@@ -1,0 +1,16 @@
+package secucloud;
+
+public class SystemPathCollectorGsutilTEMP {
+	public SystemPathCollectorGsutilTEMP(Array StringArray) {
+		StringArray[0] = determinePythonPath();
+		StringArray[1] = determineGsutilPath();
+	}
+
+	private String determinePythonPath() {
+		return "C:\\Python27\\python";
+	}
+
+	private String determineGsutilPath() {
+		return "C:\\Users\\fenix\\Desktop\\IS_Projekt\\ext\\gsutil\\gsutil";
+	}
+}

@@ -1,0 +1,7 @@
+package testClasses;
+
+public abstract class CloudConnectorAbs {
+	abstract void upload();
+	abstract void download();
+	abstract void listDir();
+}

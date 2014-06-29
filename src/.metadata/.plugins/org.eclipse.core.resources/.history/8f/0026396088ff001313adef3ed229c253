@@ -1,0 +1,16 @@
+package secucloud;
+
+import java.io.IOException;
+
+public class Main {
+	public static void main(String[] args) {
+		CloudConnectorGoogleGsutil cloudconnector = new CloudConnectorGoogleGsutil();
+		try {
+			cloudconnector.upload("TestStringUpload");
+		} catch (IOException ioexception) {
+			System.out.println(ioexception.toString());
+		}
+		System.out.println(cloudconnector.download("TestStringDownload"));
+		System.out.println(cloudconnector.listDir("TestStringListDir"));
+	}
+}

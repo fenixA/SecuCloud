@@ -1,0 +1,45 @@
+package secucloud;
+
+import java.io.*;
+
+public class CloudConnectorGoogleGsutil extends CloudConnectorAbs {
+
+	@Override
+	Boolean upload(String path) throws IOException {
+		/*
+		 * try { Process p = Runtime.getRuntime().exec("dir"); p.waitFor();
+		 * BufferedReader reader = new BufferedReader(new InputStreamReader(
+		 * p.getInputStream())); String line = reader.readLine();
+		 * 
+		 * while (line != null) { System.out.println(line); line =
+		 * reader.readLine(); }
+		 * 
+		 * } catch (IOException e1) { } catch (InterruptedException e2) { }
+		 * 
+		 * System.out.println("finished.");
+		 */
+
+		Process uploadProcess = Runtime.getRuntime().exec("dir");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				uploadProcess.getInputStream()));
+		String line = reader.readLine();
+		while (line != null) {
+			System.out.println(line);
+			line = reader.readLine();
+		}
+		return null;
+	}
+
+	@Override
+	String download(String path) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	String listDir(String path) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
