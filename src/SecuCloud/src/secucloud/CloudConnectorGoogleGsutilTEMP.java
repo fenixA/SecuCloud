@@ -2,7 +2,7 @@ package secucloud;
 
 import java.io.*;
 
-public class CloudConnectorGoogleGsutil extends CloudConnectorAbs {
+public class CloudConnectorGoogleGsutilTEMP extends CloudConnectorAbs {
 
 	@Override
 	Boolean upload(String path) {
