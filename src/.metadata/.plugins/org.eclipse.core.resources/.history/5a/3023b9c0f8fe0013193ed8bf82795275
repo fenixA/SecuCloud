@@ -1,5 +1,0 @@
-package testClasses;
-
-public class CloudConnector_google_gsutil implements ICloudConnect {
-
-}

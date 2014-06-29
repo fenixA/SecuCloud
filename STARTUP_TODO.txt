@@ -1,4 +1,4 @@
---------------NOTE: Some of the files below are in Dropbox:"data"
+--------------NOTE: Some of the files below are in Dropbox: "IS_Project_data"
 
 	install		python2.7		https://www.python.org/download/releases/2.7.7/
 opt	install		gsutil			https://developers.google.com/storage/
