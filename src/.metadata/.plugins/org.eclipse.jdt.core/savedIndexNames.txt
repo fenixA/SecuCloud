@@ -6,7 +6,6 @@ INDEX VERSION 1.126+C:\Users\fenix\Desktop\IS_Projekt\src\.metadata\.plugins\org
 3065916431.index
 1697886153.index
 2695934618.index
-1199102235.index
 4108727661.index
 305854171.index
 1299022128.index
