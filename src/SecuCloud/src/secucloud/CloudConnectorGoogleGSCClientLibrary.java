@@ -16,4 +16,8 @@ public class CloudConnectorGoogleGSCClientLibrary extends CloudConnectorAbs {
 	public String listDir(String path) {
 		return "listDir: " + path;
 	}
+
+	public static void main(String[] args) {
+		CloudConnectorGoogleGSCClientLibrary
+	}
 }
