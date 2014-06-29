@@ -1,0 +1,7 @@
+package testClasses;
+
+interface ICloudConnect {
+	public void upload();
+	public void download();
+	public void listDir();
+}

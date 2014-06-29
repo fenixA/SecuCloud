@@ -1,0 +1,11 @@
+package testClasses;
+
+public class Main {
+	public static void main(String[] args) {
+		System.out.println("test");
+		CloudConnectorGoogleGsutil cloudconnector = new CloudConnectorGoogleGsutil();
+		cloudconnector.upload();
+		cloudconnector.download();
+		cloudconnector.listDir();
+	}
+}

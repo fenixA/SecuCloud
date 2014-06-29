@@ -1,0 +1,13 @@
+package testClasses;
+
+public class CloudConnectorGoogleGsutil extends CloudConnectorAbs {
+	public void upload(){
+		System.out.println("upload");
+	}
+	public void download(){
+		System.out.println("download");
+	}
+	public void listDir(){
+		System.out.println("listDir");
+	}
+}

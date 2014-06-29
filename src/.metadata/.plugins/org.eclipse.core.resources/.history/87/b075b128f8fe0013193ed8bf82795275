@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package testClasses;
+
+/**
+ * @author fenix
+ *
+ */
+public interface upload {
+
+}

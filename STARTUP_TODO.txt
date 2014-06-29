@@ -1,0 +1,10 @@
+--------------NOTE: Some of the files below are in Dropbox:"data"
+
+	install		python2.7		https://www.python.org/download/releases/2.7.7/
+opt	install		gsutil			https://developers.google.com/storage/
+	install		JDK			http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+	download	eclipse(Kepler)		http://www.eclipse.org/
+	install		google AppEnginePlugin	
+	install		git			http://git-scm.com
+	install		sourcetree		http://www.sourcetreeapp.com/
+
