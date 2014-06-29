@@ -4,7 +4,7 @@
 opt	install		gsutil			https://developers.google.com/storage/
 	install		JDK			http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
 	download	eclipse(Kepler)		http://www.eclipse.org/
-	install		google AppEnginePlugin	
+not	install		google AppEnginePlugin	
 	install		git			http://git-scm.com
 	install		sourcetree		http://www.sourcetreeapp.com/
 
