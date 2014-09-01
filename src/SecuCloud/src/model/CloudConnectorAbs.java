@@ -1,9 +1,11 @@
 package model;
 
+import java.io.File;
+
 public abstract class CloudConnectorAbs {
-	abstract Boolean upload(String path);
+	abstract Boolean upload(File inputFile);
 
-	abstract String download(String path);
+	abstract String download(File inputFile);
 
-	abstract String listDir(String path);
+	abstract void listDir(String path);
 }

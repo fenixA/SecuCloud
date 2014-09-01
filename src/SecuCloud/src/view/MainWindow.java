@@ -10,7 +10,7 @@ package view;
 //import javax.swing.JMenuBar;
 //import javax.swing.JMenuItem;
 import javax.swing.*;
-
+import java.awt.*;
 import java.awt.event.ActionEvent;
 //import java.awt.event.ActionListener;
 //import java.io.File;
@@ -27,6 +27,7 @@ public class MainWindow extends javax.swing.JFrame{
 			windowHeight = 300;
 	// Components
 	private JMenuBar menuBar;
+	private JTable table;
 	
 	private JMenu titleFile;
 	private JMenu titleHelp;
@@ -63,6 +64,10 @@ public class MainWindow extends javax.swing.JFrame{
 	}
 
 	private void initComponents() {
+		String[]columnNames = {"File Name", "Size", "sync", "Last Modified"};
+		Object[][] data = null;
+		
+		this.table = new JTable(data, columnNames);
 		this.menuBar = new JMenuBar();
 		
 		this.titleFile = new JMenu("File");
@@ -93,5 +98,6 @@ public class MainWindow extends javax.swing.JFrame{
 		this.menuBar.add(titleHelp);
 		
 		this.setJMenuBar(this.menuBar);
+		this.
 	}
 }

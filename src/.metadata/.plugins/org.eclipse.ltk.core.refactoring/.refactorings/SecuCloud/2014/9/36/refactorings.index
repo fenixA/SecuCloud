@@ -6,3 +6,9 @@
 1409531611212	Delete element
 1409531637543	Rename compilation unit 'crypt.java'
 1409532477001	Delete element
+1409533429780	Rename local variable 'aesFile'
+1409535278795	Rename local variable 'aesFile'
+1409535589334	Rename local variable 'aesFileBis'
+1409535669420	Rename local variable 'aesFile'
+1409535881231	Rename method 'setCurrentSymKey'
+1409538150548	Rename local variable 'uploadProcess'

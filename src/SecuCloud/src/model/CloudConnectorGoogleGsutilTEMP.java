@@ -15,17 +15,33 @@ public class CloudConnectorGoogleGsutilTEMP extends CloudConnectorAbs {
 	}
 
 	@Override
-	public Boolean upload(String path) {
+	public Boolean upload(File inputFile) {
+
+		return null;
+	}
+
+	@Override
+	public String download(File inputFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void listDir(String path) {
 		try {
-			Process uploadProcess = Runtime.getRuntime()
-					.exec("cmd /C dir 2>&1");
+			Process listProcess = Runtime.getRuntime().exec(
+					new String[] { "cmd.exe", "/c",
+							"cd " + path + "&&dir 2>&1"});
 			// uploadProcess.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					uploadProcess.getInputStream()));
-			String stdoutTmpString = reader.readLine();
-			while (stdoutTmpString != null) {
-				System.out.println(stdoutTmpString);
-				stdoutTmpString = reader.readLine();
+					listProcess.getInputStream()));
+			String line;
+			while (true) {
+				line = reader.readLine();
+				if (line == null) {
+					break;
+				}
+				System.out.println(line);
 			}
 		} catch (IOException uploadIOException) {
 			System.out.println(uploadIOException.toString());
@@ -33,20 +49,6 @@ public class CloudConnectorGoogleGsutilTEMP extends CloudConnectorAbs {
 		 * catch (InterruptedException uploadInterruptException) {
 		 * System.out.println(uploadInterruptException.toString()); }
 		 */
-
-		return null;
-	}
-
-	@Override
-	public String download(String path) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String listDir(String path) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private void copy(String SrcPath, String DestPath) {
