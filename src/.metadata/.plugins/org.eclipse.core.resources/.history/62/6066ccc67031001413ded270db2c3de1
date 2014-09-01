@@ -1,0 +1,14 @@
+package control;
+
+public class Crypt {
+	public Crypt(){
+		
+	}
+	
+	public void encryptFile(){
+		
+	}
+	public void decryptFile(){
+		
+	}
+}

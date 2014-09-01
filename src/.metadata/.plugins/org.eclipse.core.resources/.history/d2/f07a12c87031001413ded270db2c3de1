@@ -5,7 +5,7 @@ import java.io.*;
 import javax.crypto.*;  
 import javax.crypto.spec.*;  
 
-public final class Crypt {
+protected class Crypt {
 	public Crypt(){
 		
 	}
