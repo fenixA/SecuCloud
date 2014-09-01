@@ -1,0 +1,13 @@
+package body;
+
+import java.awt.event.ActionListener;
+
+public class aboutWindow extends javax.swing.JFrame implements ActionListener{
+	public aboutWindow(){
+		
+	}
+	
+	protected void actionPerformed(){
+		
+	}
+}

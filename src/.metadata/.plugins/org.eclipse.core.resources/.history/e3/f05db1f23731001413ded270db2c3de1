@@ -1,0 +1,12 @@
+package Main;
+
+public class Main extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7379587371723737961L;
+
+	public static void main(String[] args) {
+		System.out.println("Testing");
+	}
+}

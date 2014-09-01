@@ -1,0 +1,39 @@
+package swingTutorials;
+
+import java.awt.Toolkit;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+
+public class SwingTutorial_1 extends javax.swing.JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4862611498603965107L;
+	private Toolkit tk;
+	
+	private double screenWidth, screenHeight, width=400, height=300;
+	
+	public SwingTutorial_1() {
+		tk = Toolkit.getDefaultToolkit();
+		Dimension d = tk.getScreenSize();
+		
+		screenHeight = d.getHeight();
+		screenWidth = d.getWidth();
+		
+		
+		setTitle("SwingTutorial_1");
+		setBounds(0, 0, 600, 600);
+		
+		
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		SwingTutorial_1 sT = new SwingTutorial_1();
+		System.out.println("Testing");
+	}
+}

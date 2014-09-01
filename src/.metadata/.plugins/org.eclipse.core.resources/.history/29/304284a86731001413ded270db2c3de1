@@ -1,0 +1,32 @@
+package body;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+//import model.CloudConnectorGoogleGsutilTEMP;
+import view.MainWindow;
+
+public class Main implements ActionListener {
+	private MainWindow mW;
+	
+	public static void main(String[] args) {
+		/*
+		 * CloudConnectorGoogleGsutilTEMP cloudconnector = new
+		 * CloudConnectorGoogleGsutilTEMP();
+		 * cloudconnector.upload("TestStringUpload");
+		 * System.out.println(cloudconnector.download("TestStringDownload"));
+		 * System.out.println(cloudconnector.listDir("TestStringListDir"));
+		 */
+		
+		mW =  new MainWindow("SecuCloud");
+		
+		
+	}
+	
+	public void actionPerformed(ActionEvent ac){
+		if(ac.getSource() == this.mW.entryHelpAbout){
+			
+		}
+		
+	}
+}

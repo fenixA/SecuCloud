@@ -1,0 +1,62 @@
+package view;
+
+import java.awt.MenuBar;
+import java.awt.Toolkit;
+//import java.awt.Dimension;
+
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+public class MainWindow extends javax.swing.JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3172688540921699213L;
+
+	private Toolkit tk;
+
+	private int positionCoordinateX, positionCoordinateY, windowWidth = 400,
+			windowHeight = 300;
+
+	// Components
+	private JMenuBar menuBar;
+	private JMenuItem menuBarItemFile;
+	private JMenuItem menuBarItemAbout;
+
+	public MainWindow() {
+		tk = Toolkit.getDefaultToolkit();
+
+		/*
+		 * ToDO!! for positioning in middle of the screeen Dimension d =
+		 * tk.getScreenSize();
+		 * 
+		 * 
+		 * positionCoordinateX = (int)(d.getWidth() - windowWidth /2);
+		 * positionCoordinateY = (int)(d.getHeight() - windowHeight /2);
+		 */
+
+		setTitle("SecuCloud");
+		setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
+				windowHeight);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		this.initComponents();
+
+		setVisible(true);
+	}
+
+	private void initComponents() {
+		this.menuBar = new JMenuBar();
+		this.menuBarItemFile = new JMenuItem("File");
+		this.menuBarItemAbout = new JMenuItem("About");
+
+		this.menuBarItemFile.add(menuBar);
+		this.menuBarItemAbout.add(menuBar);
+		
+		this.setJMenuBar(menuBar;
+	}
+}

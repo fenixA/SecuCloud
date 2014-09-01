@@ -1,0 +1,48 @@
+package control;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+//import model.CloudConnectorGoogleGsutilTEMP;
+import view.MainWindow;
+
+public class Main implements ActionListener{
+	private static Main instance;
+	private String SoftwareName;
+	private MainWindow mW;
+	private boolean singleton;
+
+	public Main(String SoftwareName) {
+		this.SoftwareName = SoftwareName;
+		this.mW = new MainWindow(SoftwareName);
+
+	}
+	
+	public static Main getInstance(String SoftwareName){
+		 if(Main.class == null){
+			 Main.instance = new Main(SoftwareName);
+			 }
+		 return Main.instance;
+	}
+	public void actionPerformed(ActionEvent ac){
+		
+	}
+
+	public void AboutWindow_fileSelected(File file){
+		System.out.println("File selected: " + file.getAbsolutePath());	
+	}
+	
+	public static void main(String[] args) {
+		Main.getInstance("SecuCloud");
+		
+		/*
+		 * CloudConnectorGoogleGsutilTEMP cloudconnector = new
+		 * CloudConnectorGoogleGsutilTEMP();
+		 * cloudconnector.upload("TestStringUpload");
+		 * System.out.println(cloudconnector.download("TestStringDownload"));
+		 * System.out.println(cloudconnector.listDir("TestStringListDir"));
+		 */
+	}
+
+}

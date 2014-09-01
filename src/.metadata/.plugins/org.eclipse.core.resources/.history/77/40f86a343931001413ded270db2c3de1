@@ -1,0 +1,20 @@
+package swingTutorials;
+
+public class SwingTutorial_1 extends javax.swing.JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4862611498603965107L;
+
+	public SwingTutorial_1() {
+		setTitle("SwingTutorial_1");
+		setBounds(0, 0, 600, 600);
+		setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		SwingTutorial_1 sT = new SwingTutorial_1();
+		System.out.println("Testing");
+	}
+}
