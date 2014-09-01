@@ -73,9 +73,10 @@ public class Main implements ActionListener {
 		Main main = Main.getInstance();
 		main.mW = null;
 		File testFile = new File(
-				"C:\\Users\\fenix\\Desktop\\IS_Projekt\\data\\testByteInput.hex");
+				"D:\\SecuCloud\\data\\testByteInput.hex");
 		main.toggle_MainWindow_fileSelected(testFile);
 		main.mW = new MainWindow(main.SoftwareName);
+		System.out.println("test");
 
 		//main.cc.listDir("");
 
