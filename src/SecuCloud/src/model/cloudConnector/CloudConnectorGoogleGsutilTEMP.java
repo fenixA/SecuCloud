@@ -10,9 +10,8 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	private String[] SystemVariables = new String[2];
 
 	public CloudConnectorGoogleGsutilTEMP() {
-		SystemPathCollectorGsutilTEMP systempathcollectorgsutil = new SystemPathCollectorGsutilTEMP();
-		SystemVariables[0] = systempathcollectorgsutil.getGsutilPath();
-		SystemVariables[1] = systempathcollectorgsutil.getPythonPath();
+		SystemVariables[0] = SystemPathCollectorGsutilTEMP.getGsutilPath();
+		SystemVariables[1] = SystemPathCollectorGsutilTEMP.getPythonPath();
 	}
 
 	@Override
@@ -72,11 +71,11 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	}
 
 	private void copy(String SrcPath, String DestPath) {
-
+		// TODO Auto-generated method stub
 	}
 
 	private void remove(String path) {
-
+		// TODO Auto-generated method stub
 	}
 
 }
