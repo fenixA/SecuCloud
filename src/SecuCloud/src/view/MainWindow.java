@@ -18,10 +18,10 @@ public class MainWindow extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 3172688540921699213L;
-//	private int positionCoordinateX = 400, positionCoordinateY = 400,
-//			windowWidth = 400, windowHeight = 300;
-	
-// Components
+	// private int positionCoordinateX = 400, positionCoordinateY = 400,
+	// windowWidth = 400, windowHeight = 300;
+
+	// Components
 	private JMenuBar menuBar;
 	private JTable table;
 	JScrollPane scrollPane;
@@ -37,8 +37,8 @@ public class MainWindow extends javax.swing.JFrame {
 
 	public MainWindow(String title) {
 		setTitle(title);
-//		setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
-//				windowHeight);
+		// setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
+		// windowHeight);
 		this.setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -48,24 +48,27 @@ public class MainWindow extends javax.swing.JFrame {
 		setVisible(true);
 	}
 
-	private Object[][] initTable(){
+	private Object[][] initTable() {
 		int ctr = 0;
-		ArrayList<InformationContainer> fileList = Main.getInstance().getFileList();
+		ArrayList<InformationContainer> fileList = Main.getInstance()
+				.getFileList();
 		Object[][] result = new Object[fileList.size()][];
-		ListIterator<InformationContainer> listIterator = fileList.listIterator();
-        while (listIterator.hasNext()) {
-            Object[] temp = new Object[4];
-            InformationContainer tempFileElement =  listIterator.next();
-            temp[0] = tempFileElement.getPlainName();
-            temp[1] = tempFileElement.getEncryptedName();
-            temp[2] = tempFileElement.getTimestamp();
-            temp[3] = new File(tempFileElement.getLocalEncryptedFileLocation()).length();
-            result[ctr] = temp;
-            ctr++;
-        }
+		ListIterator<InformationContainer> listIterator = fileList
+				.listIterator();
+		while (listIterator.hasNext()) {
+			Object[] temp = new Object[4];
+			InformationContainer tempFileElement = listIterator.next();
+			temp[0] = tempFileElement.getPlainName();
+			temp[1] = tempFileElement.getEncryptedName();
+			temp[2] = tempFileElement.getTimestamp();
+			temp[3] = new File(tempFileElement.getLocalEncryptedFileLocation())
+					.length();
+			result[ctr] = temp;
+			ctr++;
+		}
 		return result;
 	}
-	
+
 	private void initComponents() {
 		Object rowData[][] = this.initTable();
 		Object columnNames[] = { "Name", "DataKey", "Uploaded", "FileSize" };

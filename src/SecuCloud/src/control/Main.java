@@ -13,14 +13,19 @@ public class Main {
 	public static final String ENCRYPTED_DATA_LOCATION = "./../../data/encrypted/";
 
 	private static Main instance;
-	private String SoftwareName;
 	private MainWindow mW;
-	private CloudConnectorGoogleGsutilTEMP cc;
-	private ArrayList<InformationContainer> fileList = new ArrayList<InformationContainer>();
+	private CreateAccountWindow caW;
 	private FileComputer fc;
+	private CloudConnectorGoogleGsutilTEMP cc;
+	
+	private String softwareName;
+	private String userName;
+	private String userPassword;
+	private ArrayList<InformationContainer> fileList = new ArrayList<InformationContainer>();
+	
 
 	public Main() {
-		this.SoftwareName = "SecuCloud";
+		this.softwareName = "SecuCloud";
 		this.cc = new CloudConnectorGoogleGsutilTEMP();
 		this.fc = new FileComputer();
 	}
@@ -38,20 +43,21 @@ public class Main {
 		this.reloadMainWindow();
 	}
 	
-	public void toggle_CreateAccountWindow_okButton(String name, String password) {
-		System.out.println(name);
-		System.out.println(password);
+	public void toggle_CreateAccountWindow_okButton(String userName, String userPassword) {
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.caW.dispose();
 	}
 
 	private void reloadMainWindow() {
 		if (this.mW != null) {
 			this.mW.dispose();
-			this.mW = new MainWindow(this.SoftwareName);
+			this.drawMainWindow();
 		}
 	}
 	
 	private void drawMainWindow(){
-		this.mW = new MainWindow(this.SoftwareName);
+		this.mW = new MainWindow(this.softwareName);
 	}
 
 	public ArrayList<InformationContainer> getFileList() {
@@ -62,7 +68,7 @@ public class Main {
 		Main main = Main.getInstance();
 		File settings = new File("./../../data/settings.txt");
 		if (!settings.exists()) {
-			CreateAccountWindow caW = new CreateAccountWindow();
+			main.caW = new CreateAccountWindow();
 		}
 		
 		
