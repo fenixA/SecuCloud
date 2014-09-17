@@ -1,13 +1,19 @@
 package control;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
+import javax.crypto.NoSuchPaddingException;
 
 import control.crypt.Crypt;
 import model.container.InformationContainer;
 import model.container.InformationContainer.encryptionIdent;
 
 public class FileComputer {
-	public InformationContainer encryptFile(File selectedFile) {
+	public InformationContainer encryptFile(File selectedFile) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, IOException {
 		byte[] tempKey = Crypt.generateRandomKey(16);
 		String encryptedName = Crypt.generateLocationString();
 		InformationContainer temp = new InformationContainer(

@@ -1,13 +1,17 @@
 package view;
 
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 
 import model.container.InformationContainer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
 import java.io.File;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -18,8 +22,8 @@ public class MainWindow extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 3172688540921699213L;
-	// private int positionCoordinateX = 400, positionCoordinateY = 400,
-	// windowWidth = 400, windowHeight = 300;
+	private int positionCoordinateX = 400, positionCoordinateY = 400,
+			windowWidth = 400, windowHeight = 300;
 
 	// Components
 	private JMenuBar menuBar;
@@ -36,16 +40,15 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenuItem entryHelpAbout;
 
 	public MainWindow(String title) {
-		setTitle(title);
-		// setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
-		// windowHeight);
-		this.setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle(title);
+		this.setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
+				windowHeight);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.initComponents();
 		this.add(scrollPane, BorderLayout.CENTER);
 
-		setVisible(true);
+		this.setVisible(true);
 	}
 
 	private Object[][] initTable() {
@@ -91,8 +94,14 @@ public class MainWindow extends javax.swing.JFrame {
 					public void actionPerformed(ActionEvent ac) {
 						JFileChooser fc = new JFileChooser();
 						fc.showOpenDialog(null);
-						Main.getInstance().toggle_MainWindow_fileSelected(
-								fc.getSelectedFile());
+						try {
+							Main.getInstance().toggle_MainWindow_fileSelected(
+									fc.getSelectedFile());
+						} catch (InvalidKeyException | NoSuchAlgorithmException
+								| NoSuchProviderException
+								| NoSuchPaddingException | IOException e) {
+							e.printStackTrace();
+						}
 					}
 				});
 
