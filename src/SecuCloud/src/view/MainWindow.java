@@ -18,10 +18,10 @@ public class MainWindow extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 3172688540921699213L;
-	// private Toolkit tk;
-	private int positionCoordinateX = 400, positionCoordinateY = 400,
-			windowWidth = 400, windowHeight = 300;
-	// Components
+//	private int positionCoordinateX = 400, positionCoordinateY = 400,
+//			windowWidth = 400, windowHeight = 300;
+	
+// Components
 	private JMenuBar menuBar;
 	private JTable table;
 	JScrollPane scrollPane;
@@ -36,20 +36,10 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenuItem entryHelpAbout;
 
 	public MainWindow(String title) {
-		/*
-		 * ToDO!! for positioning in middle of the screen tk
-		 * =Toolkit.getDefaultToolkit();
-		 * 
-		 * Dimension d = tk.getScreenSize();
-		 * 
-		 * 
-		 * positionCoordinateX = (int)(d.getWidth() - windowWidth /2);
-		 * positionCoordinateY = (int)(d.getHeight() - windowHeight /2);
-		 */
-
 		setTitle(title);
-		setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
-				windowHeight);
+//		setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
+//				windowHeight);
+		this.setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.initComponents();

@@ -37,6 +37,11 @@ public class Main {
 		this.fileList.add(this.cc.upload(this.fc.encryptFile(selectedFile)));
 		this.reloadMainWindow();
 	}
+	
+	public void toggle_CreateAccountWindow_okButton(String name, String password) {
+		System.out.println(name);
+		System.out.println(password);
+	}
 
 	private void reloadMainWindow() {
 		if (this.mW != null) {
@@ -59,6 +64,8 @@ public class Main {
 		if (!settings.exists()) {
 			CreateAccountWindow caW = new CreateAccountWindow();
 		}
+		
+		
 		// Test code:
 		File testFile = new File("./../../data/testByteInput.hex");
 		//main.toggle_MainWindow_fileSelected(testFile);
