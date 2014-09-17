@@ -2,7 +2,7 @@ package model.cloudConnector;
 
 import java.io.*;
 
-import model.container.SecuCloudContainer;
+import model.container.FileToKeyTableElement;
 import control.SystemPathCollectorGsutilTEMP;
 
 public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
@@ -16,7 +16,7 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	}
 
 	@Override
-	public SecuCloudContainer upload(SecuCloudContainer input) {
+	public FileToKeyTableElement upload(FileToKeyTableElement input) {
 		try {
 			Process uploadProcess = Runtime.getRuntime().exec(
 					new String[] {

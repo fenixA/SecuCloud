@@ -10,7 +10,7 @@ package view;
 //import javax.swing.JMenuItem;
 import javax.swing.*;
 
-import model.container.SecuCloudContainer;
+import model.container.FileToKeyTableElement;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -73,12 +73,12 @@ public class MainWindow extends javax.swing.JFrame {
 
 	private Object[][] initTable(){
 		int ctr = 0;
-		ArrayList<SecuCloudContainer> fileList = Main.getInstance().getFileList();
+		ArrayList<FileToKeyTableElement> fileList = Main.getInstance().getFileList();
 		Object[][] result = new Object[fileList.size()][];
-		ListIterator<SecuCloudContainer> listIterator = fileList.listIterator();
+		ListIterator<FileToKeyTableElement> listIterator = fileList.listIterator();
         while (listIterator.hasNext()) {
             Object[] temp = new Object[4];
-            SecuCloudContainer tempFileElement =  listIterator.next();
+            FileToKeyTableElement tempFileElement =  listIterator.next();
             temp[0] = tempFileElement.getPlainName();
             temp[1] = tempFileElement.getEncryptedName();
             temp[2] = tempFileElement.getTimestamp();
