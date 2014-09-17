@@ -2,15 +2,20 @@ package control.crypt;
 
 import java.security.*;
 import java.io.*;
+import java.math.BigInteger;
+
 import javax.crypto.*;
 import javax.crypto.spec.*;
+
+import control.Main;
 
 public final class Crypt {
 	public Crypt() {
 
 	}
 
-	public static File encryptFileSymAesCTR(File srcFile, String dstPath, byte[] key) {
+	public static File encryptFileSymAesCTR(File srcFile, String dstPath,
+			byte[] key) {
 		File encryptedFile = null;
 		if (key.length != 16) {
 			System.out.println("Error: Invalid key length!");
@@ -21,7 +26,7 @@ public final class Crypt {
 			FileInputStream fis;
 			FileOutputStream fos;
 			CipherInputStream cis;
-			
+
 			SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 			Cipher encrypt = Cipher.getInstance("AES/CTR/PKCS5Padding",
 					"SunJCE");
@@ -52,7 +57,8 @@ public final class Crypt {
 		return encryptedFile;
 	}
 
-	public static File decryptFileSymAesCTR(File srcFile, String dstPath, byte[] key) {
+	public static File decryptFileSymAesCTR(File srcFile, String dstPath,
+			byte[] key) {
 		File decryptedFile = null;
 		File tempFile = srcFile;
 		if (key.length != 16) {
@@ -88,5 +94,19 @@ public final class Crypt {
 			e.printStackTrace();
 		}
 		return decryptedFile;
+	}
+
+	public static byte[] generateRandomKey(int length) {
+		SecureRandom random = new SecureRandom();
+		byte key[] = new byte[length];
+		random.nextBytes(key);
+		return key;
+	}
+
+	public static String generateLocationString() {
+		SecureRandom random = new SecureRandom();
+		return new BigInteger(130, random)
+				.toString(Main.FILEIDENT_LEN).replace("[", "")
+				.replace("@", "");
 	}
 }

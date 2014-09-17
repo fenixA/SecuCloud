@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 
 import control.Main;
