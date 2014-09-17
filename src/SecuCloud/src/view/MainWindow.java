@@ -1,21 +1,11 @@
 package view;
 
-//import java.awt.MenuBar;
-//import java.awt.Toolkit;
-//import java.awt.Dimension;
-
-//import javax.swing.JFrame;
-//import javax.swing.JMenu;
-//import javax.swing.JMenuBar;
-//import javax.swing.JMenuItem;
 import javax.swing.*;
 
 import model.container.InformationContainer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//import java.io.File;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,8 +34,6 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenuItem entryHelpHelp;
 	private JMenuItem entryHelpInfo;
 	private JMenuItem entryHelpAbout;
-
-	public String tempString;
 
 	public MainWindow(String title) {
 		/*

@@ -12,13 +12,13 @@ public class FileComputer {
 		String encryptedName = Crypt.generateLocationString();
 		InformationContainer temp = new InformationContainer(
 				selectedFile.getAbsolutePath(),
-				selectedFile.getAbsolutePath().replaceAll(selectedFile.getName(), "") + encryptedName,
+				Main.ENCRYPTED_DATA_LOCATION + encryptedName + ".enc",
 				encryptedName,
 				selectedFile.getName(),
 				null,
 				tempKey,
 				encryptionIdent.AES_CTR);
-		System.out.println("encryptedName: " + temp.getEncryptedName());
+		System.out.println("encryptedName: " + Main.ENCRYPTED_DATA_LOCATION + temp.getEncryptedName());
 		System.out.println("File selected: " + selectedFile.getAbsolutePath());
 		System.out.println(tempKey);
 

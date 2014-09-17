@@ -49,6 +49,5 @@ public class SystemPathCollectorGsutilTEMP {
 	
 	public static String getGsutilPath() {
 		return "./../../ext/gsutil/gsutil.py";
-		//return "C:\\Users\\fenix\\Desktop\\IS_Projekt\\ext\\gsutil\\gsutil.py";
 	}
 }
