@@ -4,16 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.LinkedList;
-import java.util.List;
 
 import view.MainWindow;
 import control.crypt.Crypt;
-//import model.CloudConnectorGoogleGsutilTEMP;
 import model.cloudConnector.CloudConnectorGoogleGsutilTEMP;
-import model.container.FileToKeyTableElement;
-import model.container.FileToKeyTableElement.encryptionIdent;
+import model.container.InformationContainer;
+import model.container.InformationContainer.encryptionIdent;
 
 public class Main implements ActionListener {
 	public static final int FILEIDENT_LEN = 64;
@@ -22,7 +18,7 @@ public class Main implements ActionListener {
 	private String SoftwareName;
 	private MainWindow mW;
 	private CloudConnectorGoogleGsutilTEMP cc;
-	private ArrayList<FileToKeyTableElement> fileList = new ArrayList<FileToKeyTableElement>();
+	private ArrayList<InformationContainer> fileList = new ArrayList<InformationContainer>();
 
 	public Main() {
 		this.SoftwareName = "SecuCloud";
@@ -44,7 +40,7 @@ public class Main implements ActionListener {
 	public void toggle_MainWindow_fileSelected(File selectedFile) {
 		byte[] tempKey = Toolbox.generateRandomKey(16);
 		String encryptedName = Toolbox.generateLocationString();
-		FileToKeyTableElement temp = new FileToKeyTableElement(
+		InformationContainer temp = new InformationContainer(
 				selectedFile.getAbsolutePath(),
 				selectedFile.getAbsolutePath().replaceAll(selectedFile.getName(), "") + encryptedName,
 				encryptedName,
@@ -65,18 +61,18 @@ public class Main implements ActionListener {
 		}		
 	}
 	
-	public ArrayList<FileToKeyTableElement> getFileList(){
+	public ArrayList<InformationContainer> getFileList(){
 		return fileList;
 	}
 
 	public static void main(String[] args) {
 		Main main = Main.getInstance();
 		main.mW = null;
-		File testFile = new File(
-				"D:\\SecuCloud\\data\\testByteInput.hex");
-		main.toggle_MainWindow_fileSelected(testFile);
+		//File testFile = new File(
+		//		"C:\\Users\\fenix\\Desktop\\IS_Projekt\\data\\testByteInput.hex");
+		//main.toggle_MainWindow_fileSelected(testFile);
 		main.mW = new MainWindow(main.SoftwareName);
-		System.out.println("test");
+		System.out.println(System.getProperty("user.dir"));
 
 		//main.cc.listDir("");
 

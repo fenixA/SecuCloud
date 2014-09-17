@@ -2,10 +2,10 @@ package model.cloudConnector;
 
 import java.io.File;
 
-import model.container.FileToKeyTableElement;
+import model.container.InformationContainer;
 
 public interface CloudConnector {
-	public FileToKeyTableElement upload(FileToKeyTableElement input);
+	public InformationContainer upload(InformationContainer input);
 
 	public String download(File inputFile);
 
