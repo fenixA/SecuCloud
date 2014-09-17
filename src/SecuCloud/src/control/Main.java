@@ -12,8 +12,8 @@ import view.MainWindow;
 import control.crypt.Crypt;
 //import model.CloudConnectorGoogleGsutilTEMP;
 import model.cloudConnector.CloudConnectorGoogleGsutilTEMP;
-import model.container.SecuCloudContainer;
-import model.container.SecuCloudContainer.encryptionIdent;
+import model.container.InformationContainer;
+import model.container.InformationContainer.encryptionIdent;
 
 public class Main implements ActionListener {
 	public static final int FILEIDENT_LEN = 64;
@@ -22,7 +22,7 @@ public class Main implements ActionListener {
 	private String SoftwareName;
 	private MainWindow mW;
 	private CloudConnectorGoogleGsutilTEMP cc;
-	private ArrayList<SecuCloudContainer> fileList = new ArrayList<SecuCloudContainer>();
+	private ArrayList<InformationContainer> fileList = new ArrayList<InformationContainer>();
 
 	public Main() {
 		this.SoftwareName = "SecuCloud";
@@ -44,7 +44,7 @@ public class Main implements ActionListener {
 	public void toggle_MainWindow_fileSelected(File selectedFile) {
 		byte[] tempKey = Toolbox.generateRandomKey(16);
 		String encryptedName = Toolbox.generateLocationString();
-		SecuCloudContainer temp = new SecuCloudContainer(
+		InformationContainer temp = new InformationContainer(
 				selectedFile.getAbsolutePath(),
 				selectedFile.getAbsolutePath().replaceAll(selectedFile.getName(), "") + encryptedName,
 				encryptedName,
@@ -65,7 +65,7 @@ public class Main implements ActionListener {
 		}		
 	}
 	
-	public ArrayList<SecuCloudContainer> getFileList(){
+	public ArrayList<InformationContainer> getFileList(){
 		return fileList;
 	}
 
@@ -74,9 +74,9 @@ public class Main implements ActionListener {
 		main.mW = null;
 		File testFile = new File(
 				"C:\\Users\\fenix\\Desktop\\IS_Projekt\\data\\testByteInput.hex");
-		main.toggle_MainWindow_fileSelected(testFile);
+		//main.toggle_MainWindow_fileSelected(testFile);
 		main.mW = new MainWindow(main.SoftwareName);
-		System.out.println("test");
+		//System.out.println(SystemInformationDeterminator.getOperationSystem());
 
 		//main.cc.listDir("");
 

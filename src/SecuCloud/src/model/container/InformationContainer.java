@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 
-public class SecuCloudContainer {
+public class InformationContainer {
 	public enum encryptionIdent {
 		AES_CTR,
 		AES_ECB,
@@ -63,7 +63,7 @@ public class SecuCloudContainer {
 		return encryption;
 	}
 
-	public SecuCloudContainer(String localPlainFileLocation,
+	public InformationContainer(String localPlainFileLocation,
 			String localEncryptedFileLocation, String encryptedName,
 			String plainName, String cloudFileLocation, byte[] symKey,
 			encryptionIdent encryption) {

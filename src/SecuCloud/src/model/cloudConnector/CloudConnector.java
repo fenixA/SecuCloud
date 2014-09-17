@@ -2,10 +2,10 @@ package model.cloudConnector;
 
 import java.io.File;
 
-import model.container.SecuCloudContainer;
+import model.container.InformationContainer;
 
 public interface CloudConnector {
-	public SecuCloudContainer upload(SecuCloudContainer input);
+	public InformationContainer upload(InformationContainer input);
 
 	public String download(File inputFile);
 
