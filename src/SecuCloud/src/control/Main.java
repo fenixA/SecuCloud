@@ -12,8 +12,8 @@ import view.MainWindow;
 import control.crypt.Crypt;
 //import model.CloudConnectorGoogleGsutilTEMP;
 import model.cloudConnector.CloudConnectorGoogleGsutilTEMP;
-import model.container.FileToKeyTableElement;
-import model.container.FileToKeyTableElement.encryptionIdent;
+import model.container.SecuCloudContainer;
+import model.container.SecuCloudContainer.encryptionIdent;
 
 public class Main implements ActionListener {
 	public static final int FILEIDENT_LEN = 64;
@@ -22,7 +22,7 @@ public class Main implements ActionListener {
 	private String SoftwareName;
 	private MainWindow mW;
 	private CloudConnectorGoogleGsutilTEMP cc;
-	private ArrayList<FileToKeyTableElement> fileList = new ArrayList<FileToKeyTableElement>();
+	private ArrayList<SecuCloudContainer> fileList = new ArrayList<SecuCloudContainer>();
 
 	public Main() {
 		this.SoftwareName = "SecuCloud";
@@ -44,7 +44,7 @@ public class Main implements ActionListener {
 	public void toggle_MainWindow_fileSelected(File selectedFile) {
 		byte[] tempKey = Toolbox.generateRandomKey(16);
 		String encryptedName = Toolbox.generateLocationString();
-		FileToKeyTableElement temp = new FileToKeyTableElement(
+		SecuCloudContainer temp = new SecuCloudContainer(
 				selectedFile.getAbsolutePath(),
 				selectedFile.getAbsolutePath().replaceAll(selectedFile.getName(), "") + encryptedName,
 				encryptedName,
@@ -65,7 +65,7 @@ public class Main implements ActionListener {
 		}		
 	}
 	
-	public ArrayList<FileToKeyTableElement> getFileList(){
+	public ArrayList<SecuCloudContainer> getFileList(){
 		return fileList;
 	}
 
@@ -73,7 +73,7 @@ public class Main implements ActionListener {
 		Main main = Main.getInstance();
 		main.mW = null;
 		File testFile = new File(
-				"D:\\SecuCloud\\data\\testByteInput.hex");
+				"C:\\Users\\fenix\\Desktop\\IS_Projekt\\data\\testByteInput.hex");
 		main.toggle_MainWindow_fileSelected(testFile);
 		main.mW = new MainWindow(main.SoftwareName);
 		System.out.println("test");
