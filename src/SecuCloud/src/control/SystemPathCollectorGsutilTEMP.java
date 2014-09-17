@@ -27,23 +27,28 @@ public class SystemPathCollectorGsutilTEMP {
 			}
 
 		} else if (SystemInformationCollector.getOperationSystem() == OsID.windows) {
-			File tempFile = new File("C:\\Python27\\python");
+			File tempFile = new File("C:\\Python27\\python.exe");
 			if (tempFile.exists()) {
 				return tempFile.getAbsolutePath();
 			}
-			tempFile = new File("C:\\Program Files\\Python27\\python");
-			if (tempFile.exists()){
+			tempFile = new File("C:\\Program Files\\Python27\\python.exe");
+			if (tempFile.exists()) {
 				return tempFile.getAbsolutePath();
+			} else {
+				System.out
+						.println("Please check your python installation. It should be installed to the standard path...");
+				System.exit(1);
 			}
 
+		} else {
+			System.out.println("Unsupported OS...");
+			System.exit(1);
 		}
+		return "";
 	}
-
-	public static String getPythonPath2() {
-		return "C:\\Python27\\python";
-	}
-
+	
 	public static String getGsutilPath() {
-		return "C:\\Users\\fenix\\Desktop\\IS_Projekt\\ext\\gsutil\\gsutil.py";
+		return "./../../ext/gsutil/gsutil.py";
+		//return "C:\\Users\\fenix\\Desktop\\IS_Projekt\\ext\\gsutil\\gsutil.py";
 	}
 }

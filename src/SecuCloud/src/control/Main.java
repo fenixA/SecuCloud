@@ -4,13 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.LinkedList;
-import java.util.List;
 
 import view.MainWindow;
 import control.crypt.Crypt;
-//import model.CloudConnectorGoogleGsutilTEMP;
 import model.cloudConnector.CloudConnectorGoogleGsutilTEMP;
 import model.container.InformationContainer;
 import model.container.InformationContainer.encryptionIdent;
@@ -72,11 +68,11 @@ public class Main implements ActionListener {
 	public static void main(String[] args) {
 		Main main = Main.getInstance();
 		main.mW = null;
-		File testFile = new File(
-				"C:\\Users\\fenix\\Desktop\\IS_Projekt\\data\\testByteInput.hex");
+		//File testFile = new File(
+		//		"C:\\Users\\fenix\\Desktop\\IS_Projekt\\data\\testByteInput.hex");
 		//main.toggle_MainWindow_fileSelected(testFile);
 		main.mW = new MainWindow(main.SoftwareName);
-		//System.out.println(SystemInformationDeterminator.getOperationSystem());
+		System.out.println(System.getProperty("user.dir"));
 
 		//main.cc.listDir("");
 
