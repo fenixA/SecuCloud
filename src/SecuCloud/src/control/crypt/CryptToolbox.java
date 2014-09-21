@@ -9,8 +9,8 @@ import javax.crypto.spec.*;
 
 import control.Main;
 
-public final class Crypt {
-	public Crypt() {
+public final class CryptToolbox {
+	public CryptToolbox() {
 
 	}
 
@@ -105,5 +105,17 @@ public final class Crypt {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(input.getBytes("UTF-8"));
 		return md.digest();
+	}
+	
+	public static byte[] expandUserPassword(String password, int len){
+		byte[] expanding = password.getBytes();
+		byte[] result = new byte[len];
+		while(expanding.length < len){
+			byte[] temp = new byte[expanding.length * 2];
+			System.arraycopy(expanding, 0, temp, 0, expanding.length);
+			System.arraycopy(expanding, 0, temp, expanding.length, expanding.length);
+		}
+		System.arraycopy(expanding, 0, result, 0, len);
+		return result;
 	}
 }
