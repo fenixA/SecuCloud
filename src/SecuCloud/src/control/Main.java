@@ -22,9 +22,9 @@ public class Main {
 	public static final String USER_HOME = System.getProperty("user.home");
 	private String ROOT_DIR;
 	private String SETTINGS_FILE;
-	private String GENERAL_DATA_DIR;
+	private String USER_DIR;
 	private String USER_DATA_DIR;
-	private String USER_ENCRYPTED_DATA_DIR;
+	private String USER_ENCRYPTED_DIR;
 
 	private static Main instance;
 	private MainWindow mainWindow;
@@ -41,12 +41,15 @@ public class Main {
 
 	// getter n setter
 	public String getUSER_ENCRYPTED_DATA_DIR() {
-		return USER_ENCRYPTED_DATA_DIR;
+		return USER_ENCRYPTED_DIR;
 	}
-	
 	public String getUserName() {
 		return userName;
 	}
+	public String getUSER_DATA_DIR() {
+		return USER_DATA_DIR;
+	}
+
 
 	public Main() {
 		this.softwareName = "SecuCloud";
@@ -95,21 +98,26 @@ public class Main {
 
 	private void collectWorkingPaths() {
 		ROOT_DIR = USER_HOME + "/" + softwareName;
-		GENERAL_DATA_DIR = ROOT_DIR + "/data";
 		SETTINGS_FILE = ROOT_DIR + "/settings.txt";
 	}
 
 	private void buildUserDirectory() {
-		File user_data_dir = new File(GENERAL_DATA_DIR + "/" + userName);
+		File user_dir = new File(ROOT_DIR + "/" + userName);
+		if (!user_dir.exists()) {
+			user_dir.mkdir();
+		}
+		USER_DIR = user_dir.getAbsolutePath();
+		File user_encrypted_dir = new File(USER_DIR + "/encrypted");
+		if (!user_encrypted_dir.exists()) {
+			user_encrypted_dir.mkdir();
+		}
+		USER_ENCRYPTED_DIR = user_encrypted_dir.getAbsolutePath();
+		System.out.println(USER_ENCRYPTED_DIR);
+		File user_data_dir = new File(USER_DIR + "/data");
 		if (!user_data_dir.exists()) {
 			user_data_dir.mkdir();
 		}
 		USER_DATA_DIR = user_data_dir.getAbsolutePath();
-		File user_encrypted_dir = new File(USER_DATA_DIR + "/encrypted");
-		if (!user_encrypted_dir.exists()) {
-			user_encrypted_dir.mkdir();
-		}
-		USER_ENCRYPTED_DATA_DIR = user_encrypted_dir.getAbsolutePath();
 	}
 	
 	private boolean tryLogin() throws IOException, InterruptedException{
@@ -127,7 +135,7 @@ public class Main {
 	private void startup() throws InterruptedException, IOException {
 		collectWorkingPaths();
 		settingsFileHandler = new SettingsFileHandler(SETTINGS_FILE);
-		File temp = new File(GENERAL_DATA_DIR);
+		File temp = new File(ROOT_DIR);
 		if (!temp.exists()) {
 			temp.mkdirs();
 		}
@@ -138,10 +146,10 @@ public class Main {
 				Thread.sleep(50);
 			}
 			settingsFileHandler.buildNewSettingsFile();
-			buildUserDirectory();
 			settingsFileHandler.addUser(userName, userPassword);
 		}
 		tryLogin();
+		buildUserDirectory();
 	}
 
 	public ArrayList<InformationContainer> getFileList() {
@@ -153,7 +161,7 @@ public class Main {
 		Main main = Main.getInstance();
 		main.startup();
 		
-		
+		System.out.println(main.getUSER_ENCRYPTED_DATA_DIR());
 
 		main.drawMainWindow();
 

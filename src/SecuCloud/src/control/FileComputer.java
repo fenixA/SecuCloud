@@ -17,7 +17,7 @@ public class FileComputer {
 		String encryptedName = CryptToolbox.generateLocationString();
 		InformationContainer temp = new InformationContainer(
 				selectedFile.getAbsolutePath(),
-				Main.getInstance().getUSER_ENCRYPTED_DATA_DIR() + encryptedName + ".enc",
+				Main.getInstance().getUSER_ENCRYPTED_DATA_DIR() + "/" + encryptedName + ".enc",
 				encryptedName,
 				selectedFile.getName(),
 				null,

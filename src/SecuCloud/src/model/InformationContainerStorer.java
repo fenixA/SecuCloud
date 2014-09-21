@@ -1,12 +1,14 @@
 package model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import control.Main;
 
 public class InformationContainerStorer {
 
-	public boolean storeFileList() {
+	public boolean storeFileList() throws IOException {
 		ArrayList<InformationContainer> fileList = Main.getInstance()
 				.getFileList();
 		for (InformationContainer ic : fileList) {
@@ -17,7 +19,11 @@ public class InformationContainerStorer {
 		return true;
 	}
 
-	private boolean storeInformationContainer(InformationContainer input) {
+	private boolean storeInformationContainer(InformationContainer input) throws IOException {
+		File file =  new File(Main.getInstance().getUSER_DATA_DIR() + "/freeze.conf");
+		if(!file.exists()){
+			file.createNewFile();
+		}
 		return true;
 	}
 }
