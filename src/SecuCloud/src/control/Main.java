@@ -6,18 +6,20 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.ArrayList;
+
 import javax.crypto.NoSuchPaddingException;
 
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
+import model.InformationContainer;
 import model.cloudConnector.CloudConnectorGoogleGsutilTEMP;
-import model.container.InformationContainer;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
+	public static final int AES_KEY_LEN = 16;
 
-	public static final String RELATIVE_ROOT_DIR = "./../../";
+	public static final String USER_HOME = System.getProperty("user.home");
 	private String ROOT_DIR;
 	private String SETTINGS_FILE;
 	private String GENERAL_DATA_DIR;
@@ -40,6 +42,10 @@ public class Main {
 	// getter n setter
 	public String getUSER_ENCRYPTED_DATA_DIR() {
 		return USER_ENCRYPTED_DATA_DIR;
+	}
+	
+	public String getUserName() {
+		return userName;
 	}
 
 	public Main() {
@@ -77,20 +83,20 @@ public class Main {
 	}
 
 	private void reloadMainWindow() {
-		if (this.mainWindow != null) {
-			this.mainWindow.dispose();
+		if (mainWindow != null) {
+			mainWindow.dispose();
 		}
-		this.drawMainWindow();
+		drawMainWindow();
 	}
 
 	private void drawMainWindow() {
-		this.mainWindow = new MainWindow(this.softwareName);
+		mainWindow = new MainWindow(this.softwareName);
 	}
 
 	private void collectWorkingPaths() {
-		ROOT_DIR = (new File(Main.RELATIVE_ROOT_DIR)).getAbsolutePath();
+		ROOT_DIR = USER_HOME + "/" + softwareName;
 		GENERAL_DATA_DIR = ROOT_DIR + "/data";
-		SETTINGS_FILE = ROOT_DIR + "/data/settings.txt";
+		SETTINGS_FILE = ROOT_DIR + "/settings.txt";
 	}
 
 	private void buildUserDirectory() {
@@ -113,7 +119,7 @@ public class Main {
 			while (loginWindow.isVisible()) {
 				Thread.sleep(50);
 			}
-			flag = settingsFileHandler.verifyUserdata(userName, userPassword);
+			flag = settingsFileHandler.verifyUserData(userName, userPassword);
 		}
 		return flag;
 	}
@@ -123,7 +129,7 @@ public class Main {
 		settingsFileHandler = new SettingsFileHandler(SETTINGS_FILE);
 		File temp = new File(GENERAL_DATA_DIR);
 		if (!temp.exists()) {
-			temp.mkdir();
+			temp.mkdirs();
 		}
 		File settings = new File(SETTINGS_FILE);
 		if (!settings.exists()) {
@@ -139,14 +145,15 @@ public class Main {
 	}
 
 	public ArrayList<InformationContainer> getFileList() {
-		return this.fileList;
+		return fileList;
 	}
 
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		Main main = Main.getInstance();
-
 		main.startup();
+		
+		
 
 		main.drawMainWindow();
 

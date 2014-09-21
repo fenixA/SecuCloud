@@ -8,13 +8,12 @@ import java.security.NoSuchProviderException;
 
 import javax.crypto.NoSuchPaddingException;
 
-import control.crypt.CryptToolbox;
-import model.container.InformationContainer;
-import model.container.InformationContainer.encryptionIdent;
+import model.InformationContainer;
+import model.InformationContainer.encryptionIdent;
 
 public class FileComputer {
 	public InformationContainer encryptFile(File selectedFile) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, IOException {
-		byte[] tempKey = CryptToolbox.generateRandomKey(16);
+		byte[] tempKey = CryptToolbox.generateRandomKey(Main.AES_KEY_LEN);
 		String encryptedName = CryptToolbox.generateLocationString();
 		InformationContainer temp = new InformationContainer(
 				selectedFile.getAbsolutePath(),

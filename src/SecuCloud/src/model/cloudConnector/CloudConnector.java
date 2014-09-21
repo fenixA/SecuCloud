@@ -2,7 +2,7 @@ package model.cloudConnector;
 
 import java.io.File;
 
-import model.container.InformationContainer;
+import model.InformationContainer;
 
 public interface CloudConnector {
 	public InformationContainer upload(InformationContainer input);

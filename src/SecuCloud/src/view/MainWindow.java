@@ -3,7 +3,7 @@ package view;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 
-import model.container.InformationContainer;
+import model.InformationContainer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

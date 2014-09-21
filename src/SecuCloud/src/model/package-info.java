@@ -5,4 +5,4 @@
  * @author fenix
  *
  */
-package model.save;
+package model;

@@ -31,7 +31,7 @@ public class SettingsFileHandler {
 		stream.close();
 	}
 
-	public boolean verifyUserdata(String userName, String userPassword)
+	public boolean verifyUserData(String userName, String userPassword)
 			throws IOException {
 		readSettingsFile();
 		for (Map.Entry<byte[], byte[]> entry : userData.entrySet()) {
@@ -55,17 +55,17 @@ public class SettingsFileHandler {
 			if ((char) temp[cntr] == ':') {
 				tempNameLen = cntr;
 				System.arraycopy(temp, 0, userName, 0, cntr);
-				cntr = -1;
+				cntr = 0;
 			} else if ((char) temp[cntr] == '\n') {
 				tempPaswordLen = cntr;
 				System.arraycopy(temp, 0, userPassword, 0, cntr);
 				userData.put(Arrays.copyOfRange(userName, 0, tempNameLen),
 						Arrays.copyOfRange(userPassword, 0, tempPaswordLen));
-				cntr = -1;
+				cntr = 0;
+			} else {
+				cntr++;
 			}
-			cntr++;
 		}
 		stream.close();
 	}
-
 }

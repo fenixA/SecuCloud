@@ -2,7 +2,7 @@ package model.cloudConnector;
 
 import java.io.*;
 
-import model.container.InformationContainer;
+import model.InformationContainer;
 import control.SystemPathCollectorGsutilTEMP;
 
 public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
