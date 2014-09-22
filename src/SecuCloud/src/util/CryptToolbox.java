@@ -1,4 +1,4 @@
-package control;
+package util;
 
 import java.security.*;
 import java.io.*;
@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
+import control.Main;
 import model.InformationContainer;
 import model.InformationContainer.encryptionIdent;
 
