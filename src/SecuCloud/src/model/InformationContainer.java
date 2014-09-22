@@ -1,64 +1,48 @@
-package model.container;
+package model;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
+import control.Main;
 
 public class InformationContainer {
 	public enum encryptionIdent {
-		AES_CTR,
-		AES_ECB,
-		RSA
+		AES_CTR, AES_ECB, RSA
 	}
 
 	private String localPlainFileLocation;
+	private String plainName;
+	private String encryptedName;
+	private String localEncryptedFileLocation;
+	private String cloudFileLocation;
+	private Timestamp time;
+	private byte[] symKey;
+	private encryptionIdent encryption;
 
 	public String getLocalPlainFileLocation() {
 		return localPlainFileLocation;
 	}
-
-	private String plainName;
-
 	public String getPlainName() {
 		return plainName;
 	}
-
-	private String encryptedName;
-
 	public String getEncryptedName() {
 		return encryptedName;
 	}
-
-	private String localEncryptedFileLocation;
-
 	public String getLocalEncryptedFileLocation() {
 		return localEncryptedFileLocation;
 	}
-
-	private String cloudFileLocation;
-
 	public String getCloudFileLocation() {
 		return cloudFileLocation;
 	}
-
 	public void setCloudFileLocation(String cloudFileLocation) {
 		this.cloudFileLocation = cloudFileLocation;
 	}
-
-	private Timestamp time;
-	
-	public String getTimestamp(){
+	public String getTimestamp() {
 		return time.toString();
 	}
-	
-	private byte[] symKey;
-
 	public byte[] getSymKey() {
 		return symKey;
 	}
-
-	private encryptionIdent encryption;
-
 	public encryptionIdent getEncryption() {
 		return encryption;
 	}
@@ -75,5 +59,6 @@ public class InformationContainer {
 		this.cloudFileLocation = cloudFileLocation;
 		this.symKey = symKey;
 		this.encryption = encryption;
+		this.cloudFileLocation = Main.getInstance().getBucket() + "/" + encryptedName;
 	}
 }

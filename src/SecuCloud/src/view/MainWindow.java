@@ -1,26 +1,23 @@
 package view;
 
-//import java.awt.MenuBar;
-//import java.awt.Toolkit;
-//import java.awt.Dimension;
-
-//import javax.swing.JFrame;
-//import javax.swing.JMenu;
-//import javax.swing.JMenuBar;
-//import javax.swing.JMenuItem;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 
-import model.container.InformationContainer;
+import model.InformationContainer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
-//import java.io.File;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.ListIterator;
+import java.util.Vector;
 
+import control.FileListHandler;
 import control.Main;
 
 public class MainWindow extends javax.swing.JFrame {
@@ -28,9 +25,9 @@ public class MainWindow extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 3172688540921699213L;
-	// private Toolkit tk;
 	private int positionCoordinateX = 400, positionCoordinateY = 400,
 			windowWidth = 400, windowHeight = 300;
+
 	// Components
 	private JMenuBar menuBar;
 	private JTable table;
@@ -45,49 +42,46 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenuItem entryHelpInfo;
 	private JMenuItem entryHelpAbout;
 
-	public String tempString;
-
 	public MainWindow(String title) {
-		/*
-		 * ToDO!! for positioning in middle of the screen tk
-		 * =Toolkit.getDefaultToolkit();
-		 * 
-		 * Dimension d = tk.getScreenSize();
-		 * 
-		 * 
-		 * positionCoordinateX = (int)(d.getWidth() - windowWidth /2);
-		 * positionCoordinateY = (int)(d.getHeight() - windowHeight /2);
-		 */
-
-		setTitle(title);
-		setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
+		this.setTitle(title);
+		this.setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
 				windowHeight);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		addWindowListener(new WindowAdapter() {
+		      public void windowClosing(WindowEvent e) {
+		        try {
+					Main.getInstance().exit();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+		      }
+		    });
 		this.initComponents();
 		this.add(scrollPane, BorderLayout.CENTER);
 
-		setVisible(true);
+		this.setVisible(true);
 	}
 
-	private Object[][] initTable(){
+	private Object[][] initTable() {
 		int ctr = 0;
-		ArrayList<InformationContainer> fileList = Main.getInstance().getFileList();
+		Vector<InformationContainer> fileList = FileListHandler.getInstance()
+				.getFileList();
 		Object[][] result = new Object[fileList.size()][];
-		ListIterator<InformationContainer> listIterator = fileList.listIterator();
-        while (listIterator.hasNext()) {
-            Object[] temp = new Object[4];
-            InformationContainer tempFileElement =  listIterator.next();
-            temp[0] = tempFileElement.getPlainName();
-            temp[1] = tempFileElement.getEncryptedName();
-            temp[2] = tempFileElement.getTimestamp();
-            temp[3] = new File(tempFileElement.getLocalEncryptedFileLocation()).length();
-            result[ctr] = temp;
-            ctr++;
-        }
+		ListIterator<InformationContainer> listIterator = fileList
+				.listIterator();
+		while (listIterator.hasNext()) {
+			Object[] temp = new Object[4];
+			InformationContainer tempFileElement = listIterator.next();
+			temp[0] = tempFileElement.getPlainName();
+			temp[1] = tempFileElement.getEncryptedName();
+			temp[2] = tempFileElement.getTimestamp();
+			temp[3] = new File(tempFileElement.getLocalEncryptedFileLocation())
+					.length();
+			result[ctr] = temp;
+			ctr++;
+		}
 		return result;
 	}
-	
+
 	private void initComponents() {
 		Object rowData[][] = this.initTable();
 		Object columnNames[] = { "Name", "DataKey", "Uploaded", "FileSize" };
@@ -110,8 +104,14 @@ public class MainWindow extends javax.swing.JFrame {
 					public void actionPerformed(ActionEvent ac) {
 						JFileChooser fc = new JFileChooser();
 						fc.showOpenDialog(null);
-						Main.getInstance().toggle_MainWindow_fileSelected(
-								fc.getSelectedFile());
+						try {
+							Main.getInstance().toggle_MainWindow_fileSelected(
+									fc.getSelectedFile());
+						} catch (InvalidKeyException | NoSuchAlgorithmException
+								| NoSuchProviderException
+								| NoSuchPaddingException | IOException e) {
+							e.printStackTrace();
+						}
 					}
 				});
 
