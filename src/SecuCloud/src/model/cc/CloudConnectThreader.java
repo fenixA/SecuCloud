@@ -1,19 +1,10 @@
 package model.cc;
 
+import util.Pair;
 import model.InformationContainer;
 import model.cc.CloudConnector.command;
 
 public class CloudConnectThreader implements Runnable {
-	public class ReturnValue<X, Y> {
-		public final X x;
-		public final Y y;
-
-		public ReturnValue(X x, Y y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
-
 	public enum identifyer {
 		InformationContainer
 	}
@@ -21,7 +12,7 @@ public class CloudConnectThreader implements Runnable {
 	private InformationContainer informationContainer;
 	private CloudConnectorGoogleGsutilTEMP cloudConnectorGSUTIL;
 	private CloudConnector.command cmd;
-	private ReturnValue<Integer, Object> returnValue;
+	private Pair<Integer, Object> returnValue;
 
 	public CloudConnectThreader(command cmd,
 			InformationContainer informationContainer) {
@@ -30,7 +21,7 @@ public class CloudConnectThreader implements Runnable {
 		this.cmd = cmd;
 	}
 
-	public ReturnValue<Integer, Object> getReturnValue() {
+	public Pair<Integer, Object> getReturnValue() {
 		return returnValue;
 	}
 
