@@ -56,6 +56,7 @@ public class Main {
 	public String getBucket() {
 		return bucket;
 	}
+	public String test = new String("test");
 
 	public Main() {
 		this.softwareName = "SecuCloud";

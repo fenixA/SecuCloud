@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>448</w>
+      <h>504</h>
+    </coordinates>
+    <panel_attributes>control::Main
+--
++FILE_IDENT_LEN = 64: int
++AES_KEY_LEN = 16: int
++USER_HOME = System.getProperty("user.home"): String
+-ROOT_DIR: String
+-SETTINGS_FILE: String
+-USER_DIR: String
+-USER_DATA_DIR: String
+-USER_ENCRYPTED_DIR: String
+-instance: Main
+-mainWindow: MainWindow
+-createAccountWindow: CreateAccountWindow
+-loginWindow: LoginWindow
+-settingsFileHandler: SettingsFileHandler
+-softwareName: String
+-userName: String
+-userPassword: String
+-bucket = "fenixbucket": String
+-cloudConnectThreadVector = new Vector&lt;Thread&gt;(): Vector&lt;Thread&gt;
+--
++Main(): ctor
++getUSER_ENCRYPTED_DATA_DIR(): String
++getUserName(): String
++getUSER_DATA_DIR(): String
++getBucket(): String
++getInstance(): Main
++toggle_MainWindow_fileSelected(File selectedFile): void
++toggle_CreateAccountWindow_okButton(String userName, String userPassword): void
++toggle_LoginWindow_okButton(String userName, String userPassword): void
++drawMainWindow(): void
+-collectWorkingPaths(): void
+-buildUserDirectory(): void
+-tryLogin(): boolean
+-startup(): void
++exit(): void
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>456</x>
+      <y>0</y>
+      <w>1024</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>model::InformationContainer
+--
+-localPlainFileLocation: String
+-plainName: String
+-encryptedName: String
+-localEncryptedFileLocation: String
+-cloudFileLocation: String
+-time: Timestamp
+-symKey: byte[]
+-encryption: encryptionIdent
+--
++InformationContainer(String localPlainFileLocation, String localEncryptedFileLocation, String encryptedName, String plainName, String cloudFileLocation, byte[] symKey, encryptionIdent encryption): ctor
++getLocalPlainFileLocation(): String
++getPlainName(): String
++getEncryptedName(): String
++getLocalEncryptedFileLocation(): String
++getCloudFileLocation(): String
++setCloudFileLocation(String cloudFileLocation): void
++getTimestamp(): String
++getSymKey(): byte[]
++getEncryption(): encryptionIdent
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1488</x>
+      <y>0</y>
+      <w>272</w>
+      <h>184</h>
+    </coordinates>
+    <panel_attributes>view::CreateAccountWindow
+--
+-serialVersionUID = -7334076302460580234L: long
+-nameLabel: JLabel
+-firstPasswordLabel: JLabel
+-secondPasswordLabel: JLabel
+-nameTextField: JTextField
+-firstPasswordTextField: JPasswordField
+-secondPasswordTextField: JPasswordField
+-okButton: JButton
+--
++CreateAccountWindow(): ctor
+-initComponents(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>512</y>
+      <w>360</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>control::CryptToolbox
+--
+--
++CryptToolbox(): ctor
++encryptFileSymAesCTR(File srcFile, String dstPath, byte[] key): File
++decryptFileSymAesCTR(File srcFile, String dstPath, byte[] key): File
++encryptFile(File selectedFile): InformationContainer
++generateRandomKey(int length): byte[]
++generateLocationString(): String
++hashStringSHA256(String input): byte[]
++expandUserPassword(String password, int len): byte[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>368</x>
+      <y>512</y>
+      <w>272</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>view::LoginWindow
+--
+-serialVersionUID = -5433548214205850844L: long
+-nameLabel: JLabel
+-passwordLabel: JLabel
+-nameTextField: JTextField
+-passwordTextField: JPasswordField
+-okButton: JButton
+--
++LoginWindow(): ctor
+-initComponents(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>648</x>
+      <y>512</y>
+      <w>328</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>control::SettingsFileHandler
+--
+-SETTINGS_FILE: String
+-userData = new HashMap&lt;byte[], byte[]&gt;(): Map&lt;byte[], byte[]&gt;
+--
++SettingsFileHandler(String settings): ctor
++buildNewSettingsFile(): void
++addUser(String userName, String userPassword): void
++verifyUserData(String userName, String userPassword): boolean
+-readSettingsFile(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>984</x>
+      <y>512</y>
+      <w>464</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>model.cc::CloudConnectThreader
+--
+-informationContainer: InformationContainer
+-cloudConnectorGSUTIL: CloudConnectorGoogleGsutilTEMP
+-cmd: CloudConnector.command
+-returnValue: ReturnValue&lt;Integer, Object&gt;
+--
++CloudConnectThreader(command cmd, InformationContainer informationContainer): ctor
++getReturnValue(): ReturnValue&lt;Integer, Object&gt;
++run(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1456</x>
+      <y>512</y>
+      <w>400</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>control::FileListHandler
+--
+-instance: FileListHandler
+-fileList = new Vector&lt;InformationContainer&gt;(): Vector&lt;InformationContainer&gt;
+--
++getFileList(): Vector&lt;InformationContainer&gt;
++addFile(InformationContainer ic): void
++purgeFile(InformationContainer ic): void
++getInstance(): FileListHandler
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>672</y>
+      <w>304</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>model.cc::CloudConnectorGoogleGsutilTEMP
+--
+--
++upload(InformationContainer input): InformationContainer
++download(File inputFile): String
++listDir(String path): void
+-copy(String SrcPath, String DestPath): void
+-remove(String path): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>312</x>
+      <y>672</y>
+      <w>304</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+model.cc::CloudConnector
+--
+--
++upload(InformationContainer input): InformationContainer
++download(File inputFile): String
++listDir(String path): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>624</x>
+      <y>672</y>
+      <w>216</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>control::SystemPathCollectorGsutilTEMP
+--
+--
++getPythonPath(): String
++getGsutilPath(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>848</x>
+      <y>672</y>
+      <w>336</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>model::InformationContainerStorer
+--
+--
++storeFileList(): boolean
+-storeInformationContainer(InformationContainer input): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1192</x>
+      <y>672</y>
+      <w>264</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>view::AboutWindow
+--
+-serialVersionUID = 5881688491916106464L: long
+--
++AboutWindow(MainWindow mW): ctor
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>792</y>
+      <w>192</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>control::SystemInformationCollector
+--
+--
++getOperationSystem(): OsID
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

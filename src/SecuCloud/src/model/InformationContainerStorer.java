@@ -23,6 +23,7 @@ public class InformationContainerStorer {
 	private boolean storeInformationContainer(InformationContainer input) throws IOException {
 		File file =  new File(Main.getInstance().getUSER_DATA_DIR() + "/freeze.conf");
 		if(!file.exists()){
+			
 			file.createNewFile();
 		}
 		return true;
