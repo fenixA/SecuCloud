@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.crypto.NoSuchPaddingException;
 
+import control.threads.Uploader;
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
@@ -43,13 +44,18 @@ public class Main {
 	public String getUSER_ENCRYPTED_DATA_DIR() {
 		return USER_ENCRYPTED_DIR;
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public String getUSER_DATA_DIR() {
 		return USER_DATA_DIR;
 	}
 
+	public ArrayList<InformationContainer> getFileList() {
+		return this.fileList;
+	}
 
 	public Main() {
 		this.softwareName = "SecuCloud";
@@ -65,11 +71,13 @@ public class Main {
 		return Main.instance;
 	}
 
-	public void toggle_MainWindow_fileSelected(File selectedFile)
+	public Thread toggle_MainWindow_fileSelected(File selectedFile)
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException, IOException {
-		this.fileList.add(this.cloudConnectorGSUTIL.upload(this.fileComputer.encryptFile(selectedFile)));
+		Thread t = new Thread(new Uploader(cloudConnectorGSUTIL, fileComputer,
+				selectedFile));
 		this.reloadMainWindow();
+		return t;
 	}
 
 	public void toggle_CreateAccountWindow_okButton(String userName,
@@ -119,10 +127,10 @@ public class Main {
 		}
 		USER_DATA_DIR = user_data_dir.getAbsolutePath();
 	}
-	
-	private boolean tryLogin() throws IOException, InterruptedException{
+
+	private boolean tryLogin() throws IOException, InterruptedException {
 		boolean flag = false;
-		while(!flag){
+		while (!flag) {
 			loginWindow = new LoginWindow();
 			while (loginWindow.isVisible()) {
 				Thread.sleep(50);
@@ -152,21 +160,17 @@ public class Main {
 		buildUserDirectory();
 	}
 
-	public ArrayList<InformationContainer> getFileList() {
-		return fileList;
-	}
-
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		Main main = Main.getInstance();
 		main.startup();
-		
+
 		System.out.println(main.getUSER_ENCRYPTED_DATA_DIR());
 
 		main.drawMainWindow();
 
 		// Test code:
-		//File testFile = new File("./../../data/testByteInput.hex");
+		// File testFile = new File("./../../data/testByteInput.hex");
 		// main.toggle_MainWindow_fileSelected(testFile);
 		// /test
 
