@@ -5,16 +5,17 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Vector;
 
 import javax.crypto.NoSuchPaddingException;
 
-import control.threads.Uploader;
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
-import model.cloudConnector.CloudConnectorGoogleGsutilTEMP;
+import model.cc.CloudConnectThreader;
+import model.cc.CloudConnector.command;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
@@ -31,14 +32,13 @@ public class Main {
 	private MainWindow mainWindow;
 	private CreateAccountWindow createAccountWindow;
 	private LoginWindow loginWindow;
-	private FileComputer fileComputer;
-	private CloudConnectorGoogleGsutilTEMP cloudConnectorGSUTIL;
 	private SettingsFileHandler settingsFileHandler;
 
 	private String softwareName;
 	private String userName;
 	private String userPassword;
-	private ArrayList<InformationContainer> fileList = new ArrayList<InformationContainer>();
+	private String bucket = "fenixbucket";
+	private Vector<Thread> cloudConnectThreadVector = new Vector<Thread>();
 
 	// getter n setter
 	public String getUSER_ENCRYPTED_DATA_DIR() {
@@ -53,14 +53,12 @@ public class Main {
 		return USER_DATA_DIR;
 	}
 
-	public ArrayList<InformationContainer> getFileList() {
-		return this.fileList;
+	public String getBucket() {
+		return bucket;
 	}
 
 	public Main() {
 		this.softwareName = "SecuCloud";
-		this.cloudConnectorGSUTIL = new CloudConnectorGoogleGsutilTEMP();
-		this.fileComputer = new FileComputer();
 	}
 
 	// Singleton
@@ -71,13 +69,16 @@ public class Main {
 		return Main.instance;
 	}
 
-	public Thread toggle_MainWindow_fileSelected(File selectedFile)
+	public void toggle_MainWindow_fileSelected(File selectedFile)
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException, IOException {
-		Thread t = new Thread(new Uploader(cloudConnectorGSUTIL, fileComputer,
-				selectedFile));
-		this.reloadMainWindow();
-		return t;
+		InformationContainer informationContainer = CryptToolbox
+				.encryptFile(selectedFile);
+		Thread t = new Thread(new CloudConnectThreader(command.upload,
+				informationContainer));
+		t.start();
+		cloudConnectThreadVector.add(t);
+		FileListHandler.getInstance().addFile(informationContainer);
 	}
 
 	public void toggle_CreateAccountWindow_okButton(String userName,
@@ -93,14 +94,10 @@ public class Main {
 		this.loginWindow.dispose();
 	}
 
-	private void reloadMainWindow() {
+	public void drawMainWindow() {
 		if (mainWindow != null) {
 			mainWindow.dispose();
 		}
-		drawMainWindow();
-	}
-
-	private void drawMainWindow() {
 		mainWindow = new MainWindow(this.softwareName);
 	}
 
@@ -160,13 +157,28 @@ public class Main {
 		buildUserDirectory();
 	}
 
+	public void exit() throws InterruptedException {
+		System.out.println("Main.exit()");
+		Iterator<Thread> it = cloudConnectThreadVector.iterator();
+		while (it.hasNext()) {
+			Thread t = it.next();
+			t.join();
+		}
+		System.exit(0);
+	}
+
+	/*
+	 * private void mainloop() throws InterruptedException { while (true) {
+	 * Iterator<Thread> it = CloudConnectThreadVector .iterator();
+	 * CloudConnectThreader t; while (it.hasNext()) { t = it.next(); if
+	 * (!t.isAlive()) { t.join();
+	 * System.out.println(t.getReturnValueIdentifyer()); } } } }
+	 */
+
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		Main main = Main.getInstance();
 		main.startup();
-
-		System.out.println(main.getUSER_ENCRYPTED_DATA_DIR());
-
 		main.drawMainWindow();
 
 		// Test code:

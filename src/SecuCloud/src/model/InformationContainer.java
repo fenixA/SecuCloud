@@ -3,6 +3,8 @@ package model;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import control.Main;
+
 public class InformationContainer {
 	public enum encryptionIdent {
 		AES_CTR, AES_ECB, RSA
@@ -57,5 +59,6 @@ public class InformationContainer {
 		this.cloudFileLocation = cloudFileLocation;
 		this.symKey = symKey;
 		this.encryption = encryption;
+		this.cloudFileLocation = Main.getInstance().getBucket() + "/" + encryptedName;
 	}
 }

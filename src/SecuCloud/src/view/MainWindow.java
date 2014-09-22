@@ -7,14 +7,17 @@ import model.InformationContainer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.Vector;
 
+import control.FileListHandler;
 import control.Main;
 
 public class MainWindow extends javax.swing.JFrame {
@@ -43,8 +46,15 @@ public class MainWindow extends javax.swing.JFrame {
 		this.setTitle(title);
 		this.setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
 				windowHeight);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		addWindowListener(new WindowAdapter() {
+		      public void windowClosing(WindowEvent e) {
+		        try {
+					Main.getInstance().exit();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+		      }
+		    });
 		this.initComponents();
 		this.add(scrollPane, BorderLayout.CENTER);
 
@@ -53,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 	private Object[][] initTable() {
 		int ctr = 0;
-		ArrayList<InformationContainer> fileList = Main.getInstance()
+		Vector<InformationContainer> fileList = FileListHandler.getInstance()
 				.getFileList();
 		Object[][] result = new Object[fileList.size()][];
 		ListIterator<InformationContainer> listIterator = fileList

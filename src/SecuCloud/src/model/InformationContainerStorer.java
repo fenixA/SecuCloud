@@ -2,14 +2,15 @@ package model;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Vector;
 
+import control.FileListHandler;
 import control.Main;
 
 public class InformationContainerStorer {
 
 	public boolean storeFileList() throws IOException {
-		ArrayList<InformationContainer> fileList = Main.getInstance()
+		Vector<InformationContainer> fileList = FileListHandler.getInstance()
 				.getFileList();
 		for (InformationContainer ic : fileList) {
 			if (!storeInformationContainer(ic)) {

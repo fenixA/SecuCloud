@@ -7,6 +7,9 @@ import java.math.BigInteger;
 import javax.crypto.*;
 import javax.crypto.spec.*;
 
+import model.InformationContainer;
+import model.InformationContainer.encryptionIdent;
+
 public final class CryptToolbox {
 	public CryptToolbox() {
 
@@ -85,6 +88,24 @@ public final class CryptToolbox {
 		return decryptedFile;
 	}
 
+	public static InformationContainer encryptFile(File selectedFile)
+			throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchProviderException, NoSuchPaddingException, IOException {
+		byte[] tempKey = generateRandomKey(Main.AES_KEY_LEN);
+		String encryptedName = generateLocationString();
+		InformationContainer temp = new InformationContainer(
+				selectedFile.getAbsolutePath(), Main.getInstance()
+						.getUSER_ENCRYPTED_DATA_DIR()
+						+ "/"
+						+ encryptedName
+						+ ".enc", encryptedName, selectedFile.getName(), null,
+				tempKey, encryptionIdent.AES_CTR);
+
+		CryptToolbox.encryptFileSymAesCTR(selectedFile,
+				temp.getLocalEncryptedFileLocation(), tempKey);
+		return temp;
+	}
+
 	public static byte[] generateRandomKey(int length) {
 		SecureRandom random = new SecureRandom();
 		byte key[] = new byte[length];
@@ -104,14 +125,15 @@ public final class CryptToolbox {
 		md.update(input.getBytes("UTF-8"));
 		return md.digest();
 	}
-	
-	public static byte[] expandUserPassword(String password, int len){
+
+	public static byte[] expandUserPassword(String password, int len) {
 		byte[] expanding = password.getBytes();
 		byte[] result = new byte[len];
-		while(expanding.length < len){
+		while (expanding.length < len) {
 			byte[] temp = new byte[expanding.length * 2];
 			System.arraycopy(expanding, 0, temp, 0, expanding.length);
-			System.arraycopy(expanding, 0, temp, expanding.length, expanding.length);
+			System.arraycopy(expanding, 0, temp, expanding.length,
+					expanding.length);
 		}
 		System.arraycopy(expanding, 0, result, 0, len);
 		return result;

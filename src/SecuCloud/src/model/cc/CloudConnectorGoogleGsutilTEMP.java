@@ -1,4 +1,4 @@
-package model.cloudConnector;
+package model.cc;
 
 import java.io.*;
 
@@ -6,14 +6,6 @@ import model.InformationContainer;
 import control.SystemPathCollectorGsutilTEMP;
 
 public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
-
-	private String[] SystemVariables = new String[2];
-
-	public CloudConnectorGoogleGsutilTEMP() {
-		SystemVariables[0] = SystemPathCollectorGsutilTEMP.getGsutilPath();
-		SystemVariables[1] = SystemPathCollectorGsutilTEMP.getPythonPath();
-	}
-
 	@Override
 	public InformationContainer upload(InformationContainer input) {
 		try {
@@ -23,7 +15,6 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
 							"cp", input.getLocalEncryptedFileLocation(),
 							"gs://fenixbucket/" + input.getEncryptedName() });
-			input.setCloudFileLocation("gs://fenixbucket/" + input.getEncryptedName());
 			uploadProcess.waitFor();
 		} catch (IOException uploadIOException) {
 			System.out.println(uploadIOException.toString());
@@ -32,7 +23,6 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		catch (InterruptedException uploadInterruptException) {
 			System.out.println(uploadInterruptException.toString());
 		}
-		System.out.println("input.getEncryptedName() : " + input.getEncryptedName());
 		return input;
 	}
 
