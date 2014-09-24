@@ -16,13 +16,13 @@ import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
 import model.cc.CloudConnectThreader;
-import model.cc.CloudConnector.command;
+import model.cc.CloudConnectThreader.command;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
 	public static final int AES_KEY_LEN = 16;
-
 	public static final String USER_HOME = System.getProperty("user.home");
+	
 	private String ROOT_DIR;
 	private String SETTINGS_FILE;
 	private String USER_DIR;
@@ -57,43 +57,26 @@ public class Main {
 	public String getBucket() {
 		return bucket;
 	}
-	public String test = new String("test");
 
-	public Main() {
-		this.softwareName = "SecuCloud";
-	}
-
-	// Singleton
 	public static Main getInstance() {
 		if (Main.instance == null) {
 			Main.instance = new Main();
 		}
 		return Main.instance;
 	}
-
-	public void toggle_MainWindow_fileSelected(File selectedFile)
-			throws InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchProviderException, NoSuchPaddingException, IOException {
-		InformationContainer informationContainer = CryptToolbox
-				.encryptFile(selectedFile);
-		Thread t = new Thread(new CloudConnectThreader(command.upload,
-				informationContainer));
-		t.start();
-		cloudConnectThreadVector.add(t);
-		FileListHandler.getInstance().addFile(informationContainer);
+	
+	public Main() {
+		this.softwareName = "SecuCloud";
 	}
 
-	public void toggle_CreateAccountWindow_okButton(String userName,
-			String userPassword) {
-		this.userName = userName;
-		this.userPassword = userPassword;
-		this.createAccountWindow.dispose();
-	}
-
-	public void toggle_LoginWindow_okButton(String userName, String userPassword) {
-		this.userName = userName;
-		this.userPassword = userPassword;
-		this.loginWindow.dispose();
+	public void exit() throws InterruptedException {
+		System.out.println("Main.exit()");
+		Iterator<Thread> it = cloudConnectThreadVector.iterator();
+		while (it.hasNext()) {
+			Thread t = it.next();
+			t.join();
+		}
+		System.exit(0);
 	}
 
 	public void drawMainWindow() {
@@ -159,41 +142,35 @@ public class Main {
 		buildUserDirectory();
 	}
 
-	public void exit() throws InterruptedException {
-		System.out.println("Main.exit()");
-		Iterator<Thread> it = cloudConnectThreadVector.iterator();
-		while (it.hasNext()) {
-			Thread t = it.next();
-			t.join();
-		}
-		System.exit(0);
+	public void toggle_MainWindow_fileSelected(File selectedFile)
+			throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchProviderException, NoSuchPaddingException, IOException {
+		InformationContainer informationContainer = CryptToolbox
+				.encryptFile(selectedFile);
+		Thread t = new Thread(new CloudConnectThreader(command.upload,
+				informationContainer));
+		t.start();
+		cloudConnectThreadVector.add(t);
+		FileListHandler.getInstance().addFile(informationContainer);
 	}
 
-	/*
-	 * private void mainloop() throws InterruptedException { while (true) {
-	 * Iterator<Thread> it = CloudConnectThreadVector .iterator();
-	 * CloudConnectThreader t; while (it.hasNext()) { t = it.next(); if
-	 * (!t.isAlive()) { t.join();
-	 * System.out.println(t.getReturnValueIdentifyer()); } } } }
-	 */
+	public void toggle_CreateAccountWindow_okButton(String userName,
+			String userPassword) {
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.createAccountWindow.dispose();
+	}
+
+	public void toggle_LoginWindow_okButton(String userName, String userPassword) {
+		this.userName = userName;
+		this.userPassword = userPassword;
+		this.loginWindow.dispose();
+	}
 
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		Main main = Main.getInstance();
 		main.startup();
 		main.drawMainWindow();
-
-		// Test code:
-		// File testFile = new File("./../../data/testByteInput.hex");
-		// main.toggle_MainWindow_fileSelected(testFile);
-		// /test
-
-		// main.drawMainWindow();
-
-		// main.cc.listDir("");
-
-		// cloudconnector.listDir(this.selectedFile.getAbsolutePath().replaceAll(this.selectedFile.getName(),
-		// ""));
-
 	}
 }
