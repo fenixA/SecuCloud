@@ -71,10 +71,10 @@ public class MainWindow extends javax.swing.JFrame {
 		while (listIterator.hasNext()) {
 			Object[] temp = new Object[4];
 			InformationContainer tempFileElement = listIterator.next();
-			temp[0] = tempFileElement.getPlainName();
+			temp[0] = tempFileElement.getName();
 			temp[1] = tempFileElement.getEncryptedName();
 			temp[2] = tempFileElement.getTimestamp();
-			temp[3] = new File(tempFileElement.getLocalEncryptedFileLocation())
+			temp[3] = new File(tempFileElement.getLocalEncryptedLocation())
 					.length();
 			result[ctr] = temp;
 			ctr++;

@@ -6,59 +6,82 @@ import java.util.Date;
 import control.Main;
 
 public class InformationContainer {
-	public enum encryptionIdent {
-		AES_CTR, AES_ECB, RSA
+	public enum Encryption {
+		AES_CTR(0), AES_ECB(1), RSA(2);
+		private int value;
+
+		private Encryption(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+
+		public byte[] getByteArray() {
+			return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16),
+					(byte) (value >>> 8), (byte) value };
+		}
 	}
 
-	private String localPlainFileLocation;
-	private String plainName;
+	private String localPlainLocation;
+	private String name;
 	private String encryptedName;
-	private String localEncryptedFileLocation;
-	private String cloudFileLocation;
+	private String localEncryptedLocation;
+	private String cloudLocation;
 	private Timestamp time;
-	private byte[] symKey;
-	private encryptionIdent encryption;
+	private byte[] key;
+	private Encryption encryption;
 
-	public String getLocalPlainFileLocation() {
-		return localPlainFileLocation;
+	public String getLocalPLainLocation() {
+		return localPlainLocation;
 	}
-	public String getPlainName() {
-		return plainName;
+
+	public String getName() {
+		return name;
 	}
+
 	public String getEncryptedName() {
 		return encryptedName;
 	}
-	public String getLocalEncryptedFileLocation() {
-		return localEncryptedFileLocation;
+
+	public String getLocalEncryptedLocation() {
+		return localEncryptedLocation;
 	}
-	public String getCloudFileLocation() {
-		return cloudFileLocation;
+
+	public String getCloudLocation() {
+		return cloudLocation;
 	}
-	public void setCloudFileLocation(String cloudFileLocation) {
-		this.cloudFileLocation = cloudFileLocation;
+
+	public void setCloudLocation(String cloudLocation) {
+		this.cloudLocation = cloudLocation;
 	}
+
 	public String getTimestamp() {
 		return time.toString();
 	}
-	public byte[] getSymKey() {
-		return symKey;
+
+	public byte[] getKey() {
+		return key;
 	}
-	public encryptionIdent getEncryption() {
+
+	public Encryption getEncryption() {
 		return encryption;
 	}
 
 	public InformationContainer(String localPlainFileLocation,
 			String localEncryptedFileLocation, String encryptedName,
 			String plainName, String cloudFileLocation, byte[] symKey,
-			encryptionIdent encryption) {
+			Encryption encryption) {
 		this.time = new Timestamp(new Date().getTime());
-		this.localPlainFileLocation = localPlainFileLocation;
-		this.localEncryptedFileLocation = localEncryptedFileLocation;
+		this.localPlainLocation = localPlainFileLocation;
+		this.localEncryptedLocation = localEncryptedFileLocation;
 		this.encryptedName = encryptedName;
-		this.plainName = plainName;
-		this.cloudFileLocation = cloudFileLocation;
-		this.symKey = symKey;
+		this.name = plainName;
+		this.cloudLocation = cloudFileLocation;
+		this.key = symKey;
 		this.encryption = encryption;
-		this.cloudFileLocation = Main.getInstance().getBucket() + "/" + encryptedName;
+		this.cloudLocation = Main.getInstance().getBucket() + "/"
+				+ encryptedName;
 	}
 }

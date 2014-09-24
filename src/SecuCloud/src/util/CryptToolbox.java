@@ -9,19 +9,19 @@ import javax.crypto.spec.*;
 
 import control.Main;
 import model.InformationContainer;
-import model.InformationContainer.encryptionIdent;
+import model.InformationContainer.Encryption;
 
 public final class CryptToolbox {
 	public CryptToolbox() {
 
 	}
 
-	public static File encryptFileSymAesCTR(File srcFile, String dstPath,
+	public static File encryptFileAesCTR(File srcFile, String dstPath,
 			byte[] key) throws NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException,
 			InvalidKeyException, IOException {
 		File encryptedFile = null;
-		if (key.length != 16) {
+		if (key.length != Main.AES_KEY_LEN) {
 			System.out.println("Error: Invalid key length!");
 			return encryptedFile;
 		}
@@ -48,17 +48,16 @@ public final class CryptToolbox {
 		fos.close();
 		cis.close();
 		fis.close();
-
 		return encryptedFile;
 	}
 
-	public static File decryptFileSymAesCTR(File srcFile, String dstPath,
+	public static File decryptFileAesCTR(File srcFile, String dstPath,
 			byte[] key) throws NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException,
 			InvalidKeyException, IOException {
 		File decryptedFile = null;
 		File tempFile = srcFile;
-		if (key.length != 16) {
+		if (key.length != Main.AES_KEY_LEN) {
 			System.out.println("Error: Invalid key length!");
 			return decryptedFile;
 		}
@@ -88,6 +87,15 @@ public final class CryptToolbox {
 
 		return decryptedFile;
 	}
+	
+	public static byte[] encryptByteArrayAesCTR(byte[] input, byte[] key){
+		//TODO
+		return new byte[0];
+	}
+	public static byte[] decryptByteArrayAesCTR(byte[] input){
+		//TODO
+		return new byte[0];
+	}
 
 	public static InformationContainer encryptFile(File selectedFile)
 			throws InvalidKeyException, NoSuchAlgorithmException,
@@ -100,10 +108,10 @@ public final class CryptToolbox {
 						+ "/"
 						+ encryptedName
 						+ ".enc", encryptedName, selectedFile.getName(), null,
-				tempKey, encryptionIdent.AES_CTR);
+				tempKey, Encryption.AES_CTR);
 
-		CryptToolbox.encryptFileSymAesCTR(selectedFile,
-				temp.getLocalEncryptedFileLocation(), tempKey);
+		CryptToolbox.encryptFileAesCTR(selectedFile,
+				temp.getLocalEncryptedLocation(), tempKey);
 		return temp;
 	}
 

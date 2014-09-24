@@ -60,7 +60,6 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 						Main.getInstance().toggle_CreateAccountWindow_okButton(
 								nameTextField.getText(), firstPassword);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} else {

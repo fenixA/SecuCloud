@@ -17,7 +17,7 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_COPY, input.getLocalEncryptedFileLocation(),
+							CMD_COPY, input.getLocalEncryptedLocation(),
 							GS_PROTOCOL + Main.getInstance().getBucket() + "/" + input.getEncryptedName() });
 			uploadProcess.waitFor();
 		} catch (IOException uploadIOException) {
