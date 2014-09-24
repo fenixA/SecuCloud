@@ -3,6 +3,7 @@ package view;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -55,8 +56,13 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 				String secondPassword = new String(secondPasswordTextField
 						.getPassword());
 				if (firstPassword.equals(secondPassword)) {
-					Main.getInstance().toggle_CreateAccountWindow_okButton(
-							nameTextField.getText(), firstPassword);
+					try {
+						Main.getInstance().toggle_CreateAccountWindow_okButton(
+								nameTextField.getText(), firstPassword);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				} else {
 					System.out.println("No matching passwords!");
 				}

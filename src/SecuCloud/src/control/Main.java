@@ -2,6 +2,7 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -90,6 +91,21 @@ public class Main {
 		ROOT_DIR = USER_HOME + "/" + softwareName;
 		SETTINGS_FILE = ROOT_DIR + "/settings.txt";
 	}
+	
+	private void drawLoginWindow(){
+		if (loginWindow != null) {
+			loginWindow.dispose();
+		}
+		loginWindow = new LoginWindow();
+	}
+	
+	private void drawCreateAccountWindow() {
+		if (createAccountWindow != null) {
+			createAccountWindow.dispose();
+		}
+		createAccountWindow = new CreateAccountWindow();
+		
+	}
 
 	private void buildUserDirectory() {
 		File user_dir = new File(ROOT_DIR + "/" + userName);
@@ -110,16 +126,15 @@ public class Main {
 		USER_DATA_DIR = user_data_dir.getAbsolutePath();
 	}
 
-	private boolean tryLogin() throws IOException, InterruptedException {
-		boolean flag = false;
-		while (!flag) {
-			loginWindow = new LoginWindow();
-			while (loginWindow.isVisible()) {
-				Thread.sleep(50);
-			}
-			flag = settingsFileHandler.verifyUserData(userName, userPassword);
+	private void tryLogin(String userName, String userPassword) throws IOException, InterruptedException {
+		if(settingsFileHandler.verifyUserData(userName, userPassword)){
+			this.userName = userName;
+			this.userPassword = userPassword;
+			buildUserDirectory();
+			this.drawMainWindow();
+		} else {
+			drawLoginWindow();
 		}
-		return flag;
 	}
 
 	private void startup() throws InterruptedException, IOException {
@@ -131,15 +146,11 @@ public class Main {
 		}
 		File settings = new File(SETTINGS_FILE);
 		if (!settings.exists()) {
-			createAccountWindow = new CreateAccountWindow();
-			while (createAccountWindow.isVisible()) {
-				Thread.sleep(50);
-			}
 			settingsFileHandler.buildNewSettingsFile();
-			settingsFileHandler.addUser(userName, userPassword);
+			drawCreateAccountWindow();
+		} else {
+			drawLoginWindow();
 		}
-		tryLogin();
-		buildUserDirectory();
 	}
 
 	public void toggle_MainWindow_fileSelected(File selectedFile)
@@ -155,22 +166,25 @@ public class Main {
 	}
 
 	public void toggle_CreateAccountWindow_okButton(String userName,
-			String userPassword) {
-		this.userName = userName;
-		this.userPassword = userPassword;
+			String userPassword) throws IOException {
 		this.createAccountWindow.dispose();
+		settingsFileHandler.addUser(userName, userPassword);
+		drawLoginWindow();
 	}
 
-	public void toggle_LoginWindow_okButton(String userName, String userPassword) {
-		this.userName = userName;
-		this.userPassword = userPassword;
+	public void toggle_LoginWindow_okButton(String userName, String userPassword) throws IOException, InterruptedException {
+			this.loginWindow.dispose();
+			tryLogin(userName, userPassword);
+	}
+	
+	public void toggle_LoginWindow_createButton() {
 		this.loginWindow.dispose();
+		drawCreateAccountWindow();
 	}
 
 	public static void main(String[] args) throws InterruptedException,
 			IOException {
 		Main main = Main.getInstance();
 		main.startup();
-		main.drawMainWindow();
 	}
 }
