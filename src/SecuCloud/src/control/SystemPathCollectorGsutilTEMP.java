@@ -34,6 +34,10 @@ public class SystemPathCollectorGsutilTEMP {
 			tempFile = new File("C:\\Program Files\\Python27\\python.exe");
 			if (tempFile.exists()) {
 				return tempFile.getAbsolutePath();
+			} 
+			tempFile = new File("C:\\Programme\\Python27\\python.exe");
+			if (tempFile.exists()) {
+				return tempFile.getAbsolutePath();
 			} else {
 				System.out
 						.println("Please check your python installation. It should be installed to the standard path...");
