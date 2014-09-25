@@ -4,7 +4,15 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.ShortBufferException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -46,12 +54,16 @@ public class LoginWindow extends JFrame {
 		this.okButton = new JButton("OK");
 		this.okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String password = new String(passwordTextField
-						.getPassword());
+				String password = new String(passwordTextField.getPassword());
 				try {
 					Main.getInstance().toggle_LoginWindow_okButton(
 							nameTextField.getText(), password);
-				} catch (IOException | InterruptedException e1) {
+				} catch (IOException | InterruptedException
+						| InvalidKeyException | NoSuchAlgorithmException
+						| NoSuchProviderException | NoSuchPaddingException
+						| ShortBufferException | IllegalBlockSizeException
+						| BadPaddingException
+						| InvalidAlgorithmParameterException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

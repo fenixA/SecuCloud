@@ -6,6 +6,8 @@ import java.util.Date;
 import control.Main;
 
 public class InformationContainer {
+	public static final int ATTRIBUTE_LEN = 256;
+	public static final int ATTRIBUTES = 8;
 	public enum Encryption {
 		AES_CTR(0), AES_ECB(1), RSA(2);
 		private int value;
@@ -17,7 +19,7 @@ public class InformationContainer {
 		public int getValue() {
 			return value;
 		}
-
+		
 		public byte[] getByteArray() {
 			return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16),
 					(byte) (value >>> 8), (byte) value };
@@ -29,7 +31,7 @@ public class InformationContainer {
 	private String encryptedName;
 	private String localEncryptedLocation;
 	private String cloudLocation;
-	private Timestamp time;
+	private String time;
 	private byte[] key;
 	private Encryption encryption;
 
@@ -58,7 +60,11 @@ public class InformationContainer {
 	}
 
 	public String getTimestamp() {
-		return time.toString();
+		return time;
+	}
+	
+	public void setTimestamp(String time) {
+		this.time = time;
 	}
 
 	public byte[] getKey() {
@@ -69,17 +75,17 @@ public class InformationContainer {
 		return encryption;
 	}
 
-	public InformationContainer(String localPlainFileLocation,
-			String localEncryptedFileLocation, String encryptedName,
-			String plainName, String cloudFileLocation, byte[] symKey,
+	public InformationContainer(String localPlainLocation,
+			String localEncryptedLocation, String encryptedName,
+			String name, String cloudLocation, byte[] key,
 			Encryption encryption) {
-		this.time = new Timestamp(new Date().getTime());
-		this.localPlainLocation = localPlainFileLocation;
-		this.localEncryptedLocation = localEncryptedFileLocation;
+		this.time = (new Timestamp(new Date().getTime())).toString();
+		this.localPlainLocation = localPlainLocation;
+		this.localEncryptedLocation = localEncryptedLocation;
 		this.encryptedName = encryptedName;
-		this.name = plainName;
-		this.cloudLocation = cloudFileLocation;
-		this.key = symKey;
+		this.name = name;
+		this.cloudLocation = cloudLocation;
+		this.key = key;
 		this.encryption = encryption;
 		this.cloudLocation = Main.getInstance().getBucket() + "/"
 				+ encryptedName;

@@ -1,4 +1,4 @@
-package util;
+package control.util;
 
 import java.security.*;
 import java.io.*;

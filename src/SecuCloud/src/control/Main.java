@@ -14,7 +14,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
-import util.CryptToolbox;
+import control.util.CryptToolbox;
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
@@ -40,6 +40,7 @@ public class Main {
 	private CreateAccountWindow createAccountWindow;
 	private LoginWindow loginWindow;
 	private SettingsFileHandler settingsFileHandler;
+	private InformationContainerStorer informationContainerStorer;
 
 	private String softwareName;
 	private String userName;
@@ -81,9 +82,7 @@ public class Main {
 			IllegalBlockSizeException, BadPaddingException,
 			InvalidAlgorithmParameterException, IOException {
 		System.out.println("Main.exit()");
-		InformationContainerStorer informationContainerStorer = new InformationContainerStorer(
-				userPassword);
-		if (informationContainerStorer.storeFileList()) {
+		if (this.informationContainerStorer.storeFileList()) {
 			Iterator<Thread> it = cloudConnectThreadVector.iterator();
 			while (it.hasNext()) {
 				System.out.println("thread loop");
@@ -144,11 +143,18 @@ public class Main {
 	}
 
 	private void tryLogin(String userName, String userPassword)
-			throws IOException, InterruptedException {
+			throws IOException, InterruptedException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, ShortBufferException,
+			IllegalBlockSizeException, BadPaddingException,
+			InvalidAlgorithmParameterException {
 		if (settingsFileHandler.verifyUserData(userName, userPassword)) {
 			this.userName = userName;
 			this.userPassword = userPassword;
 			buildUserDirectory();
+			this.informationContainerStorer = new InformationContainerStorer(
+					this.userPassword);
+			this.informationContainerStorer.loadFileList();
 			this.drawMainWindow();
 		} else {
 			drawLoginWindow();
@@ -191,7 +197,11 @@ public class Main {
 	}
 
 	public void toggle_LoginWindow_okButton(String userName, String userPassword)
-			throws IOException, InterruptedException {
+			throws IOException, InterruptedException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, ShortBufferException,
+			IllegalBlockSizeException, BadPaddingException,
+			InvalidAlgorithmParameterException {
 		this.loginWindow.dispose();
 		tryLogin(userName, userPassword);
 	}

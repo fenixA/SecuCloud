@@ -1,6 +1,6 @@
 package model.cc;
 
-import util.Pair;
+import control.util.Pair;
 import model.InformationContainer;
 
 public class CloudConnectThreader implements Runnable {

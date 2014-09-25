@@ -1,4 +1,4 @@
-package util;
+package control.util;
 
 public class Pair<X, Y> {
 	public final X x;
