@@ -82,6 +82,7 @@ public class Main {
 			IllegalBlockSizeException, BadPaddingException,
 			InvalidAlgorithmParameterException, IOException {
 		System.out.println("Main.exit()");
+		this.mainWindow.dispose();
 		if (this.informationContainerStorer.storeFileList()) {
 			Iterator<Thread> it = cloudConnectThreadVector.iterator();
 			while (it.hasNext()) {
@@ -89,7 +90,6 @@ public class Main {
 				Thread t = it.next();
 				t.join();
 			}
-
 			System.exit(0);
 		} else {
 			System.out.println("Saving of assignments failed...");
