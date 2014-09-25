@@ -3,9 +3,13 @@ package model.cc;
 import java.io.*;
 
 import model.InformationContainer;
+import control.Main;
 import control.SystemPathCollectorGsutilTEMP;
 
 public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
+	private static final String GS_PROTOCOL = "gs://";
+	private static final String CMD_COPY = "cp";
+	private static final String CMD_LIST = "ls";
 	@Override
 	public InformationContainer upload(InformationContainer input) {
 		try {
@@ -13,8 +17,8 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							"cp", input.getLocalEncryptedFileLocation(),
-							"gs://fenixbucket/" + input.getEncryptedName() });
+							CMD_COPY, input.getLocalEncryptedLocation(),
+							GS_PROTOCOL + Main.getInstance().getBucket() + "/" + input.getEncryptedName() });
 			uploadProcess.waitFor();
 		} catch (IOException uploadIOException) {
 			System.out.println(uploadIOException.toString());
@@ -39,7 +43,7 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							"ls", "gs://", path });
+							CMD_LIST, GS_PROTOCOL, path });
 			listProcess.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					listProcess.getInputStream()));

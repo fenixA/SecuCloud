@@ -23,7 +23,7 @@ public class SettingsFileHandler {
 
 	public void addUser(String userName, String userPassword)
 			throws IOException {
-		FileOutputStream stream = new FileOutputStream(this.SETTINGS_FILE);
+		FileOutputStream stream = new FileOutputStream(this.SETTINGS_FILE, true);
 		stream.write(userName.getBytes());
 		stream.write(':');
 		stream.write(userPassword.getBytes());

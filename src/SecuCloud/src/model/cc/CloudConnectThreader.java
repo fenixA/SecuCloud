@@ -1,17 +1,23 @@
 package model.cc;
 
-import util.Pair;
+import control.util.Pair;
 import model.InformationContainer;
-import model.cc.CloudConnector.command;
 
 public class CloudConnectThreader implements Runnable {
+	public enum command{
+		upload,
+		download,
+		copy,
+		listDir
+	}
+	
 	public enum identifyer {
 		InformationContainer
 	}
 
 	private InformationContainer informationContainer;
 	private CloudConnectorGoogleGsutilTEMP cloudConnectorGSUTIL;
-	private CloudConnector.command cmd;
+	private command cmd;
 	private Pair<Integer, Object> returnValue;
 
 	public CloudConnectThreader(command cmd,
@@ -30,7 +36,7 @@ public class CloudConnectThreader implements Runnable {
 		switch (cmd) {
 		case download:
 			break;
-		case ls:
+		case listDir:
 			break;
 		case upload:
 			this.cloudConnectorGSUTIL.upload(informationContainer);

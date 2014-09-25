@@ -3,7 +3,16 @@ package view;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.ShortBufferException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +31,7 @@ public class LoginWindow extends JFrame {
 	private JPasswordField passwordTextField;
 
 	private JButton okButton;
+	private JButton createButton;
 
 	public LoginWindow() {
 		setTitle("Login");
@@ -44,10 +54,25 @@ public class LoginWindow extends JFrame {
 		this.okButton = new JButton("OK");
 		this.okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String password = new String(passwordTextField
-						.getPassword());
-				Main.getInstance().toggle_LoginWindow_okButton(
-						nameTextField.getText(), password);
+				String password = new String(passwordTextField.getPassword());
+				try {
+					Main.getInstance().toggle_LoginWindow_okButton(
+							nameTextField.getText(), password);
+				} catch (IOException | InterruptedException
+						| InvalidKeyException | NoSuchAlgorithmException
+						| NoSuchProviderException | NoSuchPaddingException
+						| ShortBufferException | IllegalBlockSizeException
+						| BadPaddingException
+						| InvalidAlgorithmParameterException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		this.createButton = new JButton("Create");
+		this.createButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.getInstance().toggle_LoginWindow_createButton();
 			}
 		});
 
@@ -57,6 +82,7 @@ public class LoginWindow extends JFrame {
 		this.add(passwordLabel);
 		this.add(passwordTextField);
 
+		this.add(createButton);
 		this.add(okButton);
 
 		nameTextField.setText("fenix");

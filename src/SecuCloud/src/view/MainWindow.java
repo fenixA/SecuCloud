@@ -1,6 +1,9 @@
 package view;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.ShortBufferException;
 import javax.swing.*;
 
 import model.InformationContainer;
@@ -11,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -21,9 +25,6 @@ import control.FileListHandler;
 import control.Main;
 
 public class MainWindow extends javax.swing.JFrame {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3172688540921699213L;
 	private int positionCoordinateX = 400, positionCoordinateY = 400,
 			windowWidth = 400, windowHeight = 300;
@@ -47,14 +48,18 @@ public class MainWindow extends javax.swing.JFrame {
 		this.setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
 				windowHeight);
 		addWindowListener(new WindowAdapter() {
-		      public void windowClosing(WindowEvent e) {
-		        try {
+			public void windowClosing(WindowEvent e) {
+				try {
 					Main.getInstance().exit();
-				} catch (InterruptedException e1) {
+				} catch (InterruptedException | InvalidKeyException
+						| NoSuchAlgorithmException | NoSuchProviderException
+						| NoSuchPaddingException | ShortBufferException
+						| IllegalBlockSizeException | BadPaddingException
+						| InvalidAlgorithmParameterException | IOException e1) {
 					e1.printStackTrace();
 				}
-		      }
-		    });
+			}
+		});
 		this.initComponents();
 		this.add(scrollPane, BorderLayout.CENTER);
 
@@ -71,10 +76,10 @@ public class MainWindow extends javax.swing.JFrame {
 		while (listIterator.hasNext()) {
 			Object[] temp = new Object[4];
 			InformationContainer tempFileElement = listIterator.next();
-			temp[0] = tempFileElement.getPlainName();
+			temp[0] = tempFileElement.getName();
 			temp[1] = tempFileElement.getEncryptedName();
 			temp[2] = tempFileElement.getTimestamp();
-			temp[3] = new File(tempFileElement.getLocalEncryptedFileLocation())
+			temp[3] = new File(tempFileElement.getLocalEncryptedLocation())
 					.length();
 			result[ctr] = temp;
 			ctr++;

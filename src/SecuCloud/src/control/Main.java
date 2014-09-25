@@ -2,27 +2,33 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.ShortBufferException;
 
-import util.CryptToolbox;
+import control.util.CryptToolbox;
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
+import model.InformationContainerStorer;
 import model.cc.CloudConnectThreader;
-import model.cc.CloudConnector.command;
+import model.cc.CloudConnectThreader.command;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
 	public static final int AES_KEY_LEN = 16;
-
+	public static final int AES_BLOCK_SIZE = 16;
 	public static final String USER_HOME = System.getProperty("user.home");
+
 	private String ROOT_DIR;
 	private String SETTINGS_FILE;
 	private String USER_DIR;
@@ -34,6 +40,7 @@ public class Main {
 	private CreateAccountWindow createAccountWindow;
 	private LoginWindow loginWindow;
 	private SettingsFileHandler settingsFileHandler;
+	private InformationContainerStorer informationContainerStorer;
 
 	private String softwareName;
 	private String userName;
@@ -57,13 +64,7 @@ public class Main {
 	public String getBucket() {
 		return bucket;
 	}
-	public String test = new String("test");
 
-	public Main() {
-		this.softwareName = "SecuCloud";
-	}
-
-	// Singleton
 	public static Main getInstance() {
 		if (Main.instance == null) {
 			Main.instance = new Main();
@@ -71,29 +72,28 @@ public class Main {
 		return Main.instance;
 	}
 
-	public void toggle_MainWindow_fileSelected(File selectedFile)
-			throws InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchProviderException, NoSuchPaddingException, IOException {
-		InformationContainer informationContainer = CryptToolbox
-				.encryptFile(selectedFile);
-		Thread t = new Thread(new CloudConnectThreader(command.upload,
-				informationContainer));
-		t.start();
-		cloudConnectThreadVector.add(t);
-		FileListHandler.getInstance().addFile(informationContainer);
+	public Main() {
+		this.softwareName = "SecuCloud";
 	}
 
-	public void toggle_CreateAccountWindow_okButton(String userName,
-			String userPassword) {
-		this.userName = userName;
-		this.userPassword = userPassword;
-		this.createAccountWindow.dispose();
-	}
+	public void exit() throws InterruptedException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, ShortBufferException,
+			IllegalBlockSizeException, BadPaddingException,
+			InvalidAlgorithmParameterException, IOException {
+		System.out.println("Main.exit()");
+		if (this.informationContainerStorer.storeFileList()) {
+			Iterator<Thread> it = cloudConnectThreadVector.iterator();
+			while (it.hasNext()) {
+				System.out.println("thread loop");
+				Thread t = it.next();
+				t.join();
+			}
 
-	public void toggle_LoginWindow_okButton(String userName, String userPassword) {
-		this.userName = userName;
-		this.userPassword = userPassword;
-		this.loginWindow.dispose();
+			System.exit(0);
+		} else {
+			System.out.println("Saving of assignments failed...");
+		}
 	}
 
 	public void drawMainWindow() {
@@ -106,6 +106,21 @@ public class Main {
 	private void collectWorkingPaths() {
 		ROOT_DIR = USER_HOME + "/" + softwareName;
 		SETTINGS_FILE = ROOT_DIR + "/settings.txt";
+	}
+
+	private void drawLoginWindow() {
+		if (loginWindow != null) {
+			loginWindow.dispose();
+		}
+		loginWindow = new LoginWindow();
+	}
+
+	private void drawCreateAccountWindow() {
+		if (createAccountWindow != null) {
+			createAccountWindow.dispose();
+		}
+		createAccountWindow = new CreateAccountWindow();
+
 	}
 
 	private void buildUserDirectory() {
@@ -127,16 +142,23 @@ public class Main {
 		USER_DATA_DIR = user_data_dir.getAbsolutePath();
 	}
 
-	private boolean tryLogin() throws IOException, InterruptedException {
-		boolean flag = false;
-		while (!flag) {
-			loginWindow = new LoginWindow();
-			while (loginWindow.isVisible()) {
-				Thread.sleep(50);
-			}
-			flag = settingsFileHandler.verifyUserData(userName, userPassword);
+	private void tryLogin(String userName, String userPassword)
+			throws IOException, InterruptedException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, ShortBufferException,
+			IllegalBlockSizeException, BadPaddingException,
+			InvalidAlgorithmParameterException {
+		if (settingsFileHandler.verifyUserData(userName, userPassword)) {
+			this.userName = userName;
+			this.userPassword = userPassword;
+			buildUserDirectory();
+			this.informationContainerStorer = new InformationContainerStorer(
+					this.userPassword);
+			this.informationContainerStorer.loadFileList();
+			this.drawMainWindow();
+		} else {
+			drawLoginWindow();
 		}
-		return flag;
 	}
 
 	private void startup() throws InterruptedException, IOException {
@@ -148,52 +170,53 @@ public class Main {
 		}
 		File settings = new File(SETTINGS_FILE);
 		if (!settings.exists()) {
-			createAccountWindow = new CreateAccountWindow();
-			while (createAccountWindow.isVisible()) {
-				Thread.sleep(50);
-			}
 			settingsFileHandler.buildNewSettingsFile();
-			settingsFileHandler.addUser(userName, userPassword);
+			drawCreateAccountWindow();
+		} else {
+			drawLoginWindow();
 		}
-		tryLogin();
-		buildUserDirectory();
 	}
 
-	public void exit() throws InterruptedException {
-		System.out.println("Main.exit()");
-		Iterator<Thread> it = cloudConnectThreadVector.iterator();
-		while (it.hasNext()) {
-			Thread t = it.next();
-			t.join();
-		}
-		System.exit(0);
+	public void toggle_MainWindow_fileSelected(File selectedFile)
+			throws InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchProviderException, NoSuchPaddingException, IOException {
+		InformationContainer informationContainer = CryptToolbox
+				.encryptFileECB(selectedFile);
+		Thread t = new Thread(new CloudConnectThreader(command.upload,
+				informationContainer));
+		t.start();
+		cloudConnectThreadVector.add(t);
+		FileListHandler.getInstance().addFile(informationContainer);
 	}
 
-	/*
-	 * private void mainloop() throws InterruptedException { while (true) {
-	 * Iterator<Thread> it = CloudConnectThreadVector .iterator();
-	 * CloudConnectThreader t; while (it.hasNext()) { t = it.next(); if
-	 * (!t.isAlive()) { t.join();
-	 * System.out.println(t.getReturnValueIdentifyer()); } } } }
-	 */
+	public void toggle_CreateAccountWindow_okButton(String userName,
+			String userPassword) throws IOException {
+		this.createAccountWindow.dispose();
+		settingsFileHandler.addUser(userName, userPassword);
+		drawLoginWindow();
+	}
+
+	public void toggle_LoginWindow_okButton(String userName, String userPassword)
+			throws IOException, InterruptedException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, ShortBufferException,
+			IllegalBlockSizeException, BadPaddingException,
+			InvalidAlgorithmParameterException {
+		this.loginWindow.dispose();
+		tryLogin(userName, userPassword);
+	}
+
+	public void toggle_LoginWindow_createButton() {
+		this.loginWindow.dispose();
+		drawCreateAccountWindow();
+	}
 
 	public static void main(String[] args) throws InterruptedException,
-			IOException {
+			IOException, InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchProviderException, NoSuchPaddingException,
+			ShortBufferException, IllegalBlockSizeException,
+			BadPaddingException, InvalidAlgorithmParameterException {
 		Main main = Main.getInstance();
 		main.startup();
-		main.drawMainWindow();
-
-		// Test code:
-		// File testFile = new File("./../../data/testByteInput.hex");
-		// main.toggle_MainWindow_fileSelected(testFile);
-		// /test
-
-		// main.drawMainWindow();
-
-		// main.cc.listDir("");
-
-		// cloudconnector.listDir(this.selectedFile.getAbsolutePath().replaceAll(this.selectedFile.getName(),
-		// ""));
-
 	}
 }
