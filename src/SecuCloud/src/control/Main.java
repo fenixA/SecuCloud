@@ -105,7 +105,7 @@ public class Main {
 
 	private void collectWorkingPaths() {
 		ROOT_DIR = USER_HOME + "/" + softwareName;
-		SETTINGS_FILE = ROOT_DIR + "/settings.txt";
+		SETTINGS_FILE = ROOT_DIR + "/settings.cfg";
 	}
 
 	private void drawLoginWindow() {
@@ -120,7 +120,6 @@ public class Main {
 			createAccountWindow.dispose();
 		}
 		createAccountWindow = new CreateAccountWindow();
-
 	}
 
 	private void buildUserDirectory() {
