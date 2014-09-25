@@ -2,28 +2,33 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.attribute.UserPrincipalLookupService;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.ShortBufferException;
 
 import util.CryptToolbox;
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
+import model.InformationContainerStorer;
 import model.cc.CloudConnectThreader;
 import model.cc.CloudConnectThreader.command;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
 	public static final int AES_KEY_LEN = 16;
+	public static final int AES_BLOCK_SIZE = 16;
 	public static final String USER_HOME = System.getProperty("user.home");
-	
+
 	private String ROOT_DIR;
 	private String SETTINGS_FILE;
 	private String USER_DIR;
@@ -65,19 +70,31 @@ public class Main {
 		}
 		return Main.instance;
 	}
-	
+
 	public Main() {
 		this.softwareName = "SecuCloud";
 	}
 
-	public void exit() throws InterruptedException {
+	public void exit() throws InterruptedException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, ShortBufferException,
+			IllegalBlockSizeException, BadPaddingException,
+			InvalidAlgorithmParameterException, IOException {
 		System.out.println("Main.exit()");
-		Iterator<Thread> it = cloudConnectThreadVector.iterator();
-		while (it.hasNext()) {
-			Thread t = it.next();
-			t.join();
+		InformationContainerStorer informationContainerStorer = new InformationContainerStorer(
+				userPassword);
+		if (informationContainerStorer.storeFileList()) {
+			Iterator<Thread> it = cloudConnectThreadVector.iterator();
+			while (it.hasNext()) {
+				System.out.println("thread loop");
+				Thread t = it.next();
+				t.join();
+			}
+
+			System.exit(0);
+		} else {
+			System.out.println("Saving of assignments failed...");
 		}
-		System.exit(0);
 	}
 
 	public void drawMainWindow() {
@@ -91,20 +108,20 @@ public class Main {
 		ROOT_DIR = USER_HOME + "/" + softwareName;
 		SETTINGS_FILE = ROOT_DIR + "/settings.txt";
 	}
-	
-	private void drawLoginWindow(){
+
+	private void drawLoginWindow() {
 		if (loginWindow != null) {
 			loginWindow.dispose();
 		}
 		loginWindow = new LoginWindow();
 	}
-	
+
 	private void drawCreateAccountWindow() {
 		if (createAccountWindow != null) {
 			createAccountWindow.dispose();
 		}
 		createAccountWindow = new CreateAccountWindow();
-		
+
 	}
 
 	private void buildUserDirectory() {
@@ -126,8 +143,9 @@ public class Main {
 		USER_DATA_DIR = user_data_dir.getAbsolutePath();
 	}
 
-	private void tryLogin(String userName, String userPassword) throws IOException, InterruptedException {
-		if(settingsFileHandler.verifyUserData(userName, userPassword)){
+	private void tryLogin(String userName, String userPassword)
+			throws IOException, InterruptedException {
+		if (settingsFileHandler.verifyUserData(userName, userPassword)) {
 			this.userName = userName;
 			this.userPassword = userPassword;
 			buildUserDirectory();
@@ -157,7 +175,7 @@ public class Main {
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException, IOException {
 		InformationContainer informationContainer = CryptToolbox
-				.encryptFile(selectedFile);
+				.encryptFileECB(selectedFile);
 		Thread t = new Thread(new CloudConnectThreader(command.upload,
 				informationContainer));
 		t.start();
@@ -172,18 +190,22 @@ public class Main {
 		drawLoginWindow();
 	}
 
-	public void toggle_LoginWindow_okButton(String userName, String userPassword) throws IOException, InterruptedException {
-			this.loginWindow.dispose();
-			tryLogin(userName, userPassword);
+	public void toggle_LoginWindow_okButton(String userName, String userPassword)
+			throws IOException, InterruptedException {
+		this.loginWindow.dispose();
+		tryLogin(userName, userPassword);
 	}
-	
+
 	public void toggle_LoginWindow_createButton() {
 		this.loginWindow.dispose();
 		drawCreateAccountWindow();
 	}
 
 	public static void main(String[] args) throws InterruptedException,
-			IOException {
+			IOException, InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchProviderException, NoSuchPaddingException,
+			ShortBufferException, IllegalBlockSizeException,
+			BadPaddingException, InvalidAlgorithmParameterException {
 		Main main = Main.getInstance();
 		main.startup();
 	}

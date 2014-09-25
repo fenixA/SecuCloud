@@ -5,7 +5,8 @@ import java.io.*;
 import java.math.BigInteger;
 
 import javax.crypto.*;
-import javax.crypto.spec.*;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import control.Main;
 import model.InformationContainer;
@@ -21,10 +22,6 @@ public final class CryptToolbox {
 			NoSuchProviderException, NoSuchPaddingException,
 			InvalidKeyException, IOException {
 		File encryptedFile = null;
-		if (key.length != Main.AES_KEY_LEN) {
-			System.out.println("Error: Invalid key length!");
-			return encryptedFile;
-		}
 		encryptedFile = new File(dstPath);
 		FileInputStream fis;
 		FileOutputStream fos;
@@ -57,10 +54,6 @@ public final class CryptToolbox {
 			InvalidKeyException, IOException {
 		File decryptedFile = null;
 		File tempFile = srcFile;
-		if (key.length != Main.AES_KEY_LEN) {
-			System.out.println("Error: Invalid key length!");
-			return decryptedFile;
-		}
 		decryptedFile = new File(dstPath);
 		FileInputStream fis;
 		FileOutputStream fos;
@@ -87,17 +80,47 @@ public final class CryptToolbox {
 
 		return decryptedFile;
 	}
-	
-	public static byte[] encryptByteArrayAesCTR(byte[] input, byte[] key){
-		//TODO
-		return new byte[0];
-	}
-	public static byte[] decryptByteArrayAesCTR(byte[] input){
-		//TODO
-		return new byte[0];
+
+	public static byte[] encryptByteArrayAesCTR(byte[] input, byte[] key)
+			throws NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, InvalidKeyException,
+			IllegalBlockSizeException, ShortBufferException,
+			BadPaddingException, InvalidAlgorithmParameterException {
+		SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+		Cipher cipher = Cipher.getInstance("AES/CTR/PKCS5Padding", "SunJCE");
+		byte[] iv = generateRandomKey(cipher.getBlockSize());
+		IvParameterSpec ps = new IvParameterSpec(iv);
+		cipher.init(Cipher.ENCRYPT_MODE, secretKey, ps);
+		byte[] temp = new byte[cipher.getOutputSize(input.length)];
+		int ctLength = cipher.update(input, 0, input.length, temp, 0);
+		ctLength += cipher.doFinal(temp, ctLength);
+		byte output[] = new byte[temp.length + cipher.getBlockSize()];
+		System.arraycopy(temp, 0, output, 0, temp.length);
+		System.arraycopy(iv, 0, output, temp.length, iv.length);
+		return output;
 	}
 
-	public static InformationContainer encryptFile(File selectedFile)
+	public static byte[] decryptByteArrayAesCTR(byte[] input, byte[] key)
+			throws NoSuchAlgorithmException, NoSuchProviderException,
+			NoSuchPaddingException, InvalidKeyException, ShortBufferException,
+			IllegalBlockSizeException, BadPaddingException,
+			InvalidAlgorithmParameterException {
+		SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+		Cipher cipher = Cipher.getInstance("AES/CTR/PKCS5Padding", "SunJCE");
+		byte[] iv = new byte[cipher.getBlockSize()];
+		System.arraycopy(input, input.length - cipher.getBlockSize(), iv, 0,
+				iv.length);
+		IvParameterSpec ps = new IvParameterSpec(iv);
+		cipher.init(Cipher.DECRYPT_MODE, secretKey, ps);
+		byte[] output = new byte[cipher.getOutputSize(input.length
+				- cipher.getBlockSize())];
+		int ctLength = cipher.update(input, 0,
+				input.length - cipher.getBlockSize(), output, 0);
+		ctLength += cipher.doFinal(output, ctLength);
+		return output;
+	}
+
+	public static InformationContainer encryptFileECB(File selectedFile)
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException, IOException {
 		byte[] tempKey = generateRandomKey(Main.AES_KEY_LEN);
@@ -136,6 +159,7 @@ public final class CryptToolbox {
 	}
 
 	public static byte[] expandUserPassword(String password, int len) {
+		System.out.println("CryptoToolbox.expandUserPassword()");
 		byte[] expanding = password.getBytes();
 		byte[] result = new byte[len];
 		while (expanding.length < len) {
@@ -143,6 +167,7 @@ public final class CryptToolbox {
 			System.arraycopy(expanding, 0, temp, 0, expanding.length);
 			System.arraycopy(expanding, 0, temp, expanding.length,
 					expanding.length);
+			expanding = temp;
 		}
 		System.arraycopy(expanding, 0, result, 0, len);
 		return result;
