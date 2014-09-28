@@ -95,56 +95,51 @@ public class MainWindow extends javax.swing.JFrame {
 		Object rowData[][] = this.initTable();
 		Object columnNames[] = { "Name", "DataKey", "Uploaded", "FileSize" };
 		nonEditableJTable = new NonEditableJTable(rowData, columnNames);
-		this.table = new JTable(nonEditableJTable);
-		
-		popupMenu = new JPopupMenu();
-		deleteEntry = new JMenuItem("Delete");
-		deleteEntry.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               System.out.println("test");
-            }
-        });
-        popupMenu.add(deleteEntry);
-        table.setComponentPopupMenu(popupMenu);
-		this.menuBar = new JMenuBar();
+		table = new JTable(nonEditableJTable);
+		/* Right click event
+		 * popupMenu = new JPopupMenu(); deleteEntry = new JMenuItem("Delete");
+		 * deleteEntry.addActionListener(new ActionListener() {
+		 * 
+		 * @Override public void actionPerformed(ActionEvent e) {
+		 * System.out.println("test"); } }); popupMenu.add(deleteEntry);
+		 * table.setComponentPopupMenu(popupMenu);
+		 */
+		menuBar = new JMenuBar();
 		scrollPane = new JScrollPane(table);
 
-		this.titleFile = new JMenu("File");
-		this.titleHelp = new JMenu("About");
+		titleFile = new JMenu("File");
+		titleHelp = new JMenu("About");
 
-		this.entryFileSelect = new JMenuItem("Select");
-		this.entryFileEmpty = new JMenuItem("Empty");
-		this.entryHelpHelp = new JMenuItem("Help");
-		this.entryHelpInfo = new JMenuItem("Info");
-		this.entryHelpAbout = new JMenuItem("About");
+		entryFileSelect = new JMenuItem("Select");
+		entryFileEmpty = new JMenuItem("Empty");
+		entryHelpHelp = new JMenuItem("Help");
+		entryHelpInfo = new JMenuItem("Info");
+		entryHelpAbout = new JMenuItem("About");
 
-		this.entryFileSelect
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(ActionEvent ac) {
-						JFileChooser fc = new JFileChooser();
-						fc.showOpenDialog(null);
-						try {
-							Main.getInstance().toggle_MainWindow_fileSelected(
-									fc.getSelectedFile());
-						} catch (InvalidKeyException | NoSuchAlgorithmException
-								| NoSuchProviderException
-								| NoSuchPaddingException | IOException e) {
-							e.printStackTrace();
-						}
-					}
-				});
+		entryFileSelect.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent ac) {
+				JFileChooser fc = new JFileChooser();
+				fc.showOpenDialog(null);
+				try {
+					Main.getInstance().toggle_MainWindow_fileSelected(
+							fc.getSelectedFile());
+				} catch (InvalidKeyException | NoSuchAlgorithmException
+						| NoSuchProviderException | NoSuchPaddingException
+						| IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
-		this.titleFile.add(entryFileSelect);
-		this.titleFile.add(entryFileEmpty);
-		this.titleHelp.add(entryHelpHelp);
-		this.titleHelp.add(entryHelpInfo);
-		this.titleHelp.add(entryHelpAbout);
+		titleFile.add(entryFileSelect);
+		titleFile.add(entryFileEmpty);
+		titleHelp.add(entryHelpHelp);
+		titleHelp.add(entryHelpInfo);
+		titleHelp.add(entryHelpAbout);
 
-		this.menuBar.add(titleFile);
-		this.menuBar.add(titleHelp);
+		menuBar.add(titleFile);
+		menuBar.add(titleHelp);
 
-		this.setJMenuBar(this.menuBar);
+		setJMenuBar(this.menuBar);
 	}
 }
