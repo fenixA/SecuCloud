@@ -10,6 +10,7 @@ import model.InformationContainer;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -32,6 +33,8 @@ public class MainWindow extends javax.swing.JFrame {
 	// Components
 	private JMenuBar menuBar;
 	private JTable table;
+	private NonEditableJTable nonEditableJTable;
+	JPopupMenu popupMenu;
 	JScrollPane scrollPane;
 
 	private JMenu titleFile;
@@ -42,6 +45,7 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenuItem entryHelpHelp;
 	private JMenuItem entryHelpInfo;
 	private JMenuItem entryHelpAbout;
+	private JMenuItem deleteEntry;
 
 	public MainWindow(String title) {
 		this.setTitle(title);
@@ -90,8 +94,20 @@ public class MainWindow extends javax.swing.JFrame {
 	private void initComponents() {
 		Object rowData[][] = this.initTable();
 		Object columnNames[] = { "Name", "DataKey", "Uploaded", "FileSize" };
+		nonEditableJTable = new NonEditableJTable(rowData, columnNames);
+		this.table = new JTable(nonEditableJTable);
+		
+		popupMenu = new JPopupMenu();
+		deleteEntry = new JMenuItem("Delete");
+		deleteEntry.addActionListener(new ActionListener() {
 
-		this.table = new JTable(rowData, columnNames);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               System.out.println("test");
+            }
+        });
+        popupMenu.add(deleteEntry);
+        table.setComponentPopupMenu(popupMenu);
 		this.menuBar = new JMenuBar();
 		scrollPane = new JScrollPane(table);
 
