@@ -41,11 +41,13 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenu titleHelp;
 
 	private JMenuItem entryFileSelect;
-	private JMenuItem entryFileEmpty;
+	private JMenuItem entryFileClose;
 	private JMenuItem entryHelpHelp;
 	private JMenuItem entryHelpInfo;
 	private JMenuItem entryHelpAbout;
 	private JMenuItem deleteEntry;
+
+	private JButton selectButton;
 
 	public MainWindow(String title) {
 		this.setTitle(title);
@@ -66,7 +68,7 @@ public class MainWindow extends javax.swing.JFrame {
 		});
 		this.initComponents();
 		this.add(scrollPane, BorderLayout.CENTER);
-
+		this.add(selectButton, BorderLayout.SOUTH);
 		this.setVisible(true);
 	}
 
@@ -115,7 +117,7 @@ public class MainWindow extends javax.swing.JFrame {
 		this.titleHelp = new JMenu("About");
 
 		this.entryFileSelect = new JMenuItem("Select");
-		this.entryFileEmpty = new JMenuItem("Empty");
+		this.entryFileClose = new JMenuItem("Close");
 		this.entryHelpHelp = new JMenuItem("Help");
 		this.entryHelpInfo = new JMenuItem("Info");
 		this.entryHelpAbout = new JMenuItem("About");
@@ -136,8 +138,26 @@ public class MainWindow extends javax.swing.JFrame {
 					}
 				});
 
+		this.entryFileClose
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(ActionEvent ac) {
+						try {
+							Main.getInstance().exit();
+						} catch (InvalidKeyException | NoSuchAlgorithmException
+								| NoSuchProviderException
+								| NoSuchPaddingException | ShortBufferException
+								| IllegalBlockSizeException
+								| BadPaddingException
+								| InvalidAlgorithmParameterException
+								| InterruptedException | IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+
 		this.titleFile.add(entryFileSelect);
-		this.titleFile.add(entryFileEmpty);
+		this.titleFile.add(entryFileClose);
 		this.titleHelp.add(entryHelpHelp);
 		this.titleHelp.add(entryHelpInfo);
 		this.titleHelp.add(entryHelpAbout);
@@ -146,5 +166,7 @@ public class MainWindow extends javax.swing.JFrame {
 		this.menuBar.add(titleHelp);
 
 		this.setJMenuBar(this.menuBar);
+
+		this.selectButton = new JButton("Select");
 	}
 }
