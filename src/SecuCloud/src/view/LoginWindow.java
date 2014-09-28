@@ -38,7 +38,7 @@ public class LoginWindow extends JFrame {
 
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new GridLayout(4, 2));
+		this.setLayout(new GridLayout(3, 2));
 
 		this.initComponents();
 		this.setResizable(false);
