@@ -49,6 +49,8 @@ public class MainWindow extends javax.swing.JFrame {
 
 	private JButton selectButton;
 
+	private JButton selectButton;
+
 	public MainWindow(String title) {
 		this.setTitle(title);
 		this.setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
