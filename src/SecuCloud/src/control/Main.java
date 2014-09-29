@@ -34,6 +34,7 @@ public class Main {
 	private String USER_DIR;
 	private String USER_DATA_DIR;
 	private String USER_ENCRYPTED_DIR;
+	private String USER_DOWNLOAD_DIR;
 
 	private static Main instance;
 	private MainWindow mainWindow;
@@ -59,6 +60,10 @@ public class Main {
 
 	public String getUSER_DATA_DIR() {
 		return USER_DATA_DIR;
+	}
+	
+	public String getUSER_DOWNLOAD_DIR() {
+		return USER_DOWNLOAD_DIR;
 	}
 
 	public String getBucket() {
@@ -86,7 +91,6 @@ public class Main {
 		if (this.informationContainerStorer.storeFileList()) {
 			Iterator<Thread> it = cloudConnectThreadVector.iterator();
 			while (it.hasNext()) {
-				System.out.println("thread loop");
 				Thread t = it.next();
 				t.join();
 			}
@@ -138,7 +142,12 @@ public class Main {
 		if (!user_data_dir.exists()) {
 			user_data_dir.mkdir();
 		}
-		USER_DATA_DIR = user_data_dir.getAbsolutePath();
+		USER_DATA_DIR = user_data_dir.getAbsolutePath();	
+		File user_download_dir = new File(USER_DIR + "/download");
+		if (!user_download_dir.exists()) {
+			user_download_dir.mkdir();
+		}
+		USER_DOWNLOAD_DIR = user_download_dir.getAbsolutePath();
 	}
 
 	private void tryLogin(String userName, String userPassword)
@@ -186,6 +195,18 @@ public class Main {
 		t.start();
 		cloudConnectThreadVector.add(t);
 		FileListHandler.getInstance().addFile(informationContainer);
+	}
+	
+	public void toggle_MainWindow_delete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void toggle_MainWindow_download(String encryptedName) {
+		InformationContainer informationContainer = FileListHandler.getInstance().selectByEncryptedName(encryptedName);
+		Thread t = new Thread(new CloudConnectThreader(command.download, informationContainer));
+		t.start();
+		cloudConnectThreadVector.add(t);
 	}
 
 	public void toggle_CreateAccountWindow_okButton(String userName,

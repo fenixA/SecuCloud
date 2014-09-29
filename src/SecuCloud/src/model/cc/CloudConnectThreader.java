@@ -35,7 +35,7 @@ public class CloudConnectThreader implements Runnable {
 	public void run() {
 		switch (cmd) {
 		case download:
-			break;
+			this.cloudConnectorGSUTIL.download(informationContainer);
 		case listDir:
 			break;
 		case upload:

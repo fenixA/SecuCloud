@@ -10,6 +10,11 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	private static final String GS_PROTOCOL = "gs://";
 	private static final String CMD_COPY = "cp";
 	private static final String CMD_LIST = "ls";
+	private static final String CMD_CREATEBUCKET = "mb";
+	private static final String CMD_MOVE = "mv";
+	private static final String CMD_DELETE = "rm";
+	
+	
 	@Override
 	public InformationContainer upload(InformationContainer input) {
 		try {
@@ -31,9 +36,29 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	}
 
 	@Override
-	public String download(File inputFile) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean download(InformationContainer informationContainer) {
+		try {
+			String[] temp = new String[]{SystemPathCollectorGsutilTEMP.getPythonPath(),
+					SystemPathCollectorGsutilTEMP.getGsutilPath(),
+					CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
+					Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName()};
+			System.out.println(temp);
+			Process uploadProcess = Runtime.getRuntime().exec(
+					new String[] {
+							SystemPathCollectorGsutilTEMP.getPythonPath(),
+							SystemPathCollectorGsutilTEMP.getGsutilPath(),
+							CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
+							Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName() });
+			uploadProcess.waitFor();
+		} catch (IOException uploadIOException) {
+			System.out.println(uploadIOException.toString());
+			return false;
+		}
+		catch (InterruptedException uploadInterruptException) {
+			System.out.println(uploadInterruptException.toString());
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -64,11 +89,7 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		}
 	}
 
-	private void copy(String SrcPath, String DestPath) {
-		// TODO Auto-generated method stub
-	}
-
-	private void remove(String path) {
+	public void remove(String path) {
 		// TODO Auto-generated method stub
 	}
 

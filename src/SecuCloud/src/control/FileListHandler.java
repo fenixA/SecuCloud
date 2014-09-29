@@ -29,4 +29,14 @@ public class FileListHandler {
 		}
 		return FileListHandler.instance;
 	}
+
+	public InformationContainer selectByEncryptedName(
+			String encryptedName) {
+		for(InformationContainer ic : fileList ){
+			if (ic.getEncryptedName().equals(encryptedName)){
+				return ic;
+			}
+		}
+		return null;
+	}
 }

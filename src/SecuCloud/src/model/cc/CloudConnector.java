@@ -8,7 +8,9 @@ public interface CloudConnector {
 
 	public InformationContainer upload(InformationContainer input);
 
-	public String download(File inputFile);
+	public boolean download(InformationContainer informationContainer);
 
 	public void listDir(String path);
+	
+	public void remove(String path);
 }
