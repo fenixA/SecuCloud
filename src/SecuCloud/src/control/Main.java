@@ -189,7 +189,7 @@ public class Main {
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException, IOException {
 		InformationContainer informationContainer = CryptToolbox
-				.encryptFileECB(selectedFile);
+				.encryptFileCTR(selectedFile);
 		Thread t = new Thread(new CloudConnectThreader(command.upload,
 				informationContainer));
 		t.start();

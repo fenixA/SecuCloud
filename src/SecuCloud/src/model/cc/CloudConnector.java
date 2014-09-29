@@ -1,7 +1,5 @@
 package model.cc;
 
-import java.io.File;
-
 import model.InformationContainer;
 
 public interface CloudConnector {

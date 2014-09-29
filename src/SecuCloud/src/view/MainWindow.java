@@ -11,6 +11,9 @@ import model.InformationContainer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -48,8 +51,6 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenuItem deleteEntry;
 	private JMenuItem downloadEntry;
 
-	private JButton selectButton;
-
 	public MainWindow(String title) {
 		this.setTitle(title);
 		this.setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
@@ -69,7 +70,6 @@ public class MainWindow extends javax.swing.JFrame {
 		});
 		this.initComponents();
 		this.add(scrollPane, BorderLayout.CENTER);
-		this.add(selectButton, BorderLayout.SOUTH);
 		this.setVisible(true);
 	}
 
@@ -99,30 +99,31 @@ public class MainWindow extends javax.swing.JFrame {
 		Object columnNames[] = { "Name", "DataKey", "Uploaded", "FileSize" };
 		nonEditableJTable = new NonEditableJTable(rowData, columnNames);
 		table = new JTable(nonEditableJTable);
-		
-		popupMenu = new JPopupMenu();
+
 		deleteEntry = new JMenuItem("Delete from cloud");
 		deleteEntry.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("delete..");
 				Main.getInstance().toggle_MainWindow_delete();
+				popupMenu.setVisible(false);
 			}
 		});
-		downloadEntry =  new JMenuItem("Download");
+		downloadEntry = new JMenuItem("Download");
 		downloadEntry.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("download..");
 				int row = table.getSelectedRow();
-				String encryptedName = (String)table.getValueAt(row, 1);
+				String encryptedName = (String) table.getValueAt(row, 1);
 				Main.getInstance().toggle_MainWindow_download(encryptedName);
+				popupMenu.setVisible(false);
 			}
 		});
+
+		popupMenu = new JPopupMenu();
 		popupMenu.add(downloadEntry);
 		popupMenu.add(deleteEntry);
+
 		table.setComponentPopupMenu(popupMenu);
 
 		menuBar = new JMenuBar();
@@ -137,7 +138,7 @@ public class MainWindow extends javax.swing.JFrame {
 		entryHelpInfo = new JMenuItem("Info");
 		entryHelpAbout = new JMenuItem("About");
 
-		entryFileSelect.addActionListener(new java.awt.event.ActionListener() {
+		entryFileSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ac) {
 				JFileChooser fc = new JFileChooser();
 				fc.showOpenDialog(null);
@@ -152,22 +153,20 @@ public class MainWindow extends javax.swing.JFrame {
 			}
 		});
 
-		this.entryFileClose
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(ActionEvent ac) {
-						try {
-							Main.getInstance().exit();
-						} catch (InvalidKeyException | NoSuchAlgorithmException
-								| NoSuchProviderException
-								| NoSuchPaddingException | ShortBufferException
-								| IllegalBlockSizeException
-								| BadPaddingException
-								| InvalidAlgorithmParameterException
-								| InterruptedException | IOException e) {
-							e.printStackTrace();
-						}
-					}
-				});
+		this.entryFileClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ac) {
+				try {
+					Main.getInstance().exit();
+				} catch (InvalidKeyException | NoSuchAlgorithmException
+						| NoSuchProviderException | NoSuchPaddingException
+						| ShortBufferException | IllegalBlockSizeException
+						| BadPaddingException
+						| InvalidAlgorithmParameterException
+						| InterruptedException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 		this.titleFile.add(entryFileSelect);
 		this.titleFile.add(entryFileClose);
@@ -179,7 +178,5 @@ public class MainWindow extends javax.swing.JFrame {
 		this.menuBar.add(titleHelp);
 
 		this.setJMenuBar(this.menuBar);
-
-		this.selectButton = new JButton("Select");
 	}
 }

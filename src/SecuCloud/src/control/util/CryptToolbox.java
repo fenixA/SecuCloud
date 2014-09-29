@@ -120,7 +120,7 @@ public final class CryptToolbox {
 		return output;
 	}
 
-	public static InformationContainer encryptFileECB(File selectedFile)
+	public static InformationContainer encryptFileCTR(File selectedFile)
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException, IOException {
 		byte[] tempKey = generateRandomKey(Main.AES_KEY_LEN);

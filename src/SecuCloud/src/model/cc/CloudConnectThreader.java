@@ -1,6 +1,5 @@
 package model.cc;
 
-import control.util.Pair;
 import model.InformationContainer;
 
 public class CloudConnectThreader implements Runnable {
@@ -18,17 +17,12 @@ public class CloudConnectThreader implements Runnable {
 	private InformationContainer informationContainer;
 	private CloudConnectorGoogleGsutilTEMP cloudConnectorGSUTIL;
 	private command cmd;
-	private Pair<Integer, Object> returnValue;
 
 	public CloudConnectThreader(command cmd,
 			InformationContainer informationContainer) {
 		this.cloudConnectorGSUTIL = new CloudConnectorGoogleGsutilTEMP();
 		this.informationContainer = informationContainer;
 		this.cmd = cmd;
-	}
-
-	public Pair<Integer, Object> getReturnValue() {
-		return returnValue;
 	}
 
 	@Override
@@ -41,8 +35,6 @@ public class CloudConnectThreader implements Runnable {
 		case upload:
 			this.cloudConnectorGSUTIL.upload(informationContainer);
 		case copy:
-			break;
-		default:
 			break;
 		}
 	}

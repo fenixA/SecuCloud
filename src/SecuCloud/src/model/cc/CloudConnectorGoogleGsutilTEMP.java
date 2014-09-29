@@ -42,7 +42,6 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					SystemPathCollectorGsutilTEMP.getGsutilPath(),
 					CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
 					Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName()};
-			System.out.println(temp);
 			Process uploadProcess = Runtime.getRuntime().exec(
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
@@ -83,7 +82,6 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		} catch (IOException uploadIOException) {
 			System.out.println(uploadIOException.toString());
 		}
-
 		catch (InterruptedException uploadInterruptException) {
 			System.out.println(uploadInterruptException.toString());
 		}
