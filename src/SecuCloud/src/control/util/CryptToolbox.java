@@ -9,6 +9,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import control.Main;
+import control.util.CryptThreader.command;
 import model.InformationContainer;
 import model.InformationContainer.Encryption;
 
@@ -17,10 +18,11 @@ public final class CryptToolbox {
 
 	}
 
-	public static File encryptFileAesCTR(File srcFile, String dstPath,
+	public static File threadEncryptFileAesCTR(File srcFile, String dstPath,
 			byte[] key) throws NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException,
-			InvalidKeyException, IOException {
+			InvalidKeyException, IOException,
+			InvalidAlgorithmParameterException {
 		File encryptedFile = null;
 		encryptedFile = new File(dstPath);
 		FileInputStream fis;
@@ -29,7 +31,9 @@ public final class CryptToolbox {
 
 		SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 		Cipher encrypt = Cipher.getInstance("AES/CTR/PKCS5Padding", "SunJCE");
-		encrypt.init(Cipher.ENCRYPT_MODE, secretKey);
+		byte[] iv = generateRandomKey(encrypt.getBlockSize());
+		IvParameterSpec ps = new IvParameterSpec(iv);
+		encrypt.init(Cipher.ENCRYPT_MODE, secretKey, ps);
 		// Open the Plaintext file
 		fis = new FileInputStream(srcFile);
 		cis = new CipherInputStream(fis, encrypt);
@@ -37,6 +41,7 @@ public final class CryptToolbox {
 		fos = new FileOutputStream(encryptedFile);
 		byte[] b = new byte[8];
 		int i = cis.read(b);
+		fos.write(iv);
 		while (i != -1) {
 			fos.write(b, 0, i);
 			i = cis.read(b);
@@ -48,10 +53,11 @@ public final class CryptToolbox {
 		return encryptedFile;
 	}
 
-	public static File decryptFileAesCTR(File srcFile, String dstPath,
+	public static File threadDecryptFileAesCTR(File srcFile, String dstPath,
 			byte[] key) throws NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException,
-			InvalidKeyException, IOException {
+			InvalidKeyException, IOException,
+			InvalidAlgorithmParameterException {
 		File decryptedFile = null;
 		File tempFile = srcFile;
 		decryptedFile = new File(dstPath);
@@ -61,9 +67,14 @@ public final class CryptToolbox {
 		SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 		// Creation of Cipher objects
 		Cipher decrypt = Cipher.getInstance("AES/CTR/PKCS5Padding", "SunJCE");
-		decrypt.init(Cipher.DECRYPT_MODE, secretKey);
-		// Open the Encrypted file
 		fis = new FileInputStream(tempFile);
+		byte[] iv = new byte[decrypt.getBlockSize()];
+		for (int i = 0; i < decrypt.getBlockSize(); i++) {
+			iv[i] = (byte) fis.read();
+		}
+		IvParameterSpec ps = new IvParameterSpec(iv);
+		decrypt.init(Cipher.DECRYPT_MODE, secretKey, ps);
+		// Open the Encrypted file
 		cis = new CipherInputStream(fis, decrypt);
 		// Write to the Decrypted file
 		fos = new FileOutputStream(decryptedFile);
@@ -122,20 +133,21 @@ public final class CryptToolbox {
 
 	public static InformationContainer encryptFileCTR(File selectedFile)
 			throws InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchProviderException, NoSuchPaddingException, IOException {
+			NoSuchProviderException, NoSuchPaddingException, IOException,
+			InvalidAlgorithmParameterException {
 		byte[] tempKey = generateRandomKey(Main.AES_KEY_LEN);
 		String encryptedName = generateLocationString();
-		InformationContainer temp = new InformationContainer(
+		InformationContainer informationContainer = new InformationContainer(
 				selectedFile.getAbsolutePath(), Main.getInstance()
 						.getUSER_ENCRYPTED_DATA_DIR()
 						+ "/"
 						+ encryptedName
 						+ ".enc", encryptedName, selectedFile.getName(), null,
 				tempKey, Encryption.AES_CTR);
-
-		CryptToolbox.encryptFileAesCTR(selectedFile,
-				temp.getLocalEncryptedLocation(), tempKey);
-		return temp;
+		Thread t = new Thread(new CryptThreader(command.encryptFile, informationContainer));
+		t.start();
+		Main.getInstance().threadVector.add(t);
+		return informationContainer;
 	}
 
 	public static byte[] generateRandomKey(int length) {
