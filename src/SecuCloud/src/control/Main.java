@@ -47,7 +47,7 @@ public class Main {
 	private String userName;
 	private String userPassword;
 	private String bucket = "fenixbucket";
-	private Vector<Thread> cloudConnectThreadVector = new Vector<Thread>();
+	public Vector<Thread> threadVector = new Vector<Thread>();
 
 	// getter n setter
 	public String getUSER_ENCRYPTED_DATA_DIR() {
@@ -61,7 +61,7 @@ public class Main {
 	public String getUSER_DATA_DIR() {
 		return USER_DATA_DIR;
 	}
-	
+
 	public String getUSER_DOWNLOAD_DIR() {
 		return USER_DOWNLOAD_DIR;
 	}
@@ -89,7 +89,7 @@ public class Main {
 		System.out.println("Main.exit()");
 		this.mainWindow.dispose();
 		if (this.informationContainerStorer.storeFileList()) {
-			Iterator<Thread> it = cloudConnectThreadVector.iterator();
+			Iterator<Thread> it = threadVector.iterator();
 			while (it.hasNext()) {
 				Thread t = it.next();
 				t.join();
@@ -142,7 +142,7 @@ public class Main {
 		if (!user_data_dir.exists()) {
 			user_data_dir.mkdir();
 		}
-		USER_DATA_DIR = user_data_dir.getAbsolutePath();	
+		USER_DATA_DIR = user_data_dir.getAbsolutePath();
 		File user_download_dir = new File(USER_DIR + "/download");
 		if (!user_download_dir.exists()) {
 			user_download_dir.mkdir();
@@ -187,26 +187,29 @@ public class Main {
 
 	public void toggle_MainWindow_fileSelected(File selectedFile)
 			throws InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchProviderException, NoSuchPaddingException, IOException {
+			NoSuchProviderException, NoSuchPaddingException, IOException,
+			InvalidAlgorithmParameterException {
 		InformationContainer informationContainer = CryptToolbox
 				.encryptFileCTR(selectedFile);
 		Thread t = new Thread(new CloudConnectThreader(command.upload,
 				informationContainer));
 		t.start();
-		cloudConnectThreadVector.add(t);
+		threadVector.add(t);
 		FileListHandler.getInstance().addFile(informationContainer);
 	}
-	
+
 	public void toggle_MainWindow_delete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void toggle_MainWindow_download(String encryptedName) {
-		InformationContainer informationContainer = FileListHandler.getInstance().selectByEncryptedName(encryptedName);
-		Thread t = new Thread(new CloudConnectThreader(command.download, informationContainer));
+		InformationContainer informationContainer = FileListHandler
+				.getInstance().selectByEncryptedName(encryptedName);
+		Thread t = new Thread(new CloudConnectThreader(command.download,
+				informationContainer));
 		t.start();
-		cloudConnectThreadVector.add(t);
+		threadVector.add(t);
 	}
 
 	public void toggle_CreateAccountWindow_okButton(String userName,

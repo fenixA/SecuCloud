@@ -11,9 +11,6 @@ import model.InformationContainer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -148,6 +145,9 @@ public class MainWindow extends javax.swing.JFrame {
 				} catch (InvalidKeyException | NoSuchAlgorithmException
 						| NoSuchProviderException | NoSuchPaddingException
 						| IOException e) {
+					e.printStackTrace();
+				} catch (InvalidAlgorithmParameterException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
