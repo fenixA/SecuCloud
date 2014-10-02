@@ -38,17 +38,13 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	@Override
 	public boolean download(InformationContainer informationContainer) {
 		try {
-			String[] temp = new String[]{SystemPathCollectorGsutilTEMP.getPythonPath(),
-					SystemPathCollectorGsutilTEMP.getGsutilPath(),
-					CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
-					Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName()};
-			Process uploadProcess = Runtime.getRuntime().exec(
+			Process downloadProcess = Runtime.getRuntime().exec(
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
 							CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
 							Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName() });
-			uploadProcess.waitFor();
+			downloadProcess.waitFor();
 		} catch (IOException uploadIOException) {
 			System.out.println(uploadIOException.toString());
 			return false;
@@ -87,8 +83,24 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		}
 	}
 
-	public void remove(String path) {
-		// TODO Auto-generated method stub
+	public boolean remove(InformationContainer informationContainer) {
+		try {
+			Process deleteProcess = Runtime.getRuntime().exec(
+					new String[] {
+							SystemPathCollectorGsutilTEMP.getPythonPath(),
+							SystemPathCollectorGsutilTEMP.getGsutilPath(),
+							CMD_DELETE, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName()
+							});
+			deleteProcess.waitFor();
+		} catch (IOException deleteIOException) {
+			System.out.println(deleteIOException.toString());
+			return false;
+		}
+		catch (InterruptedException deleteInterruptException) {
+			System.out.println(deleteInterruptException.toString());
+			return false;
+		}
+		return true;
 	}
 
 }

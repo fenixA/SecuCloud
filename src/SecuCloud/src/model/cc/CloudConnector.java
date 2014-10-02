@@ -10,5 +10,5 @@ public interface CloudConnector {
 
 	public void listDir(String path);
 	
-	public void remove(String path);
+	public boolean remove(InformationContainer informationContainer);
 }
