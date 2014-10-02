@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2014 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +16,7 @@
 
 from gslib.help_provider import HelpProvider
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>OVERVIEW</B>
   Google Cloud Storage offers two APIs: an XML and a JSON API. Gsutil can
   interact with both APIs. By default, gsutil versions starting with 4.0
@@ -55,7 +56,7 @@ class CommandOptions(HelpProvider):
       help_name_aliases=['XML', 'JSON', 'api', 'force_api', 'prefer_api'],
       help_type='additional_help',
       help_one_line_summary='Cloud Storage APIs',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 

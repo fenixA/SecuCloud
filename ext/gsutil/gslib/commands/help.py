@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of gsutil help command."""
+
+from __future__ import absolute_import
 
 import itertools
 import os
@@ -29,7 +32,7 @@ from gslib.help_provider import HelpProvider
 from gslib.help_provider import MAX_HELP_NAME_LEN
 from gslib.util import IsRunningInteractively
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil help [command or topic]
 
@@ -64,8 +67,8 @@ _detailed_help_text = ("""
 """)
 
 top_level_usage_string = (
-    'Usage: gsutil [-d][-D] [-h header]... '
-    '[-m] [command [opts...] args...] [-q]'
+    'Usage: gsutil [-D] [-DD] [-h header]... '
+    '[-m] [-o] [-q] [command [opts...] args...]'
 )
 
 
@@ -89,7 +92,7 @@ class HelpCommand(Command):
       help_name_aliases=['?'],
       help_type='command_help',
       help_one_line_summary='Get help about commands and topics',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 

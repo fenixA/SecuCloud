@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +21,8 @@
 # of the iterator classes, the iterator is used once per class instantiation
 # so that next() calls do not collide, but this semantic has been long-assumed
 # by the iterator classes for the use of __iter__ anyway.
+
+from __future__ import absolute_import
 
 import sys
 

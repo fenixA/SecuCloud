@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
-# coding=utf8
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Unit and integration tests for gsutil command_runner module."""
+
+from __future__ import absolute_import
+
 import logging
 import os
 import time
@@ -33,11 +36,6 @@ from gslib.util import SECONDS_PER_DAY
 class TestCommandRunnerUnitTests(
     testcase.unit_testcase.GsUtilUnitTestCase):
   """Unit tests for gsutil update check in command_runner module."""
-
-  # TODO: Many tests in this file increment the version number, and output
-  # a message to stderr claiming this version is available.  When mixed with
-  # some failures in the tests, this can be misleading, particularly when
-  # a new version number is under development but not yet released.
 
   def setUp(self):
     """Sets up the command runner mock objects."""

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2014 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Utility functions and class for listing commands such as ls and du."""
+
+from __future__ import absolute_import
+
 import fnmatch
 
-from gslib.bucket_listing_ref import BucketListingRefType
 from gslib.exception import CommandException
 from gslib.plurality_checkable_iterator import PluralityCheckableIterator
 from gslib.util import UTF8
@@ -27,14 +30,25 @@ def PrintNewLine():
 
 
 def PrintDirHeader(bucket_listing_ref):
-  """Default function for printing headers for buckets or prefixes.
+  """Default function for printing headers for prefixes.
 
-  Header is printed prior to listing the contents of the bucket or prefix.
+  Header is printed prior to listing the contents of the prefix.
 
   Args:
-    bucket_listing_ref: BucketListingRef of type BUCKET or PREFIX.
+    bucket_listing_ref: BucketListingRef of type PREFIX.
   """
-  print '%s:' % bucket_listing_ref.GetUrlString().encode(UTF8)
+  print '%s:' % bucket_listing_ref.url_string.encode(UTF8)
+
+
+def PrintBucketHeader(bucket_listing_ref):  # pylint: disable=unused-argument
+  """Default function for printing headers for buckets.
+
+  Header is printed prior to listing the contents of the bucket.
+
+  Args:
+    bucket_listing_ref: BucketListingRef of type BUCKET.
+  """
+  pass
 
 
 def PrintDir(bucket_listing_ref):
@@ -43,7 +57,7 @@ def PrintDir(bucket_listing_ref):
   Args:
     bucket_listing_ref: BucketListingRef of type BUCKET or PREFIX.
   """
-  print bucket_listing_ref.GetUrlString().encode(UTF8)
+  print bucket_listing_ref.url_string.encode(UTF8)
 
 
 # pylint: disable=unused-argument
@@ -66,7 +80,7 @@ def PrintObject(bucket_listing_ref):
   Returns:
     (num_objects, num_bytes).
   """
-  print bucket_listing_ref.GetUrlString().encode(UTF8)
+  print bucket_listing_ref.url_string.encode(UTF8)
   return (1, 0)
 
 
@@ -77,6 +91,7 @@ class LsHelper(object):
                print_object_func=PrintObject,
                print_dir_func=PrintDir,
                print_dir_header_func=PrintDirHeader,
+               print_bucket_header_func=PrintBucketHeader,
                print_dir_summary_func=PrintDirSummary,
                print_newline_func=PrintNewLine,
                all_versions=False, should_recurse=False,
@@ -95,6 +110,8 @@ class LsHelper(object):
       print_dir_func:    Function for printing buckets/prefixes.
       print_dir_header_func: Function for printing header line for buckets
                              or prefixes.
+      print_bucket_header_func: Function for printing header line for buckets
+                                or prefixes.
       print_dir_summary_func: Function for printing size summaries about
                               buckets/prefixes.
       print_newline_func: Function for printing new lines between dirs.
@@ -112,6 +129,7 @@ class LsHelper(object):
     self._print_object_func = print_object_func
     self._print_dir_func = print_dir_func
     self._print_dir_header_func = print_dir_header_func
+    self._print_bucket_header_func = print_bucket_header_func
     self._print_dir_summary_func = print_dir_summary_func
     self._print_newline_func = print_newline_func
     self.all_versions = all_versions
@@ -135,14 +153,16 @@ class LsHelper(object):
 
     if url.IsBucket() or self.should_recurse:
       # IsBucket() implies a top-level listing.
-      return self._RecurseExpandUrlAndPrint(url.GetUrlString(),
+      if url.IsBucket():
+        self._print_bucket_header_func(url)
+      return self._RecurseExpandUrlAndPrint(url.url_string,
                                             print_initial_newline=False)
     else:
       # User provided a prefix or object URL, but it's impossible to tell
       # which until we do a listing and see what matches.
-      top_level_iteration = url.GetVersionlessUrlStringStripOneSlash()
       top_level_iterator = PluralityCheckableIterator(self._iterator_func(
-          '%s' % top_level_iteration, all_versions=self.all_versions).IterAll(
+          url.CreatePrefixUrl(wildcard_suffix=None),
+          all_versions=self.all_versions).IterAll(
               expand_top_level_buckets=True,
               bucket_listing_fields=self.bucket_listing_fields))
       plurality = top_level_iterator.HasPlurality()
@@ -150,19 +170,19 @@ class LsHelper(object):
       for blr in top_level_iterator:
         if self._MatchesExcludedPattern(blr):
           continue
-        if blr.ref_type == BucketListingRefType.OBJECT:
+        if blr.IsObject():
           nd = 0
           no, nb = self._print_object_func(blr)
           print_newline = True
-        elif blr.ref_type == BucketListingRefType.PREFIX:
+        elif blr.IsPrefix():
           if print_newline:
             self._print_newline_func()
           else:
             print_newline = True
           if plurality:
             self._print_dir_header_func(blr)
-          expansion_url_str = '%s/*' % StorageUrlFromString(
-              blr.GetUrlString()).GetVersionlessUrlStringStripOneSlash()
+          expansion_url_str = StorageUrlFromString(
+              blr.url_string).CreatePrefixUrl(wildcard_suffix='*')
           nd, no, nb = self._RecurseExpandUrlAndPrint(expansion_url_str)
           self._print_dir_summary_func(nb, blr)
         else:
@@ -196,18 +216,18 @@ class LsHelper(object):
       if self._MatchesExcludedPattern(blr):
         continue
 
-      if blr.ref_type == BucketListingRefType.OBJECT:
+      if blr.IsObject():
         nd = 0
         no, nb = self._print_object_func(blr)
-      elif blr.ref_type == BucketListingRefType.PREFIX:
+      elif blr.IsPrefix():
         if self.should_recurse:
           if print_initial_newline:
             self._print_newline_func()
           else:
             print_initial_newline = True
           self._print_dir_header_func(blr)
-          expansion_url_str = '%s/*' % StorageUrlFromString(
-              blr.GetUrlString()).GetVersionlessUrlStringStripOneSlash()
+          expansion_url_str = StorageUrlFromString(
+              blr.url_string).CreatePrefixUrl(wildcard_suffix='*')
 
           nd, no, nb = self._RecurseExpandUrlAndPrint(expansion_url_str)
           self._print_dir_summary_func(nb, blr)
@@ -234,7 +254,7 @@ class LsHelper(object):
       True if reference matches a pattern and should be excluded.
     """
     if self.exclude_patterns:
-      tomatch = blr.GetUrlString()
+      tomatch = blr.url_string
       for pattern in self.exclude_patterns:
         if fnmatch.fnmatch(tomatch, pattern):
           return True

@@ -34,6 +34,7 @@ import cgi
 import datetime
 import errno
 from hashlib import sha1
+import json
 import logging
 import os
 import socket
@@ -47,7 +48,6 @@ if os.environ.get('USER_AGENT'):
 
 from boto import config
 import httplib2
-from oauth2client.anyjson import simplejson
 from oauth2client.client import AccessTokenRefreshError
 from oauth2client.client import HAS_CRYPTO
 from oauth2client.client import OAuth2Credentials
@@ -65,14 +65,14 @@ token_exchange_lock = threading.Lock()
 
 DEFAULT_SCOPE = 'https://www.googleapis.com/auth/devstorage.full_control'
 
-META_TOKEN_URI = ('http://metadata/computeMetadata/v1/instance/'
+METADATA_SERVER = 'http://metadata.google.internal'
+
+META_TOKEN_URI = (METADATA_SERVER + '/computeMetadata/v1/instance/'
                   'service-accounts/default/token')
 
 META_HEADERS = {
     'X-Google-Metadata-Request': 'True'
 }
-
-METADATA_SERVER = 'http://169.254.169.254'
 
 
 # Note: this is copied from gsutil's gslib.cred_types. It should be kept in
@@ -263,7 +263,8 @@ class OAuth2Client(object):
   def __init__(self, cache_key_base, access_token_cache=None,
                datetime_strategy=datetime.datetime, auth_uri=None,
                token_uri=None, disable_ssl_certificate_validation=False,
-               proxy_host=None, proxy_port=None, ca_certs_file=None):
+               proxy_host=None, proxy_port=None, proxy_user=None,
+               proxy_pass=None, ca_certs_file=None):
     # datetime_strategy is used to invoke utcnow() on; it is injected into the
     # constructor for unit testing purposes.
     self.auth_uri = auth_uri
@@ -277,6 +278,8 @@ class OAuth2Client(object):
       self._proxy_info = httplib2.ProxyInfo(socks.PROXY_TYPE_HTTP,
                                             proxy_host,
                                             proxy_port,
+                                            proxy_user=proxy_user,
+                                            proxy_pass=proxy_pass,
                                             proxy_rdns=True)
     else:
       self._proxy_info = None
@@ -350,7 +353,8 @@ class OAuth2ServiceAccountClient(OAuth2Client):
                access_token_cache=None, auth_uri=None, token_uri=None,
                datetime_strategy=datetime.datetime,
                disable_ssl_certificate_validation=False,
-               proxy_host=None, proxy_port=None, ca_certs_file=None):
+               proxy_host=None, proxy_port=None, proxy_user=None,
+               proxy_pass=None, ca_certs_file=None):
     """Creates an OAuth2ServiceAccountClient.
 
     Args:
@@ -368,6 +372,10 @@ class OAuth2ServiceAccountClient(OAuth2Client):
           to be used.
       proxy_port: An optional int specifying the port number of an HTTP proxy
           to be used.
+      proxy_user: An optional string specifying the user name for interacting
+          with the HTTP proxy.
+      proxy_pass: An optional string specifying the password for interacting
+          with the HTTP proxy.
       ca_certs_file: The cacerts.txt file to use.
     """
     super(OAuth2ServiceAccountClient, self).__init__(
@@ -375,8 +383,8 @@ class OAuth2ServiceAccountClient(OAuth2Client):
         access_token_cache=access_token_cache,
         datetime_strategy=datetime_strategy,
         disable_ssl_certificate_validation=disable_ssl_certificate_validation,
-        proxy_host=proxy_host, proxy_port=proxy_port,
-        ca_certs_file=ca_certs_file)
+        proxy_host=proxy_host, proxy_port=proxy_port, proxy_user=proxy_user,
+        proxy_pass=proxy_pass, ca_certs_file=ca_certs_file)
     self.client_id = client_id
     self.private_key = private_key
     self.password = password
@@ -422,7 +430,8 @@ class OAuth2UserAccountClient(OAuth2Client):
                auth_uri=None, access_token_cache=None,
                datetime_strategy=datetime.datetime,
                disable_ssl_certificate_validation=False,
-               proxy_host=None, proxy_port=None, ca_certs_file=None):
+               proxy_host=None, proxy_port=None, proxy_user=None,
+               proxy_pass=None, ca_certs_file=None):
     """Creates an OAuth2UserAccountClient.
 
     Args:
@@ -440,6 +449,10 @@ class OAuth2UserAccountClient(OAuth2Client):
           to be used.
       proxy_port: An optional int specifying the port number of an HTTP proxy
           to be used.
+      proxy_user: An optional string specifying the user name for interacting
+          with the HTTP proxy.
+      proxy_pass: An optional string specifying the password for interacting
+          with the HTTP proxy.
       ca_certs_file: The cacerts.txt file to use.
     """
     super(OAuth2UserAccountClient, self).__init__(
@@ -447,8 +460,8 @@ class OAuth2UserAccountClient(OAuth2Client):
         access_token_cache=access_token_cache,
         datetime_strategy=datetime_strategy,
         disable_ssl_certificate_validation=disable_ssl_certificate_validation,
-        proxy_host=proxy_host, proxy_port=proxy_port,
-        ca_certs_file=ca_certs_file)
+        proxy_host=proxy_host, proxy_port=proxy_port, proxy_user=proxy_user,
+        proxy_pass=proxy_pass, ca_certs_file=ca_certs_file)
     self.token_uri = token_uri
     self.client_id = client_id
     self.client_secret = client_secret
@@ -520,7 +533,7 @@ class OAuth2GCEClient(OAuth2Client):
       raise GsAccessTokenRefreshError()
 
     if response.status == 200:
-      d = simplejson.loads(content)
+      d = json.loads(content)
 
       return AccessToken(
           d['access_token'],
@@ -616,4 +629,3 @@ class AccessToken(object):
 
   def __str__(self):
     return 'AccessToken(token=%s, expiry=%sZ)' % (self.token, self.expiry)
-

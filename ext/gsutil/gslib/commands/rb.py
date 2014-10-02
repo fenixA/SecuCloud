@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +14,8 @@
 # limitations under the License.
 """Implementation of rb command for deleting cloud storage buckets."""
 
+from __future__ import absolute_import
+
 from gslib.cloud_api import NotEmptyException
 from gslib.command import Command
 from gslib.cs_api_map import ApiSelector
@@ -21,7 +24,7 @@ from gslib.storage_url import StorageUrlFromString
 from gslib.util import NO_MAX
 
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil [-f] rb url...
 
@@ -66,7 +69,7 @@ class RbCommand(Command):
           'deletebucket', 'removebucket', 'removebuckets', 'rmdir'],
       help_type='command_help',
       help_one_line_summary='Remove buckets',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -100,7 +103,7 @@ class RbCommand(Command):
         else:
           raise
       for blr in blrs:
-        url = StorageUrlFromString(blr.GetUrlString())
+        url = blr.storage_url
         self.logger.info('Removing %s...', url)
         try:
           self.gsutil_api.DeleteBucket(url.bucket_name, provider=url.scheme)

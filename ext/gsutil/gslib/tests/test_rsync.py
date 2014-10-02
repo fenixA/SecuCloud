@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2014 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -277,6 +278,10 @@ class TestRsync(testcase.GsUtilIntegrationTestCase):
     self.CreateObject(bucket_uri=bucket_uri, object_name='subdir/obj5',
                       contents='subdir/obj5')
 
+    # Need to make sure the bucket listing is caught-up, otherwise the
+    # first rsync may not see obj2 and overwrite it.
+    self.AssertNObjectsInBucket(bucket_uri, 3)
+
     # Use @Retry as hedge against bucket listing eventual consistency.
     @Retry(AssertionError, tries=3, timeout_secs=1)
     def _Check1():
@@ -442,10 +447,13 @@ class TestRsync(testcase.GsUtilIntegrationTestCase):
       self.CreateTempFile(tmpdir=tmpdir1, file_name='d1-%s' %i, contents='x')
       self.CreateTempFile(tmpdir=tmpdir2, file_name='d2-%s' %i, contents='y')
 
-    reduce_buffer_config = [('GSUtil', 'rsync_buffer_lines',
-                             '50' if IS_WINDOWS else '2')]
+    # We open a new temp file each time we reach rsync_buffer_lines of
+    # listing output. On Windows, this will result in a 'too many open file
+    # handles' error, so choose a larger value so as not to open so many files.
+    rsync_buffer_config = [('GSUtil', 'rsync_buffer_lines',
+                            '50' if IS_WINDOWS else '2')]
     # Run gsutil with config option to make buffer size << # files.
-    with SetBotoConfigForTest(reduce_buffer_config):
+    with SetBotoConfigForTest(rsync_buffer_config):
       self.RunGsUtil(['rsync', '-d', tmpdir1, tmpdir2])
     listing1 = _TailSet(tmpdir1, self._FlatListDir(tmpdir1))
     listing2 = _TailSet(tmpdir2, self._FlatListDir(tmpdir2))
@@ -628,8 +636,12 @@ class TestRsync(testcase.GsUtilIntegrationTestCase):
         tmpdir=tmpdir, file_name='obj1', contents='obj1')
     self.CreateTempFile(tmpdir=tmpdir, file_name='obj2', contents='obj2')
     self.CreateTempFile(tmpdir=subdir, file_name='obj3', contents='subdir/obj3')
-    fpath3 = os.path.join(tmpdir, 'symlink')
-    os.symlink(fpath1, fpath3)
+    good_symlink_path = os.path.join(tmpdir, 'symlink1')
+    os.symlink(fpath1, good_symlink_path)
+    # Make a symlink that points to a non-existent path to test that -e also
+    # handles that case.
+    bad_symlink_path = os.path.join(tmpdir, 'symlink2')
+    os.symlink(os.path.join('/', 'non-existent'), bad_symlink_path)
     self.CreateObject(bucket_uri=bucket_uri, object_name='obj2',
                       contents='OBJ2')
     self.CreateObject(bucket_uri=bucket_uri, object_name='obj4',
@@ -640,19 +652,23 @@ class TestRsync(testcase.GsUtilIntegrationTestCase):
     # Use @Retry as hedge against bucket listing eventual consistency.
     @Retry(AssertionError, tries=3, timeout_secs=1)
     def _Check1():
+      """Ensure listings match the commented expectations."""
       self.RunGsUtil(['rsync', '-d', '-e', tmpdir, suri(bucket_uri)])
       listing1 = _TailSet(tmpdir, self._FlatListDir(tmpdir))
       listing2 = _TailSet(suri(bucket_uri), self._FlatListBucket(bucket_uri))
       # Dir should have un-altered content.
       self.assertEquals(
-          listing1, set(['/obj1', '/obj2', '/subdir/obj3', '/symlink']))
+          listing1,
+          set(['/obj1', '/obj2', '/subdir/obj3', '/symlink1', '/symlink2']))
       # Bucket should have content like dir but without the symlink, and
       # without subdir objects synchronized.
       self.assertEquals(listing2, set(['/obj1', '/obj2', '/subdir/obj5']))
     _Check1()
 
-    # Now run without -e, and see that symlink gets copied (as file to which it
-    # points). Use @Retry as hedge against bucket listing eventual consistency.
+    # Now remove invalid symlink and run without -e, and see that symlink gets
+    # copied (as file to which it points). Use @Retry as hedge against bucket
+    # listing eventual consistency.
+    os.unlink(bad_symlink_path)
     @Retry(AssertionError, tries=3, timeout_secs=1)
     def _Check2():
       """Tests rsync works as expected."""
@@ -661,13 +677,13 @@ class TestRsync(testcase.GsUtilIntegrationTestCase):
       listing2 = _TailSet(suri(bucket_uri), self._FlatListBucket(bucket_uri))
       # Dir should have un-altered content.
       self.assertEquals(
-          listing1, set(['/obj1', '/obj2', '/subdir/obj3', '/symlink']))
+          listing1, set(['/obj1', '/obj2', '/subdir/obj3', '/symlink1']))
       # Bucket should have content like dir but without the symlink, and
       # without subdir objects synchronized.
       self.assertEquals(
-          listing2, set(['/obj1', '/obj2', '/subdir/obj5', '/symlink']))
+          listing2, set(['/obj1', '/obj2', '/subdir/obj5', '/symlink1']))
       self.assertEquals('obj1', self.RunGsUtil(
-          ['cat', suri(bucket_uri, 'symlink')], return_stdout=True))
+          ['cat', suri(bucket_uri, 'symlink1')], return_stdout=True))
     _Check2()
 
     # Check that re-running the same rsync command causes no more changes.

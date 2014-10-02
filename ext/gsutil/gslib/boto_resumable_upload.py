@@ -1,5 +1,5 @@
-# pylint: disable=g-bad-file-header
-# Copyright 2010 Google Inc.
+# -*- coding: utf-8 -*-
+# Copyright 2010 Google Inc. All Rights Reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the
@@ -40,6 +40,9 @@ in boto, where applicable.
 
 TODO: gsutil-beta: Add a similar comment to the boto code.
 """
+
+from __future__ import absolute_import
+
 import errno
 import httplib
 import random
@@ -47,12 +50,14 @@ import re
 import socket
 import time
 import urlparse
-from boto import config
 from boto import UserAgent
 from boto.connection import AWSAuthConnection
 from boto.exception import ResumableTransferDisposition
 from boto.exception import ResumableUploadException
 from gslib.exception import InvalidUrlError
+from gslib.util import GetMaxRetryDelay
+from gslib.util import GetNumRetries
+from gslib.util import XML_PROGRESS_CALLBACKS
 
 
 class BotoResumableUpload(object):
@@ -410,12 +415,12 @@ class BotoResumableUpload(object):
       self.upload_start_point = service_end
 
     total_bytes_uploaded = service_end + 1
-    # Corner case: Don't attempt to seek if we've already uploaded the
-    # entire file, because if the file is a stream (e.g., the KeyFile
-    # wrapper around input key when copying between providers), attempting
-    # to seek to the end of file would result in an InvalidRange error.
-    if file_length < total_bytes_uploaded:
+
+    # Start reading from the file based upon the number of bytes that the
+    # server has so far.
+    if total_bytes_uploaded < file_length:
       fp.seek(total_bytes_uploaded)
+
     conn = key.bucket.connection
 
     # Get a new HTTP connection (vs conn.get_http_connection(), which reuses
@@ -460,8 +465,8 @@ class BotoResumableUpload(object):
       raise
     else:
       if debug >= 1:
-        self.logger.debug('Caught ResumableUploadException (%s) - will retry' %
-                          e.message)
+        self.logger.debug(
+            'Caught ResumableUploadException (%s) - will retry', e.message)
 
   def TrackProgressLessIterations(self, service_had_bytes_before_attempt,
                                   debug=0):
@@ -488,7 +493,8 @@ class BotoResumableUpload(object):
           ResumableTransferDisposition.ABORT_CUR_PROCESS)
 
     # Use binary exponential backoff to desynchronize client requests.
-    sleep_time_secs = random.random() * (2**self.progress_less_iterations)
+    sleep_time_secs = min(random.random() * (2**self.progress_less_iterations),
+                          GetMaxRetryDelay())
     if debug >= 1:
       self.logger.debug('Got retryable failure (%d progress-less in a row).\n'
                         'Sleeping %3.1f seconds before re-trying',
@@ -496,7 +502,7 @@ class BotoResumableUpload(object):
     time.sleep(sleep_time_secs)
 
   def SendFile(self, key, fp, size, headers, canned_acl=None, cb=None,
-               num_cb=10):
+               num_cb=XML_PROGRESS_CALLBACKS):
     """Upload a file to a key into a bucket on GS, resumable upload protocol.
 
     Args:
@@ -540,7 +546,7 @@ class BotoResumableUpload(object):
     # Use num-retries from constructor if one was provided; else check
     # for a value specified in the boto config file; else default to 5.
     if self.num_retries is None:
-      self.num_retries = config.getint('Boto', 'num_retries', 6)
+      self.num_retries = GetNumRetries()
     self.progress_less_iterations = 0
 
     while True:  # Retry as long as we're making progress.

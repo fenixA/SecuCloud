@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +14,8 @@
 # limitations under the License.
 """Implementation of mb command for creating cloud storage buckets."""
 
+from __future__ import absolute_import
+
 import textwrap
 
 from gslib.cloud_api import BadRequestException
@@ -24,7 +27,7 @@ from gslib.third_party.storage_apitools import storage_v1_messages as apitools_m
 from gslib.util import NO_MAX
 
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil mb [-c class] [-l location] [-p proj_id] uri...
 
@@ -67,7 +70,7 @@ _detailed_help_text = ("""
   location (US). Otherwise, you can specify one of the available locations:
 
   - ASIA (Asia)
-  - ASIA-EAST1 (Eastern Asia-Pacific) 
+  - ASIA-EAST1 (Eastern Asia-Pacific)
   - EU (European Union)
   - US (United States)
   - US-EAST1 (Eastern United States) [1]_
@@ -124,7 +127,7 @@ class MbCommand(Command):
           'reduced_redundancy', 'standard', 'storage class'],
       help_type='command_help',
       help_one_line_summary='Make buckets',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 

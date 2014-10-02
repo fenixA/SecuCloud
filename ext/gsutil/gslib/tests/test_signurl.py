@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2014 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,7 +49,7 @@ class TestSignUrl(testcase.GsUtilIntegrationTestCase):
 
       # rm signed_url_test.key signed_url_test.pem
       contents = pkgutil.get_data('gslib', 'tests/test_data/test.p12')
-      self.ks_file = self.CreateTempFile(contents=contents, open_wb=True)
+      self.ks_file = self.CreateTempFile(contents=contents)
     return self.ks_file
 
   def testSignUrlOutput(self):

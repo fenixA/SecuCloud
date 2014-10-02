@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,6 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from __future__ import absolute_import
 
 from contextlib import contextmanager
 import functools
@@ -34,9 +37,6 @@ if not hasattr(unittest.TestCase, 'assertIsNone'):
 RUN_INTEGRATION_TESTS = True
 RUN_UNIT_TESTS = True
 RUN_S3_TESTS = False
-
-# Whether the tests are running verbose or not.
-VERBOSE_OUTPUT = False
 
 PARALLEL_COMPOSITE_UPLOAD_TEST_CONFIG = '/tmp/.boto.parallel_upload_test_config'
 

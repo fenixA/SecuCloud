@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +14,8 @@
 # limitations under the License.
 """Implementation of website configuration command for buckets."""
 
+from __future__ import absolute_import
+
 import getopt
 import sys
 
@@ -20,7 +23,6 @@ from gslib.command import Command
 from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
 from gslib.help_provider import CreateHelpText
-from gslib.storage_url import StorageUrlFromString
 from gslib.third_party.storage_apitools import encoding as encoding
 from gslib.third_party.storage_apitools import storage_v1_messages as apitools_messages
 from gslib.util import NO_MAX
@@ -120,7 +122,7 @@ _DESCRIPTION = """
   The web command has two sub-commands:
 """ + _SET_DESCRIPTION + _GET_DESCRIPTION
 
-_detailed_help_text = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
+_DETAILED_HELP_TEXT = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
 
 _get_help_text = CreateHelpText(_GET_SYNOPSIS, _GET_DESCRIPTION)
 _set_help_text = CreateHelpText(_SET_SYNOPSIS, _SET_DESCRIPTION)
@@ -149,7 +151,7 @@ class WebCommand(Command):
       help_type='command_help',
       help_one_line_summary=(
           'Set a main page and/or error page for one or more buckets'),
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={'get': _get_help_text, 'set': _set_help_text},
   )
 
@@ -160,8 +162,7 @@ class WebCommand(Command):
 
     if bucket_url.scheme == 's3':
       sys.stdout.write(self.gsutil_api.XmlPassThroughGetWebsite(
-          bucket_url.GetUrlString(),
-          provider=bucket_url.scheme))
+          bucket_url, provider=bucket_url.scheme))
     else:
       if bucket_metadata.website and (bucket_metadata.website.mainPageSuffix or
                                       bucket_metadata.website.notFoundPage):
@@ -194,10 +195,9 @@ class WebCommand(Command):
     for url_str in url_args:
       bucket_iter = self.GetBucketUrlIterFromArg(url_str, bucket_fields=['id'])
       for blr in bucket_iter:
-        url = StorageUrlFromString(blr.url_string)
+        url = blr.storage_url
         some_matched = True
-        self.logger.info('Setting website configuration on %s...',
-                         blr.url_string)
+        self.logger.info('Setting website configuration on %s...', blr)
         bucket_metadata = apitools_messages.Bucket(website=website)
         self.gsutil_api.PatchBucket(url.bucket_name, bucket_metadata,
                                     provider=url.scheme, fields=['id'])

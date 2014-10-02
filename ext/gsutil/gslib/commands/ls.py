@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of Unix-like ls command for cloud storage providers."""
+
+from __future__ import absolute_import
 
 import re
 
@@ -36,7 +39,7 @@ from gslib.util import UTF8
 # 2013-07-03 20:32:53.048000+00:00
 JSON_TIMESTAMP_RE = re.compile(r'([^\s]*)\s([^\.\+]*).*')
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil ls [-a] [-b] [-l] [-L] [-R] [-p proj_id] url...
 
@@ -232,7 +235,7 @@ class LsCommand(Command):
       help_name_aliases=['dir', 'list'],
       help_type='command_help',
       help_one_line_summary='List providers, buckets, or objects',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -248,14 +251,14 @@ class LsCommand(Command):
     """
     if (listing_style == ListingStyle.SHORT or
         listing_style == ListingStyle.LONG):
-      print bucket_blr.GetUrlString()
+      print bucket_blr
       return
     # listing_style == ListingStyle.LONG_LONG:
     # We're guaranteed by the caller that the root object is populated.
     bucket = bucket_blr.root_object
     location_constraint = bucket.location
     storage_class = bucket.storageClass
-    fields = {'bucket': bucket_blr.GetUrlString(),
+    fields = {'bucket': bucket_blr.url_string,
               'storage_class': storage_class,
               'location_constraint': location_constraint,
               'acl': AclTranslation.JsonFromMessage(bucket.acl),
@@ -268,6 +271,19 @@ class LsCommand(Command):
     fields['cors_config'] = 'Present' if bucket.cors else 'None'
     fields['lifecycle_config'] = 'Present' if bucket.lifecycle else 'None'
 
+    # For field values that are multiline, add indenting to make it look
+    # prettier.
+    for key in fields:
+      previous_value = fields[key]
+      if (not isinstance(previous_value, basestring) or
+          '\n' not in previous_value):
+        continue
+      new_value = previous_value.replace('\n', '\n\t  ')
+      # Start multiline values on a new line if they aren't already.
+      if not new_value.startswith('\n'):
+        new_value = '\n\t  ' + new_value
+      fields[key] = new_value
+
     print('{bucket} :\n'
           '\tStorage class:\t\t\t{storage_class}\n'
           '\tLocation constraint:\t\t{location_constraint}\n'
@@ -278,8 +294,7 @@ class LsCommand(Command):
           '\tLifecycle configuration:\t{lifecycle_config}\n'
           '\tACL:\t\t\t\t{acl}\n'
           '\tDefault ACL:\t\t\t{default_acl}'.format(**fields))
-    bucket_url_str = bucket_blr.GetUrlString()
-    if StorageUrlFromString(bucket_url_str).scheme == 's3':
+    if bucket_blr.storage_url.scheme == 's3':
       print('Note: this is an S3 bucket so configuration values may be '
             'blank. To retrieve bucket configuration values, use '
             'individual configuration commands such as gsutil acl get '
@@ -288,7 +303,7 @@ class LsCommand(Command):
   def _PrintLongListing(self, bucket_listing_ref):
     """Prints an object with ListingStyle.LONG."""
     obj = bucket_listing_ref.root_object
-    url_str = bucket_listing_ref.GetUrlString()
+    url_str = bucket_listing_ref.url_string
     if (obj.metadata and S3_DELETE_MARKER_GUID in
         obj.metadata.additionalProperties):
       size_string = '0'
@@ -358,6 +373,11 @@ class LsCommand(Command):
     total_objs = 0
     total_bytes = 0
 
+    def MaybePrintBucketHeader(blr):
+      if len(self.args) > 1:
+        print '%s:' % blr.url_string.encode(UTF8)
+    print_bucket_header = MaybePrintBucketHeader
+
     for url_str in self.args:
       storage_url = StorageUrlFromString(url_str)
       if storage_url.IsFileUrl():
@@ -387,7 +407,7 @@ class LsCommand(Command):
             # listings with fields=='id'. Ensure the bucket exists by calling
             # GetBucket.
             self.gsutil_api.GetBucket(
-                StorageUrlFromString(blr.GetUrlString()).bucket_name,
+                blr.storage_url.bucket_name,
                 fields=['id'], provider=storage_url.scheme)
           self._PrintBucketInfo(blr, listing_style)
           total_buckets += 1
@@ -396,13 +416,14 @@ class LsCommand(Command):
       else:
         # URL names a bucket, object, or object subdir ->
         # list matching object(s) / subdirs.
-        def _PrintPrefixOrBucketLong(blr):
-          print '%-33s%s' % ('', blr.GetUrlString().encode(UTF8))
+        def _PrintPrefixLong(blr):
+          print '%-33s%s' % ('', blr.url_string.encode(UTF8))
 
         if listing_style == ListingStyle.SHORT:
           # ls helper by default readies us for a short listing.
           ls_helper = LsHelper(self.WildcardIterator, self.logger,
                                all_versions=self.all_versions,
+                               print_bucket_header_func=print_bucket_header,
                                should_recurse=self.recursion_requested)
         elif listing_style == ListingStyle.LONG:
           bucket_listing_fields = ['name', 'updated', 'size']
@@ -413,7 +434,8 @@ class LsCommand(Command):
 
           ls_helper = LsHelper(self.WildcardIterator, self.logger,
                                print_object_func=self._PrintLongListing,
-                               print_dir_func=_PrintPrefixOrBucketLong,
+                               print_dir_func=_PrintPrefixLong,
+                               print_bucket_header_func=print_bucket_header,
                                all_versions=self.all_versions,
                                should_recurse=self.recursion_requested,
                                fields=bucket_listing_fields)
@@ -423,7 +445,8 @@ class LsCommand(Command):
           bucket_listing_fields = None
           ls_helper = LsHelper(self.WildcardIterator, self.logger,
                                print_object_func=PrintFullInfoAboutObject,
-                               print_dir_func=_PrintPrefixOrBucketLong,
+                               print_dir_func=_PrintPrefixLong,
+                               print_bucket_header_func=print_bucket_header,
                                all_versions=self.all_versions,
                                should_recurse=self.recursion_requested,
                                fields=bucket_listing_fields)

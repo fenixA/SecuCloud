@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of Unix-like du command for cloud storage providers."""
+
+from __future__ import absolute_import
+
 import sys
 
 from gslib.boto_translation import S3_DELETE_MARKER_GUID
+from gslib.bucket_listing_ref import BucketListingObject
 from gslib.command import Command
 from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
@@ -25,15 +30,20 @@ from gslib.util import MakeHumanReadable
 from gslib.util import NO_MAX
 from gslib.util import UTF8
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil du url...
 
 
 <B>DESCRIPTION</B>
   The du command displays the amount of space (in bytes) being used by the
-  objects for a given URL. The syntax emulates the Linux du command (which
-  stands for disk usage).
+  objects in the file or object hierarchy under a given URL. The syntax emulates
+  the Linux du command (which stands for disk usage). For example, the command:
+
+  gsutil du -s gs://your-bucket/dir
+
+  will report the total space used by all objects under gs://your-bucket/dir and
+  any sub-directories.
 
 
 <B>OPTIONS</B>
@@ -86,6 +96,10 @@ _detailed_help_text = ("""
 
     gsutil du -e "*.bak" -0 gs://bucketname
 
+  To get a total of all buckets in a project with a grand total for an entire
+  project:
+
+      gsutil -o GSUtil:default_project_id=project-name du -shc
 """)
 
 
@@ -111,7 +125,7 @@ class DuCommand(Command):
       help_name_aliases=[],
       help_type='command_help',
       help_one_line_summary='Display object size usage',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -134,7 +148,7 @@ class DuCommand(Command):
       Exception: if calling bug encountered.
     """
     obj = bucket_listing_ref.root_object
-    url_str = bucket_listing_ref.GetUrlString()
+    url_str = bucket_listing_ref.url_string
     if (obj.metadata and S3_DELETE_MARKER_GUID in
         obj.metadata.additionalProperties):
       size_string = '0'
@@ -203,8 +217,9 @@ class DuCommand(Command):
     def _PrintNothing(unused_blr=None):
       pass
 
-    def _SummaryLine(num_bytes, name):
-      return self._PrintSummaryLine(num_bytes, name)
+    def _PrintDirectory(num_bytes, name):
+      if not self.summary_only:
+        self._PrintSummaryLine(num_bytes, name)
 
     for url_arg in self.args:
       top_level_storage_url = StorageUrlFromString(url_arg)
@@ -217,9 +232,10 @@ class DuCommand(Command):
           self.WildcardIterator, self.logger,
           print_object_func=_PrintObjectLong, print_dir_func=_PrintNothing,
           print_dir_header_func=_PrintNothing,
-          print_dir_summary_func=_SummaryLine, print_newline_func=_PrintNothing,
-          all_versions=self.all_versions, should_recurse=True,
-          exclude_patterns=self.exclude_patterns, fields=bucket_listing_fields)
+          print_dir_summary_func=_PrintDirectory,
+          print_newline_func=_PrintNothing, all_versions=self.all_versions,
+          should_recurse=True, exclude_patterns=self.exclude_patterns,
+          fields=bucket_listing_fields)
 
       # ls_helper expands to objects and prefixes, so perform a top-level
       # expansion first.
@@ -234,16 +250,13 @@ class DuCommand(Command):
                          top_level_storage_url.bucket_name)).IterBuckets(
                              bucket_fields=['id'])
       else:
-        # This is actually a string, not a blr, but we are just using the
-        # string in the below function.
-        top_level_iter = [url_arg]
+        top_level_iter = [BucketListingObject(top_level_storage_url)]
 
-      for blr_or_str in top_level_iter:
-        url_string = str(blr_or_str)
-        storage_url = StorageUrlFromString(url_string)
+      for blr in top_level_iter:
+        storage_url = blr.storage_url
         if storage_url.IsBucket() and self.summary_only:
           storage_url = StorageUrlFromString(
-              '%s://%s/**' % (storage_url.scheme, storage_url.bucket_name))
+              storage_url.CreatePrefixUrl(wildcard_suffix='**'))
         _, exp_objs, exp_bytes = ls_helper.ExpandUrlAndPrint(storage_url)
         if (storage_url.IsObject() and exp_objs == 0 and
             ContainsWildcard(url_arg) and not self.exclude_patterns):
@@ -251,7 +264,7 @@ class DuCommand(Command):
         total_bytes += exp_bytes
 
         if self.summary_only:
-          self._PrintSummaryLine(exp_bytes, url_string.rstrip('/'))
+          self._PrintSummaryLine(exp_bytes, blr.url_string.rstrip('/'))
 
     if self.produce_total:
       self._PrintSummaryLine(total_bytes, 'total')

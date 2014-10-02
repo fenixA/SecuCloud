@@ -1,3 +1,104 @@
+Release 4.6 (release date: 2014-09-08)
+=======================================
+
+Bug Fixes
+---------
+- Fixed a TypeError bug that occurred in perfdiag write throughput tests.
+- Fixed an rsync bug that caused invalid symlinks to abort the transfer
+  even when -e option was specified.
+- Fixed a perfdiag assumption that ipaddrlist was populated.
+- Fixed an AttributeError when setting an invalid canned ACL with defacl set.
+- Fixed a bug where non-resumable uploads would include payload in debug output
+  when for running in debug mode (-D).
+
+Other Changes
+-------------
+- Added the proxy_rdns configuration variable for clients that
+  do DNS lookups via a proxy.
+- Added the state_dir configuration variable for choosing the location of
+  gsutil's internal state files, including resumable transfer tracker files.
+  resumable_tracker_dir configuration variable is now deprecated.
+- Added DNS, connection latency, and proxy use information to perfdiag
+  command.
+- perfdiag command will not perform DNS lookups if they are disabled in
+  boto config.
+- perfdiag command will now only attempt to delete uploaded objects when
+  running write tests.
+- Added code coverage support to test command.
+- rsync -d now succeeds on a 404 for a to-be-deleted object (for example, when
+  the object was already deleted by an external process).
+
+Release 4.5 (release date: 2014-08-14)
+=======================================
+
+Bug Fixes
+---------
+- Fixed a bug that caused resumable uploads to restart if gsutil was
+  terminated with CTRL-C.
+- Fixed a bug in defacl ch command that caused a failure when updating
+  an existing default object ACL entry.
+- Fixed an invalid literal bug during rsync file listing.
+- Made several improvements to JSON upload stability, including fixing a bug
+  which occasionally caused resumable upload hashes not to catch up properly.
+- All JSON calls now have socket timeouts, eliminating hangs under
+  flaky network conditions.
+- Fixed a bug where acl ch -g AllAuthenticatedUsers would instead add
+  AllUsers.
+- Fixed a bug that caused object custom metadata not to be preserved when
+  copying in the cloud.
+- Fixed a bug where du -s did not properly elide subdirectories.
+
+Other Changes
+-------------
+- Parallel composite uploads are now disabled by default until crcmod is
+  available in major Linux distributions. To re-enable the setting from
+  prior versions, in the [GSUtil] section of your .boto config file, add:
+  parallel_composite_upload_threshold=150M
+- Non-wildcarded URLs for existing objects now use Get before trying List
+  (as in gsutil3), and thus are not subject to eventual listing consistency.
+- gsutil -D now redacts proxy configuration values in the output.
+
+Release 4.4 (release date: 2014-07-17)
+=======================================
+
+New Features
+------------
+- Added the hash command, which can calculate hashes of local files.
+  gsutil already calculates hashes for integrity checking, but this allows
+  the user to separately calculate the MD5 and CRC32c hashes of a local file.
+
+Bug Fixes
+---------
+- Many improvements to JSON API media transfers, including far
+  more robust retry logic.
+- Fixed "File changed during upload: EOF..." errors on XML resumable uploads.
+- Fixed rsync command to read and write index files in binary mode.
+- Fix potential TypeError in _CheckAndHandleCredentialException.
+- Fixed possible data corruption when using JSON API uploads for
+  small files with lines starting with "From:", which would cause
+  integrity checks to fail.
+- Fixed gsutil cp to skip directory placeholders when downloading, avoiding
+  "directory exists where the file needs to be created" errors.
+- Fixed daisy chain cp/rsync for files >= 100MB.
+- Fixed a bug in JSON proxy support where the proxy info was sometimes unused.
+- Fixed a bug where an acl get on a private default object ACL returned an
+  error instead of a blank ACL.
+- Fixed a JSON API issue with large HTTP responses on 32-bit systems.
+
+Other Changes
+-------------
+- Improved object listing performance when using the XML API.
+- Improved various error messages.
+- Improved progress display during media transfer.
+- Switched to truncated exponential backoff for retries.
+- Improved OS-specific ulimit checks.
+- Added some information such as OS and Cloud SDK wrapping to gsutil version,
+  and changed the output format to be more uniform.
+- Daisy chain cp/rsync now supports resumable uploads.
+- Improved proxy support for proxy username and passwords.
+- x-amz headers are now supported for cp, rsync, and setmeta.  x-amz-meta
+  headers continue to be supported as well.
+
 Release 4.3 (release date: 2014-06-10)
 =======================================
 
@@ -89,6 +190,8 @@ Major New Gsutil Version - Backwards-Incompatible Changes
 - All commands using the global -m option or a force option (such as 
   rm -f or cp -c) will now return a non-zero exit code if there are any
   failures during the operation.
+- MD5 and CRC32c values are now represented in base64 encoding instead
+  of hex encoding (this includes manifest files).
 
 New Features
 ------------

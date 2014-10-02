@@ -1,5 +1,5 @@
-# Copyright 2010 Google Inc. All Rights Reserved.
 # -*- coding: utf-8 -*-
+# Copyright 2010 Google Inc. All Rights Reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the
@@ -28,6 +28,8 @@ make small incremental changes and rerun the tests frequently. Additional
 end-to-end tests (which send traffic to the production Google Cloud Storage
 service) are available via the gsutil test command.
 """
+
+from __future__ import absolute_import
 
 import gzip
 import os
@@ -102,11 +104,13 @@ class GsutilNamingTests(testcase.GsUtilUnitTestCase):
     src_file1 = self.CreateTempFile(file_name='f1')
     dst_bucket_uri = self.CreateBucket()
     self.RunCommand('cp', [src_file0, src_file1, suri(dst_bucket_uri)])
-    actual = list(self._test_wildcard_iterator(
+    actual = set(str(u) for u in self._test_wildcard_iterator(
         suri(dst_bucket_uri, '**')).IterAll(expand_top_level_buckets=True))
-    self.assertEqual(2, len(actual))
-    self.assertEqual('f0', actual[0].root_object.name)
-    self.assertEqual('f1', actual[1].root_object.name)
+    expected = set([
+        suri(dst_bucket_uri, 'f0'),
+        suri(dst_bucket_uri, 'f1'),
+    ])
+    self.assertEqual(expected, actual)
 
   # @PerformsFileToObjectUpload
   def testCopyingNestedFileToBucketSubdir(self):
@@ -123,11 +127,13 @@ class GsutilNamingTests(testcase.GsUtilUnitTestCase):
     # Make an object under subdir so next copy will treat subdir as a subdir.
     self.RunCommand('cp', [src_file, suri(dst_bucket_uri, 'subdir/a')])
     self.RunCommand('cp', [src_file, suri(dst_bucket_uri, 'subdir')])
-    actual = list(self._test_wildcard_iterator(
+    actual = set(str(u) for u in self._test_wildcard_iterator(
         suri(dst_bucket_uri, '**')).IterObjects())
-    self.assertEqual(2, len(actual))
-    self.assertEqual('subdir/a', actual[0].root_object.name)
-    self.assertEqual('subdir/obj', actual[1].root_object.name)
+    expected = set([
+        suri(dst_bucket_uri, 'subdir', 'a'),
+        suri(dst_bucket_uri, 'subdir', 'obj'),
+    ])
+    self.assertEqual(expected, actual)
 
   # @PerformsFileToObjectUpload
   def testCopyingAbsolutePathDirToBucket(self):
@@ -342,10 +348,10 @@ class GsutilNamingTests(testcase.GsUtilUnitTestCase):
     dst_bucket_uri = self.CreateBucket(test_objects=['dstobj'])
     self.RunCommand('cp', [suri(src_bucket_uri, 'obj'),
                            '%s*' % dst_bucket_uri.uri])
-    actual = list(self._test_wildcard_iterator(
+    actual = set(str(u) for u in self._test_wildcard_iterator(
         suri(dst_bucket_uri, '*')).IterAll(expand_top_level_buckets=True))
-    self.assertEqual(1, len(actual))
-    self.assertEqual('dstobj', actual[0].root_object.name)
+    expected = set([suri(dst_bucket_uri, 'dstobj')])
+    self.assertEqual(expected, actual)
 
   def testCopyingObjsAndFilesToDir(self):
     """Tests copying objects and files to a directory."""
@@ -1074,10 +1080,10 @@ class GsutilNamingTests(testcase.GsUtilUnitTestCase):
     return uri.uri.rpartition('/')[-1]
 
   def testFileContainingColon(self):
-    uri_str = 'abc:def'
-    uri = StorageUrlFromString(uri_str)
-    self.assertEqual('file', uri.scheme)
-    self.assertEqual('file://%s' % uri_str, uri.GetUrlString())
+    url_str = 'abc:def'
+    url = StorageUrlFromString(url_str)
+    self.assertEqual('file', url.scheme)
+    self.assertEqual('file://%s' % url_str, url.url_string)
 
 
 # TODO: These should all be moved to their own test_*.py testing files.

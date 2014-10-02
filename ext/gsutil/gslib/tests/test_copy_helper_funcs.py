@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +22,7 @@ from gslib.copy_helper import _ParseParallelUploadTrackerFile
 from gslib.copy_helper import FilterExistingComponents
 from gslib.copy_helper import ObjectFromTracker
 from gslib.copy_helper import PerformParallelUploadFileToObjectArgs
-from gslib.hashing_helper import CalculateMd5FromContents
+from gslib.hashing_helper import CalculateB64EncodedMd5FromContents
 from gslib.storage_url import StorageUrlFromString
 from gslib.tests.mock_cloud_api import MockCloudApi
 from gslib.tests.testcase.unit_testcase import GsUtilUnitTestCase
@@ -149,7 +150,7 @@ class TestCpFuncs(GsUtilUnitTestCase):
         self.default_provider, bucket_name,
         fpath_uploaded_correctly))
     with open(fpath_uploaded_correctly) as f_in:
-      fpath_uploaded_correctly_md5 = CalculateMd5FromContents(f_in)
+      fpath_uploaded_correctly_md5 = CalculateB64EncodedMd5FromContents(f_in)
     mock_api.MockCreateObjectWithMetadata(
         apitools_messages.Object(bucket=bucket_name,
                                  name=fpath_uploaded_correctly,
@@ -179,7 +180,7 @@ class TestCpFuncs(GsUtilUnitTestCase):
     object_wrong_contents_url = StorageUrlFromString('%s://%s/%s' % (
         self.default_provider, bucket_name, fpath_wrong_contents))
     with open(self.CreateTempFile(contents='_')) as f_in:
-      fpath_wrong_contents_md5 = CalculateMd5FromContents(f_in)
+      fpath_wrong_contents_md5 = CalculateB64EncodedMd5FromContents(f_in)
     mock_api.MockCreateObjectWithMetadata(
         apitools_messages.Object(bucket=bucket_name,
                                  name=fpath_wrong_contents,
@@ -202,7 +203,7 @@ class TestCpFuncs(GsUtilUnitTestCase):
     # Exists in tracker file and already uploaded, but no longer needed.
     fpath_no_longer_used = self.CreateTempFile(file_name='foo6', contents='6')
     with open(fpath_no_longer_used) as f_in:
-      file_md5 = CalculateMd5FromContents(f_in)
+      file_md5 = CalculateB64EncodedMd5FromContents(f_in)
     mock_api.MockCreateObjectWithMetadata(
         apitools_messages.Object(bucket=bucket_name,
                                  name='foo6', md5Hash=file_md5), contents='6')
@@ -227,13 +228,13 @@ class TestCpFuncs(GsUtilUnitTestCase):
     for arg in [args_not_uploaded, args_wrong_contents, args_remote_deleted]:
       self.assertTrue(arg in components_to_upload)
     self.assertEqual(1, len(uploaded_components))
-    self.assertEqual(args_uploaded_correctly.dst_url.GetUrlString(),
-                     uploaded_components[0].GetUrlString())
+    self.assertEqual(args_uploaded_correctly.dst_url.url_string,
+                     uploaded_components[0].url_string)
     self.assertEqual(1, len(existing_objects_to_delete))
     no_longer_used_url = StorageUrlFromString('%s://%s/%s' % (
         self.default_provider, bucket_name, fpath_no_longer_used))
-    self.assertEqual(no_longer_used_url.GetUrlString(),
-                     existing_objects_to_delete[0].GetUrlString())
+    self.assertEqual(no_longer_used_url.url_string,
+                     existing_objects_to_delete[0].url_string)
 
   def test_FilterExistingComponentsVersioned(self):
     """Tests upload with versionined parallel components."""
@@ -254,7 +255,7 @@ class TestCpFuncs(GsUtilUnitTestCase):
     fpath_uploaded_correctly_url = StorageUrlFromString(
         str(fpath_uploaded_correctly))
     with open(fpath_uploaded_correctly) as f_in:
-      fpath_uploaded_correctly_md5 = CalculateMd5FromContents(f_in)
+      fpath_uploaded_correctly_md5 = CalculateB64EncodedMd5FromContents(f_in)
     object_uploaded_correctly = mock_api.MockCreateObjectWithMetadata(
         apitools_messages.Object(bucket=bucket_name,
                                  name=fpath_uploaded_correctly,
@@ -289,7 +290,7 @@ class TestCpFuncs(GsUtilUnitTestCase):
     fpath_wrong_contents = self.CreateTempFile(file_name='foo4', contents='4')
     fpath_wrong_contents_url = StorageUrlFromString(str(fpath_wrong_contents))
     with open(self.CreateTempFile(contents='_')) as f_in:
-      fpath_wrong_contents_md5 = CalculateMd5FromContents(f_in)
+      fpath_wrong_contents_md5 = CalculateB64EncodedMd5FromContents(f_in)
     object_wrong_contents = mock_api.MockCreateObjectWithMetadata(
         apitools_messages.Object(bucket=bucket_name,
                                  name=fpath_wrong_contents,
@@ -322,8 +323,8 @@ class TestCpFuncs(GsUtilUnitTestCase):
                                  bucket_url, mock_api))
 
     self.assertEqual([args_wrong_contents], components_to_upload)
-    self.assertEqual(args_uploaded_correctly.dst_url.GetUrlString(),
-                     uploaded_components[0].GetUrlString())
+    self.assertEqual(args_uploaded_correctly.dst_url.url_string,
+                     uploaded_components[0].url_string)
     expected_to_delete = [(args_wrong_contents.dst_url.object_name,
                            args_wrong_contents.dst_url.generation),
                           (args_duplicate.dst_url.object_name,

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +14,12 @@
 # limitations under the License.
 """Implementation of versioning configuration command for buckets."""
 
+from __future__ import absolute_import
+
 from gslib.command import Command
 from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
 from gslib.help_provider import CreateHelpText
-from gslib.storage_url import StorageUrlFromString
 from gslib.third_party.storage_apitools import storage_v1_messages as apitools_messages
 from gslib.util import NO_MAX
 
@@ -53,7 +55,7 @@ _DESCRIPTION = """
   The gsutil versioning command has two sub-commands:
 """ + _SET_DESCRIPTION + _GET_DESCRIPTION
 
-_detailed_help_text = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
+_DETAILED_HELP_TEXT = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
 
 _get_help_text = CreateHelpText(_GET_SYNOPSIS, _GET_DESCRIPTION)
 _set_help_text = CreateHelpText(_SET_SYNOPSIS, _SET_DESCRIPTION)
@@ -82,7 +84,7 @@ class VersioningCommand(Command):
       help_type='command_help',
       help_one_line_summary=(
           'Enable or suspend versioning for one or more buckets'),
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={'get': _get_help_text, 'set': _set_help_text},
   )
 
@@ -110,7 +112,7 @@ class VersioningCommand(Command):
     for url_str in url_args:
       bucket_iter = self.GetBucketUrlIterFromArg(url_str, bucket_fields=['id'])
       for blr in bucket_iter:
-        url = StorageUrlFromString(blr.url_string)
+        url = blr.storage_url
         some_matched = True
         bucket_metadata = apitools_messages.Bucket(
             versioning=apitools_messages.Bucket.VersioningValue())

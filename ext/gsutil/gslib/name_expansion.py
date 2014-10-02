@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,12 +24,12 @@ the various rules for determining how these expansions are done.
 # an interface which does not follow lint guidelines.
 # pylint: disable=invalid-name
 
+from __future__ import absolute_import
+
 import multiprocessing
 import os
 import sys
 
-from gslib.bucket_listing_ref import BucketListingRef
-from gslib.bucket_listing_ref import BucketListingRefType
 from gslib.exception import CommandException
 from gslib.plurality_checkable_iterator import PluralityCheckableIterator
 import gslib.wildcard_iterator
@@ -52,63 +53,24 @@ class NameExpansionResult(object):
   in _NameExpansionIterator.
   """
 
-  def __init__(self, src_url_str, is_multi_src_request,
-               src_url_expands_to_multi, names_container, blr,
-               have_existing_dst_container=None):
+  def __init__(self, source_storage_url, is_multi_source_request,
+               names_container, expanded_storage_url):
     """Instantiates a result from name expansion.
 
     Args:
-      src_url_str: string representation of URL that was expanded.
-      is_multi_src_request: bool indicator whether src_url_str expanded to more
-          than one BucketListingRef.
-      src_url_expands_to_multi: bool indicator whether the current src_url
-          expanded to more than one BucketListingRef.
+      source_storage_url: StorageUrl that was being expanded.
+      is_multi_source_request: bool indicator whether src_url_str expanded to
+          more than one BucketListingRef.
       names_container: Bool indicator whether src_url names a container.
-      blr: BucketListingRef that was expanded.
-      have_existing_dst_container: bool indicator whether this is a copy
-          request to an existing bucket, bucket subdir, or directory. Default
-          None value should be used in cases where this is not needed (commands
-          other than cp).
+      expanded_storage_url: StorageUrl that was expanded.
     """
-    self.src_url_str = src_url_str
-    self.is_multi_src_request = is_multi_src_request
-    self.src_url_expands_to_multi = src_url_expands_to_multi
+    self.source_storage_url = source_storage_url
+    self.is_multi_source_request = is_multi_source_request
     self.names_container = names_container
-    self.blr_url_string = blr.GetUrlString()
-    self.blr_type = blr.ref_type
-    self.have_existing_dst_container = have_existing_dst_container
+    self.expanded_storage_url = expanded_storage_url
 
   def __repr__(self):
-    return '%s' % self.blr_url_string
-
-  def GetSrcUrlStr(self):
-    #  Returns: the string representation of the URL that was expanded.
-    return self.src_url_str
-
-  def IsMultiSrcRequest(self):
-    # Returns bool indicator whether name expansion resulted in more than one
-    # BucketListingRef.
-    return self.is_multi_src_request
-
-  def SrcUrlExpandsToMulti(self):
-    # Returns bool indicator whether the current src_url expanded to more than
-    # one BucketListingRef.
-    return self.src_url_expands_to_multi
-
-  def NamesContainer(self):
-    # Returns bool indicator of whether src_url names a directory, bucket, or
-    # bucket subdir.
-    return self.names_container
-
-  def GetExpandedUrlStr(self):
-    # Returns the string representation of URL to which src_url_str expands.
-    return self.blr_url_string
-
-  def HaveExistingDstContainer(self):
-    # Returns bool indicator whether this is a copy request to an
-    # existing bucket, bucket subdir, or directory, or None if not
-    # relevant.
-    return self.have_existing_dst_container
+    return '%s' % self._expanded_storage_url
 
 
 class _NameExpansionIterator(object):
@@ -117,9 +79,8 @@ class _NameExpansionIterator(object):
   See details in __iter__ function doc.
   """
 
-  def __init__(self, command_name, debug, logger,
-               gsutil_api, url_strs, recursion_requested,
-               have_existing_dst_container=None, all_versions=False,
+  def __init__(self, command_name, debug, logger, gsutil_api, url_strs,
+               recursion_requested, all_versions=False,
                cmd_supports_recursion=True, project_id=None,
                continue_on_error=False):
     """Creates a NameExpansionIterator.
@@ -133,10 +94,6 @@ class _NameExpansionIterator(object):
       recursion_requested: True if -R specified on command-line.  If so,
           listings will be flattened so mapped-to results contain objects
           spanning subdirectories.
-      have_existing_dst_container: Bool indicator whether this is a copy
-          request to an existing bucket, bucket subdir, or directory. Default
-          None value should be used in cases where this is not needed (commands
-          other than cp).
       all_versions: Bool indicating whether to iterate over all object versions.
       cmd_supports_recursion: Bool indicating whether this command supports a
           '-R' flag. Useful for printing helpful error messages.
@@ -179,7 +136,6 @@ class _NameExpansionIterator(object):
     self.gsutil_api = gsutil_api
     self.url_strs = url_strs
     self.recursion_requested = recursion_requested
-    self.have_existing_dst_container = have_existing_dst_container
     self.all_versions = all_versions
     # Check self.url_strs.HasPlurality() at start because its value can change
     # if url_strs is itself an iterator.
@@ -216,11 +172,7 @@ class _NameExpansionIterator(object):
         if self.url_strs.has_plurality:
           raise CommandException('Multiple URL strings are not supported '
                                  'with streaming ("-") URLs.')
-        yield NameExpansionResult(url_str, self.url_strs.has_plurality,
-                                  self.url_strs.has_plurality, False,
-                                  BucketListingRef(url_str,
-                                                   BucketListingRefType.OBJECT),
-                                  self.have_existing_dst_container)
+        yield NameExpansionResult(storage_url, False, False, storage_url)
         continue
 
       # Step 1: Expand any explicitly specified wildcards. The output from this
@@ -283,8 +235,8 @@ class _NameExpansionIterator(object):
           self.cmd_supports_recursion, self.logger))
 
       src_url_expands_to_multi = post_step3_iter.HasPlurality()
-      is_multi_src_request = (self.url_strs.has_plurality
-                              or src_url_expands_to_multi)
+      is_multi_source_request = (self.url_strs.has_plurality
+                                 or src_url_expands_to_multi)
 
       # Step 4. Expand directories and buckets. This step yields the iterated
       # values. Starting with gs://bucket this step would expand to:
@@ -294,10 +246,10 @@ class _NameExpansionIterator(object):
       for (names_container, blr) in post_step3_iter:
         src_names_container = src_names_bucket or names_container
 
-        if blr.ref_type == BucketListingRefType.OBJECT:
+        if blr.IsObject():
           yield NameExpansionResult(
-              url_str, is_multi_src_request, src_url_expands_to_multi,
-              src_names_container, blr, self.have_existing_dst_container)
+              storage_url, is_multi_source_request, src_names_container,
+              blr.storage_url)
         else:
           # Use implicit wildcarding to do the enumeration.
           # At this point we are guaranteed that:
@@ -305,29 +257,27 @@ class _NameExpansionIterator(object):
           #   filtered in step 3 otherwise.
           # - This is a prefix or bucket subdirectory because only
           #   non-recursive iterations product bucket references.
-          expanded_url = StorageUrlFromString(blr.GetUrlString())
+          expanded_url = StorageUrlFromString(blr.url_string)
           if expanded_url.IsFileUrl():
             # Convert dir to implicit recursive wildcard.
             url_to_iterate = '%s%s%s' % (blr, os.sep, subdir_exp_wildcard)
           else:
             # Convert subdir to implicit recursive wildcard.
-            stripped_url = expanded_url.GetVersionlessUrlStringStripOneSlash()
-            url_to_iterate = '%s/%s' % (stripped_url,
-                                        subdir_exp_wildcard)
+            url_to_iterate = expanded_url.CreatePrefixUrl(
+                wildcard_suffix=subdir_exp_wildcard)
 
           wc_iter = PluralityCheckableIterator(
               self.WildcardIterator(url_to_iterate).IterObjects(
                   bucket_listing_fields=['name']))
           src_url_expands_to_multi = (src_url_expands_to_multi
                                       or wc_iter.HasPlurality())
-          is_multi_src_request = (self.url_strs.has_plurality
-                                  or src_url_expands_to_multi)
+          is_multi_source_request = (self.url_strs.has_plurality
+                                     or src_url_expands_to_multi)
           # This will be a flattened listing of all underlying objects in the
           # subdir.
           for blr in wc_iter:
             yield NameExpansionResult(
-                url_str, is_multi_src_request, src_url_expands_to_multi,
-                True, blr, self.have_existing_dst_container)
+                storage_url, is_multi_source_request, True, blr.storage_url)
 
   def WildcardIterator(self, url_string):
     """Helper to instantiate gslib.WildcardIterator.
@@ -347,11 +297,10 @@ class _NameExpansionIterator(object):
         project_id=self.project_id)
 
 
-def NameExpansionIterator(command_name, debug, logger, gsutil_api,
-                          url_strs, recursion_requested,
-                          have_existing_dst_container=None,
-                          all_versions=False, cmd_supports_recursion=True,
-                          project_id=None, continue_on_error=False):
+def NameExpansionIterator(command_name, debug, logger, gsutil_api, url_strs,
+                          recursion_requested, all_versions=False,
+                          cmd_supports_recursion=True, project_id=None,
+                          continue_on_error=False):
   """Static factory function for instantiating _NameExpansionIterator.
 
   This wraps the resulting iterator in a PluralityCheckableIterator and checks
@@ -367,10 +316,6 @@ def NameExpansionIterator(command_name, debug, logger, gsutil_api,
     recursion_requested: True if -R specified on command-line.  If so,
         listings will be flattened so mapped-to results contain objects
         spanning subdirectories.
-    have_existing_dst_container: Bool indicator whether this is a copy
-        request to an existing bucket, bucket subdir, or directory. Default
-        None value should be used in cases where this is not needed (commands
-        other than cp).
     all_versions: Bool indicating whether to iterate over all object versions.
     cmd_supports_recursion: Bool indicating whether this command supports a '-R'
         flag. Useful for printing helpful error messages.
@@ -388,10 +333,8 @@ def NameExpansionIterator(command_name, debug, logger, gsutil_api,
   """
   url_strs = PluralityCheckableIterator(url_strs)
   name_expansion_iterator = _NameExpansionIterator(
-      command_name, debug, logger,
-      gsutil_api, url_strs, recursion_requested,
-      have_existing_dst_container, all_versions=all_versions,
-      cmd_supports_recursion=cmd_supports_recursion,
+      command_name, debug, logger, gsutil_api, url_strs, recursion_requested,
+      all_versions=all_versions, cmd_supports_recursion=cmd_supports_recursion,
       project_id=project_id, continue_on_error=continue_on_error)
   name_expansion_iterator = PluralityCheckableIterator(name_expansion_iterator)
   if name_expansion_iterator.IsEmpty():
@@ -519,21 +462,20 @@ class _OmitNonRecursiveIterator(object):
 
   def __iter__(self):
     for (names_container, blr) in self.tuple_iter:
-      if (not self.recursion_requested and
-          blr.ref_type != BucketListingRefType.OBJECT):
+      if not self.recursion_requested and not blr.IsObject():
         # At this point we either have a bucket or a prefix,
         # so if recursion is not requested, we're going to omit it.
-        expanded_url = StorageUrlFromString(blr.GetUrlString())
+        expanded_url = StorageUrlFromString(blr.url_string)
         if expanded_url.IsFileUrl():
           desc = 'directory'
         else:
-          desc = blr.ref_type
+          desc = blr.type_name
         if self.cmd_supports_recursion:
           self.logger.info(
               'Omitting %s "%s". (Did you mean to do %s -R?)',
-              desc, blr.GetUrlString(), self.command_name)
+              desc, blr.url_string, self.command_name)
         else:
-          self.logger.info('Omitting %s "%s".', desc, blr.GetUrlString())
+          self.logger.info('Omitting %s "%s".', desc, blr.url_string)
       else:
         yield (names_container, blr)
 
@@ -567,15 +509,13 @@ class _ImplicitBucketSubdirIterator(object):
 
   def __iter__(self):
     for blr in self.blr_iter:
-      if blr.ref_type == BucketListingRefType.PREFIX:
+      if blr.IsPrefix():
         # This is a bucket subdirectory, list objects according to the wildcard.
-        # Strip a '/' from the prefix url to handle objects ending in /.
-        prefix_url = StorageUrlFromString(
-            blr.GetUrlString()).GetVersionlessUrlStringStripOneSlash()
+        prefix_url = StorageUrlFromString(blr.url_string).CreatePrefixUrl(
+            wildcard_suffix=self.subdir_exp_wildcard)
         implicit_subdir_iterator = PluralityCheckableIterator(
             self.name_exp_instance.WildcardIterator(
-                '%s/%s' % (prefix_url, self.subdir_exp_wildcard)).IterAll(
-                    bucket_listing_fields=['name']))
+                prefix_url).IterAll(bucket_listing_fields=['name']))
         if not implicit_subdir_iterator.IsEmpty():
           for exp_blr in implicit_subdir_iterator:
             yield (True, exp_blr)
@@ -583,7 +523,7 @@ class _ImplicitBucketSubdirIterator(object):
           # Prefix that contains no objects, for example in the $folder$ case
           # or an empty filesystem directory.
           yield (False, blr)
-      elif blr.ref_type == BucketListingRefType.OBJECT:
+      elif blr.IsObject():
         yield (False, blr)
       else:
         raise CommandException(

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2010 Google Inc. All Rights Reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -22,6 +23,8 @@
 
 The exceptions in this module are for use across multiple different classes.
 """
+
+from __future__ import absolute_import
 
 
 class AbortException(StandardError):

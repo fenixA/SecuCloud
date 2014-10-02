@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,12 +14,13 @@
 # limitations under the License.
 """Implementation of gsutil test command."""
 
-# Get the system logging module, not our local logging module.
 from __future__ import absolute_import
 
 import logging
+import os
 import subprocess
 import sys
+import tempfile
 import textwrap
 import time
 
@@ -46,11 +48,17 @@ except ImportError as e:
     raise
 
 
+try:
+  import coverage
+except ImportError:
+  coverage = None
+
+
 DEFAULT_TEST_PARALLEL_PROCESSES = 15
 DEFAULT_S3_TEST_PARALLEL_PROCESSES = 50
 
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil test [-l] [-u] [-f] [command command...]
 
@@ -118,13 +126,22 @@ _detailed_help_text = ("""
 
     gsutil test -l cp
 
+  To output test coverage:
+
+    gsutil -m test -c -p 500
+    coverage html
+
+  This will output an HTML report to a directory named 'htmlcov'.
+
 
 <B>OPTIONS</B>
+  -c          Output coverage information.
+
   -f          Exit on first test failure.
 
   -l          List available tests.
 
-  -p          Run at most N tests in parallel. The default value is %d.
+  -p N        Run at most N tests in parallel. The default value is %d.
 
   -s          Run tests against S3 instead of GS.
 
@@ -237,7 +254,7 @@ def CountFalseInList(input_list):
 
 
 def CreateTestProcesses(parallel_tests, test_index, process_list, process_done,
-                        max_parallel_tests):
+                        max_parallel_tests, root_coverage_file=None):
   """Creates test processes to run tests in parallel.
 
   Args:
@@ -248,22 +265,26 @@ def CreateTestProcesses(parallel_tests, test_index, process_list, process_done,
     process_done: List of booleans indicating process completion. One 'False'
                   will be added per process created.
     max_parallel_tests: Maximum number of tests to run in parallel.
+    root_coverage_file: The root .coverage filename if coverage is requested.
 
   Returns:
     Index of last created test.
   """
   orig_test_index = test_index
-  executable_prefix = [sys.executable] if sys.executable else []
+  executable_prefix = [sys.executable] if sys.executable and IS_WINDOWS else []
   s3_argument = ['-s'] if tests.util.RUN_S3_TESTS else []
 
   process_create_start_time = time.time()
   last_log_time = process_create_start_time
   while (CountFalseInList(process_done) < max_parallel_tests and
          test_index < len(parallel_tests)):
+    env = os.environ.copy()
+    if root_coverage_file:
+      env['GSUTIL_COVERAGE_OUTPUT_FILE'] = root_coverage_file
     process_list.append(subprocess.Popen(
         executable_prefix + [gslib.GSUTIL_PATH] + ['test'] + s3_argument +
         [parallel_tests[test_index][len('gslib.tests.test_'):]],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE))
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env))
     test_index += 1
     process_done.append(False)
     if time.time() - last_log_time > 5:
@@ -286,7 +307,7 @@ class TestCommand(Command):
       command_name_aliases=[],
       min_args=0,
       max_args=NO_MAX,
-      supported_sub_args='uflp:s',
+      supported_sub_args='uflp:sc',
       file_url_ok=True,
       provider_url_ok=False,
       urls_start_arg=0,
@@ -297,7 +318,7 @@ class TestCommand(Command):
       help_name_aliases=[],
       help_type='command_help',
       help_one_line_summary='Run gsutil tests',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -310,10 +331,11 @@ class TestCommand(Command):
     failfast = False
     list_tests = False
     max_parallel_tests = DEFAULT_TEST_PARALLEL_PROCESSES
+    perform_coverage = False
     if self.sub_opts:
       for o, a in self.sub_opts:
-        if o == '-u':
-          tests.util.RUN_INTEGRATION_TESTS = False
+        if o == '-c':
+          perform_coverage = True
         elif o == '-f':
           failfast = True
         elif o == '-l':
@@ -326,15 +348,22 @@ class TestCommand(Command):
                                    'add appropriate credentials to your .boto '
                                    'file and re-run.')
           tests.util.RUN_S3_TESTS = True
+        elif o == '-u':
+          tests.util.RUN_INTEGRATION_TESTS = False
+
+    if perform_coverage and not coverage:
+      raise CommandException(
+          'Coverage has been requested but the coverage module was not found. '
+          'You can install it with "pip install coverage".')
 
     if self.parallel_operations:
       if IS_WINDOWS:
         raise CommandException('-m test is not supported on Windows.')
       elif (tests.util.RUN_S3_TESTS and
             max_parallel_tests > DEFAULT_S3_TEST_PARALLEL_PROCESSES):
-        self.logger.warn('Reducing parallel tests to %d due to S3 '
-                         'maximum bucket limitations.' %
-                         DEFAULT_S3_TEST_PARALLEL_PROCESSES)
+        self.logger.warn(
+            'Reducing parallel tests to %d due to S3 maximum bucket '
+            'limitations.', DEFAULT_S3_TEST_PARALLEL_PROCESSES)
         max_parallel_tests = DEFAULT_S3_TEST_PARALLEL_PROCESSES
 
     test_names = sorted(GetTestNames())
@@ -377,6 +406,17 @@ class TestCommand(Command):
       verbosity = 2
       logging.disable(logging.ERROR)
 
+    if perform_coverage:
+      # We want to run coverage over the gslib module, but filter out the test
+      # modules and any third-party code. We also filter out anything under the
+      # temporary directory. Otherwise, the gsutil update test (which copies
+      # code to the temporary directory) gets included in the output.
+      coverage_controller = coverage.coverage(
+          source=['gslib'], omit=['gslib/third_party/*', 'gslib/tests/*',
+                                  tempfile.gettempdir() + '*'])
+      coverage_controller.erase()
+      coverage_controller.start()
+
     num_parallel_failures = 0
     if self.parallel_operations:
       sequential_tests, parallel_integration_tests, parallel_unit_tests = (
@@ -418,7 +458,8 @@ class TestCommand(Command):
       parallel_start_time = last_log_time = time.time()
       test_index = CreateTestProcesses(
           parallel_integration_tests, 0, process_list, process_done,
-          max_parallel_tests)
+          max_parallel_tests,
+          coverage_controller.data.filename if perform_coverage else None)
       while len(process_results) < num_parallel_tests:
         for proc_num in xrange(len(process_list)):
           if process_done[proc_num] or process_list[proc_num].poll() is None:
@@ -434,7 +475,8 @@ class TestCommand(Command):
         if len(process_list) < num_parallel_tests:
           test_index = CreateTestProcesses(
               parallel_integration_tests, test_index, process_list,
-              process_done, max_parallel_tests)
+              process_done, max_parallel_tests,
+              coverage_controller.data.filename if perform_coverage else None)
         if len(process_results) < num_parallel_tests:
           if time.time() - last_log_time > 5:
             print '%d/%d finished - %d failures' % (
@@ -488,6 +530,13 @@ class TestCommand(Command):
                                        resultclass=resultclass,
                                        failfast=failfast)
       ret = runner.run(suite)
+
+    if perform_coverage:
+      coverage_controller.stop()
+      coverage_controller.combine()
+      coverage_controller.save()
+      print ('Coverage information was saved to: %s' %
+             coverage_controller.data.filename)
 
     if ret.wasSuccessful() and not num_parallel_failures:
       ResetFailureCount()

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2010 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Base class for gsutil commands.
 
 In addition to base class code, this file contains helpers that depend on base
@@ -20,6 +20,8 @@ class state and that are used by multiple commands belong in this file.
 Functions that don't depend on class state belong in util.py, and non-shared
 helpers belong in individual subclasses.
 """
+
+from __future__ import absolute_import
 
 import codecs
 from collections import namedtuple
@@ -105,7 +107,7 @@ def CreateGsutilLogger(command_name):
 def _UrlArgChecker(command_instance, url):
   if not command_instance.exclude_symlinks:
     return True
-  exp_src_url = StorageUrlFromString(url.GetExpandedUrlStr())
+  exp_src_url = url.expanded_storage_url
   if exp_src_url.IsFileUrl() and os.path.islink(exp_src_url.object_name):
     command_instance.logger.info('Skipping symbolic link %s...', exp_src_url)
     return False
@@ -529,13 +531,13 @@ class Command(HelpProvider):
   # Shared helper functions that depend on base class state. #
   ############################################################
 
-  def ApplyAclFunc(self, acl_func, acl_excep_handler, url_args):
+  def ApplyAclFunc(self, acl_func, acl_excep_handler, url_strs):
     """Sets the standard or default object ACL depending on self.command_name.
 
     Args:
       acl_func: ACL function to be passed to Apply.
       acl_excep_handler: ACL exception handler to be passed to Apply.
-      url_args: URLs on which to set ACL.
+      url_strs: URL strings on which to set ACL.
 
     Raises:
       CommandException if an ACL could not be set.
@@ -545,25 +547,25 @@ class Command(HelpProvider):
     # our threading machinery currently assumes it's working with objects
     # (name_expansion_iterator), and normally we wouldn't expect users to need
     # to set ACLs on huge numbers of buckets at once anyway.
-    for i in range(len(url_args)):
-      url = StorageUrlFromString(url_args[i])
+    for url_str in url_strs:
+      url = StorageUrlFromString(url_str)
       if url.IsCloudUrl() and url.IsBucket():
         if self.recursion_requested:
           # If user specified -R option, convert any bucket args to bucket
           # wildcards (e.g., gs://bucket/*), to prevent the operation from
           # being applied to the buckets themselves.
           url.object_name = '*'
-          multi_threaded_url_args.append(url.GetUrlString())
+          multi_threaded_url_args.append(url.url_string)
         else:
           # Convert to a NameExpansionResult so we can re-use the threaded
           # function for the single-threaded implementation.  RefType is unused.
-          for blr in self.WildcardIterator(url.GetUrlString()).IterBuckets(
+          for blr in self.WildcardIterator(url.url_string).IterBuckets(
               bucket_fields=['id']):
-            name_expansion_for_url = NameExpansionResult(url_args[i], False,
-                                                         False, False, blr)
+            name_expansion_for_url = NameExpansionResult(
+                url, False, False, blr.storage_url)
             acl_func(self, name_expansion_for_url)
       else:
-        multi_threaded_url_args.append(url_args[i])
+        multi_threaded_url_args.append(url_str)
 
     if len(multi_threaded_url_args) >= 1:
       name_expansion_iterator = NameExpansionIterator(
@@ -594,9 +596,9 @@ class Command(HelpProvider):
       gsutil_api = thread_state
     else:
       gsutil_api = self.gsutil_api
-    url_string = name_expansion_result.GetExpandedUrlStr()
-    url = StorageUrlFromString(url_string)
-    self.logger.info('Setting ACL on %s...' % url_string)
+    op_string = 'default object ACL' if self.def_acl else 'ACL'
+    url = name_expansion_result.expanded_storage_url
+    self.logger.info('Setting %s on %s...', op_string, url)
     if ((gsutil_api.GetApiSelector(url.scheme) == ApiSelector.XML
          and url.scheme != 'gs') or self.canned):
       # If we are using canned ACLs or interacting with a non-google ACL
@@ -607,7 +609,7 @@ class Command(HelpProvider):
         orig_prefer_api = gsutil_api.prefer_api
         gsutil_api.prefer_api = ApiSelector.XML
         gsutil_api.XmlPassThroughSetAcl(
-            self.acl_arg, url_string, canned=self.canned,
+            self.acl_arg, url, canned=self.canned,
             def_obj_acl=self.def_acl, provider=url.scheme)
         gsutil_api.prefer_api = orig_prefer_api
       except ServiceException as e:
@@ -722,7 +724,7 @@ class Command(HelpProvider):
       # Need to use XML passthrough.
       try:
         acl = self.gsutil_api.XmlPassThroughGetAcl(
-            blr.GetUrlString(), def_obj_acl=self.def_acl, provider=url.scheme)
+            url, def_obj_acl=self.def_acl, provider=url.scheme)
         print acl.to_xml()
       except AccessDeniedException, _:
         self._WarnServiceAccounts()
@@ -730,14 +732,21 @@ class Command(HelpProvider):
     else:
       if self.command_name == 'defacl':
         acl = blr.root_object.defaultObjectAcl
+        if not acl:
+          self.logger.warn(
+              'No default object ACL present for %s. This could occur if '
+              'the default object ACL is private, in which case objects '
+              'created in this bucket will be readable only by their '
+              'creators. It could also mean you do not have OWNER permission '
+              'on %s and therefore do not have permission to read the '
+              'default object ACL.', url_str, url_str)
       else:
         acl = blr.root_object.acl
-      if not acl:
-        self._WarnServiceAccounts()
-        raise AccessDeniedException('Access denied. Please ensure you have '
-                                    'OWNER permission on %s.' % url_str)
-      else:
-        print AclTranslation.JsonFromMessage(acl)
+        if not acl:
+          self._WarnServiceAccounts()
+          raise AccessDeniedException('Access denied. Please ensure you have '
+                                      'OWNER permission on %s.' % url_str)
+      print AclTranslation.JsonFromMessage(acl)
 
   def GetAclCommandBucketListingReference(self, url_str):
     """Gets a single bucket listing reference for an acl get command.
@@ -757,7 +766,7 @@ class Command(HelpProvider):
     wildcard_url = StorageUrlFromString(url_str)
     if wildcard_url.IsObject():
       plurality_iter = PluralityCheckableIterator(
-          self.WildcardIterator(url_str).IterAll(
+          self.WildcardIterator(url_str).IterObjects(
               bucket_listing_fields=['acl']))
     else:
       # Bucket or provider.  We call IterBuckets explicitly here to ensure that
@@ -814,8 +823,8 @@ class Command(HelpProvider):
       raise CommandException(
           '%s matched more than one URL, which is not\n'
           'allowed by the %s command' % (arg, self.command_name))
-    blr = list(plurality_checkable_iterator)
-    return StorageUrlFromString(blr[0].GetUrlString()), blr[0].root_object
+    blr = list(plurality_checkable_iterator)[0]
+    return StorageUrlFromString(blr.url_string), blr.root_object
 
   def GetBucketUrlIterFromArg(self, arg, bucket_fields=None):
     """Gets a single bucket URL based on the command arguments.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Integration tests for perfdiag command."""
+
+from __future__ import absolute_import
+
 import socket
 
 import gslib.tests.testcase as testcase
@@ -50,6 +54,9 @@ class TestPerfDiag(testcase.GsUtilIntegrationTestCase):
     if self.test_api == 'XML':
       self.RunGsUtil(self._custom_endpoint_flags + cmd)
 
+  def test_write_throughput_single_process_single_thread(self):
+    self._run_basic_wthru_or_rthru('wthru', 1, 1)
+
   def test_write_throughput_single_process_multi_thread(self):
     self._run_basic_wthru_or_rthru('wthru', 1, 2)
 
@@ -60,6 +67,9 @@ class TestPerfDiag(testcase.GsUtilIntegrationTestCase):
   @unittest.skipIf(IS_WINDOWS, 'Multiprocessing is not supported on Windows')
   def test_write_throughput_multi_process_multi_thread(self):
     self._run_basic_wthru_or_rthru('wthru', 2, 2)
+
+  def test_read_throughput_single_process_single_thread(self):
+    self._run_basic_wthru_or_rthru('rthru', 1, 1)
 
   def test_read_throughput_single_process_multi_thread(self):
     self._run_basic_wthru_or_rthru('rthru', 1, 2)

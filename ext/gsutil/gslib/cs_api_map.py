@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """API map classes used with the CloudApiDelegator class."""
+
+from __future__ import absolute_import
 
 from gslib.boto_translation import BotoTranslation
 from gslib.gcs_json_api import GcsJsonApi
@@ -77,7 +80,6 @@ class GsutilApiMapFactory(object):
         (value) Default ApiSelector for this command and provider.
       }
     }
-
   """
 
   @classmethod

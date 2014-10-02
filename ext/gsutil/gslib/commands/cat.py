@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 # Copyright 2011, Nexenta Systems Inc.
 #
@@ -14,6 +15,8 @@
 # limitations under the License.
 """Implementation of Unix-like cat command for cloud storage providers."""
 
+from __future__ import absolute_import
+
 import re
 
 from gslib.cat_helper import CatHelper
@@ -22,7 +25,7 @@ from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
 from gslib.util import NO_MAX
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil cat [-h] url...
 
@@ -88,7 +91,7 @@ class CatCommand(Command):
       help_name_aliases=[],
       help_type='command_help',
       help_one_line_summary='Concatenate object content to stdout',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 

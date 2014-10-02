@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of setmeta command for setting cloud object metadata."""
+
+from __future__ import absolute_import
 
 from gslib.cloud_api import AccessDeniedException
 from gslib.cloud_api import PreconditionException
@@ -28,7 +31,7 @@ from gslib.util import NO_MAX
 from gslib.util import Retry
 
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
     gsutil setmeta [-n] -h [header:value|header] ... url...
 
@@ -134,7 +137,7 @@ class SetMetaCommand(Command):
       help_name_aliases=['setheader'],
       help_type='command_help',
       help_one_line_summary='Set metadata on already uploaded objects',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -149,7 +152,7 @@ class SetMetaCommand(Command):
               'removed in the future.\nPlease use gsutil acl set ... to set '
               'canned ACLs.')
         elif o == '-h':
-          if 'x-goog-acl' in a:
+          if 'x-goog-acl' in a or 'x-amz-acl' in a:
             raise CommandException(
                 'gsutil setmeta no longer allows canned ACLs. Use gsutil acl '
                 'set ... to set canned ACLs.')
@@ -200,8 +203,7 @@ class SetMetaCommand(Command):
     """
     gsutil_api = GetCloudApiInstance(self, thread_state=thread_state)
 
-    exp_src_url = StorageUrlFromString(
-        name_expansion_result.GetExpandedUrlStr())
+    exp_src_url = name_expansion_result.expanded_storage_url
     self.logger.info('Setting metadata on %s...', exp_src_url)
 
     fields = ['generation', 'metadata', 'metageneration']

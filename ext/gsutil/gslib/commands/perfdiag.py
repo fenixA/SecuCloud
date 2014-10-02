@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,10 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 """Contains the perfdiag gsutil command."""
 
-# Get the system logging module, not our local logging module.
 from __future__ import absolute_import
 
 import calendar
@@ -53,6 +52,7 @@ from gslib.hashing_helper import CalculateB64EncodedMd5FromContents
 from gslib.storage_url import StorageUrlFromString
 from gslib.third_party.storage_apitools import storage_v1_messages as apitools_messages
 from gslib.util import GetCloudApiInstance
+from gslib.util import GetMaxRetryDelay
 from gslib.util import HumanReadableToBytes
 from gslib.util import IS_LINUX
 from gslib.util import MakeBitsHumanReadable
@@ -60,7 +60,7 @@ from gslib.util import MakeHumanReadable
 from gslib.util import Percentile
 from gslib.util import ResumableThreshold
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil perfdiag [-i in.json] [-o out.json] [-n iterations] [-c processes]
   [-k threads] [-s size] [-t tests] url...
@@ -165,8 +165,9 @@ _detailed_help_text = ("""
 <B>NOTE</B>
   The perfdiag command collects system information. It collects your IP address,
   executes DNS queries to Google servers and collects the results, and collects
-  network statistics information from the output of netstat -s. None of this
-  information will be sent to Google unless you choose to send it.
+  network statistics information from the output of netstat -s. It will also
+  attempt to connect to your proxy server if you have one configured. None of
+  this information will be sent to Google unless you choose to send it.
 """)
 
 
@@ -230,7 +231,7 @@ class PerfDiagCommand(Command):
       help_name_aliases=[],
       help_type='command_help',
       help_one_line_summary='Run performance diagnostic',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -244,13 +245,22 @@ class PerfDiagCommand(Command):
       1048576,  # 1MB
   )
 
-  # List of all diagnostic tests.
-  ALL_DIAG_TESTS = ('rthru', 'wthru', 'lat', 'list')
-  # List of diagnostic tests to run by default.
-  DEFAULT_DIAG_TESTS = ('rthru', 'wthru', 'lat')
+  # Test names.
+  RTHRU = 'rthru'
+  WTHRU = 'wthru'
+  LAT = 'lat'
+  LIST = 'list'
 
-  # Google Cloud Storage API endpoint host.
-  GOOGLE_API_HOST = boto.gs.connection.GSConnection.DefaultHost
+  # List of all diagnostic tests.
+  ALL_DIAG_TESTS = (RTHRU, WTHRU, LAT, LIST)
+  # List of diagnostic tests to run by default.
+  DEFAULT_DIAG_TESTS = (RTHRU, WTHRU, LAT)
+
+  # Google Cloud Storage XML API endpoint host.
+  XML_API_HOST = boto.config.get(
+      'Credentials', 'gs_host', boto.gs.connection.GSConnection.DefaultHost)
+  # Google Cloud Storage XML API endpoint port.
+  XML_API_PORT = boto.config.get('Credentials', 'gs_port', 80)
 
   # Maximum number of times to retry requests on 5xx errors.
   MAX_SERVER_ERROR_RETRIES = 5
@@ -368,19 +378,19 @@ class PerfDiagCommand(Command):
       except OSError:
         pass
 
-    cleanup_files = [self.thru_local_file, self.tcp_warmup_file]
-    for f in cleanup_files:
+    if self.LAT in self.diag_tests or self.WTHRU in self.diag_tests:
+      cleanup_files = [self.thru_local_file, self.tcp_warmup_file]
+      for f in cleanup_files:
 
-      def _Delete():
-        try:
-          self.gsutil_api.DeleteObject(self.bucket_url.bucket_name,
-                                       os.path.basename(f),
-                                       provider=self.provider)
-        except NotFoundException as e:
-          if e.status != 404:
-            raise
+        def _Delete():
+          try:
+            self.gsutil_api.DeleteObject(self.bucket_url.bucket_name,
+                                         os.path.basename(f),
+                                         provider=self.provider)
+          except NotFoundException:
+            pass
 
-      self._RunOperation(_Delete)
+        self._RunOperation(_Delete)
 
   @contextlib.contextmanager
   def _Time(self, key, bucket):
@@ -423,7 +433,7 @@ class PerfDiagCommand(Command):
     i = 0
     return_val = None
     while not success:
-      next_sleep = random.random() * (2 ** i) + 1
+      next_sleep = min(random.random() * (2 ** i) + 1, GetMaxRetryDelay())
       try:
         return_val = func()
         self.total_requests += 1
@@ -464,15 +474,14 @@ class PerfDiagCommand(Command):
       self.logger.info('\nRunning latency iteration %d...', i+1)
       for fpath in self.latency_files:
         basename = os.path.basename(fpath)
-        url = StorageUrlFromString(str(self.bucket_url))
+        url = self.bucket_url.Clone()
         url.object_name = basename
         file_size = self.file_sizes[fpath]
         readable_file_size = MakeHumanReadable(file_size)
 
         self.logger.info(
-            "\nFile of size %(size)s located on disk at '%(fpath)s' being "
-            "diagnosed in the cloud at '%(url)s'."
-            % {'size': readable_file_size, 'fpath': fpath, 'url': url})
+            "\nFile of size %s located on disk at '%s' being diagnosed in the "
+            "cloud at '%s'.", readable_file_size, fpath, url)
 
         upload_target = StorageUrlToUploadObjectMetadata(url)
 
@@ -529,12 +538,10 @@ class PerfDiagCommand(Command):
                                        'threads': self.threads}
 
     # Copy the TCP warmup file.
-    warmup_url = StorageUrlFromString(str(self.bucket_url))
+    warmup_url = self.bucket_url.Clone()
     warmup_url.object_name = os.path.basename(self.tcp_warmup_file)
     warmup_target = StorageUrlToUploadObjectMetadata(warmup_url)
 
-    # TODO: gsutil-beta: Need to disable dumping payloads at debuglevel==2
-    # for JSON API, because it dumps the entire warmup file.
     def _Upload1():
       self.gsutil_api.UploadObject(
           cStringIO.StringIO(self.file_contents[self.tcp_warmup_file]),
@@ -542,8 +549,8 @@ class PerfDiagCommand(Command):
     self._RunOperation(_Upload1)
 
     # Copy the file to remote location before reading.
-    thru_url = StorageUrlFromString(str(self.bucket_url))
-    thru_url.object_name = self.thru_local_file
+    thru_url = self.bucket_url.Clone()
+    thru_url.object_name = os.path.basename(self.thru_local_file)
     thru_target = StorageUrlToUploadObjectMetadata(thru_url)
     thru_target.md5Hash = self.file_md5s[self.thru_local_file]
 
@@ -612,15 +619,21 @@ class PerfDiagCommand(Command):
                                         'processes': self.processes,
                                         'threads': self.threads}
 
-    warmup_url = StorageUrlFromString(str(self.bucket_url))
+    warmup_url = self.bucket_url.Clone()
     warmup_url.object_name = os.path.basename(self.tcp_warmup_file)
     warmup_target = StorageUrlToUploadObjectMetadata(warmup_url)
 
-    thru_url = StorageUrlFromString(str(self.bucket_url))
-    thru_url.object_name = self.thru_local_file
+    thru_url = self.bucket_url.Clone()
+    thru_url.object_name = os.path.basename(self.thru_local_file)
     thru_target = StorageUrlToUploadObjectMetadata(thru_url)
-    thru_tuple = UploadObjectTuple(
-        thru_target.bucket, thru_target.name, filepath=self.thru_local_file)
+    thru_tuples = []
+    for i in xrange(self.num_iterations):
+      # Create a unique name for each uploaded object.  Otherwise,
+      # the XML API would fail when trying to non-atomically get metadata
+      # for the object that gets blown away by the overwrite.
+      thru_tuples.append(UploadObjectTuple(
+          thru_target.bucket, thru_target.name + str(i),
+          filepath=self.thru_local_file))
 
     if self.processes == 1 and self.threads == 1:
       # Warm up the TCP connection.
@@ -633,31 +646,33 @@ class PerfDiagCommand(Command):
 
       times = []
 
-      def _Upload():
-        """Uploads the write throughput measurement object."""
-        upload_target = apitools_messages.Object(bucket=thru_tuple.bucket_name,
-                                                 name=thru_tuple.object_name,
-                                                 md5Hash=thru_tuple.md5)
-        io_fp = cStringIO.StringIO(self.file_contents[self.thru_local_file])
-        t0 = time.time()
-        if self.thru_filesize < ResumableThreshold():
-          self.gsutil_api.UploadObject(
-              io_fp, upload_target, provider=self.provider,
-              size=self.thru_filesize, fields=['name'])
-        else:
-          self.gsutil_api.UploadObjectResumable(
-              io_fp, upload_target, provider=self.provider,
-              size=self.thru_filesize, fields=['name'],
-              tracker_callback=_DummyTrackerCallback)
+      for i in xrange(self.num_iterations):
+        thru_tuple = thru_tuples[i]
+        def _Upload():
+          """Uploads the write throughput measurement object."""
+          upload_target = apitools_messages.Object(
+              bucket=thru_tuple.bucket_name, name=thru_tuple.object_name,
+              md5Hash=thru_tuple.md5)
+          io_fp = cStringIO.StringIO(self.file_contents[self.thru_local_file])
+          t0 = time.time()
+          if self.thru_filesize < ResumableThreshold():
+            self.gsutil_api.UploadObject(
+                io_fp, upload_target, provider=self.provider,
+                size=self.thru_filesize, fields=['name'])
+          else:
+            self.gsutil_api.UploadObjectResumable(
+                io_fp, upload_target, provider=self.provider,
+                size=self.thru_filesize, fields=['name'],
+                tracker_callback=_DummyTrackerCallback)
 
-        t1 = time.time()
-        times.append(t1 - t0)
-      for _ in range(self.num_iterations):
+          t1 = time.time()
+          times.append(t1 - t0)
+
         self._RunOperation(_Upload)
       time_took = sum(times)
 
     else:
-      args = [thru_tuple] * self.num_iterations
+      args = thru_tuples
       t0 = time.time()
       self.Apply(_UploadWrapper,
                  args,
@@ -907,6 +922,16 @@ class PerfDiagCommand(Command):
 
     # Find out whether HTTPS is enabled in Boto.
     sysinfo['boto_https_enabled'] = boto.config.get('Boto', 'is_secure', True)
+
+    # Look up proxy info.
+    proxy_host = boto.config.get('Boto', 'proxy', None)
+    proxy_port = boto.config.getint('Boto', 'proxy_port', 0)
+    sysinfo['using_proxy'] = bool(proxy_host)
+
+    if boto.config.get('Boto', 'proxy_rdns', False):
+      self.logger.info('DNS lookups are disallowed in this environment, so '
+                       'some information is not included in this perfdiag run.')
+
     # Get the local IP address from socket lib.
     try:
       sysinfo['ip_address'] = socket.gethostbyname(socket.gethostname())
@@ -922,19 +947,31 @@ class PerfDiagCommand(Command):
 
     # Execute a CNAME lookup on Google DNS to find what Google server
     # it's routing to.
-    cmd = ['nslookup', '-type=CNAME', self.GOOGLE_API_HOST]
+    cmd = ['nslookup', '-type=CNAME', self.XML_API_HOST]
     try:
       nslookup_cname_output = self._Exec(cmd, return_output=True)
       m = re.search(r' = (?P<googserv>[^.]+)\.', nslookup_cname_output)
       sysinfo['googserv_route'] = m.group('googserv') if m else None
-    except OSError:
+    except (CommandException, OSError):
       sysinfo['googserv_route'] = ''
+
+    # Try to determine the latency of a DNS lookup for the Google hostname
+    # endpoint. Note: we don't piggyback on gethostbyname_ex below because
+    # the _ex version requires an extra RTT.
+    try:
+      t0 = time.time()
+      socket.gethostbyname(self.XML_API_HOST)
+      t1 = time.time()
+      sysinfo['google_host_dns_latency'] = t1 - t0
+    except socket_errors:
+      pass
 
     # Look up IP addresses for Google Server.
     try:
-      (hostname, _, ipaddrlist) = socket.gethostbyname_ex(self.GOOGLE_API_HOST)
+      (hostname, _, ipaddrlist) = socket.gethostbyname_ex(self.XML_API_HOST)
       sysinfo['googserv_ips'] = ipaddrlist
     except socket_errors:
+      ipaddrlist = []
       sysinfo['googserv_ips'] = []
 
     # Reverse lookup the hostnames for the Google Server IPs.
@@ -952,8 +989,42 @@ class PerfDiagCommand(Command):
       nslookup_txt_output = self._Exec(cmd, return_output=True)
       m = re.search(r'text\s+=\s+"(?P<dnsip>[\.\d]+)"', nslookup_txt_output)
       sysinfo['dns_o-o_ip'] = m.group('dnsip') if m else None
-    except OSError:
+    except (CommandException, OSError):
       sysinfo['dns_o-o_ip'] = ''
+
+    # Try to determine the latency of connecting to the Google hostname
+    # endpoint.
+    sysinfo['google_host_connect_latencies'] = {}
+    for googserv_ip in ipaddrlist:
+      try:
+        sock = socket.socket()
+        t0 = time.time()
+        sock.connect((googserv_ip, self.XML_API_PORT))
+        t1 = time.time()
+        sysinfo['google_host_connect_latencies'][googserv_ip] = t1 - t0
+      except socket_errors:
+        pass
+
+    # If using a proxy, try to determine the latency of a DNS lookup to resolve
+    # the proxy hostname and the latency of connecting to the proxy.
+    if proxy_host:
+      proxy_ip = None
+      try:
+        t0 = time.time()
+        proxy_ip = socket.gethostbyname(proxy_host)
+        t1 = time.time()
+        sysinfo['proxy_dns_latency'] = t1 - t0
+      except socket_errors:
+        pass
+
+      try:
+        sock = socket.socket()
+        t0 = time.time()
+        sock.connect((proxy_ip or proxy_host, proxy_port))
+        t1 = time.time()
+        sysinfo['proxy_host_connect_latency'] = t1 - t0
+      except socket_errors:
+        pass
 
     # Try and find the number of CPUs in the system if available.
     try:
@@ -1214,6 +1285,26 @@ class PerfDiagCommand(Command):
       if 'boto_https_enabled' in info:
         print 'Boto HTTPS Enabled: \n  %s' % info['boto_https_enabled']
 
+      if 'using_proxy' in info:
+        print 'Requests routed through proxy: \n  %s' % info['using_proxy']
+
+      if 'google_host_dns_latency' in info:
+        print ('Latency of the DNS lookup for Google Storage server (ms): '
+               '\n  %.1f' % (info['google_host_dns_latency'] * 1000.0))
+
+      if 'google_host_connect_latencies' in info:
+        print 'Latencies connecting to Google Storage server IPs (ms):'
+        for ip, latency in info['google_host_connect_latencies'].iteritems():
+          print '  %s = %.1f' % (ip, latency * 1000.0)
+
+      if 'proxy_dns_latency' in info:
+        print ('Latency of the DNS lookup for the configured proxy (ms): '
+               '\n  %.1f' % (info['proxy_dns_latency'] * 1000.0))
+
+      if 'proxy_host_connect_latency' in info:
+        print ('Latency connecting to the configured proxy (ms): \n  %.1f' %
+               (info['proxy_host_connect_latency'] * 1000.0))
+
     if 'request_errors' in self.results and 'total_requests' in self.results:
       print
       print '-' * 78
@@ -1335,8 +1426,8 @@ class PerfDiagCommand(Command):
       raise CommandException('Wrong number of arguments for "perfdiag" '
                              'command.')
 
-    self.provider = StorageUrlFromString(self.args[0]).scheme
     self.bucket_url = StorageUrlFromString(self.args[0])
+    self.provider = self.bucket_url.scheme
     if not (self.bucket_url.IsCloudUrl() and self.bucket_url.IsBucket()):
       raise CommandException('The perfdiag command requires a URL that '
                              'specifies a bucket.\n"%s" is not '
@@ -1389,13 +1480,13 @@ class PerfDiagCommand(Command):
       self.results['json_format'] = 'perfdiag'
       self.results['metadata'] = self.metadata_keys
 
-      if 'lat' in self.diag_tests:
+      if self.LAT in self.diag_tests:
         self._RunLatencyTests()
-      if 'rthru' in self.diag_tests:
+      if self.RTHRU in self.diag_tests:
         self._RunReadThruTests()
-      if 'wthru' in self.diag_tests:
+      if self.WTHRU in self.diag_tests:
         self._RunWriteThruTests()
-      if 'list' in self.diag_tests:
+      if self.LIST in self.diag_tests:
         self._RunListTests()
 
       # Collect netstat info and disk counters after tests.

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +14,11 @@
 # limitations under the License.
 """Additional help about subdirectory handling in gsutil."""
 
+from __future__ import absolute_import
+
 from gslib.help_provider import HelpProvider
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>OVERVIEW</B>
   This section provides details about how subdirectories work in gsutil.
   Most users probably don't need to know these details, and can simply use
@@ -99,12 +102,12 @@ class CommandOptions(HelpProvider):
 
   # Help specification. See help_provider.py for documentation.
   help_spec = HelpProvider.HelpSpec(
-      help_name = 'subdirs',
-      help_name_aliases = [
+      help_name='subdirs',
+      help_name_aliases=[
           'dirs', 'directory', 'directories', 'folder', 'folders', 'hierarchy',
           'subdir', 'subdirectory', 'subdirectories'],
-      help_type = 'additional_help',
-      help_one_line_summary = 'How Subdirectories Work',
-      help_text = _detailed_help_text,
-      subcommand_help_text = {},
+      help_type='additional_help',
+      help_one_line_summary='How Subdirectories Work',
+      help_text=_DETAILED_HELP_TEXT,
+      subcommand_help_text={},
   )

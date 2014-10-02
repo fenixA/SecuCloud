@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +14,11 @@
 # limitations under the License.
 """Additional help about Google Cloud Storage projects."""
 
+from __future__ import absolute_import
+
 from gslib.help_provider import HelpProvider
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>OVERVIEW</B>
   This section discusses how to work with projects in Google Cloud Storage.
 
@@ -36,7 +39,7 @@ _detailed_help_text = ("""
   These projects make it easy to set up a bucket and start uploading objects
   with access control appropriate for a project at your company, as the three
   group memberships can be configured by your administrative staff. Control
-  over projects and their associated memberships is provided by the 
+  over projects and their associated memberships is provided by the
   `Google Developers Console <https://cloud.google.com/console#/project>`_.
 
 
@@ -78,7 +81,7 @@ _detailed_help_text = ("""
   the gsutil ls -p option, respectively). The project's name shown in the
   Google Developers Console is a user-friendly name that you can choose; this is
   not the project ID required by the gsutil mb and ls commands. To find the
-  project ID, go to the Cloud Storage pane in the Google Developers Console. 
+  project ID, go to the Cloud Storage pane in the Google Developers Console.
   The project ID is listed as "Project Number" in the Overview pane of your
   project.
 """)
@@ -89,11 +92,12 @@ class CommandOptions(HelpProvider):
 
   # Help specification. See help_provider.py for documentation.
   help_spec = HelpProvider.HelpSpec(
-      help_name = 'projects',
-      help_name_aliases = ['apis console', 'cloud console', 'console',
-                           'dev console', 'project', 'proj', 'project-id'],
-      help_type = 'additional_help',
-      help_one_line_summary = 'Working With Projects',
-      help_text = _detailed_help_text,
-      subcommand_help_text = {},
+      help_name='projects',
+      help_name_aliases=[
+          'apis console', 'cloud console', 'console', 'dev console', 'project',
+          'proj', 'project-id'],
+      help_type='additional_help',
+      help_one_line_summary='Working With Projects',
+      help_text=_DETAILED_HELP_TEXT,
+      subcommand_help_text={},
   )

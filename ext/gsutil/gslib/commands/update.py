@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of update command for updating gsutil."""
+
 from __future__ import absolute_import
 
 import os
@@ -26,7 +28,6 @@ import gslib
 from gslib.command import Command
 from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
-from gslib.storage_url import StorageUrlFromString
 from gslib.util import CERTIFICATE_VALIDATION_ENABLED
 from gslib.util import CompareVersions
 from gslib.util import GetBotoConfigFileList
@@ -37,7 +38,7 @@ from gslib.util import LookUpGsutilVersion
 from gslib.util import RELEASE_NOTES_URL
 
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil update [-f] [-n] [uri]
 
@@ -106,7 +107,7 @@ class UpdateCommand(Command):
       help_name_aliases=['refresh'],
       help_type='command_help',
       help_one_line_summary='Update to the latest gsutil release',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -179,17 +180,26 @@ class UpdateCommand(Command):
 
     # Won't fail - this command runs after main startup code that insists on
     # having a config file.
-    config_files = ' '.join(GetBotoConfigFileList())
+    config_file_list = GetBotoConfigFileList()
+    config_files = ' '.join(config_file_list)
     self._CleanUpUpdateCommand(tf, dirs_to_remove)
+
+    # Pick current protection of each boto config file for command that restores
+    # protection (rather than fixing at 600) to support use cases like how GCE
+    # installs a service account with an /etc/boto.cfg file protected to 644.
+    chmod_cmds = []
+    for config_file in config_file_list:
+      mode = oct(stat.S_IMODE((os.stat(config_file)[stat.ST_MODE])))
+      chmod_cmds.append('\n\tsudo chmod %s %s' % (mode, config_file))
+
     raise CommandException('\n'.join(textwrap.wrap(
         'Since it was installed by a different user previously, you will need '
         'to update using the following commands. You will be prompted for your '
         'password, and the install will run as "root". If you\'re unsure what '
         'this means please ask your system administrator for help:')) + (
-            '\n\tsudo chmod 644 %s\n\tsudo env BOTO_CONFIG="%s" gsutil update'
-            '\n\tsudo chmod 600 %s') %
-                           (config_files, config_files, config_files),
-                           informational=True)
+            '\n\tsudo chmod 0644 %s\n\tsudo env BOTO_CONFIG="%s" %s update'
+            '%s') % (config_files, config_files, self.gsutil_path,
+                     ' '.join(chmod_cmds)), informational=True)
 
   # This list is checked during gsutil update by doing a lowercased
   # slash-left-stripped check. For example "/Dev" would match the "dev" entry.
@@ -250,9 +260,18 @@ class UpdateCommand(Command):
 
     if gslib.IS_PACKAGE_INSTALL:
       raise CommandException(
-          'Update command is only available for gsutil installed from a '
+          'The update command is only available for gsutil installed from a '
           'tarball. If you installed gsutil via another method, use the same '
           'method to update it.')
+
+    if os.environ.get('CLOUDSDK_WRAPPER') == '1':
+      raise CommandException(
+          'The update command is disabled for Cloud SDK installs. Please run '
+          '"gcloud components update" to update it. Note: the Cloud SDK '
+          'incorporates updates to the underlying tools approximately every 2 '
+          'weeks, so if you are attempting to update to a recently created '
+          'release / pre-release of gsutil it may not yet be available via '
+          'the Cloud SDK.')
 
     https_validate_certificates = CERTIFICATE_VALIDATION_ENABLED
     if not https_validate_certificates:
@@ -287,7 +306,7 @@ class UpdateCommand(Command):
         if i > 0:
           raise CommandException(
               'Invalid update URI. Must name a single .tar.gz file.')
-        storage_url = StorageUrlFromString(result.GetUrlString())
+        storage_url = result.storage_url
         if storage_url.IsFileUrl() and not storage_url.IsDirectory():
           if not force_update:
             raise CommandException(

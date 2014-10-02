@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +14,11 @@
 # limitations under the License.
 """Additional help about Access Control Lists."""
 
+from __future__ import absolute_import
+
 from gslib.help_provider import HelpProvider
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>OVERVIEW</B>
   Access Control Lists (ACLs) allow you to control who can read and write
   your data, and who can read and write the ACLs themselves.
@@ -191,11 +194,12 @@ class CommandOptions(HelpProvider):
 
   # Help specification. See help_provider.py for documentation.
   help_spec = HelpProvider.HelpSpec(
-      help_name = 'acls',
-      help_name_aliases = ['ACL', 'access control', 'access control list',
-                           'authorization', 'canned', 'canned acl'],
-      help_type = 'additional_help',
-      help_one_line_summary = 'Working With Access Control Lists',
-      help_text = _detailed_help_text,
-      subcommand_help_text = {},
+      help_name='acls',
+      help_name_aliases=[
+          'ACL', 'access control', 'access control list', 'authorization',
+          'canned', 'canned acl'],
+      help_type='additional_help',
+      help_one_line_summary='Working With Access Control Lists',
+      help_text=_DETAILED_HELP_TEXT,
+      subcommand_help_text={},
   )

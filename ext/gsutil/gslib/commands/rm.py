@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +14,8 @@
 # limitations under the License.
 """Implementation of Unix-like rm command for cloud storage providers."""
 
+from __future__ import absolute_import
+
 from gslib.cloud_api import NotEmptyException
 from gslib.cloud_api import ServiceException
 from gslib.command import Command
@@ -27,7 +30,7 @@ from gslib.util import NO_MAX
 from gslib.util import Retry
 
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil rm [-f] [-R] url...
 
@@ -145,7 +148,7 @@ class RmCommand(Command):
       help_name_aliases=['del', 'delete', 'remove'],
       help_type='command_help',
       help_one_line_summary='Remove objects',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -174,8 +177,7 @@ class RmCommand(Command):
         if url.IsBucket() or url.IsProvider():
           for blr in self.WildcardIterator(url_str).IterBuckets(
               bucket_fields=bucket_fields):
-            bucket_urls_to_delete.append(
-                StorageUrlFromString(blr.GetUrlString()))
+            bucket_urls_to_delete.append(blr.storage_url)
             bucket_strings_to_delete.append(url_str)
 
     # Used to track if any files failed to be removed.
@@ -249,7 +251,7 @@ class RmCommand(Command):
           if not e.reason.startswith('No URLs matched:'):
             raise
         if not had_previous_failures:
-          ResetFailureCount()          
+          ResetFailureCount()
 
     # Now that all data has been deleted, delete any bucket URLs.
     for url in bucket_urls_to_delete:
@@ -266,10 +268,8 @@ class RmCommand(Command):
   def RemoveFunc(self, name_expansion_result, thread_state=None):
     gsutil_api = GetCloudApiInstance(self, thread_state=thread_state)
 
-    exp_src_url = StorageUrlFromString(
-        name_expansion_result.GetExpandedUrlStr())
-    self.logger.info('Removing %s...',
-                     name_expansion_result.GetExpandedUrlStr())
+    exp_src_url = name_expansion_result.expanded_storage_url
+    self.logger.info('Removing %s...', exp_src_url)
     gsutil_api.DeleteObject(
         exp_src_url.bucket_name, exp_src_url.object_name,
         generation=exp_src_url.generation, provider=exp_src_url.scheme)
