@@ -22,13 +22,14 @@ import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
 import model.InformationContainerStorer;
+import model.cc.CloudConnectorGoogleGsutilTEMP;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
 	public static final int AES_KEY_LEN = 16;
 	public static final int AES_BLOCK_SIZE = 16;
 	public static final String USER_HOME = System.getProperty("user.home");
-	
+
 	public static final String DOWNLOAD_EXTENSION = ".down";
 	public static final String UPLOAD_EXTENSION = ".up";
 
@@ -64,7 +65,7 @@ public class Main {
 	public String getUSER_DOWNLOAD_DIR() {
 		return USER_DOWNLOAD_DIR;
 	}
-	
+
 	public String getUSER_TEMP_DIR() {
 		return USER_TEMP_DIR;
 	}
@@ -165,6 +166,8 @@ public class Main {
 			this.informationContainerStorer = new InformationContainerStorer(
 					this.userPassword);
 			this.informationContainerStorer.loadFileList();
+			FileListHandler.getInstance().synchronizeCloudStorage(
+					new CloudConnectorGoogleGsutilTEMP().listDir());
 			this.drawMainWindow();
 		} else {
 			drawLoginWindow();

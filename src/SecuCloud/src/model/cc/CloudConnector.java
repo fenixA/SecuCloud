@@ -1,5 +1,7 @@
 package model.cc;
 
+import java.util.Vector;
+
 import model.InformationContainer;
 
 public interface CloudConnector {
@@ -8,7 +10,7 @@ public interface CloudConnector {
 
 	public boolean download(InformationContainer informationContainer);
 
-	public void listDir();
+	public Vector<String> listDir();
 	
 	public boolean remove(InformationContainer informationContainer);
 }

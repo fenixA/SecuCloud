@@ -1,6 +1,7 @@
 package model.cc;
 
 import java.io.*;
+import java.util.Vector;
 
 import model.InformationContainer;
 import control.Main;
@@ -62,8 +63,9 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	}
 
 	@Override
-	public void listDir() {
+	public Vector<String> listDir() {
 		System.out.println("CloudConnectorGoogleGsutilTEMP.listDir()");
+		Vector<String> result = new Vector<String>();
 		try {
 			Process listProcess = Runtime.getRuntime().exec(
 					new String[] {
@@ -80,13 +82,15 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 				if (line == null) {
 					break;
 				}
-				System.out.println(line);
+				String tmp = line.replaceAll(GS_PROTOCOL + Main.getInstance().getBucket() + "/", "");
+				result.add(tmp);
 			}
 		} catch (IOException listDirIOException) {
 			System.out.println(listDirIOException.toString());
 		} catch (InterruptedException listDirInterruptException) {
 			System.out.println(listDirInterruptException.toString());
 		}
+		return result;
 	}
 
 	public boolean remove(InformationContainer informationContainer) {
