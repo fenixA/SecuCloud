@@ -8,7 +8,7 @@ public interface CloudConnector {
 
 	public boolean download(InformationContainer informationContainer);
 
-	public void listDir(String path);
+	public void listDir();
 	
 	public boolean remove(InformationContainer informationContainer);
 }

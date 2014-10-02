@@ -57,13 +57,14 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	}
 
 	@Override
-	public void listDir(String path) {
+	public void listDir() {
+		System.out.println("CloudConnectorGoogleGsutilTEMP.listDir()");
 		try {
 			Process listProcess = Runtime.getRuntime().exec(
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_LIST, GS_PROTOCOL, path });
+							CMD_LIST, GS_PROTOCOL + Main.getInstance().getBucket()});
 			listProcess.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					listProcess.getInputStream()));
