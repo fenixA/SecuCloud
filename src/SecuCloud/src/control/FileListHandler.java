@@ -12,19 +12,13 @@ public class FileListHandler {
 		return this.fileList;
 	}
 
-	public void addFile(InformationContainer ic) {
-		this.fileList.add(ic);
+	public void addFile(InformationContainer informationContainer) {
+		this.fileList.add(informationContainer);
 		Main.getInstance().drawMainWindow();
-		System.out.println("Filehandler.addFile()");
 	}
 	
-	public void deleteFile(InformationContainer ic) {
-		this.fileList.remove(ic);
-		Main.getInstance().drawMainWindow();
-		System.out.println("Filehandler.removeFile()");
-	}
-
-	public void purgeFile(InformationContainer ic) {
+	public void deleteFile(InformationContainer informationContainer) {
+		this.fileList.remove(informationContainer);
 		Main.getInstance().drawMainWindow();
 	}
 
@@ -38,9 +32,9 @@ public class FileListHandler {
 
 	public InformationContainer selectByEncryptedName(
 			String encryptedName) {
-		for(InformationContainer ic : fileList ){
-			if (ic.getEncryptedName().equals(encryptedName)){
-				return ic;
+		for(InformationContainer informationContainer : fileList ){
+			if (informationContainer.getEncryptedName().equals(encryptedName)){
+				return informationContainer;
 			}
 		}
 		return null;
