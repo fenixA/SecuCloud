@@ -139,7 +139,7 @@ public final class CryptToolbox {
 		String encryptedName = generateLocationString();
 		InformationContainer informationContainer = new InformationContainer(
 				selectedFile.getAbsolutePath(), Main.getInstance()
-						.getUSER_ENCRYPTED_DATA_DIR() + "/" + encryptedName,
+						.getUSER_TEMP_DIR() + "/" + encryptedName,
 				encryptedName, selectedFile.getName(), tempKey,
 				Encryption.AES_CTR);
 		Thread t = new Thread(new ThreaderInstanceCreator(command.encryptUploadFile,

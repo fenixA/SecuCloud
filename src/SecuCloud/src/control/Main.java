@@ -22,19 +22,20 @@ import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
 import model.InformationContainerStorer;
-import model.cc.CloudConnectorGoogleGsutilTEMP;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
 	public static final int AES_KEY_LEN = 16;
 	public static final int AES_BLOCK_SIZE = 16;
 	public static final String USER_HOME = System.getProperty("user.home");
+	
+	public static final String DOWNLOAD_EXTENSION = ".down";
+	public static final String UPLOAD_EXTENSION = ".up";
 
 	private String ROOT_DIR;
 	private String SETTINGS_FILE;
 	private String USER_DIR;
 	private String USER_DATA_DIR;
-	private String USER_ENCRYPTED_DIR;
 	private String USER_DOWNLOAD_DIR;
 	private String USER_TEMP_DIR;
 
@@ -52,10 +53,6 @@ public class Main {
 	public Vector<Thread> threadVector = new Vector<Thread>();
 
 	// getter n setter
-	public String getUSER_ENCRYPTED_DATA_DIR() {
-		return USER_ENCRYPTED_DIR;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -138,12 +135,6 @@ public class Main {
 			user_dir.mkdir();
 		}
 		USER_DIR = user_dir.getAbsolutePath();
-		File user_encrypted_dir = new File(USER_DIR + "/encrypted");
-		if (!user_encrypted_dir.exists()) {
-			user_encrypted_dir.mkdir();
-		}
-		USER_ENCRYPTED_DIR = user_encrypted_dir.getAbsolutePath();
-		System.out.println(USER_ENCRYPTED_DIR);
 		File user_data_dir = new File(USER_DIR + "/data");
 		if (!user_data_dir.exists()) {
 			user_data_dir.mkdir();

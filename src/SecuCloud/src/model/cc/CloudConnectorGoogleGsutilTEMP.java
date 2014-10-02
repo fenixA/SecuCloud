@@ -10,20 +10,22 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	private static final String GS_PROTOCOL = "gs://";
 	private static final String CMD_COPY = "cp";
 	private static final String CMD_LIST = "ls";
-//	private static final String CMD_CREATEBUCKET = "mb";
-//	private static final String CMD_MOVE = "mv";
+	// private static final String CMD_CREATEBUCKET = "mb";
+	// private static final String CMD_MOVE = "mv";
 	private static final String CMD_DELETE = "rm";
-	
-	
+
 	@Override
 	public InformationContainer upload(InformationContainer informationContainer) {
 		try {
-			Process uploadProcess = Runtime.getRuntime().exec(
-					new String[] {
+			Process uploadProcess = Runtime
+					.getRuntime()
+					.exec(new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_COPY, informationContainer.getLocalEncryptedLocation(),
-							GS_PROTOCOL +  informationContainer.getCloudLocation() });
+							CMD_COPY,
+							informationContainer.getLocalEncryptedLocation(),
+							GS_PROTOCOL
+									+ informationContainer.getCloudLocation() });
 			uploadProcess.waitFor();
 		} catch (IOException uploadIOException) {
 			System.out.println(uploadIOException.toString());
@@ -42,14 +44,17 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_COPY, GS_PROTOCOL + informationContainer.getCloudLocation(),
-							Main.getInstance().getUSER_TEMP_DIR() + "/" + informationContainer.getName() });
+							CMD_COPY,
+							GS_PROTOCOL
+									+ informationContainer.getCloudLocation(),
+							Main.getInstance().getUSER_TEMP_DIR() + "/"
+									+ informationContainer.getEncryptedName()
+									+ Main.DOWNLOAD_EXTENSION });
 			downloadProcess.waitFor();
 		} catch (IOException downloadIOException) {
 			System.out.println(downloadIOException.toString());
 			return false;
-		}
-		catch (InterruptedException downloadInterruptException) {
+		} catch (InterruptedException downloadInterruptException) {
 			System.out.println(downloadInterruptException.toString());
 			return false;
 		}
@@ -64,7 +69,8 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_LIST, GS_PROTOCOL + Main.getInstance().getBucket()});
+							CMD_LIST,
+							GS_PROTOCOL + Main.getInstance().getBucket() });
 			listProcess.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					listProcess.getInputStream()));
@@ -78,26 +84,26 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 			}
 		} catch (IOException listDirIOException) {
 			System.out.println(listDirIOException.toString());
-		}
-		catch (InterruptedException listDirInterruptException) {
+		} catch (InterruptedException listDirInterruptException) {
 			System.out.println(listDirInterruptException.toString());
 		}
 	}
 
 	public boolean remove(InformationContainer informationContainer) {
 		try {
-			Process deleteProcess = Runtime.getRuntime().exec(
-					new String[] {
+			Process deleteProcess = Runtime
+					.getRuntime()
+					.exec(new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_DELETE, GS_PROTOCOL + informationContainer.getCloudLocation()
-							});
+							CMD_DELETE,
+							GS_PROTOCOL
+									+ informationContainer.getCloudLocation() });
 			deleteProcess.waitFor();
 		} catch (IOException deleteIOException) {
 			System.out.println(deleteIOException.toString());
 			return false;
-		}
-		catch (InterruptedException deleteInterruptException) {
+		} catch (InterruptedException deleteInterruptException) {
 			System.out.println(deleteInterruptException.toString());
 			return false;
 		}

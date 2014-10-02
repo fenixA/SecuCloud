@@ -44,12 +44,14 @@ public class ThreaderInstanceCreator implements Runnable {
 				e.printStackTrace();
 			}
 			this.cloudConnectorGoogleGsutilTEMP.upload(informationContainer);
+			File encryptedFile = new File(informationContainer.getLocalEncryptedLocation());
+			encryptedFile.delete();
 			break;
 		case downloadDecryptFile:
 			this.cloudConnectorGoogleGsutilTEMP.download(informationContainer);
 			try {
 				File f = new File(Main.getInstance().getUSER_TEMP_DIR() + "/"
-						+ informationContainer.getName());
+						+ informationContainer.getEncryptedName() + Main.DOWNLOAD_EXTENSION);
 				CryptToolbox.threadDecryptFileAesCTR(f,
 						Main.getInstance().getUSER_DOWNLOAD_DIR() + "/"
 								+ informationContainer.getName(),
