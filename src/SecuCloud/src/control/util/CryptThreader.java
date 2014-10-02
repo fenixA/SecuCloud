@@ -69,7 +69,6 @@ public class CryptThreader implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 	}
 }
