@@ -101,8 +101,9 @@ public class MainWindow extends javax.swing.JFrame {
 		deleteEntry.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("delete..");
-				Main.getInstance().toggle_MainWindow_delete();
+				int row = table.getSelectedRow();
+				String encryptedName = (String) table.getValueAt(row, 1);
+				Main.getInstance().toggle_MainWindow_delete(encryptedName);
 				popupMenu.setVisible(false);
 			}
 		});

@@ -17,6 +17,12 @@ public class FileListHandler {
 		Main.getInstance().drawMainWindow();
 		System.out.println("Filehandler.addFile()");
 	}
+	
+	public void deleteFile(InformationContainer ic) {
+		this.fileList.remove(ic);
+		Main.getInstance().drawMainWindow();
+		System.out.println("Filehandler.removeFile()");
+	}
 
 	public void purgeFile(InformationContainer ic) {
 		Main.getInstance().drawMainWindow();

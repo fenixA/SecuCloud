@@ -10,8 +10,8 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	private static final String GS_PROTOCOL = "gs://";
 	private static final String CMD_COPY = "cp";
 	private static final String CMD_LIST = "ls";
-	private static final String CMD_CREATEBUCKET = "mb";
-	private static final String CMD_MOVE = "mv";
+//	private static final String CMD_CREATEBUCKET = "mb";
+//	private static final String CMD_MOVE = "mv";
 	private static final String CMD_DELETE = "rm";
 	
 	
@@ -43,7 +43,7 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
 							CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
-							Main.getInstance().getUSER_TEMP_DIR() + "/" + informationContainer.getName() });
+							Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName() });
 			downloadProcess.waitFor();
 		} catch (IOException downloadIOException) {
 			System.out.println(downloadIOException.toString());

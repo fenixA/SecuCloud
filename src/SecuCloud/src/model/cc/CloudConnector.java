@@ -4,7 +4,7 @@ import model.InformationContainer;
 
 public interface CloudConnector {
 
-	public InformationContainer upload(InformationContainer input);
+	public InformationContainer upload(InformationContainer informationContainer);
 
 	public boolean download(InformationContainer informationContainer);
 
