@@ -11,26 +11,27 @@ import javax.crypto.NoSuchPaddingException;
 
 import control.Main;
 import model.InformationContainer;
-import model.cc.CloudConnectThreader;
+import model.cc.CloudConnectorGoogleGsutilTEMP;
 
-public class CryptThreader implements Runnable {
+public class ThreaderInstanceCreator implements Runnable {
 	public enum command {
-		encryptFile, decryptFile
+		encryptUploadFile, downloadDecryptFile, removeFile
 	}
 
 	private InformationContainer informationContainer;
 	private command cmd;
-	private Thread t;
+	private CloudConnectorGoogleGsutilTEMP cloudConnectorGoogleGsutilTEMP;
 
-	public CryptThreader(command cmd, InformationContainer informationContainer) {
+	public ThreaderInstanceCreator(command cmd, InformationContainer informationContainer) {
 		this.informationContainer = informationContainer;
 		this.cmd = cmd;
+		this.cloudConnectorGoogleGsutilTEMP = new CloudConnectorGoogleGsutilTEMP();
 	}
 
 	@Override
 	public void run() {
 		switch (cmd) {
-		case encryptFile:
+		case encryptUploadFile:
 			File selectedFile = new File(
 					informationContainer.getLocalPLainLocation());
 			try {
@@ -40,21 +41,13 @@ public class CryptThreader implements Runnable {
 			} catch (InvalidKeyException | NoSuchAlgorithmException
 					| NoSuchProviderException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			this.t = new Thread(new CloudConnectThreader(
-					CloudConnectThreader.command.upload, informationContainer));
-			this.t.start();
-			Main.getInstance().threadVector.add(this.t);
-		case decryptFile:
-			this.t = new Thread(
-					new CloudConnectThreader(
-							CloudConnectThreader.command.download,
-							informationContainer));
-			this.t.start();
+			this.cloudConnectorGoogleGsutilTEMP.upload(informationContainer);
+			break;
+		case downloadDecryptFile:
+			this.cloudConnectorGoogleGsutilTEMP.download(informationContainer);
 			try {
-				this.t.join();
 				File f = new File(Main.getInstance().getUSER_TEMP_DIR() + "/"
 						+ informationContainer.getName());
 				CryptToolbox.threadDecryptFileAesCTR(f,
@@ -62,13 +55,16 @@ public class CryptThreader implements Runnable {
 								+ informationContainer.getName(),
 						informationContainer.getKey());
 				f.delete();
-			} catch (InterruptedException | InvalidKeyException
-					| NoSuchAlgorithmException | NoSuchProviderException
-					| NoSuchPaddingException
+			} catch (InvalidKeyException | NoSuchAlgorithmException
+					| NoSuchProviderException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
+		case removeFile:
+			this.cloudConnectorGoogleGsutilTEMP.remove(informationContainer);
+			break;
 		}
 	}
 }

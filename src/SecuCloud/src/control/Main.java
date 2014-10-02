@@ -14,15 +14,14 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
-import control.util.CryptThreader;
+import control.util.ThreaderInstanceCreator;
 import control.util.CryptToolbox;
+import control.util.ThreaderInstanceCreator.command;
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
 import model.InformationContainerStorer;
-import model.cc.CloudConnectThreader;
-import model.cc.CloudConnectThreader.command;
 
 public class Main {
 	public static final int FILE_IDENT_LEN = 64;
@@ -202,17 +201,13 @@ public class Main {
 			InvalidAlgorithmParameterException {
 		InformationContainer informationContainer = CryptToolbox
 				.encryptFileCTR(selectedFile);
-		Thread t = new Thread(new CloudConnectThreader(command.upload,
-				informationContainer));
-		t.start();
-		threadVector.add(t);
 		FileListHandler.getInstance().addFile(informationContainer);
 	}
 
 	public void toggle_MainWindow_delete(String encryptedName) {
 		InformationContainer informationContainer = FileListHandler
 				.getInstance().selectByEncryptedName(encryptedName);
-		Thread t = new Thread(new CloudConnectThreader(CloudConnectThreader.command.remove,
+		Thread t = new Thread(new ThreaderInstanceCreator(command.removeFile,
 				informationContainer));
 		t.start();
 		threadVector.add(t);
@@ -222,10 +217,7 @@ public class Main {
 	public void toggle_MainWindow_download(String encryptedName) {
 		InformationContainer informationContainer = FileListHandler
 				.getInstance().selectByEncryptedName(encryptedName);
-		Thread t = new Thread(new CryptThreader(CryptThreader.command.encryptFile,
-				informationContainer));
-		t.start();
-		threadVector.add(t);
+		CryptToolbox.decryptFileCTR(informationContainer);
 	}
 
 	public void toggle_CreateAccountWindow_okButton(String userName,

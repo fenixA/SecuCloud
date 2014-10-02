@@ -77,14 +77,13 @@ public class InformationContainer {
 
 	public InformationContainer(String localPlainLocation,
 			String localEncryptedLocation, String encryptedName,
-			String name, String cloudLocation, byte[] key,
+			String name, byte[] key,
 			Encryption encryption) {
 		this.time = (new Timestamp(new Date().getTime())).toString();
 		this.localPlainLocation = localPlainLocation;
 		this.localEncryptedLocation = localEncryptedLocation;
 		this.encryptedName = encryptedName;
 		this.name = name;
-		this.cloudLocation = cloudLocation;
 		this.key = key;
 		this.encryption = encryption;
 		this.cloudLocation = Main.getInstance().getBucket() + "/"

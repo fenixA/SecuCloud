@@ -16,14 +16,14 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	
 	
 	@Override
-	public InformationContainer upload(InformationContainer input) {
+	public InformationContainer upload(InformationContainer informationContainer) {
 		try {
 			Process uploadProcess = Runtime.getRuntime().exec(
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_COPY, input.getLocalEncryptedLocation(),
-							GS_PROTOCOL + Main.getInstance().getBucket() + "/" + input.getEncryptedName() });
+							CMD_COPY, informationContainer.getLocalEncryptedLocation(),
+							GS_PROTOCOL +  informationContainer.getCloudLocation() });
 			uploadProcess.waitFor();
 		} catch (IOException uploadIOException) {
 			System.out.println(uploadIOException.toString());
@@ -32,7 +32,7 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		catch (InterruptedException uploadInterruptException) {
 			System.out.println(uploadInterruptException.toString());
 		}
-		return input;
+		return informationContainer;
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
-							Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName() });
+							CMD_COPY, GS_PROTOCOL + informationContainer.getCloudLocation(),
+							Main.getInstance().getUSER_TEMP_DIR() + "/" + informationContainer.getName() });
 			downloadProcess.waitFor();
 		} catch (IOException downloadIOException) {
 			System.out.println(downloadIOException.toString());

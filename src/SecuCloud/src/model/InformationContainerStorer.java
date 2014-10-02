@@ -205,9 +205,10 @@ public class InformationContainerStorer {
 		ctr++;
 
 		InformationContainer ic = new InformationContainer(localPlainLocation,
-				localEncryptedLocation, encryptedName, name, cloudLocation,
+				localEncryptedLocation, encryptedName, name,
 				key, Encryption.values()[encryption]);
 		ic.setTimestamp(time);
+		ic.setCloudLocation(cloudLocation);
 		return ic;
 	}
 

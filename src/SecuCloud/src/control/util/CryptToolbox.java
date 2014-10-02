@@ -9,7 +9,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import control.Main;
-import control.util.CryptThreader.command;
+import control.util.ThreaderInstanceCreator.command;
 import model.InformationContainer;
 import model.InformationContainer.Encryption;
 
@@ -139,18 +139,19 @@ public final class CryptToolbox {
 		String encryptedName = generateLocationString();
 		InformationContainer informationContainer = new InformationContainer(
 				selectedFile.getAbsolutePath(), Main.getInstance()
-						.getUSER_ENCRYPTED_DATA_DIR()
-						+ "/"
-						+ encryptedName, encryptedName, selectedFile.getName(), null,
-				tempKey, Encryption.AES_CTR);
-		Thread t = new Thread(new CryptThreader(command.encryptFile, informationContainer));
+						.getUSER_ENCRYPTED_DATA_DIR() + "/" + encryptedName,
+				encryptedName, selectedFile.getName(), tempKey,
+				Encryption.AES_CTR);
+		Thread t = new Thread(new ThreaderInstanceCreator(command.encryptUploadFile,
+				informationContainer));
 		t.start();
 		Main.getInstance().threadVector.add(t);
 		return informationContainer;
 	}
-	
-	public static void decryptFileCTR(InformationContainer informationContainer){
-		Thread t = new Thread(new CryptThreader(command.decryptFile, informationContainer));
+
+	public static void decryptFileCTR(InformationContainer informationContainer) {
+		Thread t = new Thread(new ThreaderInstanceCreator(command.downloadDecryptFile,
+				informationContainer));
 		t.start();
 		Main.getInstance().threadVector.add(t);
 	}
