@@ -148,6 +148,12 @@ public final class CryptToolbox {
 		Main.getInstance().threadVector.add(t);
 		return informationContainer;
 	}
+	
+	public static void decryptFileCTR(InformationContainer informationContainer){
+		Thread t = new Thread(new CryptThreader(command.decryptFile, informationContainer));
+		t.start();
+		Main.getInstance().threadVector.add(t);
+	}
 
 	public static byte[] generateRandomKey(int length) {
 		SecureRandom random = new SecureRandom();

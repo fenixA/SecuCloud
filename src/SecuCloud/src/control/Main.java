@@ -14,6 +14,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
+import control.util.CryptThreader;
 import control.util.CryptToolbox;
 import view.CreateAccountWindow;
 import view.LoginWindow;
@@ -35,6 +36,7 @@ public class Main {
 	private String USER_DATA_DIR;
 	private String USER_ENCRYPTED_DIR;
 	private String USER_DOWNLOAD_DIR;
+	private String USER_TEMP_DIR;
 
 	private static Main instance;
 	private MainWindow mainWindow;
@@ -64,6 +66,10 @@ public class Main {
 
 	public String getUSER_DOWNLOAD_DIR() {
 		return USER_DOWNLOAD_DIR;
+	}
+	
+	public String getUSER_TEMP_DIR() {
+		return USER_TEMP_DIR;
 	}
 
 	public String getBucket() {
@@ -148,6 +154,11 @@ public class Main {
 			user_download_dir.mkdir();
 		}
 		USER_DOWNLOAD_DIR = user_download_dir.getAbsolutePath();
+		File user_temp_dir = new File(USER_DIR + "/temp");
+		if (!user_temp_dir.exists()) {
+			user_temp_dir.mkdir();
+		}
+		USER_TEMP_DIR = user_temp_dir.getAbsolutePath();
 	}
 
 	private void tryLogin(String userName, String userPassword)
@@ -206,7 +217,7 @@ public class Main {
 	public void toggle_MainWindow_download(String encryptedName) {
 		InformationContainer informationContainer = FileListHandler
 				.getInstance().selectByEncryptedName(encryptedName);
-		Thread t = new Thread(new CloudConnectThreader(command.download,
+		Thread t = new Thread(new CryptThreader(CryptThreader.command.encryptFile,
 				informationContainer));
 		t.start();
 		threadVector.add(t);
