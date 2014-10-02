@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -19,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 """Unit tests for PluralityCheckableIterator."""
+
+from __future__ import absolute_import
 
 import sys
 

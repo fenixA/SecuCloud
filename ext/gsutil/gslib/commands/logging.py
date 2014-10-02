@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of logging configuration command for buckets."""
+
+from __future__ import absolute_import
 
 import getopt
 import sys
@@ -107,7 +110,7 @@ _DESCRIPTION = """
   https://developers.google.com/storage/docs/accesslogs#reviewing
 """
 
-_detailed_help_text = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
+_DETAILED_HELP_TEXT = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
 
 _get_help_text = CreateHelpText(_GET_SYNOPSIS, _GET_DESCRIPTION)
 _set_help_text = CreateHelpText(_SET_SYNOPSIS, _SET_DESCRIPTION)
@@ -136,7 +139,7 @@ class LoggingCommand(Command):
                          'enablelogging', 'disablelogging'],
       help_type='command_help',
       help_one_line_summary='Configure or retrieve logging on buckets',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={'get': _get_help_text, 'set': _set_help_text},
   )
 
@@ -147,8 +150,7 @@ class LoggingCommand(Command):
 
     if bucket_url.scheme == 's3':
       sys.stdout.write(self.gsutil_api.XmlPassThroughGetLogging(
-          bucket_url.GetUrlString(),
-          provider=bucket_url.scheme))
+          bucket_url, provider=bucket_url.scheme))
     else:
       if (bucket_metadata.logging and bucket_metadata.logging.logBucket and
           bucket_metadata.logging.logObjectPrefix):
@@ -184,9 +186,9 @@ class LoggingCommand(Command):
     for url_str in self.args:
       bucket_iter = self.GetBucketUrlIterFromArg(url_str, bucket_fields=['id'])
       for blr in bucket_iter:
-        url = StorageUrlFromString(blr.url_string)
+        url = blr.storage_url
         some_matched = True
-        self.logger.info('Enabling logging on %s...', blr.url_string)
+        self.logger.info('Enabling logging on %s...', blr)
         logging = apitools_messages.Bucket.LoggingValue(
             logBucket=target_bucket_url.bucket_name,
             logObjectPrefix=target_prefix or url.bucket_name)
@@ -205,9 +207,9 @@ class LoggingCommand(Command):
     for url_str in self.args:
       bucket_iter = self.GetBucketUrlIterFromArg(url_str, bucket_fields=['id'])
       for blr in bucket_iter:
-        url = StorageUrlFromString(blr.url_string)
+        url = blr.storage_url
         some_matched = True
-        self.logger.info('Disabling logging on %s...', blr.url_string)
+        self.logger.info('Disabling logging on %s...', blr)
         logging = apitools_messages.Bucket.LoggingValue()
 
         bucket_metadata = apitools_messages.Bucket(logging=logging)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +14,11 @@
 # limitations under the License.
 """Additional help about object versioning."""
 
+from __future__ import absolute_import
+
 from gslib.help_provider import HelpProvider
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>OVERVIEW</B>
   Versioning-enabled buckets maintain an archive of objects, providing a way to
   un-delete data that you accidentally deleted, or to retrieve older versions of
@@ -261,10 +264,10 @@ class CommandOptions(HelpProvider):
 
   # Help specification. See help_provider.py for documentation.
   help_spec = HelpProvider.HelpSpec(
-      help_name = 'versions',
-      help_name_aliases = ['concurrency', 'concurrency control'],
-      help_type = 'additional_help',
-      help_one_line_summary = 'Object Versioning and Concurrency Control',
-      help_text = _detailed_help_text,
-      subcommand_help_text = {},
+      help_name='versions',
+      help_name_aliases=['concurrency', 'concurrency control'],
+      help_type='additional_help',
+      help_one_line_summary='Object Versioning and Concurrency Control',
+      help_text=_DETAILED_HELP_TEXT,
+      subcommand_help_text={},
   )

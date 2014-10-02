@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,9 +14,11 @@
 # limitations under the License.
 """Additional help text for anonymous access."""
 
+from __future__ import absolute_import
+
 from gslib.help_provider import HelpProvider
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>OVERVIEW</B>
   gsutil users can access publicly readable data without obtaining
   credentials. For example, the gs://uspto-pair bucket contains a number
@@ -39,10 +42,10 @@ class CommandOptions(HelpProvider):
 
   # Help specification. See help_provider.py for documentation.
   help_spec = HelpProvider.HelpSpec(
-      help_name = 'anon',
-      help_name_aliases = ['anonymous', 'public'],
-      help_type = 'additional_help',
-      help_one_line_summary = 'Accessing Public Data Without Credentials',
-      help_text = _detailed_help_text,
-      subcommand_help_text = {},
+      help_name='anon',
+      help_name_aliases=['anonymous', 'public'],
+      help_type='additional_help',
+      help_one_line_summary='Accessing Public Data Without Credentials',
+      help_text=_DETAILED_HELP_TEXT,
+      subcommand_help_text={},
   )

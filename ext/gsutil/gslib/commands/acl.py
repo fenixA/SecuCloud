@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of acl command for cloud storage providers."""
+
+from __future__ import absolute_import
 
 import getopt
 
@@ -235,7 +238,7 @@ _DESCRIPTION = ("""
   The acl command has three sub-commands:
 """ + '\n'.join([_GET_DESCRIPTION, _SET_DESCRIPTION, _CH_DESCRIPTION]))
 
-_detailed_help_text = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
+_DETAILED_HELP_TEXT = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
 
 _get_help_text = CreateHelpText(_GET_SYNOPSIS, _GET_DESCRIPTION)
 _set_help_text = CreateHelpText(_SET_SYNOPSIS, _SET_DESCRIPTION)
@@ -243,7 +246,7 @@ _ch_help_text = CreateHelpText(_CH_SYNOPSIS, _CH_DESCRIPTION)
 
 
 def _ApplyExceptionHandler(cls, exception):
-  cls.logger.error('Encountered a problem: {0}'.format(exception))
+  cls.logger.error('Encountered a problem: %s', exception)
   cls.everything_set_okay = False
 
 
@@ -273,7 +276,7 @@ class AclCommand(Command):
       help_name_aliases=['getacl', 'setacl', 'chmod', 'chacl'],
       help_type='command_help',
       help_one_line_summary='Get, set, or change bucket and/or object ACLs',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={
           'get': _get_help_text, 'set': _set_help_text, 'ch': _ch_help_text},
   )
@@ -356,8 +359,7 @@ class AclCommand(Command):
     else:
       gsutil_api = self.gsutil_api
 
-    url_string = name_expansion_result.GetExpandedUrlStr()
-    url = StorageUrlFromString(url_string)
+    url = name_expansion_result.expanded_storage_url
 
     if url.IsBucket():
       bucket = gsutil_api.GetBucket(url.bucket_name, provider=url.scheme,
@@ -372,15 +374,14 @@ class AclCommand(Command):
     if not current_acl:
       self._WarnServiceAccounts()
       self.logger.warning('Failed to set acl for %s. Please ensure you have '
-                          'OWNER-role access to this resource.' % url_string)
+                          'OWNER-role access to this resource.', url)
       return
 
     modification_count = 0
     for change in self.changes:
-      modification_count += change.Execute(url_string, current_acl,
-                                           self.logger)
+      modification_count += change.Execute(url, current_acl, 'acl', self.logger)
     if modification_count == 0:
-      self.logger.info('No changes to {0}'.format(url_string))
+      self.logger.info('No changes to %s', url)
       return
 
     try:
@@ -391,13 +392,8 @@ class AclCommand(Command):
                                preconditions=preconditions,
                                provider=url.scheme, fields=['id'])
       else:  # Object
-        preconditions = Preconditions(meta_gen_match=gcs_object.metageneration)
-        # If we're operating on the live version of the object, only apply
-        # if the live version hasn't changed or been overwritten.  If we're
-        # referring to a version explicitly, then we don't care what the live
-        # version is and we will change the ACL on the requested version.
-        if not url.generation:
-          preconditions.gen_match = gcs_object.generation
+        preconditions = Preconditions(gen_match=gcs_object.generation,
+                                      meta_gen_match=gcs_object.metageneration)
 
         object_metadata = apitools_messages.Object(acl=current_acl)
         gsutil_api.PatchObjectMetadata(
@@ -408,7 +404,7 @@ class AclCommand(Command):
       # Don't retry on bad requests, e.g. invalid email address.
       raise CommandException('Received bad request from server: %s' % str(e))
 
-    self.logger.info('Updated ACL on {0}'.format(url_string))
+    self.logger.info('Updated ACL on %s', url)
 
   def RunCommand(self):
     """Command entry point for the acl command."""

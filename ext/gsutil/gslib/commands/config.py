@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,6 +22,7 @@ import multiprocessing
 import os
 import platform
 import signal
+import socket
 import stat
 import sys
 import textwrap
@@ -42,7 +44,7 @@ from gslib.util import IS_WINDOWS
 from gslib.util import TWO_MB
 
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil [-D] config [-a] [-b] [-e] [-f] [-o <file>] [-r] [-s <scope>] [-w]
 
@@ -97,7 +99,7 @@ _detailed_help_text = ("""
   accessible from the machine where you run gsutil. Make sure to set its
   protection so only the users you want to be able to authenticate have
   access.
-  
+
   Note that your service account will NOT be considered an Owner for the
   purposes of API access (see "gsutil help creds" for more information about
   this). See https://developers.google.com/accounts/docs/OAuth2ServiceAccount
@@ -155,7 +157,7 @@ _detailed_help_text = ("""
       gs_access_key_id
       gs_host
       gs_json_host
-      gs_json_port 
+      gs_json_port
       gs_oauth2_refresh_token
       gs_port
       gs_secret_access_key
@@ -167,9 +169,11 @@ _detailed_help_text = ("""
       proxy_port
       proxy_user
       proxy_pass
+      proxy_rdns
       http_socket_timeout
       https_validate_certificates
       debug
+      max_retry_delay
       num_retries
 
     [GSUtil]
@@ -184,9 +188,10 @@ _detailed_help_text = ("""
       parallel_thread_count
       prefer_api
       resumable_threshold
-      resumable_tracker_dir
+      resumable_tracker_dir (deprecated in 4.6, use state_dir)
       rsync_buffer_lines
       software_update_check_period
+      state_dir
       use_magicfile
 
     [OAuth2]
@@ -277,8 +282,15 @@ else:
   DEFAULT_PARALLEL_PROCESS_COUNT = 1
   DEFAULT_PARALLEL_THREAD_COUNT = 24
 
-DEFAULT_PARALLEL_COMPOSITE_UPLOAD_THRESHOLD = '150M'
+# TODO: Once compiled crcmod is being distributed by major Linux distributions
+# revert DEFAULT_PARALLEL_COMPOSITE_UPLOAD_THRESHOLD value to '150M'.
+DEFAULT_PARALLEL_COMPOSITE_UPLOAD_THRESHOLD = '0'
 DEFAULT_PARALLEL_COMPOSITE_UPLOAD_COMPONENT_SIZE = '50M'
+
+CHECK_HASH_IF_FAST_ELSE_FAIL = 'if_fast_else_fail'
+CHECK_HASH_IF_FAST_ELSE_SKIP = 'if_fast_else_skip'
+CHECK_HASH_ALWAYS = 'always'
+CHECK_HASH_NEVER = 'never'
 
 CONFIG_BOTO_SECTION_CONTENT = """
 [Boto]
@@ -307,9 +319,25 @@ https_validate_certificates = True
 #debug = <0, 1, or 2>
 
 # 'num_retries' controls the number of retry attempts made when errors occur
-# during data transfers. The default is 6. Note: don't set this value to 0, as
-# it will cause boto to fail when reusing HTTP connections.
+# during data transfers. The default is 6.
+# Note 1: You can cause gsutil to retry failures effectively infinitely by
+# setting this value to a large number (like 10000). Doing that could be useful
+# in cases where your network connection occasionally fails and is down for an
+# extended period of time, because when it comes back up gsutil will continue
+# retrying.  However, in general we recommend not setting the value above 10,
+# because otherwise gsutil could appear to "hang" due to excessive retries
+# (since unless you run gsutil -D you won't see any logged evidence that gsutil
+# is retrying).
+# Note 2: Don't set this value to 0, as it will cause boto to fail when reusing
+# HTTP connections.
 #num_retries = <integer value>
+
+# 'max_retry_delay' controls the max delay (in seconds) between retries. The
+# default value is 60, so the backoff sequence will be 1 seconds, 2 seconds, 4,
+# 8, 16, 32, and then 60 for all subsequent retries for a given HTTP request.
+# Note: At present this value only impacts the XML API and the JSON API uses a
+# fixed value of 60.
+#max_retry_delay = <integer value>
 """
 
 CONFIG_INPUTLESS_GSUTIL_SECTION_CONTENT = """
@@ -341,13 +369,14 @@ CONFIG_INPUTLESS_GSUTIL_SECTION_CONTENT = """
 # operations.
 #rsync_buffer_lines = 32000
 
-# 'resumable_tracker_dir' specifies the base location where resumable
-# transfer tracker files are saved. By default they're in ~/.gsutil
-#resumable_tracker_dir = <file path>
-# gsutil also saves a file called .last_software_update_check in this directory,
-# that tracks the last time a check was made whether a new version of the gsutil
-# software is available. 'software_update_check_period' specifies the number of
-# days between such checks. The default is 30. Setting the value to 0 disables
+# 'state_dir' specifies the base location where files that
+# need a static location are stored, such as pointers to credentials,
+# resumable transfer tracker files, and the last software update check.
+# By default these files are stored in ~/.gsutil
+#state_dir = <file_path>
+# gsutil periodically checks whether a new version of the gsutil software is
+# available. 'software_update_check_period' specifies the number of days
+# between such checks. The default is 30. Setting the value to 0 disables
 # periodic software update checks.
 #software_update_check_period = 30
 
@@ -382,6 +411,14 @@ CONFIG_INPUTLESS_GSUTIL_SECTION_CONTENT = """
 # less than MAX_COMPONENT_COUNT.
 # Values can be provided either in bytes or as human-readable values
 # (e.g., "150M" to represent 150 megabytes)
+#
+# Note: At present parallel composite uploads are disabled by default, because
+# using composite objects requires a compiled crcmod (see "gsutil help crcmod"),
+# and for operating systems that don't already have this package installed this
+# makes gsutil harder to use. Google is actively working with a number of the
+# Linux distributions to get crcmod included with the stock distribution. Once
+# that is done we will re-enable parallel composite uploads by default in
+# gsutil.
 #parallel_composite_upload_threshold = %(parallel_composite_upload_threshold)s
 #parallel_composite_upload_component_size = %(parallel_composite_upload_component_size)s
 
@@ -402,14 +439,15 @@ content_language = en
 
 # 'check_hashes' specifies how strictly to require integrity checking for
 # downloaded data. Legal values are:
-#   'if_fast_else_fail' - (default) Only integrity check if the digest will run
-#       efficiently (using compiled code), else fail the download.
-#   'if_fast_else_skip' - Only integrity check if the server supplies a hash and
-#       the local digest computation will run quickly, else skip the check.
-#   'always' - Always check download integrity regardless of possible
+#   '%(hash_fast_else_fail)s' - (default) Only integrity check if the digest
+#       will run efficiently (using compiled code), else fail the download.
+#   '%(hash_fast_else_skip)s' - Only integrity check if the server supplies a
+#       hash and the local digest computation will run quickly, else skip the
+#       check.
+#   '%(hash_always)s' - Always check download integrity regardless of possible
 #       performance costs.
-#   'never' - Don't perform download integrity checks. This settings is not
-#       recommended except for special cases such as measuring download
+#   '%(hash_never)s' - Don't perform download integrity checks. This setting is
+#       not recommended except for special cases such as measuring download
 #       performance excluding time for integrity checking.
 # This option exists to assist users who wish to download a GCS composite object
 # and are unable to install crcmod with the C-extension. CRC32c is the only
@@ -428,7 +466,11 @@ content_language = en
 #prefer_api = json
 #prefer_api = xml
 
-""" % {'resumable_threshold': TWO_MB,
+""" % {'hash_fast_else_fail': CHECK_HASH_IF_FAST_ELSE_FAIL,
+       'hash_fast_else_skip': CHECK_HASH_IF_FAST_ELSE_SKIP,
+       'hash_always': CHECK_HASH_ALWAYS,
+       'hash_never': CHECK_HASH_NEVER,
+       'resumable_threshold': TWO_MB,
        'parallel_process_count': DEFAULT_PARALLEL_PROCESS_COUNT,
        'parallel_thread_count': DEFAULT_PARALLEL_THREAD_COUNT,
        'parallel_composite_upload_threshold': (
@@ -508,7 +550,7 @@ class ConfigCommand(Command):
       help_type='command_help',
       help_one_line_summary=(
           'Obtain credentials and create configuration file'),
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -585,15 +627,22 @@ class ConfigCommand(Command):
             'If you would like to fix this yourself, consider running:\n'
             '"sudo chmod 400 </path/to/key>" for improved security.')
 
-  def _PromptForProxyConfigVarAndMaybeSaveToBotoConfig(self, varname, prompt):
+  def _PromptForProxyConfigVarAndMaybeSaveToBotoConfig(self, varname, prompt,
+                                                       convert_to_bool=False):
     """Prompts for one proxy config line, saves to boto.config if not empty.
 
     Args:
       varname: The config variable name.
       prompt: The prompt to output to the user.
+      convert_to_bool: Whether to convert "y/n" to True/False.
     """
     value = raw_input(prompt)
     if value:
+      if convert_to_bool:
+        if value == 'y' or value == 'Y':
+          value = 'True'
+        else:
+          value = 'False'
       boto.config.set('Boto', varname, value)
 
   def _PromptForProxyConfig(self):
@@ -607,6 +656,11 @@ class ConfigCommand(Command):
         'proxy_user', 'What is your proxy user (leave blank if not used)? ')
     self._PromptForProxyConfigVarAndMaybeSaveToBotoConfig(
         'proxy_pass', 'What is your proxy pass (leave blank if not used)? ')
+    self._PromptForProxyConfigVarAndMaybeSaveToBotoConfig(
+        'proxy_rdns',
+        'Should DNS lookups be resolved by your proxy? (Y if your site '
+        'disallows client DNS lookups)? ',
+        convert_to_bool=True)
 
   def _WriteConfigLineMaybeCommented(self, config_file, name, value, desc):
     """Writes proxy name/value pair or comment line to config file.
@@ -637,7 +691,8 @@ class ConfigCommand(Command):
     config_file.write(
         '# To use a proxy, edit and uncomment the proxy and proxy_port lines.\n'
         '# If you need a user/password with this proxy, edit and uncomment\n'
-        '# those lines as well.\n')
+        '# those lines as well. If your organization also disallows DNS\n'
+        '# lookups by client machines set proxy_rdns = True\n')
     self._WriteConfigLineMaybeCommented(
         config_file, 'proxy', config.get_value('Boto', 'proxy', None),
         'proxy host')
@@ -650,6 +705,10 @@ class ConfigCommand(Command):
     self._WriteConfigLineMaybeCommented(
         config_file, 'proxy_pass', config.get_value('Boto', 'proxy_pass', None),
         'proxy password')
+    self._WriteConfigLineMaybeCommented(
+        config_file, 'proxy_rdns',
+        config.get_value('Boto', 'proxy_rdns', False),
+        'let proxy server perform DNS lookups')
 
   # pylint: disable=dangerous-default-value,too-many-statements
   def _WriteBotoConfigFile(self, config_file, launch_browser=True,
@@ -697,7 +756,7 @@ class ConfigCommand(Command):
       try:
         oauth2_refresh_token = oauth2_helper.OAuth2ApprovalFlow(
             oauth2_client, oauth2_scopes, launch_browser)
-      except (ResponseNotReady, ServerNotFoundError):
+      except (ResponseNotReady, ServerNotFoundError, socket.error):
         # TODO: Determine condition to check for in the ResponseNotReady
         # exception so we only run proxy config flow if failure was caused by
         # request being blocked because it wasn't sent through proxy. (This

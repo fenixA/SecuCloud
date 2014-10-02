@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 # Copyright 2011, Nexenta Systems Inc.
 #
@@ -14,7 +15,6 @@
 # limitations under the License.
 """Implementation of Unix-like cp command for cloud storage providers."""
 
-# Get the system logging module, not our local logging module.
 from __future__ import absolute_import
 
 import os
@@ -35,9 +35,9 @@ from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
 from gslib.name_expansion import NameExpansionIterator
 from gslib.storage_url import ContainsWildcard
-from gslib.storage_url import StorageUrlFromString
 from gslib.util import CreateLock
 from gslib.util import GetCloudApiInstance
+from gslib.util import IsCloudSubdirPlaceholder
 from gslib.util import MakeHumanReadable
 from gslib.util import NO_MAX
 from gslib.util import RemoveCRLFFromString
@@ -206,6 +206,28 @@ COPY_IN_CLOUD_TEXT = """
   will cause all versions of gs://bucket1/obj to be copied to gs://bucket2.
 """
 
+FAILURE_HANDLING_TEXT = """
+<B>CHECKSUM VALIDATION AND FAILURE HANDLING</B>
+  At the end of every upload or download, the gsutil cp command validates that
+  that the checksum of the source file/object matches the checksum of the
+  destination file/object. If the checksums do not match, gsutil will delete
+  the invalid copy and print a warning message. This very rarely happens, but
+  if it does, please contact gs-team@google.com.
+
+  The cp command will retry when failures occur, but if enough failures happen
+  during a particular copy or delete operation the command will skip that object
+  and move on. At the end of the copy run if any failures were not successfully
+  retried, the cp command will report the count of failures, and exit with
+  non-zero status.
+
+  Note that there are cases where retrying will never succeed, such as if you
+  don't have write permission to the destination bucket or if the destination
+  path for some objects is longer than the maximum allowed length.
+
+  For more details about gsutil's retry handling, please see
+  "gsutil help retries".
+"""
+
 RESUMABLE_TRANSFERS_TEXT = """
 <B>RESUMABLE TRANSFERS</B>
   gsutil automatically uses the Google Cloud Storage resumable upload feature
@@ -224,9 +246,12 @@ RESUMABLE_TRANSFERS_TEXT = """
   visible as soon as it starts being written. Thus, before you attempt to use
   any files downloaded by gsutil you should make sure the download completed
   successfully, by checking the exit status from the gsutil command. This can
-  be done using a script like the following:
+  be done in a bash script, for example, by doing:
 
-     until gsutil cp gs://your-bucket/your-object ./local-file; do sleep 1; done
+     gsutil cp gs://your-bucket/your-object ./local-file
+     if [ "$status" -ne "0" ] ; then
+       << Code that handles failures >>
+     fi
 
   Resumable uploads and downloads store some state information in a file
   in ~/.gsutil named by the destination object or file. If you attempt to
@@ -251,20 +276,28 @@ STREAMING_TRANSFERS_TEXT = """
 
 PARALLEL_COMPOSITE_UPLOADS_TEXT = """
 <B>PARALLEL COMPOSITE UPLOADS</B>
-  gsutil automatically uses
+  gsutil can automatically use
   `object composition <https://developers.google.com/storage/docs/composite-objects>`_
-  to perform uploads in parallel for large, local files being uploaded to
-  Google Cloud Storage. This means that, by default, a large file will be split
-  into component pieces that will be uploaded in parallel. Those components will
-  then be composed in the cloud, and the temporary components in the cloud will
-  be deleted after successful composition. No additional local disk space is
-  required for this operation.
+  to perform uploads in parallel for large, local files being uploaded to Google
+  Cloud Storage. This means that, if enabled (see next paragraph), a large file
+  will be split into component pieces that will be uploaded in parallel. Those
+  components will then be composed in the cloud, and the temporary components in
+  the cloud will be deleted after successful composition. No additional local
+  disk space is required for this operation.
 
-  Any file whose size exceeds the "parallel_composite_upload_threshold" config
-  variable will trigger this feature by default. The ideal size of a
-  component can also be set with the "parallel_composite_upload_component_size"
-  config variable. See the .boto config file for details about how these values
-  are used.
+  If the "parallel_composite_upload_threshold" config value is not 0 (which
+  disbles the feature), any file whose size exceeds the specified size will
+  trigger a parallel composite upload. Note that at present parallel composite
+  uploads are disabled by default, because using composite objects requires a
+  compiled crcmod (see "gsutil help crcmod"), and for operating systems that
+  don't already have this package installed this makes gsutil harder to use.
+  Google is actively working with a number of the Linux distributions to get
+  crcmod included with the stock distribution. Once that is done we will
+  re-enable parallel composite uploads by default in gsutil.
+
+  The ideal size of a component can also be set with the
+  "parallel_composite_upload_component_size" config variable. See the comments
+  in the .boto config file for details about how these values are used.
 
   If the transfer fails prior to composition, running the command again will
   take advantage of resumable uploads for those components that failed, and
@@ -277,14 +310,20 @@ PARALLEL_COMPOSITE_UPLOADS_TEXT = """
   related to the hash of the contents of the file or object).
 
   To avoid leaving temporary objects around, you should make sure to check the
-  exit status from the gsutil command. This can be done using a script like the
-  following:
+  exit status from the gsutil command.  This can be done in a bash script, for
+  example, by doing:
 
-     until gsutil cp ./file gs://your-bucket/obj; do sleep 1; done
+     gsutil cp ./local-file gs://your-bucket/your-object
+     if [ "$status" -ne "0" ] ; then
+       << Code that handles failures >>
+     fi
 
-  If you're copying a whole directory use this instead:
+  Or, for copying a directory, use this instead:
 
-     until gsutil cp -c -L cp.log -R ./dir gs://bucket; do sleep 1; done
+     gsutil cp -c -L cp.log -R ./dir gs://bucket
+     if [ "$status" -ne "0" ] ; then
+       << Code that handles failures >>
+     fi
 
   One important caveat is that files uploaded in this fashion are still subject
   to the maximum number of components limit. For example, if you upload a large
@@ -301,6 +340,7 @@ PARALLEL_COMPOSITE_UPLOADS_TEXT = """
   "parallel_composite_upload_threshold" variable in the .boto config file to 0.
 """ % (PARALLEL_UPLOAD_TEMP_NAMESPACE, 10, MAX_COMPONENT_COUNT - 9,
        MAX_COMPONENT_COUNT)
+
 
 CHANGING_TEMP_DIRECTORIES_TEXT = """
 <B>CHANGING TEMP DIRECTORIES</B>
@@ -340,7 +380,11 @@ OPTIONS_TEXT = """
   -c             If an error occurrs, continue to attempt to copy the remaining
                  files. If any copies were unsuccessful, gsutil's exit status
                  will be non-zero even if this flag is set. This option is
-                 implicitly set when running "gsutil -m cp...".
+                 implicitly set when running "gsutil -m cp...". Note: -c only
+                 applies to the actual copying operation. If an error occurs
+                 while iterating over the files in the local directory (e.g.,
+                 invalid Unicode file name) gsutil will print an error message
+                 and abort.
 
   -D             Copy in "daisy chain" mode, i.e., copying between two buckets
                  by hooking a download to an upload, via the machine where
@@ -474,13 +518,18 @@ OPTIONS_TEXT = """
                    browser will know to uncompress the data based on the
                    Content-Encoding header, and to render it as HTML based on
                    the Content-Type header.
+
+                 Note that if you download an object with Content-Encoding:gzip
+                 gsutil will decompress the content before writing the local
+                 file.
 """
 
-_detailed_help_text = '\n\n'.join([SYNOPSIS_TEXT,
+_DETAILED_HELP_TEXT = '\n\n'.join([SYNOPSIS_TEXT,
                                    DESCRIPTION_TEXT,
                                    NAME_CONSTRUCTION_TEXT,
                                    SUBDIRECTORIES_TEXT,
                                    COPY_IN_CLOUD_TEXT,
+                                   FAILURE_HANDLING_TEXT,
                                    RESUMABLE_TRANSFERS_TEXT,
                                    STREAMING_TRANSFERS_TEXT,
                                    PARALLEL_COMPOSITE_UPLOADS_TEXT,
@@ -499,7 +548,7 @@ def _CopyExceptionHandler(cls, e):
   """Simple exception handler to allow post-completion status."""
   cls.logger.error(str(e))
   cls.op_failure_count += 1
-  cls.logger.debug('\n\nEncountered exception while copying:\n%s\n' %
+  cls.logger.debug('\n\nEncountered exception while copying:\n%s\n',
                    traceback.format_exc())
 
 
@@ -549,7 +598,7 @@ class CpCommand(Command):
       help_name_aliases=['copy'],
       help_type='command_help',
       help_one_line_summary='Copy files and objects',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 
@@ -557,23 +606,16 @@ class CpCommand(Command):
   def CopyFunc(self, name_expansion_result, thread_state=None):
     """Worker function for performing the actual copy (and rm, for mv)."""
     gsutil_api = GetCloudApiInstance(self, thread_state=thread_state)
-    exp_dst_url = self.exp_dst_url
-    have_existing_dst_container = self.have_existing_dst_container
 
     copy_helper_opts = copy_helper.GetCopyHelperOpts()
     if copy_helper_opts.perform_mv:
       cmd_name = 'mv'
     else:
       cmd_name = self.command_name
-    src_url_str = name_expansion_result.GetSrcUrlStr()
-    src_url = StorageUrlFromString(src_url_str)
-    exp_src_url_str = name_expansion_result.GetExpandedUrlStr()
-    exp_src_url = StorageUrlFromString(exp_src_url_str)
-    src_url_names_container = name_expansion_result.NamesContainer()
-    src_url_expands_to_multi = name_expansion_result.NamesContainer()
-    have_multiple_srcs = name_expansion_result.IsMultiSrcRequest()
-    have_existing_dest_subdir = (
-        name_expansion_result.HaveExistingDstContainer())
+    src_url = name_expansion_result.source_storage_url
+    exp_src_url = name_expansion_result.expanded_storage_url
+    src_url_names_container = name_expansion_result.names_container
+    have_multiple_srcs = name_expansion_result.is_multi_source_request
 
     if src_url.IsCloudUrl() and src_url.IsProvider():
       raise CommandException(
@@ -581,14 +623,27 @@ class CpCommand(Command):
           (cmd_name, src_url))
     if have_multiple_srcs:
       copy_helper.InsistDstUrlNamesContainer(
-          exp_dst_url, have_existing_dst_container, cmd_name)
+          self.exp_dst_url, self.have_existing_dst_container, cmd_name)
+
+    # Various GUI tools (like the GCS web console) create placeholder objects
+    # ending with '/' when the user creates an empty directory. Normally these
+    # tools should delete those placeholders once objects have been written
+    # "under" the directory, but sometimes the placeholders are left around. We
+    # need to filter them out here, otherwise if the user tries to rsync from
+    # GCS to a local directory it will result in a directory/file conflict
+    # (e.g., trying to download an object called "mydata/" where the local
+    # directory "mydata" exists).
+    if IsCloudSubdirPlaceholder(exp_src_url):
+      self.logger.info('Skipping cloud sub-directory placeholder object %s',
+                       exp_src_url)
+      return
 
     if copy_helper_opts.use_manifest and self.manifest.WasSuccessful(
-        exp_src_url.GetUrlString()):
+        exp_src_url.url_string):
       return
 
     if copy_helper_opts.perform_mv:
-      if name_expansion_result.NamesContainer():
+      if name_expansion_result.names_container:
         # Use recursion_requested when performing name expansion for the
         # directory mv case so we can determine if any of the source URLs are
         # directories (and then use cp -R and rm -R to perform the move, to
@@ -599,38 +654,36 @@ class CpCommand(Command):
         # would make the name transformation too complex and would also be
         # dangerous (e.g., someone could accidentally move many objects to the
         # wrong name, or accidentally overwrite many objects).
-        if ContainsWildcard(src_url_str):
+        if ContainsWildcard(src_url.url_string):
           raise CommandException('The mv command disallows naming source '
                                  'directories using wildcards')
 
-    if (exp_dst_url.IsFileUrl()
-        and not os.path.exists(exp_dst_url.object_name)
+    if (self.exp_dst_url.IsFileUrl()
+        and not os.path.exists(self.exp_dst_url.object_name)
         and have_multiple_srcs):
-      os.makedirs(exp_dst_url.object_name)
+      os.makedirs(self.exp_dst_url.object_name)
 
     dst_url = copy_helper.ConstructDstUrl(
-        src_url, exp_src_url, src_url_names_container, src_url_expands_to_multi,
-        have_multiple_srcs, exp_dst_url, have_existing_dest_subdir,
+        src_url, exp_src_url, src_url_names_container, have_multiple_srcs,
+        self.exp_dst_url, self.have_existing_dst_container,
         self.recursion_requested)
     dst_url = copy_helper.FixWindowsNaming(src_url, dst_url)
 
     copy_helper.CheckForDirFileConflict(exp_src_url, dst_url)
     if copy_helper.SrcDstSame(exp_src_url, dst_url):
       raise CommandException('%s: "%s" and "%s" are the same file - '
-                             'abort.' % (cmd_name,
-                                         exp_src_url.GetUrlString(),
-                                         dst_url.GetUrlString()))
+                             'abort.' % (cmd_name, exp_src_url, dst_url))
 
     if dst_url.IsCloudUrl() and dst_url.HasGeneration():
       raise CommandException('%s: a version-specific URL\n(%s)\ncannot be '
                              'the destination for gsutil cp - abort.'
-                             % (cmd_name, dst_url.GetUrlString()))
+                             % (cmd_name, dst_url))
 
     elapsed_time = bytes_transferred = 0
     try:
       if copy_helper_opts.use_manifest:
         self.manifest.Initialize(
-            exp_src_url.GetUrlString(), dst_url.GetUrlString())
+            exp_src_url.url_string, dst_url.url_string)
       (elapsed_time, bytes_transferred, result_url, md5) = (
           copy_helper.PerformCopy(
               self.logger, exp_src_url, dst_url, gsutil_api,
@@ -639,38 +692,38 @@ class CpCommand(Command):
               gzip_exts=self.gzip_exts, test_method=self.test_method))
       if copy_helper_opts.use_manifest:
         if md5:
-          self.manifest.Set(exp_src_url.GetUrlString(), 'md5', md5)
+          self.manifest.Set(exp_src_url.url_string, 'md5', md5)
         self.manifest.SetResult(
-            exp_src_url.GetUrlString(), bytes_transferred, 'OK')
+            exp_src_url.url_string, bytes_transferred, 'OK')
       if copy_helper_opts.print_ver:
         # Some cases don't return a version-specific URL (e.g., if destination
         # is a file).
-        self.logger.info('Created: %s' % result_url.GetUrlString())
+        self.logger.info('Created: %s', result_url)
     except ItemExistsError:
-      message = 'Skipping existing item: %s' % dst_url.GetUrlString()
+      message = 'Skipping existing item: %s' % dst_url
       self.logger.info(message)
       if copy_helper_opts.use_manifest:
-        self.manifest.SetResult(exp_src_url.GetUrlString(), 0, 'skip', message)
+        self.manifest.SetResult(exp_src_url.url_string, 0, 'skip', message)
     except Exception, e:
       if (copy_helper_opts.no_clobber and
           copy_helper.IsNoClobberServerException(e)):
-        message = 'Rejected (noclobber): %s' % dst_url.GetUrlString()
+        message = 'Rejected (noclobber): %s' % dst_url
         self.logger.info(message)
         if copy_helper_opts.use_manifest:
           self.manifest.SetResult(
-              exp_src_url.GetUrlString(), 0, 'skip', message)
+              exp_src_url.url_string, 0, 'skip', message)
       elif self.continue_on_error:
-        message = 'Error copying %s: %s' % (src_url.GetUrlString(), str(e))
+        message = 'Error copying %s: %s' % (src_url, str(e))
         self.op_failure_count += 1
         self.logger.error(message)
         if copy_helper_opts.use_manifest:
           self.manifest.SetResult(
-              exp_src_url.GetUrlString(), 0, 'error',
+              exp_src_url.url_string, 0, 'error',
               RemoveCRLFFromString(message))
       else:
         if copy_helper_opts.use_manifest:
           self.manifest.SetResult(
-              exp_src_url.GetUrlString(), 0, 'error', str(e))
+              exp_src_url.url_string, 0, 'error', str(e))
         raise
 
     # TODO: If we ever use -n (noclobber) with -M (move) (not possible today
@@ -708,7 +761,7 @@ class CpCommand(Command):
         raise CommandException('Wrong number of arguments for "cp" command.')
       url_strs = self.args[:-1]
 
-    (exp_dst_url, have_existing_dst_container) = (
+    (self.exp_dst_url, self.have_existing_dst_container) = (
         copy_helper.ExpandUrlToSingleBlr(self.args[-1], self.gsutil_api,
                                          self.debug, self.project_id))
 
@@ -719,7 +772,7 @@ class CpCommand(Command):
     # un-versioned destination object.
     all_versions = False
     try:
-      bucket = self._GetBucketWithVersioningConfig(exp_dst_url)
+      bucket = self._GetBucketWithVersioningConfig(self.exp_dst_url)
       if bucket and bucket.versioning and bucket.versioning.enabled:
         all_versions = True
     except AccessDeniedException:
@@ -738,11 +791,8 @@ class CpCommand(Command):
         self.command_name, self.debug,
         self.logger, self.gsutil_api, url_strs,
         self.recursion_requested or copy_helper_opts.perform_mv,
-        have_existing_dst_container=have_existing_dst_container,
         project_id=self.project_id, all_versions=all_versions,
         continue_on_error=self.continue_on_error or self.parallel_operations)
-    self.have_existing_dst_container = have_existing_dst_container
-    self.exp_dst_url = exp_dst_url
 
     # Use a lock to ensure accurate statistics in the face of
     # multi-threading/multi-processing.
@@ -897,8 +947,8 @@ class CpCommand(Command):
         raise
       except NotFoundException, e:
         raise CommandException('Destination bucket %s does not exist.' %
-                               exp_dst_url.GetUrlString())
+                               exp_dst_url)
       except Exception, e:
         raise CommandException('Error retrieving destination bucket %s: %s' %
-                               (exp_dst_url.GetUrlString(), e.message))
+                               (exp_dst_url, e.message))
       return bucket

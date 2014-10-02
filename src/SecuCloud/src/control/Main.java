@@ -209,9 +209,14 @@ public class Main {
 		FileListHandler.getInstance().addFile(informationContainer);
 	}
 
-	public void toggle_MainWindow_delete() {
-		// TODO Auto-generated method stub
-
+	public void toggle_MainWindow_delete(String encryptedName) {
+		InformationContainer informationContainer = FileListHandler
+				.getInstance().selectByEncryptedName(encryptedName);
+		Thread t = new Thread(new CloudConnectThreader(CloudConnectThreader.command.remove,
+				informationContainer));
+		t.start();
+		threadVector.add(t);
+		FileListHandler.getInstance().deleteFile(informationContainer);
 	}
 
 	public void toggle_MainWindow_download(String encryptedName) {

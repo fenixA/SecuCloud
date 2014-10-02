@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +19,8 @@ The StorageUri func defined in this class uses that state
 instantiate this frequently constructed object with just one param for most
 cases.
 """
+
+from __future__ import absolute_import
 
 import boto
 
@@ -52,4 +55,3 @@ class StorageUriBuilder(object):
         uri_str, 'file', debug=self.debug, validate=False,
         bucket_storage_uri_class=self.bucket_storage_uri_class,
         suppress_consec_slashes=False)
-      

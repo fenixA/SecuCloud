@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Tests for du command."""
+
+from __future__ import absolute_import
+
 import gslib.tests.testcase as testcase
 from gslib.tests.testcase.integration_testcase import SkipForS3
 from gslib.tests.util import ObjectToURI as suri
@@ -127,6 +131,24 @@ class TestDu(testcase.GsUtilIntegrationTestCase):
       self.assertSetEqual(set(stdout.splitlines()), set([
           '%-10s  %s' % (18, suri(bucket_uri1)),
           '%-10s  %s' % (18, suri(bucket_uri2)),
+      ]))
+    _Check()
+
+  def test_subdir_summary(self):
+    """Tests summary listing with the -s flag on a subdirectory."""
+    bucket_uri1, _ = self._create_nested_subdir()
+    bucket_uri2, _ = self._create_nested_subdir()
+    subdir1 = suri(bucket_uri1, 'sub1')
+    subdir2 = suri(bucket_uri2, 'sub1')
+
+    # Use @Retry as hedge against bucket listing eventual consistency.
+    @Retry(AssertionError, tries=3, timeout_secs=1)
+    def _Check():
+      stdout = self.RunGsUtil(
+          ['du', '-s', subdir1, subdir2], return_stdout=True)
+      self.assertSetEqual(set(stdout.splitlines()), set([
+          '%-10s  %s' % (18, subdir1),
+          '%-10s  %s' % (18, subdir2),
       ]))
     _Check()
 

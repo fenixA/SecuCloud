@@ -141,8 +141,7 @@ public final class CryptToolbox {
 				selectedFile.getAbsolutePath(), Main.getInstance()
 						.getUSER_ENCRYPTED_DATA_DIR()
 						+ "/"
-						+ encryptedName
-						+ ".enc", encryptedName, selectedFile.getName(), null,
+						+ encryptedName, encryptedName, selectedFile.getName(), null,
 				tempKey, Encryption.AES_CTR);
 		Thread t = new Thread(new CryptThreader(command.encryptFile, informationContainer));
 		t.start();

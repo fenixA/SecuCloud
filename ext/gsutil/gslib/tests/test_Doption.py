@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,25 +14,59 @@
 # limitations under the License.
 """Integration tests for gsutil -D option."""
 
+from __future__ import absolute_import
+
 import gslib
 from gslib.cs_api_map import ApiSelector
 import gslib.tests.testcase as testcase
 from gslib.tests.testcase.integration_testcase import SkipForS3
 from gslib.tests.util import ObjectToURI as suri
+from gslib.tests.util import SetBotoConfigForTest
+from gslib.util import ONE_KB
 
 
 @SkipForS3('-D output is implementation-specific.')
-class TestCat(testcase.GsUtilIntegrationTestCase):
+class TestDOption(testcase.GsUtilIntegrationTestCase):
   """Integration tests for gsutil -D option."""
+
+  def test_minus_D_multipart_upload(self):
+    """Tests that debug option does not output upload media body."""
+    # We want to ensure it works with and without a trailing newline.
+    for file_contents in ('a1b2c3d4', 'a1b2c3d4\n'):
+      fpath = self.CreateTempFile(contents=file_contents)
+      bucket_uri = self.CreateBucket()
+      with SetBotoConfigForTest(
+          [('GSUtil', 'resumable_threshold', str(ONE_KB))]):
+        stderr = self.RunGsUtil(
+            ['-D', 'cp', fpath, suri(bucket_uri)], return_stderr=True)
+        print 'command line:' + ' '.join(['-D', 'cp', fpath, suri(bucket_uri)])
+        if self.test_api == ApiSelector.JSON:
+          self.assertIn('media body', stderr)
+        self.assertNotIn('a1b2c3d4', stderr)
+        self.assertIn('Comparing local vs cloud md5-checksum for', stderr)
+        self.assertIn('total_bytes_transferred: %d' % len(file_contents),
+                      stderr)
+
+  def test_minus_D_resumable_upload(self):
+    fpath = self.CreateTempFile(contents='a1b2c3d4')
+    bucket_uri = self.CreateBucket()
+    with SetBotoConfigForTest([('GSUtil', 'resumable_threshold', '4')]):
+      stderr = self.RunGsUtil(
+          ['-D', 'cp', fpath, suri(bucket_uri)], return_stderr=True)
+      self.assertNotIn('a1b2c3d4', stderr)
+      self.assertIn('Comparing local vs cloud md5-checksum for', stderr)
+      self.assertIn('total_bytes_transferred: 8', stderr)
 
   def test_minus_D_cat(self):
     """Tests cat command with debug option."""
     key_uri = self.CreateObject(contents='0123456789')
-    (stdout, stderr) = self.RunGsUtil(['-D', 'cat', suri(key_uri)],
-                                      return_stdout=True, return_stderr=True)
+    with SetBotoConfigForTest([('Boto', 'proxy_pass', 'secret')]):
+      (stdout, stderr) = self.RunGsUtil(
+          ['-D', 'cat', suri(key_uri)], return_stdout=True, return_stderr=True)
     self.assertIn('You are running gsutil with debug output enabled.', stderr)
     self.assertIn("reply: 'HTTP/1.1 200 OK", stderr)
-    self.assertIn('config: [', stderr)
+    self.assertIn('config:', stderr)
+    self.assertIn("('proxy_pass', 'REDACTED')", stderr)
     self.assertIn("reply: 'HTTP/1.1 200 OK", stderr)
     self.assertIn('header: Expires: ', stderr)
     self.assertIn('header: Date: ', stderr)
@@ -55,20 +90,22 @@ class TestCat(testcase.GsUtilIntegrationTestCase):
       self.assertRegexpMatches(
           stderr, '.*GET.*b/%s/o/%s.*user-agent:.*gsutil/%s' %
           (key_uri.bucket_name, key_uri.object_name, gslib.VERSION))
-      self.assertIn(('header: Cache-Control: private, max-age=0, '
-                     'must-revalidate, no-transform'), stderr)
+      self.assertIn(('header: Cache-Control: no-cache, no-store, max-age=0, '
+                     'must-revalidate'), stderr)
       self.assertIn("md5Hash: u'eB5eJF1ptWaXm4bijSPyxw=='", stderr)
 
     if gslib.IS_PACKAGE_INSTALL:
       self.assertIn('PACKAGED_GSUTIL_INSTALLS_DO_NOT_HAVE_CHECKSUMS', stdout)
     else:
-      self.assertRegexpMatches(stdout, r'.*checksum [0-9a-f]{32}.*')
-    self.assertIn('gsutil version %s' % gslib.VERSION, stdout)
-    self.assertIn('boto version ', stdout)
-    self.assertIn('python version ', stdout)
+      self.assertRegexpMatches(stdout, r'.*checksum: [0-9a-f]{32}.*')
+    self.assertIn('gsutil version: %s' % gslib.VERSION, stdout)
+    self.assertIn('boto version: ', stdout)
+    self.assertIn('python version: ', stdout)
+    self.assertIn('OS: ', stdout)
+    self.assertIn('multiprocessing available: ', stdout)
+    self.assertIn('using cloud sdk: ', stdout)
     self.assertIn('config path: ', stdout)
     self.assertIn('gsutil path: ', stdout)
     self.assertIn('compiled crcmod: ', stdout)
     self.assertIn('installed via package manager: ', stdout)
     self.assertIn('editable install: ', stdout)
-      

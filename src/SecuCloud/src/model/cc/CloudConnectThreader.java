@@ -7,7 +7,8 @@ public class CloudConnectThreader implements Runnable {
 		upload,
 		download,
 		copy,
-		listDir
+		listDir,
+		remove
 	}
 	
 	public enum identifyer {
@@ -36,6 +37,8 @@ public class CloudConnectThreader implements Runnable {
 			this.cloudConnectorGSUTIL.upload(informationContainer);
 		case copy:
 			break;
+		case remove:
+			this.cloudConnectorGSUTIL.remove(informationContainer);
 		}
 	}
 }

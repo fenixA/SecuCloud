@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2014 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,8 +14,11 @@
 # limitations under the License.
 """Implementation of Unix-like rsync command."""
 
+from __future__ import absolute_import
+
 import errno
 import heapq
+import io
 from itertools import islice
 import os
 import tempfile
@@ -26,6 +30,7 @@ from boto import config
 import crcmod
 
 from gslib import copy_helper
+from gslib.cloud_api import NotFoundException
 from gslib.command import Command
 from gslib.command import DummyArgChecker
 from gslib.copy_helper import CreateCopyHelperOpts
@@ -33,6 +38,7 @@ from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
 from gslib.hashing_helper import CalculateB64EncodedCrc32cFromContents
 from gslib.hashing_helper import CalculateB64EncodedMd5FromContents
+from gslib.hashing_helper import SLOW_CRCMOD_WARNING
 from gslib.plurality_checkable_iterator import PluralityCheckableIterator
 from gslib.storage_url import StorageUrlFromString
 from gslib.util import GetCloudApiInstance
@@ -42,13 +48,8 @@ from gslib.util import UsingCrcmodExtension
 from gslib.util import UTF8
 from gslib.wildcard_iterator import CreateWildcardIterator
 
-SLOW_CRCMOD_WARNING = """
-WARNING: You have requested checksumming but your crcmod installation isn't
-using the module's C extension, so checksumming will run very slowly. For help
-installing the extension, please see:
-  $ gsutil help crcmod"""
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil rsync [-c] [-C] [-d] [-e] [-n] [-p] [-R] src_url dst_url
 
@@ -108,7 +109,13 @@ _detailed_help_text = ("""
   workstation.
 
 
-<B>FAILURE HANDLING</B>
+<B>CHECKSUM VALIDATION AND FAILURE HANDLING</B>
+  At the end of every upload or download, the gsutil rsync command validates
+  that the checksum of the source file/object matches the checksum of the
+  destination file/object. If the checksums do not match, gsutil will delete
+  the invalid copy and print a warning message. This very rarely happens, but
+  if it does, please contact gs-team@google.com.
+
   The rsync command will retry when failures occur, but if enough failures
   happen during a particular copy or delete operation the command will skip that
   object and move on. At the end of the synchronization run if any failures were
@@ -119,6 +126,9 @@ _detailed_help_text = ("""
   Note that there are cases where retrying will never succeed, such as if you
   don't have write permission to the destination bucket or if the destination
   path for some objects is longer than the maximum allowed length.
+
+  For more details about gsutil's retry handling, please see
+  "gsutil help retries".
 
 
 <B>CHANGE DETECTION ALGORITHM</B>
@@ -167,7 +177,7 @@ _detailed_help_text = ("""
 
   If the output contains:
 
-    compiled crcmod: False 
+    compiled crcmod: False
 
   you are running a Python library for computing CRC32C, which is much slower
   than using the compiled code. For information on getting a compiled CRC32C
@@ -192,7 +202,10 @@ _detailed_help_text = ("""
   -C            If an error occurs, continue to attempt to copy the remaining
                 files. If errors occurred, gsutil's exit status will be non-zero
                 even if this flag is set. This option is implicitly set when
-                running "gsutil -m rsync...".
+                running "gsutil -m rsync...".  Note: -C only applies to the
+                actual copying operation. If an error occurs while iterating
+                over the files in the local directory (e.g., invalid Unicode
+                file name) gsutil will print an error message and abort.
 
   -d            Delete extra files under dst_url not found under src_url. By
                 default extra files are not deleted.
@@ -327,7 +340,7 @@ def _ListUrlRootFunc(cls, args_tuple, thread_state=None):
   (url_str, out_file_name, desc) = args_tuple
   # We sort while iterating over url_str, allowing parallelism of batched
   # sorting with collecting the listing.
-  out_file = open(out_file_name, 'w')
+  out_file = io.open(out_file_name, mode='w', encoding=UTF8)
   _BatchSort(_FieldedListingIterator(cls, gsutil_api, url_str, desc), out_file)
   out_file.close()
 
@@ -352,33 +365,34 @@ def _FieldedListingIterator(cls, gsutil_api, url_str, desc):
   for blr in CreateWildcardIterator(
       wildcard, gsutil_api, debug=cls.debug,
       project_id=cls.project_id).IterObjects(
-          # Request just the needed fields, to heavily reduce bandwidth usage.
+          # Request just the needed fields, to reduce bandwidth usage.
           bucket_listing_fields=['crc32c', 'md5Hash', 'name', 'size']):
     # Various GUI tools (like the GCS web console) create placeholder objects
     # ending with '/' when the user creates an empty directory. Normally these
     # tools should delete those placeholders once objects have been written
-    # "under" the directory, but sometimes the placeholders are left around. We
-    # need to filter them out here, otherwise if the user tries to rsync from
-    # GCS to a local directory it will result in a directory/file conflict
-    # (e.g., trying to download an object called "mydata/" where the local
-    # directory "mydata" exists).
-    url = StorageUrlFromString(blr.GetUrlString())
+    # "under" the directory, but sometimes the placeholders are left around.
+    # We need to filter them out here, otherwise if the user tries to rsync
+    # from GCS to a local directory it will result in a directory/file
+    # conflict (e.g., trying to download an object called "mydata/" where the
+    # local directory "mydata" exists).
+    url = blr.storage_url
     if IsCloudSubdirPlaceholder(url, blr=blr):
-      cls.logger.info('Skipping cloud sub-directory placeholder object %s',
-                      url.GetUrlString())
+      cls.logger.info('Skipping cloud sub-directory placeholder object %s', url)
+      continue
+    if (cls.exclude_symlinks and url.IsFileUrl()
+        and os.path.islink(url.object_name)):
       continue
     i += 1
     if i % _PROGRESS_REPORT_LISTING_COUNT == 0:
       cls.logger.info('At %s listing %d...', desc, i)
-    yield _BuildTmpOutputLine(blr, url)
+    yield _BuildTmpOutputLine(blr)
 
 
-def _BuildTmpOutputLine(blr, url):
+def _BuildTmpOutputLine(blr):
   """Builds line to output to temp file for given BucketListingRef.
 
   Args:
     blr: The BucketListingRef.
-    url: The StorageUrl for above blr.
 
   Returns:
     The output line, formatted as quote_plus(URL)<sp>size<sp>crc32c<sp>md5
@@ -388,6 +402,7 @@ def _BuildTmpOutputLine(blr, url):
   """
   crc32c = _NA
   md5 = _NA
+  url = blr.storage_url
   if url.IsFileUrl():
     size = os.path.getsize(url.object_name)
   elif url.IsCloudUrl():
@@ -397,7 +412,7 @@ def _BuildTmpOutputLine(blr, url):
   else:
     raise CommandException('Got unexpected URL type (%s)' % url.scheme)
   return '%s %d %s %s\n' % (
-      urllib.quote_plus(url.GetUrlString().encode(UTF8)), size, crc32c, md5)
+      urllib.quote_plus(url.url_string.encode(UTF8)), size, crc32c, md5)
 
 
 # pylint: disable=bare-except
@@ -428,10 +443,10 @@ def _BatchSort(in_iter, out_file):
       current_chunk = sorted(islice(in_iter, buffer_size))
       if not current_chunk:
         break
-      output_chunk = open('%s-%06i' % (out_file.name, len(chunk_files)),
-                          'w+b', _OUTPUT_BUFFER_SIZE)
+      output_chunk = io.open('%s-%06i' % (out_file.name, len(chunk_files)),
+                             mode='w+', encoding=UTF8)
       chunk_files.append(output_chunk)
-      output_chunk.writelines(current_chunk)
+      output_chunk.writelines(unicode(''.join(current_chunk)))
       output_chunk.flush()
       output_chunk.seek(0)
     out_file.writelines(heapq.merge(*chunk_files))
@@ -477,9 +492,9 @@ class _DiffIterator(object):
     # Build sorted lists of src and dst URLs in parallel. To do this, pass args
     # to _ListUrlRootFunc as tuple (url_str, out_file_name, desc).
     args_iter = iter([
-        (self.base_src_url.GetUrlString(), self.sorted_list_src_file_name,
+        (self.base_src_url.url_string, self.sorted_list_src_file_name,
          'source'),
-        (self.base_dst_url.GetUrlString(), self.sorted_list_dst_file_name,
+        (self.base_dst_url.url_string, self.sorted_list_dst_file_name,
          'destination')
     ])
     command_obj.Apply(_ListUrlRootFunc, args_iter, _RootListingExceptionHandler,
@@ -548,8 +563,8 @@ class _DiffIterator(object):
     if (StorageUrlFromString(url_str).IsCloudUrl()
         and crc32c == _NA and md5 == _NA):
       self.logger.warn(
-          'Found no hashes to validate %s. '
-          'Integrity cannot be assured without hashes.' % url_str)
+          'Found no hashes to validate %s. Integrity cannot be assured without '
+          'hashes.', url_str)
       return True
     return False
 
@@ -603,8 +618,8 @@ class _DiffIterator(object):
     # Strip trailing slashes, if any, so we compute tail length against
     # consistent position regardless of whether trailing slashes were included
     # or not in URL.
-    base_src_url_len = len(self.base_src_url.GetUrlString().rstrip('/\\'))
-    base_dst_url_len = len(self.base_dst_url.GetUrlString().rstrip('/\\'))
+    base_src_url_len = len(self.base_src_url.url_string.rstrip('/\\'))
+    base_dst_url_len = len(self.base_dst_url.url_string.rstrip('/\\'))
     src_url_str = dst_url_str = None
     # Invariant: After each yield, the URLs in src_url_str, dst_url_str,
     # self.sorted_src_urls_it, and self.sorted_dst_urls_it are not yet
@@ -620,8 +635,7 @@ class _DiffIterator(object):
         src_url_str_to_check = src_url_str[base_src_url_len:].replace('\\', '/')
         dst_url_str_would_copy_to = copy_helper.ConstructDstUrl(
             self.base_src_url, StorageUrlFromString(src_url_str), True, True,
-            True, self.base_dst_url, False,
-            self.recursion_requested).GetUrlString()
+            self.base_dst_url, False, self.recursion_requested).url_string
       if self.sorted_dst_urls_it.IsEmpty():
         # We've reached end of dst URLs, so copy src to dst.
         yield _DiffToApply(
@@ -684,9 +698,14 @@ def _RsyncFunc(cls, diff_to_apply, thread_state=None):
       if dst_url.IsFileUrl():
         os.unlink(dst_url.object_name)
       else:
-        gsutil_api.DeleteObject(
-            dst_url.bucket_name, dst_url.object_name,
-            generation=dst_url.generation, provider=dst_url.scheme)
+        try:
+          gsutil_api.DeleteObject(
+              dst_url.bucket_name, dst_url.object_name,
+              generation=dst_url.generation, provider=dst_url.scheme)
+        except NotFoundException:
+          # If the object happened to be deleted by an external process, this
+          # is fine because it moves us closer to the desired state.
+          pass
   elif diff_to_apply.diff_action == _DiffAction.COPY:
     src_url_str = diff_to_apply.src_url_str
     src_url = StorageUrlFromString(src_url_str)
@@ -736,7 +755,7 @@ class RsyncCommand(Command):
       help_name_aliases=['sync', 'synchronize'],
       help_type='command_help',
       help_one_line_summary='Synchronize content of two buckets/directories',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
   total_bytes_transferred = 0

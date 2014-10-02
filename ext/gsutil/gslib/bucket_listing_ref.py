@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,16 +14,11 @@
 # limitations under the License.
 """Classes for cloud/file references yielded by gsutil iterators."""
 
-
-class BucketListingRefType(object):
-  """Enum class for describing BucketListingRefs."""
-  BUCKET = 'bucket'  # Cloud bucket
-  OBJECT = 'object'  # Cloud object or filesystem file
-  PREFIX = 'prefix'  # Cloud bucket subdir or filesystem directory
+from __future__ import absolute_import
 
 
 class BucketListingRef(object):
-  """A reference to one fully expanded iterator result.
+  """Base class for a reference to one fully expanded iterator result.
 
   This allows polymorphic iteration over wildcard-iterated URLs.  The
   reference contains a fully expanded URL string containing no wildcards and
@@ -39,41 +35,80 @@ class BucketListingRef(object):
   For filesystem URLs, root_object is not populated.
   """
 
-  def __init__(self, url_string, ref_type, root_object=None):
-    """Instantiates a BucketListingRef from the URL string and object metadata.
+  class _BucketListingRefType(object):
+    """Enum class for describing BucketListingRefs."""
+    BUCKET = 'bucket'  # Cloud bucket
+    OBJECT = 'object'  # Cloud object or filesystem file
+    PREFIX = 'prefix'  # Cloud bucket subdir or filesystem directory
+
+  @property
+  def url_string(self):
+    return self._url_string
+
+  @property
+  def type_name(self):
+    return self._ref_type
+
+  def IsBucket(self):
+    return self._ref_type == self._BucketListingRefType.BUCKET
+
+  def IsObject(self):
+    return self._ref_type == self._BucketListingRefType.OBJECT
+
+  def IsPrefix(self):
+    return self._ref_type == self._BucketListingRefType.PREFIX
+
+  def __str__(self):
+    return self._url_string
+
+
+class BucketListingBucket(BucketListingRef):
+  """BucketListingRef subclass for buckets."""
+
+  def __init__(self, storage_url, root_object=None):
+    """Creates a BucketListingRef of type bucket.
 
     Args:
-      url_string: String describing the referenced object.
-      ref_type: BucketListingRefType for the underlying object.
+      storage_url: StorageUrl containing a bucket.
       root_object: Underlying object metadata, if available.
-
-    Raises:
-      BucketListingRefException: If reference type is invalid.
     """
-    if ref_type not in (BucketListingRefType.BUCKET,
-                        BucketListingRefType.OBJECT,
-                        BucketListingRefType.PREFIX):
-      raise BucketListingRefException('Invalid ref_type %s' % ref_type)
-    self.url_string = url_string
-    self.ref_type = ref_type
+    super(BucketListingBucket, self).__init__()
+    self._ref_type = self._BucketListingRefType.BUCKET
+    self._url_string = storage_url.url_string
+    self.storage_url = storage_url
     self.root_object = root_object
 
-  def GetUrlString(self):
-    return self.url_string
 
-  def __str__(self):
-    return self.url_string
+class BucketListingPrefix(BucketListingRef):
+  """BucketListingRef subclass for prefixes."""
+
+  def __init__(self, storage_url, root_object=None):
+    """Creates a BucketListingRef of type prefix.
+
+    Args:
+      storage_url: StorageUrl containing a prefix.
+      root_object: Underlying object metadata, if available.
+    """
+    super(BucketListingPrefix, self).__init__()
+    self._ref_type = self._BucketListingRefType.PREFIX
+    self._url_string = storage_url.url_string
+    self.storage_url = storage_url
+    self.root_object = root_object
 
 
-class BucketListingRefException(StandardError):
-  """Exception raised for invalid BucketListingRef requests."""
+class BucketListingObject(BucketListingRef):
+  """BucketListingRef subclass for objects."""
 
-  def __init__(self, reason):
-    StandardError.__init__(self)
-    self.reason = reason
+  def __init__(self, storage_url, root_object=None):
+    """Creates a BucketListingRef of type object.
 
-  def __repr__(self):
-    return 'BucketListingRefException: %s' % self.reason
+    Args:
+      storage_url: StorageUrl containing an object.
+      root_object: Underlying object metadata, if available.
+    """
+    super(BucketListingObject, self).__init__()
+    self._ref_type = self._BucketListingRefType.OBJECT
+    self._url_string = storage_url.url_string
+    self.storage_url = storage_url
+    self.root_object = root_object
 
-  def __str__(self):
-    return 'BucketListingRefException: %s' % self.reason

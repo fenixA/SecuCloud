@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Gsutil API for interacting with cloud storage providers."""
+
+from __future__ import absolute_import
 
 
 class CloudApi(object):
@@ -398,7 +401,7 @@ class CloudApi(object):
       preconditions: Destination object preconditions for the request.
       provider: Cloud storage provider to connect to.  If not present,
                 class-wide default is used.
-      fields: If present, return only these Object metadata fields..
+      fields: If present, return only these Object metadata fields.
 
     Raises:
       ArgumentException for errors during input validation.
@@ -421,7 +424,7 @@ class CloudApi(object):
       preconditions: Destination object preconditions for the request.
       provider: Cloud storage provider to connect to.  If not present,
                 class-wide default is used.
-      fields: If present, return only these Object metadata fields..
+      fields: If present, return only these Object metadata fields.
 
     Raises:
       ArgumentException for errors during input validation.

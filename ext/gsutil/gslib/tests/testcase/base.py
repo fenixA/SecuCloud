@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Base test case class for unit and integration tests."""
+
+from __future__ import absolute_import
+
 from functools import wraps
 import os.path
 import random
@@ -40,9 +44,11 @@ class GsUtilTestCase(unittest.TestCase):
     if util.RUN_S3_TESTS:
       self.test_api = 'XML'
       self.default_provider = 's3'
+      self.provider_custom_meta = 'amz'
     else:
       self.test_api = boto.config.get('GSUtil', 'prefer_api', 'JSON').upper()
       self.default_provider = 'gs'
+      self.provider_custom_meta = 'goog'
     self.tempdirs = []
 
   def tearDown(self):
@@ -94,8 +100,7 @@ class GsUtilTestCase(unittest.TestCase):
       self.CreateTempFile(tmpdir=tmpdir, file_name=name, contents='test %d' % i)
     return tmpdir
 
-  def CreateTempFile(self, tmpdir=None, contents=None,
-                     file_name=None, open_wb=False):
+  def CreateTempFile(self, tmpdir=None, contents=None, file_name=None):
     """Creates a temporary file on disk.
 
     Args:
@@ -107,7 +112,6 @@ class GsUtilTestCase(unittest.TestCase):
                  test file name is constructed. This can also be a tuple, where
                  ('dir', 'foo') means to create a file named 'foo' inside a
                  subdirectory named 'dir'.
-      open_wb: Boolean, should the temporary file be opened in binary mode
 
     Returns:
       The path to the new temporary file.
@@ -121,9 +125,7 @@ class GsUtilTestCase(unittest.TestCase):
     if not os.path.isdir(os.path.dirname(fpath)):
       os.makedirs(os.path.dirname(fpath))
 
-    mode = 'wb' if open_wb else 'w'
-
-    with open(fpath, mode) as f:
+    with open(fpath, 'wb') as f:
       contents = contents or self.MakeTempName('contents')
       f.write(contents)
     return fpath

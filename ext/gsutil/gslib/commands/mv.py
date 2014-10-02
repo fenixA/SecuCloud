@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +14,8 @@
 # limitations under the License.
 """Implementation of Unix-like mv command for cloud storage providers."""
 
+from __future__ import absolute_import
+
 from gslib.command import Command
 from gslib.commands.cp import CP_SUB_ARGS
 from gslib.cs_api_map import ApiSelector
@@ -20,7 +23,7 @@ from gslib.exception import CommandException
 from gslib.storage_url import StorageUrlFromString
 from gslib.util import NO_MAX
 
-_detailed_help_text = ("""
+_DETAILED_HELP_TEXT = ("""
 <B>SYNOPSIS</B>
   gsutil mv [-p] src_url dst_url
   gsutil mv [-p] url... dst_url
@@ -105,7 +108,7 @@ class MvCommand(Command):
       help_name_aliases=['move', 'rename'],
       help_type='command_help',
       help_one_line_summary='Move/rename objects and/or subdirectories',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={},
   )
 

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -19,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 """Tests for gsutil utility functions."""
+
+from __future__ import absolute_import
 
 from gslib import util
 import gslib.tests.testcase as testcase

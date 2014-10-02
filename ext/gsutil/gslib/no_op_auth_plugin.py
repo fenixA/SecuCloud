@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +17,8 @@
 This allows users to use gsutil for accessing publicly readable buckets and
 objects without first signing up for an account.
 """
+
+from __future__ import absolute_import
 
 from boto.auth_handler import AuthHandler
 

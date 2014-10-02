@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,13 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of lifecycle configuration command for GCS buckets."""
+
+from __future__ import absolute_import
+
 import sys
 
 from gslib.command import Command
 from gslib.cs_api_map import ApiSelector
 from gslib.exception import CommandException
 from gslib.help_provider import CreateHelpText
-from gslib.storage_url import StorageUrlFromString
 from gslib.third_party.storage_apitools import storage_v1_messages as apitools_messages
 from gslib.translation_helper import LifecycleTranslation
 from gslib.util import NO_MAX
@@ -30,7 +33,7 @@ _GET_SYNOPSIS = """
 """
 
 _SET_SYNOPSIS = """
-  gsutil lifecycle set config-xml-file url...
+  gsutil lifecycle set config-json-file url...
 """
 
 _SYNOPSIS = _GET_SYNOPSIS + _SET_SYNOPSIS.lstrip('\n') + '\n'
@@ -80,7 +83,7 @@ _DESCRIPTION = """
 
 """
 
-_detailed_help_text = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
+_DETAILED_HELP_TEXT = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
 
 _get_help_text = CreateHelpText(_GET_SYNOPSIS, _GET_DESCRIPTION)
 _set_help_text = CreateHelpText(_SET_SYNOPSIS, _SET_DESCRIPTION)
@@ -109,7 +112,7 @@ class LifecycleCommand(Command):
       help_type='command_help',
       help_one_line_summary=(
           'Get or set lifecycle configuration for a bucket'),
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={'get': _get_help_text, 'set': _set_help_text},
   )
 
@@ -134,14 +137,12 @@ class LifecycleCommand(Command):
       bucket_iter = self.GetBucketUrlIterFromArg(url_str,
                                                  bucket_fields=['lifecycle'])
       for blr in bucket_iter:
-        url = StorageUrlFromString(blr.url_string)
+        url = blr.storage_url
         some_matched = True
-        self.logger.info('Setting lifecycle configuration on %s...',
-                         blr.url_string)
+        self.logger.info('Setting lifecycle configuration on %s...', blr)
         if url.scheme == 's3':
-          self.gsutil_api.XmlPassThroughSetLifecycle(lifecycle_txt,
-                                                     url.GetUrlString(),
-                                                     provider=url.scheme)
+          self.gsutil_api.XmlPassThroughSetLifecycle(
+              lifecycle_txt, url, provider=url.scheme)
         else:
           bucket_metadata = apitools_messages.Bucket(lifecycle=lifecycle)
           self.gsutil_api.PatchBucket(url.bucket_name, bucket_metadata,
@@ -157,8 +158,7 @@ class LifecycleCommand(Command):
 
     if bucket_url.scheme == 's3':
       sys.stdout.write(self.gsutil_api.XmlPassThroughGetLifecycle(
-          bucket_url.GetUrlString(),
-          provider=bucket_url.scheme))
+          bucket_url, provider=bucket_url.scheme))
     else:
       if bucket_metadata.lifecycle and bucket_metadata.lifecycle.rule:
         sys.stdout.write(LifecycleTranslation.JsonLifecycleFromMessage(

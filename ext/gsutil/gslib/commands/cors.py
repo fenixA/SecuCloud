@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2012 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of cors configuration command for GCS buckets."""
+
+from __future__ import absolute_import
 
 import sys
 
@@ -79,7 +82,7 @@ _DESCRIPTION = ("""
 For more info about CORS, see http://www.w3.org/TR/cors/.
 """)
 
-_detailed_help_text = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
+_DETAILED_HELP_TEXT = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
 
 _get_help_text = CreateHelpText(_GET_SYNOPSIS, _GET_DESCRIPTION)
 _set_help_text = CreateHelpText(_SET_SYNOPSIS, _SET_DESCRIPTION)
@@ -108,7 +111,7 @@ class CorsCommand(Command):
       help_type='command_help',
       help_one_line_summary=(
           'Set a CORS JSON document for one or more buckets'),
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={'get': _get_help_text, 'set': _set_help_text},
   )
 
@@ -146,12 +149,12 @@ class CorsCommand(Command):
     for url_str in url_args:
       bucket_iter = self.GetBucketUrlIterFromArg(url_str, bucket_fields=['id'])
       for blr in bucket_iter:
-        url = StorageUrlFromString(blr.url_string)
+        url = blr.storage_url
         some_matched = True
-        self.logger.info('Setting CORS on %s...', blr.url_string)
+        self.logger.info('Setting CORS on %s...', blr)
         if url.scheme == 's3':
-          self.gsutil_api.XmlPassThroughSetCors(cors_txt, url.GetUrlString(),
-                                                provider=url.scheme)
+          self.gsutil_api.XmlPassThroughSetCors(
+              cors_txt, url, provider=url.scheme)
         else:
           bucket_metadata = apitools_messages.Bucket(cors=cors)
           self.gsutil_api.PatchBucket(url.bucket_name, bucket_metadata,
@@ -167,8 +170,7 @@ class CorsCommand(Command):
 
     if bucket_url.scheme == 's3':
       sys.stdout.write(self.gsutil_api.XmlPassThroughGetCors(
-          bucket_url.GetUrlString(),
-          provider=bucket_url.scheme))
+          bucket_url, provider=bucket_url.scheme))
     else:
       if bucket_metadata.cors:
         sys.stdout.write(

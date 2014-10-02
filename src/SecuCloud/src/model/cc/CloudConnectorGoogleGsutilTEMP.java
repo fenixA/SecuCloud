@@ -10,8 +10,8 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 	private static final String GS_PROTOCOL = "gs://";
 	private static final String CMD_COPY = "cp";
 	private static final String CMD_LIST = "ls";
-	private static final String CMD_CREATEBUCKET = "mb";
-	private static final String CMD_MOVE = "mv";
+//	private static final String CMD_CREATEBUCKET = "mb";
+//	private static final String CMD_MOVE = "mv";
 	private static final String CMD_DELETE = "rm";
 	
 	
@@ -43,14 +43,14 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
 							CMD_COPY, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName(),
-							Main.getInstance().getUSER_TEMP_DIR() + "/" + informationContainer.getName() });
+							Main.getInstance().getUSER_DOWNLOAD_DIR() + "/" + informationContainer.getName() });
 			downloadProcess.waitFor();
-		} catch (IOException uploadIOException) {
-			System.out.println(uploadIOException.toString());
+		} catch (IOException downloadIOException) {
+			System.out.println(downloadIOException.toString());
 			return false;
 		}
-		catch (InterruptedException uploadInterruptException) {
-			System.out.println(uploadInterruptException.toString());
+		catch (InterruptedException downloadInterruptException) {
+			System.out.println(downloadInterruptException.toString());
 			return false;
 		}
 		return true;
@@ -75,11 +75,11 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 				}
 				System.out.println(line);
 			}
-		} catch (IOException uploadIOException) {
-			System.out.println(uploadIOException.toString());
+		} catch (IOException listDirIOException) {
+			System.out.println(listDirIOException.toString());
 		}
-		catch (InterruptedException uploadInterruptException) {
-			System.out.println(uploadInterruptException.toString());
+		catch (InterruptedException listDirInterruptException) {
+			System.out.println(listDirInterruptException.toString());
 		}
 	}
 
@@ -89,7 +89,7 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 					new String[] {
 							SystemPathCollectorGsutilTEMP.getPythonPath(),
 							SystemPathCollectorGsutilTEMP.getGsutilPath(),
-							CMD_DELETE, GS_PROTOCOL + Main.getInstance().getBucket() + "/" + informationContainer.getEncryptedName()
+							CMD_DELETE, GS_PROTOCOL + informationContainer.getCloudLocation()
 							});
 			deleteProcess.waitFor();
 		} catch (IOException deleteIOException) {

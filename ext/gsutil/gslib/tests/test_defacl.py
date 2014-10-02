@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Integration tests for the defacl command."""
+
+from __future__ import absolute_import
 
 import re
 import gslib.tests.testcase as case
@@ -57,6 +60,12 @@ class TestDefacl(case.GsUtilIntegrationTestCase):
     json_text3 = self.RunGsUtil(self._defacl_get_prefix +
                                 [suri(bucket)], return_stdout=True)
     self.assertRegexpMatches(json_text3, test_regex2)
+
+    stderr = self.RunGsUtil(self._defacl_ch_prefix +
+                            ['-g', self.GROUP_TEST_ADDRESS+':WRITE',
+                             suri(bucket)],
+                            return_stderr=True, expected_status=1)
+    self.assertIn('WRITER cannot be set as a default object ACL', stderr)
 
   def testChangeMultipleBuckets(self):
     """Tests defacl ch on multiple buckets."""
@@ -106,6 +115,9 @@ class TestDefacl(case.GsUtilIntegrationTestCase):
   def testEmptyDefAcl(self):
     bucket = self.CreateBucket()
     self.RunGsUtil(self._defacl_set_prefix + ['private', suri(bucket)])
+    stdout = self.RunGsUtil(self._defacl_get_prefix + [suri(bucket)],
+                            return_stdout=True)
+    self.assertEquals(stdout.rstrip(), '[]')
     self.RunGsUtil(self._defacl_ch_prefix +
                    ['-u', self.USER_TEST_ADDRESS+':fc', suri(bucket)])
 

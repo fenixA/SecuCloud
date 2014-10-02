@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2010 Google Inc. All Rights Reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
@@ -20,10 +21,11 @@
 # IN THE SOFTWARE.
 """Unit tests for gsutil wildcard_iterator."""
 
+from __future__ import absolute_import
+
 import tempfile
 
 from gslib import wildcard_iterator
-from gslib.bucket_listing_ref import BucketListingRefType
 from gslib.exception import InvalidUrlError
 from gslib.storage_url import ContainsWildcard
 import gslib.tests.testcase as testcase
@@ -121,10 +123,10 @@ class CloudWildcardIteratorTests(testcase.GsUtilUnitTestCase):
     prefixes = set()
     for blr in self._test_wildcard_iterator(
         self.test_bucket0_uri.clone_replace_name('*')):
-      if blr.ref_type == BucketListingRefType.PREFIX:
+      if blr.IsPrefix():
         prefixes.add(blr.root_object)
       else:
-        uri_strs.add(blr.GetUrlString())
+        uri_strs.add(blr.url_string)
     exp_obj_uri_strs = set([suri(self.test_bucket0_uri, x)
                             for x in self.immed_child_obj_names])
     self.assertEqual(exp_obj_uri_strs, uri_strs)
@@ -137,10 +139,10 @@ class CloudWildcardIteratorTests(testcase.GsUtilUnitTestCase):
     actual_prefixes = set()
     for blr in self._test_wildcard_iterator(
         self.test_bucket0_uri.clone_replace_name('*/nested1')):
-      if blr.ref_type == BucketListingRefType.PREFIX:
+      if blr.IsPrefix():
         actual_prefixes.add(blr.root_object)
       else:
-        actual_uri_strs.add(blr.GetUrlString())
+        actual_uri_strs.add(blr.url_string)
     expected_uri_strs = set()
     expected_prefixes = set(['nested1/'])
     self.assertEqual(expected_prefixes, actual_prefixes)
@@ -152,10 +154,10 @@ class CloudWildcardIteratorTests(testcase.GsUtilUnitTestCase):
     actual_prefixes = set()
     for blr in self._test_wildcard_iterator(
         self.test_bucket0_uri.clone_replace_name('*/nested2/*')):
-      if blr.ref_type == BucketListingRefType.PREFIX:
+      if blr.IsPrefix():
         actual_prefixes.add(blr.root_object)
       else:
-        actual_uri_strs.add(blr.GetUrlString())
+        actual_uri_strs.add(blr.url_string)
     expected_uri_strs = set([
         self.test_bucket0_uri.clone_replace_name('nested1/nested2/xyz1').uri,
         self.test_bucket0_uri.clone_replace_name('nested1/nested2/xyz2').uri])

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Implementation of default object acl command for Google Cloud Storage."""
+
+from __future__ import absolute_import
 
 import getopt
 
@@ -28,7 +31,6 @@ from gslib.exception import CommandException
 from gslib.help_provider import CreateHelpText
 from gslib.storage_url import StorageUrlFromString
 from gslib.third_party.storage_apitools import storage_v1_messages as apitools_messages
-from gslib.translation_helper import AclTranslation
 from gslib.util import NO_MAX
 from gslib.util import Retry
 from gslib.util import UrlsAreForSingleProvider
@@ -100,7 +102,7 @@ _DESCRIPTION = """
   The defacl command has three sub-commands:
 """ + '\n'.join([_SET_DESCRIPTION + _GET_DESCRIPTION + _CH_DESCRIPTION])
 
-_detailed_help_text = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
+_DETAILED_HELP_TEXT = CreateHelpText(_SYNOPSIS, _DESCRIPTION)
 
 _get_help_text = CreateHelpText(_GET_SYNOPSIS, _GET_DESCRIPTION)
 _set_help_text = CreateHelpText(_SET_SYNOPSIS, _SET_DESCRIPTION)
@@ -130,7 +132,7 @@ class DefAclCommand(Command):
           'default acl', 'setdefacl', 'getdefacl', 'chdefacl'],
       help_type='command_help',
       help_one_line_summary='Get, set, or change default ACL on buckets',
-      help_text=_detailed_help_text,
+      help_text=_DETAILED_HELP_TEXT,
       subcommand_help_text={
           'get': _get_help_text, 'set': _set_help_text, 'ch': _ch_help_text},
   )
@@ -191,19 +193,17 @@ class DefAclCommand(Command):
     bucket_urls = set()
     for url_arg in self.args:
       for result in self.WildcardIterator(url_arg):
-        url = StorageUrlFromString(result.url_string)
-        if not url.IsBucket():
+        if not result.storage_url.IsBucket():
           raise CommandException(
               'The defacl ch command can only be applied to buckets.')
-        bucket_urls.add(url.GetUrlString())
+        bucket_urls.add(result.storage_url)
 
-    for url_string in bucket_urls:
-      self.ApplyAclChanges(url_string)
+    for storage_url in bucket_urls:
+      self.ApplyAclChanges(storage_url)
 
   @Retry(ServiceException, tries=3, timeout_secs=1)
-  def ApplyAclChanges(self, url_string):
+  def ApplyAclChanges(self, url):
     """Applies the changes in self.changes to the provided URL."""
-    url = StorageUrlFromString(url_string)
     bucket = self.gsutil_api.GetBucket(
         url.bucket_name, provider=url.scheme,
         fields=['defaultObjectAcl', 'metageneration'])
@@ -211,14 +211,15 @@ class DefAclCommand(Command):
     if not current_acl:
       self._WarnServiceAccounts()
       self.logger.warning('Failed to set acl for %s. Please ensure you have '
-                          'OWNER-role access to this resource.' % url_string)
+                          'OWNER-role access to this resource.', url)
       return
 
     modification_count = 0
     for change in self.changes:
-      modification_count += change.Execute(url, current_acl, self.logger)
+      modification_count += change.Execute(
+          url, current_acl, 'defacl', self.logger)
     if modification_count == 0:
-      self.logger.info('No changes to {0}'.format(url))
+      self.logger.info('No changes to %s', url)
       return
 
     try:
@@ -231,7 +232,7 @@ class DefAclCommand(Command):
       # Don't retry on bad requests, e.g. invalid email address.
       raise CommandException('Received bad request from server: %s' % str(e))
 
-    self.logger.info('Updated default ACL on {0}'.format(url))
+    self.logger.info('Updated default ACL on %s', url)
 
   def RunCommand(self):
     """Command entry point for the defacl command."""
@@ -240,6 +241,7 @@ class DefAclCommand(Command):
         self.args, self.command_spec.supported_sub_args)
     self.CheckArguments()
     self.def_acl = True
+    self.continue_on_error = False
     if action_subcommand == 'get':
       func = self._GetDefAcl
     elif action_subcommand == 'set':

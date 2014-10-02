@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2013 Google Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +14,11 @@
 # limitations under the License.
 """Contains helper objects for changing and deleting ACLs."""
 
+from __future__ import absolute_import
+
 import re
 
 from gslib.exception import CommandException
-from gslib.storage_url import StorageUrlFromString
 
 
 class ChangeType(object):
@@ -162,8 +164,11 @@ class AclChange(object):
       elif (self.scope_type == 'GroupByDomain' and
             entry.domain and self.identifier == entry.domain):
         yield entry
-      elif (self.scope_type in ('AllUsers', 'AllAuthenticatedUsers') and
-            entry.entity in self.public_entity_types):
+      elif (self.scope_type == 'AllUsers' and
+            entry.entity.lower() == self.public_entity_all_users.lower()):
+        yield entry
+      elif (self.scope_type == 'AllAuthenticatedUsers' and
+            entry.entity.lower() == self.public_entity_all_auth_users.lower()):
         yield entry
 
   def _AddEntry(self, current_acl, entry_class):
@@ -198,25 +203,31 @@ class AclChange(object):
     for acl_entry in current_acl:
       return acl_entry.__class__
 
-  def Execute(self, url_string, current_acl, logger):
+  def Execute(self, storage_url, current_acl, command_name, logger):
     """Executes the described change on an ACL.
 
     Args:
-      url_string: URL string representing the object to change.
+      storage_url: StorageUrl representing the object to change.
       current_acl: A list of ObjectAccessControls or
                    BucketAccessControls to permute.
+      command_name: String name of comamnd being run (e.g., 'acl').
       logger: An instance of logging.Logger.
 
     Returns:
       The number of changes that were made.
     """
-    logger.debug('Executing {0} on {1}'.format(self.raw_descriptor, url_string))
+    logger.debug(
+        'Executing %s %s on %s', command_name, self.raw_descriptor, storage_url)
 
-    if self.perm == 'WRITER' and StorageUrlFromString(url_string).IsObject():
-      logger.warning(
-          'Skipping {0} on {1}, as WRITER does not apply to objects'
-          .format(self.raw_descriptor, url_string))
-      return 0
+    if self.perm == 'WRITER':
+      if command_name == 'acl' and storage_url.IsObject():
+        logger.warning(
+            'Skipping %s on %s, as WRITER does not apply to objects',
+            self.raw_descriptor, storage_url)
+        return 0
+      elif command_name == 'defacl':
+        raise CommandException('WRITER cannot be set as a default object ACL '
+                               'because WRITER does not apply to objects')
 
     entry_class = self._GetEntriesClass(current_acl)
     matching_entries = list(self._YieldMatchingEntries(current_acl))
@@ -230,7 +241,7 @@ class AclChange(object):
       self._AddEntry(current_acl, entry_class)
       change_count = 1
 
-    logger.debug('New Acl:\n{0}'.format(str(current_acl)))
+    logger.debug('New Acl:\n%s', str(current_acl))
     return change_count
 
 
@@ -274,10 +285,11 @@ class AclDel(object):
             self.identifier == 'AllAuthenticatedUsers'):
         yield entry
 
-  def Execute(self, uri, current_acl, logger):
-    logger.debug('Executing {0} on {1}'.format(self.raw_descriptor, uri))
+  def Execute(self, storage_url, current_acl, command_name, logger):
+    logger.debug(
+        'Executing %s %s on %s', command_name, self.raw_descriptor, storage_url)
     matching_entries = list(self._YieldMatchingEntries(current_acl))
     for entry in matching_entries:
       current_acl.remove(entry)
-    logger.debug('New Acl:\n{0}'.format(str(current_acl)))
+    logger.debug('New Acl:\n%s', str(current_acl))
     return len(matching_entries)
