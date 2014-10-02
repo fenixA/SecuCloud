@@ -17,7 +17,7 @@ public class FileListHandler {
 		Main.getInstance().drawMainWindow();
 		System.out.println(informationContainer.getCloudLocation());
 	}
-	
+
 	public void deleteFile(InformationContainer informationContainer) {
 		this.fileList.remove(informationContainer);
 		Main.getInstance().drawMainWindow();
@@ -31,10 +31,17 @@ public class FileListHandler {
 		return FileListHandler.instance;
 	}
 
-	public InformationContainer selectByEncryptedName(
-			String encryptedName) {
-		for(InformationContainer informationContainer : fileList ){
-			if (informationContainer.getEncryptedName().equals(encryptedName)){
+	public void synchronizeCloudStorage(Vector<String> cloudFiles) {
+		for (InformationContainer informationContainer : fileList) {
+			if(!cloudFiles.contains(informationContainer.getEncryptedName())){
+				System.out.println("shit!!!");
+			}
+		}
+	}
+
+	public InformationContainer selectByEncryptedName(String encryptedName) {
+		for (InformationContainer informationContainer : fileList) {
+			if (informationContainer.getEncryptedName().equals(encryptedName)) {
 				return informationContainer;
 			}
 		}
