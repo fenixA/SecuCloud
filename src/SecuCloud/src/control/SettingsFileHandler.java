@@ -42,7 +42,6 @@ public class SettingsFileHandler {
 		System.arraycopy(salt, 0, hashBase, userPassword.length(),
 				Main.SALT_LEN);
 		byte[] hashedPassword = CryptToolbox.hashByteArraySHA256(hashBase);
-		System.out.println(hashedPassword.length);
 		stream.write(userName.getBytes());
 		stream.write(SEPETATOR);
 		stream.write(hashedPassword);
@@ -74,11 +73,9 @@ public class SettingsFileHandler {
 
 	private byte[] readInSingleUser(byte[] input) {
 		System.out.println("SettingsFileHandler.readInSingleUserData()");
-		printHRByteArray("input", input);
 		int cntr = 0;
 		byte[] temp = new byte[MAX_NAME_LEN];
 		do {
-			System.out.println(cntr + " : " + (char) input[cntr]);
 			if (input[cntr] == SEPETATOR) {
 				cntr++;
 				break;
@@ -101,8 +98,6 @@ public class SettingsFileHandler {
 				input.length - cntr - PASSWORD_INFO_LEN);
 		this.userData.put(userName, hashAndSalt);
 		this.users++;
-		System.out.println("result lengt: " + result.length);
-		printHRByteArray("result", result);
 		return result;
 	}
 
@@ -123,15 +118,12 @@ public class SettingsFileHandler {
 			this.buildNewSettingsFile();
 		}
 		byte[] temp = new byte[(int) settingsFile.length()];
-		System.out.println("length: " + settingsFile.length());
 		FileInputStream stream = new FileInputStream(settingsFile);
 		for (int i = 0; i < settingsFile.length(); i++) {
 			temp[i] = (byte) stream.read();
 		}
 		while (temp.length > 1) {
 			byte[] subResult = temp;
-			printHRByteArray("temp", temp);
-			System.out.println("length: " + temp.length);
 			temp = this.readInSingleUser(subResult);
 		}
 		stream.close();

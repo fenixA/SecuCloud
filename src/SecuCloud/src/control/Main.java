@@ -231,9 +231,7 @@ public class Main {
 		Vector<String> lost = FileListHandler.getInstance().synchronizeCloudStorage(
 						new CloudConnectorGoogleGsutilTEMP().listDir());
 		if (lost != null) {
-			System.out.println(lost.size());
 			for (int i = 0; i < lost.size(); i++) {
-				System.out.println(i);
 				InformationContainer informationContainer = FileListHandler
 						.getInstance().selectByEncryptedName(lost.get(i));
 				drawDeleteWindow();

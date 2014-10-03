@@ -43,11 +43,10 @@ public class InformationContainerStorer {
 			NoSuchPaddingException, ShortBufferException,
 			IllegalBlockSizeException, BadPaddingException,
 			InvalidAlgorithmParameterException {
-		System.out.println("InformationContainerStorer.loadFileList");
+		System.out.println("InformationContainerStorer.loadFileList()");
 		File inFile = new File(Main.getInstance().getUSER_DATA_DIR() + "/"
 				+ STATE_FILE);
 		if (!inFile.exists()) {
-			System.out.println("No already saved Files!");
 			return;
 		}
 		FileInputStream stream = new FileInputStream(inFile);
@@ -73,7 +72,7 @@ public class InformationContainerStorer {
 			NoSuchPaddingException, ShortBufferException,
 			IllegalBlockSizeException, BadPaddingException,
 			InvalidAlgorithmParameterException {
-		System.out.println("InformationContainerStorer.storeFileList");
+		System.out.println("InformationContainerStorer.storeFileList()");
 		Vector<InformationContainer> fileList = FileListHandler.getInstance()
 				.getFileList();
 		File outFile = new File(Main.getInstance().getUSER_DATA_DIR() + "/"
@@ -97,7 +96,7 @@ public class InformationContainerStorer {
 			ShortBufferException, IllegalBlockSizeException,
 			BadPaddingException, InvalidAlgorithmParameterException {
 		System.out
-				.println("InformationContainerStorer.storeInformationContainer");
+				.println("InformationContainerStorer.storeInformationContainer()");
 		byte[] output;
 		if (informationContainer == null) {
 			return false;
@@ -119,7 +118,7 @@ public class InformationContainerStorer {
 			ShortBufferException, IllegalBlockSizeException,
 			BadPaddingException, InvalidAlgorithmParameterException {
 		System.out
-				.println("InformationContainerStorer.loadInformationContainer");
+				.println("InformationContainerStorer.loadInformationContainer()");
 		return createInformationContainerFromByteArray(CryptToolbox
 				.decryptByteArrayAesCTR(input, expandedPassword));
 	}
@@ -127,9 +126,7 @@ public class InformationContainerStorer {
 	private InformationContainer createInformationContainerFromByteArray(
 			byte[] input) {
 		System.out
-				.println("InformationContainerStorer.createInformationContainerFromByteArray");
-		System.out
-		.println("InputSize: " + input.length);
+				.println("InformationContainerStorer.createInformationContainerFromByteArray()");
 		String localPlainLocation = new String();
 		String name = new String();
 		String encryptedName = new String();
@@ -205,8 +202,8 @@ public class InformationContainerStorer {
 		ctr++;
 
 		InformationContainer ic = new InformationContainer(localPlainLocation,
-				localEncryptedLocation, encryptedName, name,
-				key, Encryption.values()[encryption]);
+				localEncryptedLocation, encryptedName, name, key,
+				Encryption.values()[encryption]);
 		ic.setTimestamp(time);
 		ic.setCloudLocation(cloudLocation);
 		return ic;
