@@ -31,7 +31,7 @@ public final class CryptToolbox {
 
 		SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 		Cipher encrypt = Cipher.getInstance("AES/CTR/PKCS5Padding", "SunJCE");
-		byte[] iv = generateRandomKey(encrypt.getBlockSize());
+		byte[] iv = generateRandomBytes(encrypt.getBlockSize());
 		IvParameterSpec ps = new IvParameterSpec(iv);
 		encrypt.init(Cipher.ENCRYPT_MODE, secretKey, ps);
 		// Open the Plaintext file
@@ -99,7 +99,7 @@ public final class CryptToolbox {
 			BadPaddingException, InvalidAlgorithmParameterException {
 		SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
 		Cipher cipher = Cipher.getInstance("AES/CTR/PKCS5Padding", "SunJCE");
-		byte[] iv = generateRandomKey(cipher.getBlockSize());
+		byte[] iv = generateRandomBytes(cipher.getBlockSize());
 		IvParameterSpec ps = new IvParameterSpec(iv);
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey, ps);
 		byte[] temp = new byte[cipher.getOutputSize(input.length)];
@@ -135,7 +135,7 @@ public final class CryptToolbox {
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException, IOException,
 			InvalidAlgorithmParameterException {
-		byte[] tempKey = generateRandomKey(Main.AES_KEY_LEN);
+		byte[] tempKey = generateRandomBytes(Main.AES_KEY_LEN);
 		String encryptedName = generateLocationString();
 		InformationContainer informationContainer = new InformationContainer(
 				selectedFile.getAbsolutePath(), Main.getInstance()
@@ -156,7 +156,7 @@ public final class CryptToolbox {
 		Main.getInstance().threadVector.add(t);
 	}
 
-	public static byte[] generateRandomKey(int length) {
+	public static byte[] generateRandomBytes(int length) {
 		SecureRandom random = new SecureRandom();
 		byte key[] = new byte[length];
 		random.nextBytes(key);
@@ -169,10 +169,10 @@ public final class CryptToolbox {
 				.replace("[", "").replace("@", "");
 	}
 
-	public static byte[] hashStringSHA256(String input)
+	public static byte[] hashByteArraySHA256(byte[] input)
 			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
-		md.update(input.getBytes("UTF-8"));
+		md.update(input);
 		return md.digest();
 	}
 

@@ -28,6 +28,8 @@ public class Main {
 	public static final int FILE_IDENT_LEN = 64;
 	public static final int AES_KEY_LEN = 16;
 	public static final int AES_BLOCK_SIZE = 16;
+	public static final int SALT_LEN = 64;
+	public static final int HASH_LEN = 32;
 	public static final String USER_HOME = System.getProperty("user.home");
 
 	public static final String DOWNLOAD_EXTENSION = ".down";
@@ -176,14 +178,12 @@ public class Main {
 
 	private void startup() throws InterruptedException, IOException {
 		collectWorkingPaths();
-		settingsFileHandler = new SettingsFileHandler(SETTINGS_FILE);
 		File temp = new File(ROOT_DIR);
 		if (!temp.exists()) {
 			temp.mkdirs();
 		}
-		File settings = new File(SETTINGS_FILE);
-		if (!settings.exists()) {
-			settingsFileHandler.buildNewSettingsFile();
+		settingsFileHandler = new SettingsFileHandler(SETTINGS_FILE);
+		if (settingsFileHandler.users < 1) {
 			drawCreateAccountWindow();
 		} else {
 			drawLoginWindow();
@@ -216,7 +216,7 @@ public class Main {
 	}
 
 	public void toggle_CreateAccountWindow_okButton(String userName,
-			String userPassword) throws IOException {
+			String userPassword) throws IOException, NoSuchAlgorithmException {
 		this.createAccountWindow.dispose();
 		settingsFileHandler.addUser(userName, userPassword);
 		drawLoginWindow();

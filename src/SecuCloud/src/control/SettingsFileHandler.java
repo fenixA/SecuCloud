@@ -4,67 +4,135 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import control.util.CryptToolbox;
+
 public class SettingsFileHandler {
-	private String SETTINGS_FILE;
+	private static final int PASSWORD_INFO_LEN = Main.HASH_LEN + Main.SALT_LEN;
+	private static final int MAX_NAME_LEN = 256;
+	private static final char SEPETATOR = ':';
+	private String settingsFileName;
+	public int users = 0;
 	private Map<byte[], byte[]> userData = new HashMap<byte[], byte[]>();
 
-	public SettingsFileHandler(String settings) {
-		this.SETTINGS_FILE = settings;
+	public SettingsFileHandler(String settingsFileName) throws IOException {
+		this.settingsFileName = settingsFileName;
+		readSettingsFile();
 	}
 
 	public void buildNewSettingsFile() throws IOException {
-		File settings = new File(this.SETTINGS_FILE);
+		File settings = new File(this.settingsFileName);
 		settings.createNewFile();
 	}
 
 	public void addUser(String userName, String userPassword)
-			throws IOException {
-		FileOutputStream stream = new FileOutputStream(this.SETTINGS_FILE, true);
+			throws IOException, NoSuchAlgorithmException {
+		System.out.println("SettingsFileHandler.addUser()");
+		FileOutputStream stream = new FileOutputStream(this.settingsFileName,
+				true);
+		byte[] salt = CryptToolbox.generateRandomBytes(Main.SALT_LEN);
+		byte[] hashBase = new byte[Main.SALT_LEN
+				+ userPassword.getBytes().length];
+		System.arraycopy(userPassword.getBytes(), 0, hashBase, 0,
+				userPassword.getBytes().length);
+		System.arraycopy(salt, 0, hashBase, userPassword.length(),
+				Main.SALT_LEN);
+		byte[] hashedPassword = CryptToolbox.hashByteArraySHA256(hashBase);
+		System.out.println(hashedPassword.length);
 		stream.write(userName.getBytes());
-		stream.write(':');
-		stream.write(userPassword.getBytes());
-		stream.write('\n');
+		stream.write(SEPETATOR);
+		stream.write(hashedPassword);
+		stream.write(salt);
+		stream.flush();
 		stream.close();
+		readSettingsFile();
 	}
 
 	public boolean verifyUserData(String userName, String userPassword)
-			throws IOException {
-		readSettingsFile();
+			throws IOException, NoSuchAlgorithmException {
+		System.out.println("SettingsFileHandler.verifyUserData()");
 		for (Map.Entry<byte[], byte[]> entry : userData.entrySet()) {
+			byte[] hash = new byte[Main.HASH_LEN];
+			byte[] hashBase = new byte[userPassword.length() + Main.SALT_LEN];
+			System.arraycopy(entry.getValue(), 0, hash, 0, Main.HASH_LEN);
+			System.arraycopy(userPassword.getBytes(), 0, hashBase, 0,
+					userPassword.length());
+			System.arraycopy(entry.getValue(), Main.HASH_LEN, hashBase,
+					userPassword.length(), Main.SALT_LEN);
 			if (Arrays.equals(entry.getKey(), userName.getBytes())
-					&& Arrays.equals(entry.getValue(), userPassword.getBytes())) {
+					&& Arrays.equals(
+							CryptToolbox.hashByteArraySHA256(hashBase), hash)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private void readSettingsFile() throws IOException {
-		FileInputStream stream = new FileInputStream(new File(
-				this.SETTINGS_FILE));
-		int cntr = 0, tempPaswordLen = 0, tempNameLen = 0;
-		byte[] temp = new byte[256];
-		byte[] userName = new byte[128];
-		byte[] userPassword = new byte[128];
-
-		while ((temp[cntr] = (byte) stream.read()) != -1) {
-			if ((char) temp[cntr] == ':') {
-				tempNameLen = cntr;
-				System.arraycopy(temp, 0, userName, 0, cntr);
-				cntr = 0;
-			} else if ((char) temp[cntr] == '\n') {
-				tempPaswordLen = cntr;
-				System.arraycopy(temp, 0, userPassword, 0, cntr);
-				userData.put(Arrays.copyOfRange(userName, 0, tempNameLen),
-						Arrays.copyOfRange(userPassword, 0, tempPaswordLen));
-				cntr = 0;
+	private byte[] readInSingleUser(byte[] input) {
+		System.out.println("SettingsFileHandler.readInSingleUserData()");
+		printHRByteArray("input", input);
+		int cntr = 0;
+		byte[] temp = new byte[MAX_NAME_LEN];
+		do {
+			System.out.println(cntr + " : " + (char) input[cntr]);
+			if (input[cntr] == SEPETATOR) {
+				cntr++;
+				break;
 			} else {
+				temp[cntr] = input[cntr];
 				cntr++;
 			}
+		} while (cntr < MAX_NAME_LEN);
+
+		byte[] userName = new byte[cntr - 1];
+		System.arraycopy(temp, 0, userName, 0, cntr - 1);
+
+		byte[] hashAndSalt = new byte[Main.HASH_LEN + Main.SALT_LEN];
+		System.arraycopy(input, cntr, hashAndSalt, 0, Main.HASH_LEN);
+		System.arraycopy(input, Main.HASH_LEN + cntr, hashAndSalt,
+				Main.HASH_LEN, Main.SALT_LEN);
+
+		byte[] result = new byte[input.length - cntr - PASSWORD_INFO_LEN];
+		System.arraycopy(input, cntr + PASSWORD_INFO_LEN, result, 0,
+				input.length - cntr - PASSWORD_INFO_LEN);
+		this.userData.put(userName, hashAndSalt);
+		this.users++;
+		System.out.println("result lengt: " + result.length);
+		printHRByteArray("result", result);
+		return result;
+	}
+
+	public void printHRByteArray(String ident, byte[] input) {
+		System.out.print(ident + ": ");
+		int i = 0;
+		while (i < input.length) {
+			System.out.print((int) input[i]);
+			i++;
+		}
+		System.out.println();
+	}
+
+	private void readSettingsFile() throws IOException {
+		System.out.println("SettingsFileHandler.readSettingsFile()");
+		File settingsFile = new File(this.settingsFileName);
+		if (!settingsFile.exists()) {
+			this.buildNewSettingsFile();
+		}
+		byte[] temp = new byte[(int) settingsFile.length()];
+		System.out.println("length: " + settingsFile.length());
+		FileInputStream stream = new FileInputStream(settingsFile);
+		for (int i = 0; i < settingsFile.length(); i++) {
+			temp[i] = (byte) stream.read();
+		}
+		while (temp.length > 1) {
+			byte[] subResult = temp;
+			printHRByteArray("temp", temp);
+			System.out.println("length: " + temp.length);
+			temp = this.readInSingleUser(subResult);
 		}
 		stream.close();
 	}
