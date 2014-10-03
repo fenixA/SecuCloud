@@ -31,18 +31,12 @@ public class FileListHandler {
 		return FileListHandler.instance;
 	}
 
-	public Vector<String> synchronizeCloudStorage(Vector<String> cloudFiles) {
-		Vector<String> lost = new Vector<String>();
+	public void synchronizeCloudStorage(Vector<String> cloudFiles) {
 		for (InformationContainer informationContainer : fileList) {
-			if (!cloudFiles.contains(informationContainer.getEncryptedName())) {
-				lost.add(informationContainer.getEncryptedName());
+			if(!cloudFiles.contains(informationContainer.getEncryptedName())){
+				System.out.println("shit!!!");
 			}
 		}
-		if (lost.size() == 0) {
-			return null;
-		}
-		return lost;
-
 	}
 
 	public InformationContainer selectByEncryptedName(String encryptedName) {

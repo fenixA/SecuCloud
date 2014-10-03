@@ -18,7 +18,6 @@ import control.util.ThreaderInstanceCreator;
 import control.util.CryptToolbox;
 import control.util.ThreaderInstanceCreator.command;
 import view.CreateAccountWindow;
-import view.DeleteWindow;
 import view.LoginWindow;
 import view.MainWindow;
 import model.InformationContainer;
@@ -44,7 +43,6 @@ public class Main {
 	private static Main instance;
 	private MainWindow mainWindow;
 	private CreateAccountWindow createAccountWindow;
-	private DeleteWindow deleteWindow;
 	private LoginWindow loginWindow;
 	private SettingsFileHandler settingsFileHandler;
 	private InformationContainerStorer informationContainerStorer;
@@ -54,7 +52,6 @@ public class Main {
 	private String userPassword;
 	private String bucket = "fenixbucket";
 	public Vector<Thread> threadVector = new Vector<Thread>();
-	public Vector<String> lost = new Vector<String>();
 
 	// getter n setter
 	public String getUserName() {
@@ -133,13 +130,6 @@ public class Main {
 		createAccountWindow = new CreateAccountWindow();
 	}
 
-	private void drawDeleteWindow() {
-//		if (deleteWindow != null) {
-//			deleteWindow.handleQuit();
-//		}
-		deleteWindow = new DeleteWindow();
-	}
-
 	private void buildUserDirectory() {
 		File user_dir = new File(ROOT_DIR + "/" + userName);
 		if (!user_dir.exists()) {
@@ -176,8 +166,9 @@ public class Main {
 			this.informationContainerStorer = new InformationContainerStorer(
 					this.userPassword);
 			this.informationContainerStorer.loadFileList();
+			FileListHandler.getInstance().synchronizeCloudStorage(
+					new CloudConnectorGoogleGsutilTEMP().listDir());
 			this.drawMainWindow();
-			this.checkSynchronization();
 		} else {
 			drawLoginWindow();
 		}
@@ -229,25 +220,6 @@ public class Main {
 		this.createAccountWindow.dispose();
 		settingsFileHandler.addUser(userName, userPassword);
 		drawLoginWindow();
-	}
-
-	private void checkSynchronization() {
-		Vector<String> lost = FileListHandler.getInstance()
-				.synchronizeCloudStorage(
-						new CloudConnectorGoogleGsutilTEMP().listDir());
-		if (lost != null) {
-			System.out.println(lost.size());
-			for (int i = 0; i < lost.size(); i++) {
-				System.out.println(i);
-				InformationContainer informationContainer = FileListHandler
-						.getInstance().selectByEncryptedName(lost.get(i));
-				drawDeleteWindow();
-				if (this.deleteWindow.handleQuit() == true) {
-					FileListHandler.getInstance().deleteFile(
-							informationContainer);
-				}
-			}
-		}
 	}
 
 	public void toggle_LoginWindow_okButton(String userName, String userPassword)
