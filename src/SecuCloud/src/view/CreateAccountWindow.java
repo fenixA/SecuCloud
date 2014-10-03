@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -59,7 +60,7 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 					try {
 						Main.getInstance().toggle_CreateAccountWindow_okButton(
 								nameTextField.getText(), firstPassword);
-					} catch (IOException e1) {
+					} catch (IOException | NoSuchAlgorithmException e1) {
 						e1.printStackTrace();
 					}
 				} else {
