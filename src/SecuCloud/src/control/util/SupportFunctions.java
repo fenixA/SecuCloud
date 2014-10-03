@@ -16,4 +16,14 @@ public class SupportFunctions {
 		return new byte[] { (byte) (value >>> 24), (byte) (value >>> 16),
 				(byte) (value >>> 8), (byte) value };
 	}
+	
+	public static void printHRByteArray(String ident, byte[] input) {
+		System.out.print(ident + ": ");
+		int i = 0;
+		while (i < input.length) {
+			System.out.print((int) input[i]);
+			i++;
+		}
+		System.out.println();
+	}
 }

@@ -101,16 +101,6 @@ public class SettingsFileHandler {
 		return result;
 	}
 
-	public void printHRByteArray(String ident, byte[] input) {
-		System.out.print(ident + ": ");
-		int i = 0;
-		while (i < input.length) {
-			System.out.print((int) input[i]);
-			i++;
-		}
-		System.out.println();
-	}
-
 	private void readSettingsFile() throws IOException {
 		System.out.println("SettingsFileHandler.readSettingsFile()");
 		File settingsFile = new File(this.settingsFileName);
