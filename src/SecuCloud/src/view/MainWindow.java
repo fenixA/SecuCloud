@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -78,13 +77,11 @@ public class MainWindow extends javax.swing.JFrame {
 		ListIterator<InformationContainer> listIterator = fileList
 				.listIterator();
 		while (listIterator.hasNext()) {
-			Object[] temp = new Object[4];
+			Object[] temp = new Object[3];
 			InformationContainer tempFileElement = listIterator.next();
 			temp[0] = tempFileElement.getName();
 			temp[1] = tempFileElement.getEncryptedName();
 			temp[2] = tempFileElement.getTimestamp();
-			temp[3] = new File(tempFileElement.getLocalEncryptedLocation())
-					.length();
 			result[ctr] = temp;
 			ctr++;
 		}
@@ -93,7 +90,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 	private void initComponents() {
 		Object rowData[][] = this.initTable();
-		Object columnNames[] = { "Name", "DataKey", "Uploaded", "FileSize" };
+		Object columnNames[] = { "Name", "DataKey", "Uploaded"};
 		nonEditableJTable = new NonEditableJTable(rowData, columnNames);
 		table = new JTable(nonEditableJTable);
 
