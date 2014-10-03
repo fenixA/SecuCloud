@@ -235,7 +235,7 @@ public class Main {
 				InformationContainer informationContainer = FileListHandler
 						.getInstance().selectByEncryptedName(lost.get(i));
 				drawDeleteWindow();
-				if (this.deleteWindow.handleQuit() == true) {
+				if (this.deleteWindow.HandleInput(informationContainer.getName(), lost.get(i)) == true) {
 					FileListHandler.getInstance().deleteFile(
 							informationContainer);
 				}
