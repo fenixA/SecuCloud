@@ -15,7 +15,6 @@ public class FileListHandler {
 	public void addFile(InformationContainer informationContainer) {
 		this.fileList.add(informationContainer);
 		Main.getInstance().drawMainWindow();
-		System.out.println(informationContainer.getCloudLocation());
 	}
 
 	public void deleteFile(InformationContainer informationContainer) {

@@ -58,8 +58,17 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 						.getPassword());
 				if (firstPassword.equals(secondPassword)) {
 					try {
-						Main.getInstance().toggle_CreateAccountWindow_okButton(
-								nameTextField.getText(), firstPassword);
+						if (nameTextField.getText().contains(":")
+								|| nameTextField.getText().contains("0")) {
+							System.out
+									.println("Unavailable character in Username!");
+						} else {
+
+							Main.getInstance()
+									.toggle_CreateAccountWindow_okButton(
+											nameTextField.getText(),
+											firstPassword);
+						}
 					} catch (IOException | NoSuchAlgorithmException e1) {
 						e1.printStackTrace();
 					}
