@@ -282,100 +282,35 @@ Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java 
 Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt orientiert. Das besondere an Java sind außerdem eine vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert, und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der ja Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, können Java Anwendungen auch auf diesem Laufen, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden.
-\\\cite{1}\cite{2}\cite{3}
+\cite{Oracle}\cite{WikiJava}\cite{WikiJavaTechnology}
 
 
 \subsubsection{Google Cloud Storage}
 
 \subsubsection{Schnittstelle Google Cloud Storage: gsutill}
-\textbf{gsutil} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff von den gängigen Betriebssystemen Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die vewendeten Befehle aufgelistet - ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt:
+\textbf{gsutil} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist derzeit inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
 
 \begin{compactitem}
 	\item Auflisten: \textbf{ls}\\
 	gsutil ls [Optionen] gs://\textless Bucket\textgreater
 	\item Kopieren: \textbf{cp}\\
-	Upload: gsutil cp [Optionen] \textless Quellpfad lokaler Datei\textgreater~ gs://\textless Bucket\textgreater\\
+	Upload: gsutil cp [Optionen] \textless Quellpfad lokaler Datei\textgreater~gs://\textless Bucket\textgreater\\
 	Download:  gsutil cp [Optionen] gs://\textless Bucket\textgreater/\textless Dateiname\textgreater~\textless Zielpfad lokaler Datei\textgreater
 	\item Entfernen: \textbf{rm}\\
 	gsutil rm [Optionen] gs://\textless Bucket\textgreater /\textless Dateiname\textgreater
 \end{compactitem}
 
+Desweiteren verarbeitet gsutil Befehle für das Erstellen und Löschen von Buckets, Verschieben, Umbenennen und Editieren von Objekten sowie zur Rechteverwaltung.
 
+Neben der Schnittstelle gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}.\\
+\textbf{\url{https://cloud.google.com/storage/docs/gsutil}}
 
 \subsubsection{Eclipse IDE for Java Developers}
-Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch plugins kann die Funktionalität von Enclipse noch erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2, Build id: 20140224-0627}  verwendet.
+Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch plugins kann die Funktionalität von Enclipse noch erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
 
 \subsubsection{GIT}
 \subsubsection{OpenJDK}
 OpenJDK ist eine Sammlung von Werkzeugen zur Erzeugung von Software. Diese beinhaltet neben der Laufzeitumgebung Java Runtime Environment (JRE) den Java-Compiler javac, Dokumentationswerkzeuge oder den Java-Archiver jar zur Bündelung von Java-Klassen.
-\subsubsection{Kryptographische Verfahren}
-\textbf{AES}\\
-AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im
-Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen
-Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher
-geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der
-symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den
-Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils
-verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael
-von Vincent Rijmen und Joan Daemen.
-Unter anderem wird er von der NASA und der US-Amerikanischen Regierung
-verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr.
-Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen
-Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine
-Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der
-mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen
-Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard
-der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht
-übernommen werden muss und in einem äußerst transparenten Verfahren
-ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund
-für das in AES gesetzte Vertrauen.
-Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei
-Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die
-Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die
-Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus
-sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.\\
-\textbf{Funktionsweise}\\
-Wird ein 16 Byte Block mit dem AES verschlüsselt, wird dieser Block zunächst in
-eine Tabelle mit vier Zeilen und vier Spalten geschrieben, wobei jedes Feld der
-Tabelle ein Byte enthält. Nun werden die einzelnen Felder mehrfach mit
-unterschiedlichen Teilen des erweiterten Schlüssels chiffriert, wobei über die
-Schlüssellänge k definiert wird, wieviele dieser Verschlüsselungsrunden r es
-gibt (Fall AES-128: 10 Runden).
-Aus dem Schlüssel k werden jetzt (r + 1) Rundenschlüsselgeneriert indem k
-in eine weitere Tabelle mit (im Fall AES-128) vier Zeilen und 44 Spalten
-eingetragen wird. Nachdem der Schlüssel in die ersten Byte-großen Felder der
-Tabelle gelegt wurde, werden die restlichen rekursiv nach bestimmten Rotations-
-und Berechnungsverfahren gefüllt. Nach dieser Vorbereitung werden die Nutzdaten
-in der ersten Tabelle jetzt in mehreren Runden zunächst mit dem jeweiligen
-Rundenschlüssel XOR-Verknüpft. Danach werden die einzenen Felder der Tabelle
-wieder nach festgelegten Prinzipien innerhalb ihrer Spalte nach links
-verschoben. Links herausfallende Werte werden rechts wieder in die Tabelle
-eingefügt, es wird also rotiert. Danach werden die einzelnen Werte innerhalb
-der Spalten nach definierten Verrechnungssystemen (Spaltenwert * [1|2|3] modulo
-(irreduzibles Polynom) | innerhalb des Glasios-Körpers, anschließend
-untereinader XOR-Verknüpft) vermischt. Nachdem dieses Verfahren (Verknüpfung mit
-dem Rundenschlüssel, rotieren der Zeilen, vermischen der Spalten) r-Mal
-ausgeführt wurde ist die Verschlüsselung abgeschlossen.
-Die Entschlüsselung durchläuft, wie bei allen symmetrischen Kryptosystemen,
-exakt die selben Schritte in umgekehrter Reihenfolge.
-\\\cite{4}\cite{5}\\
-\\\textbf{Counter Mode}\\
-Für Blockchiffren wurden im Laufe der Jahre verschiedene sog. Betriebsmodi entwickelt. Ein Betriebsmodus stellt die Art und Weise da in der eine Blockchiffre verwendet wird. Mit der Verwendung von Betriebsmodi ist es unter anderem möglich Blockchiffren   als   Stromchiffren   zu   verwenden,   Nachrichten   mit   mehrfacher   Blocklänge   zu   verschlüsseln   oder selbstsynchronisierende Chiffren zu erzeugen. Einer dieser Betriebsmodi ist der sog. Counter Mode.
-Im Counter Mode wird nicht der Klartext selbst mittels Algorithmus und Schlüssels chiffriert sondern es wird mittels eines (im besten Fall zufällig) gewählten Initialisierungsvektor (Nonce, number only used once) und einem Zähler (Counter) eine Bytefolge in Blocklänge gebildet. Diese wird dann mittels des Schlüssels chiffriert und per XOR Operation mit einem der Blocklänge entsprechen Teil des Klartextes verknüpft. Danach wird der Zähler um eins erhöht und auf die Selbe Weise mit dem Rest der Nachricht fortgefahren. Wichtig zu verstehen ist hierbei, dass der Initialisierungsvektor nicht Teil des Geheimnisses ist (welches ausschließlich der Schlüssel darstellt, siehe Kerckhoffs‘ Prinzip), sondern offen übertragen werden kann. Es dient ausschließlich der Diversifikation gleicher Klartexte und dem Auffüllen einer Blocklänge. Durch den Counter Mode ist es möglich, Blockchiffren als Stromchiffren zu betreiben, da Klartexte beliebiger Länge mit den erzeugten Chiffratbytes bitweise verknüpft werden können. Vorteil bei diesem Modus ist auch, dass Chiffrate im Voraus errechnet werden können, wodurch sich unter Umständen Zeitvorteile ergeben. Fehlerhaft übertragene Bits werden eins zu eins fehlerhaft entschlüsselt, weitere Teile der Nachricht sind nicht betroffen.
-\\\cite{6}\cite{7}\\
-\\\textbf{Kryptographische Hashfunktionen: SHA2-256}\\
-SHA (Secure Hash Algorithm) ist eben so wie der AES eine Standardisierung. In diesem Falle allerdings die Standardisierung eines sicheren Hash Algorithmus. 
-
-Ein sicherer Hash Algorithmus ist in erster Linie eine Hashing Funktion wie jede Andere, also ein Algorithmus, der Prüfsummen auf Eingabewerte beliebiger Länge berechnet. Prüfsummen fanden schon vor der Kryütographie Einsatz in der Informatik, vor allem um die korrekte Übertragung von Daten zu gewährleisten. Ein gutes Beispiel hierfür bietet der CRC (Cyclic Redundancy Check). Wenn aus einem Bitstrom mittels CRC eine Prüfsumme brechnet wurde, kann mittels dieser nach der Übertragung der Daten relativ sicher festgestellt werden, ob alle Daten korrekt übertragen wurden, da der CRC Wert sich durch kleinste Veränderungen im Bitstrom stark verändert. Im Falle der kryptogephischen Hash Funktion ist diese Eigenschaft eben so wichtig, allerdings kommen  in diesem Umfeld weitere Anforderungen hinzu: Eine kryptographische Hash Funktion sollte eine Einwegfunktion sein. Das bedeutet, dass es nicht möglich sein darf, aus einem Berechneten Hashwert die Ursprüglichen Daten zu berechnen. Die meißten Hash Funktionen stellen dies sicher, indem der Hashwert kürzer als die Eingabedaten ist. Durch diese Kompression ist es nicht mehr möglich die ursprünglichen Daten zu ermitteln. Eine weitere Anforderung ist, dass eine kryptographische Hashfunktion kollisionsresistent ist. Bei einer kollisionsresistenten Hashfunktion ist es nicht möglich in effektiver Zeit einen zweiten Datenstrom zu berechnen, der den selben Hashwert erzeugt wie den, den man schon besitzt. Aus dieser Anforderung ergibt sich auch, dass es nicht möglich ist einen Datenstrom derart zu bearbeiten, dass er einen gewünschten Hash produziert. Diese Anforderungen erfüllt CRC garnicht, dafür aber kryptographische Hashfunktionen wie die in SHA standardisierten. Dafür sind sie meißt deutlich komplexer (rechenintensiver) und die erzeugten Hashes sind länger. Der eigentliche Sinn und Zweck von kryptographischen Hashfunktionen liegt vor allem in zwei Anwndungsfällen:
-\\\textbf{Sicherstellung von Integrität}\\
-Um die Integrität eines Übertragenen Bitstroms zu garantieren, kann der Hashwert zusätzlich sicher mit übertragen werden (überlicherweise asymmetrisch verschlüsselt). Nach dem erhalt der Nachricht, kann der Empfänger anhand des Hashes überprüfen ob sie unverändert übertragen wurde. Hier liegt auch der Grund der Kollisionssicherheit: Es ist nicht effektiv möglich eine neue sinnvolle Nachricht mit einem manipulierten Inhalt zu erzeugen, die den selben Hash aufweist.
-\\\textbf{Beweiß: Geheimnisbesitz}\\
-Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, vertraut aber der Übertragung nicht und möchte es daher nicht preisgeben, kann sie einen sog. Salt (Eng. Salz, von versalzen) erzeugen, und diesen mit dem Geheimniss zusammen hashen. Dieser Hash inklusive des Salt wird verschickt und der Empfänger kann seinerseits das Geheimnis und den Salt hashen. Kenn die andere Person das Geheimnis, müssen die Hashes sich gleichen. Der Salt dient in diesem Fall, um sicher zu stellen, dass ein eventueller Angreifer den Hash des reinen Passwortes nicht aufzeichnen kann und sich mit dem Besitz des Hashes als kenner des Geheimnisses ausgibt. Außerdem verhindert der Salt, dass Passwortlisten (sog. Rainbowtables) von gehashten Geheimnissen (in diesem Fall : Passwörtern) vorrausberechnet und sie mit gestohlenen Hashes abgleicht. Dieses Verfahren wird zum Beispiel verwendet, wenn Server Passwörter für den Login speichern. So müssen sie die Passwörter nicht im Klartext speichern, und der Schaden bei einem Einbruch kann minimiert werden. 
-
-Der SHA2 ist der Nachfolger von SHA1 und ermöglicht die erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe unterschlagen und damit eine geringere Länge des Hashwertes erreicht.
-\\\cite{8}\cite{9}\cite{10}\\
-
-\textbf{RSA}\\
 \subsection{Konzeptentwurf}
 UML-Diagramm
 \subsubsection{Architektur}
@@ -402,6 +337,7 @@ Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter 
  
 \subsubsection{Kryptosystem}
 Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
+\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
 \subsubsection{GUI}
 Beschreibung und Darstellung der Oberfläche
 \subsubsection{Funktionalitäten}
@@ -449,22 +385,13 @@ Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
 \textbf{Traffic Überwachung}\\
 \pagebreak
 
-\begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
-	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
-	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_(Programmiersprache)}
-	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
-	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
-	\bibitem[WAes]{5}\url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
-	\bibitem[WCounterMode]{6}\url{http://de.wikipedia.org/wiki/Counter_Mode}
-	\bibitem[NistCounterMode]{7}\url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}
-	\bibitem[WSha]{8}\url{http://de.wikipedia.org/wiki/Secure_Hash_Algorithm}
-	\bibitem[WSha2]{9}\url{http://de.wikipedia.org/wiki/SHA-2}
-	\bibitem[NistSha2]{10}\url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}
+\section{Literatur}
 
-	
-	
-	
-	
+\begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
+ \bibitem[1]{Oracle}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
+ \bibitem[2]{WikiJava}\url{http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29}
+ \bibitem[3]{WikiJavaTechnology}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
+
 \end{thebibliography}
 
 \pagebreak
