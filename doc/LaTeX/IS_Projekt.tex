@@ -68,8 +68,6 @@
 \renewcommand{\theHsection}{\Roman{section}}
 \pagenumbering{Roman}
 
-
-
 % ----------------------------------------------------------------------------------------------------------
 % Titelseite
 % ----------------------------------------------------------------------------------------------------------
@@ -190,12 +188,18 @@ Ziel der Projektarbeit ist es primär eine Anwendung zu entwickeln, die ein aus 
 Kurze Beschreibung der Kapitel - Erfolgt am Ende der Ausarbeitung
 \pagebreak
 
+% ----------------------------------------------------------------------------------------------------------
+% Methoden
+% ----------------------------------------------------------------------------------------------------------
 \section{Methoden}
 \subsection{Grundlagen Cloud Computing}
 \subsubsection{Definition}
 Definition von Cloud Computing nach dem National Institute of Standards and Technology (NIST) und der European Network and Information Security Agency (ENISA):
 
 ''Cloud Computing ist ein Modell, das es erlaubt bei Bedarf, jederzeit und überall bequem über ein Netz auf einen geteilten Pool von konfigurierbaren Rechnerressourcen (z. B. Netze, Server, Speichersysteme, Anwendungen und Dienste) zuzugreifen, die schnell und mit minimalem Managementaufwand oder geringer Serviceprovider-Interaktion zur Verfügung gestellt werden können.''
+
+\subsubsection{Notwendigkeit}
+\cite{33}
 
 \subsubsection{Charakteristik}
 Nach NIST können Cloud Services in fünf Eigenschaften unterschieden werden:
@@ -263,11 +267,43 @@ Das Management eines Vorfalls und dessen Gegenmaßnahmen sollte darauf ausgelegt
 RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust, welche nach einem entsprechenden Vorfall akzeptabel ist. Ausgedrückt wird dies zusätzlich in Zeit, der Zeit zwischen entsprechendem Verlust und Rückführung zur letzten zuverlässigen Sicherung. RTO (engl. Recovery Time Objective) definiert die Höchstzeitdauer, die für die Wiederherstellung und vollständigen Zugriff auf die Daten akzeptabel ist.
 \end{compactitem}
 
-
 \subsection{Vorgehensweise}
 
-\subsubsection{Theoretische Analyse}
-Evaluierung technisch realisierbarer Lösungen, Daseinsberechtigung von Cloud Storage Lösungen (\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}, Schnittstellenbetrachtung (gsutil:  \url{https://cloud.google.com/storage/docs/gsutil}), Cloud-Anbieter-Vergleich (\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb})
+\subsubsection{Cloud-Anbieter}
+Der Markt für Cloud Computing in Form von IaaS befindet sich in einem stetigen Wandel und einer raschen Weiterentwicklung. Aus diesem Grund muss die Wahl des Anbieters sehr sorgfältig und unter Betrachtung aller Gesichtspunkte getroffen werden. Die aktuelle Studie "Magic Quadrant for Cloud Infrastructure as a Service" von Gartner \cite{30} vergleicht die Vorzüge und Nachteile der derzeit angebotenen Produkte unter Betrachtung aller gängigen Anwendungsfälle von IaaS. Hierzu gehören beispielsweise:
+\begin{compactitem}
+	\item Entwicklung und Testverfahren
+	\item Produktionsumfeld (inkl. geschäftskritischer Aufgaben interner und kundenorientierter Anwendungen)
+	\item Automatisierung
+	\item Wiederherstellung im Sonderfall
+	\item Einzelanwendungsfälle und virtuelle Rechenzentren
+	\item Entwurfsmuster für native Cloud Anwendungen und Unternehmensanwendungen
+\end{compactitem}
+\pagebreak
+
+\textbf{Magisches Quadrat}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Gartner_Magic_Square.png}
+	 \captionof{figure}{\small Magisches Quadrat}
+\end{minipage}
+\vspace{1em}
+
+\begin{compactitem}
+\item{Marktführer (Leader):}
+\\Der Marktführer-Quadtrant stellt Anbieter dar, dessen Produkte die Marktanforderungen am besten bedienen, am meisten Umsatz generiert und sich somit durchgesetzt haben. Marktführer haben in der Regel einen relativ hohen Marktanteil, ein starkes Umsatzwachstum und positives Kunden-Feedback. Die Produkte der Marktführer verfügen gegenüber Anderer über eine überlegene Vision.
+\item{Herausforderer (Challenger):}
+\\Der Herausforderer-Quadrant zeigt Anbieter mit großem Umsatz, der aber eher auf anderen Produkten oder Dienstleistungen basiert. Ihr IaaS-Angebot ist eher moderat und wird einer Teilmenge der Marktanforderungen gerecht. Viele der angebotenen IaaS-Lösungen sind eine Erweiterung bereits bestehender Systeme.
+\item{Visionäre (Visionairs):}
+\\Der Visionäre-Quadrant besteht aus Anbietern, deren Produkte die Marktanforderungen gut abdecken, aber dessen Bewertung der Umsetzung nicht der der Marktführer entspricht. Dies liegt unter anderem auch an der relativ kleinen Präsenz auf dem IaaS-Markt.
+\item{Nischenprodukt (Niche):}
+\\Der Nischen-Quadrant zeigt vor allem kleine, regionale Anbieter, deren Fokus auf der Entwicklung von IaaS-Lösungen für einzelne Anwendungsfälle liegt. Die Marktanforderungen werden somit nur teilweise erfüllt.
+\end{compactitem}
+
+\subsubsection{Schnittstellenfestlegung}
+Der Vergleich möglicher Schnittstellen zu Google Cloud Storage führte zu gsutil. 
 
 \subsubsection{Java}
 Die Anwendung zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit began eine der ersten plattformunabhängigen Programmiersprachhen zu entwickeln. Sie sollte die Computerwelt revolutionieren indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
@@ -278,17 +314,16 @@ Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt,
 	\item JRE: Java Runtime Environment
 \end{compactitem}
 
-Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
+Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
 Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt orientiert. Das besondere an Java sind außerdem eine vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert, und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der ja Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, können Java Anwendungen auch auf diesem Laufen, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden.
-\\\cite{1}\cite{2}\cite{3}
-
+\cite{Oracle}\cite{WikiJava}\cite{WikiJavaTechnology}
 
 \subsubsection{Google Cloud Storage}
 
 \subsubsection{Schnittstelle Google Cloud Storage: gsutill}
-\textbf{gsutil} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist derzeit inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
+\textbf{gsutil}\cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist derzeit inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
 
 \begin{compactitem}
 	\item Auflisten: \textbf{ls}\\
@@ -303,71 +338,17 @@ Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache z
 Desweiteren verarbeitet gsutil Befehle für das Erstellen und Löschen von Buckets, Verschieben, Umbenennen und Editieren von Objekten sowie zur Rechteverwaltung.
 
 Neben der Schnittstelle gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}.\\
-\textbf{\url{https://cloud.google.com/storage/docs/gsutil}}
 
 \subsubsection{Eclipse IDE for Java Developers}
 Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch plugins kann die Funktionalität von Enclipse noch erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
 
 \subsubsection{GIT}
-\subsubsection{OpenJDK}
-OpenJDK ist eine Sammlung von Werkzeugen zur Erzeugung von Software. Diese beinhaltet neben der Laufzeitumgebung Java Runtime Environment (JRE) den Java-Compiler javac, Dokumentationswerkzeuge oder den Java-Archiver jar zur Bündelung von Java-Klassen.
-\subsubsection{Kryptographische Verfahren}
-\textbf{AES}\\
-AES (Eng. Advanced Encryption Standard) ist ein Kryptosystem, welches im
-Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen
-Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher
-geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der
-symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den
-Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils
-verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael
-von Vincent Rijmen und Joan Daemen.
+\textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
+\cite{31}
 
-Unter anderem wird er von der NASA und der US-Amerikanischen Regierung
-verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr.
-Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen
-Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine
-Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der
-mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen
-Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard
-der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht
-übernommen werden muss und in einem äußerst transparenten Verfahren
-ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund
-für das in AES gesetzte Vertrauen.
-Grundsätzlich ist AES ein symmetrisches Blockchiffresystem. Es arbeitet also bei
-Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die
-Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die
-Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus
-sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.\\
-\textbf{Funktionsweise}\\
-Wird ein 16 Byte Block mit dem AES verschlüsselt, wird dieser Block zunächst in
-eine Tabelle mit vier Zeilen und vier Spalten geschrieben, wobei jedes Feld der
-Tabelle ein Byte enthält. Nun werden die einzelnen Felder mehrfach mit
-unterschiedlichen Teilen des erweiterten Schlüssels chiffriert, wobei über die
-Schlüssellänge k definiert wird, wieviele dieser Verschlüsselungsrunden r es
-gibt (Fall AES-128: 10 Runden).
-Aus dem Schlüssel k werden jetzt (r + 1) Rundenschlüsselgeneriert indem k
-in eine weitere Tabelle mit (im Fall AES-128) vier Zeilen und 44 Spalten
-eingetragen wird. Nachdem der Schlüssel in die ersten Byte-großen Felder der
-Tabelle gelegt wurde, werden die restlichen rekursiv nach bestimmten Rotations-
-und Berechnungsverfahren gefüllt. Nach dieser Vorbereitung werden die Nutzdaten
-in der ersten Tabelle jetzt in mehreren Runden zunächst mit dem jeweiligen
-Rundenschlüssel XOR-Verknüpft. Danach werden die einzenen Felder der Tabelle
-wieder nach festgelegten Prinzipien innerhalb ihrer Spalte nach links
-verschoben. Links herausfallende Werte werden rechts wieder in die Tabelle
-eingefügt, es wird also rotiert. Danach werden die einzelnen Werte innerhalb
-der Spalten nach definierten Verrechnungssystemen (Spaltenwert * [1|2|3] modulo
-(irreduzibles Polynom) | innerhalb des Glasios-Körpers, anschließend
-untereinader XOR-Verknüpft) vermischt. Nachdem dieses Verfahren (Verknüpfung mit
-dem Rundenschlüssel, rotieren der Zeilen, vermischen der Spalten) r-Mal
-ausgeführt wurde ist die Verschlüsselung abgeschlossen.
-Die Entschlüsselung durchläuft, wie bei allen symmetrischen Kryptosystemen,
-exakt die selben Schritte in umgekehrter Reihenfolge.
-\\\cite{4}\cite{5}\\
-\textbf{Counter Mode}\\
-\textbf{SHA2-256}\\
-\textbf{RSA}\\
 \subsection{Konzeptentwurf}
 UML-Diagramm
+
 \subsubsection{Architektur}
 Die Anwendung wurde in nachfolgende Pakete unterteilt:
 \begin{compactitem}
@@ -382,16 +363,20 @@ Implementierung des Kryptosystems.
 	\item view:\\
 Automatisierte UML-Generierung.
 \end{compactitem}
+
 \subsubsection{Annahmen}
-Der Client und dessen Zugang zur Cloud wird als sicher angenommen.
+Der Client und dessen Zugang zur Cloud wird, nach Vorgabe, als sicher angesehen.
+
 \subsubsection{Entscheidungsgrundlage Cloud Service}
 Weshalb Google Cloud Storage eingesetzt wird
+
 \subsubsection{Betriebssystem}
 Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
 
- 
 \subsubsection{Kryptosystem}
 Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
+\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+
 \subsubsection{GUI}
 Beschreibung und Darstellung der Oberfläche
 \subsubsection{Funktionalitäten}
@@ -399,15 +384,20 @@ Erläuterung der Grundfunktionen der Prototyps
 
 \pagebreak
 
+% ----------------------------------------------------------------------------------------------------------
+% Ergebnisse
+% ----------------------------------------------------------------------------------------------------------
 \section{Ergebnisse}
 Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
 
 \pagebreak
 
+% ----------------------------------------------------------------------------------------------------------
+% Diskussion
+% ----------------------------------------------------------------------------------------------------------
 \section{Diskussion}
 Ausführliches Fazit zur aktuellen und zukünftigen Notwendigkeit\\
 Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
-
 
 \subsection{Erweiterung der Funktionalitäten}
 \subsubsection{Erhöhung der Bedienerfreundlichkeit}
@@ -439,18 +429,26 @@ Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
 \textbf{Traffic Überwachung}\\
 \pagebreak
 
-\section{Literatur}
-
+% ----------------------------------------------------------------------------------------------------------
+% Literatur
+% ----------------------------------------------------------------------------------------------------------
 \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
-	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
-	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29}
-	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
-	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
-	\bibitem[WAes]{5}\url{http://http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
+ \bibitem[1]{Oracle}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
+ \bibitem[2]{WikiJava}\url{http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29}
+ \bibitem[3]{WikiJavaTechnology}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
+ 
+ 
+ 
+ \bibitem[Gartner]{30}\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb}
+ \bibitem[GIT]{31}\url{http://git-scm.com/book}
+ \bibitem[gsutil]{32}\url{https://cloud.google.com/storage/docs/gsutil}
+ \bibitem[IEEE]{33}\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}
 \end{thebibliography}
-
 \pagebreak
 
+% ----------------------------------------------------------------------------------------------------------
+% Anhang
+% ----------------------------------------------------------------------------------------------------------
 \pagenumbering{Roman}
 \setcounter{page}{1}
 \lhead{Anhang \thesection}
