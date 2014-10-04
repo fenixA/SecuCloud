@@ -282,7 +282,7 @@ Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java 
 Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt orientiert. Das besondere an Java sind außerdem eine vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert, und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der ja Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, können Java Anwendungen auch auf diesem Laufen, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden.
-\cite{Oracle}\cite{WikiJava}\cite{WikiJavaTechnology}
+\\\cite{1}\cite{2}\cite{3}
 
 
 \subsubsection{Google Cloud Storage}
@@ -311,6 +311,61 @@ Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung vo
 \subsubsection{GIT}
 \subsubsection{OpenJDK}
 OpenJDK ist eine Sammlung von Werkzeugen zur Erzeugung von Software. Diese beinhaltet neben der Laufzeitumgebung Java Runtime Environment (JRE) den Java-Compiler javac, Dokumentationswerkzeuge oder den Java-Archiver jar zur Bündelung von Java-Klassen.
+\subsubsection{Kryptographische Verfahren}
+\textbf{AES}\\
+AES (Eng. Advanced Encryption Standard) ist ein Kryptosystem, welches im
+Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen
+Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher
+geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der
+symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den
+Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils
+verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael
+von Vincent Rijmen und Joan Daemen.
+
+Unter anderem wird er von der NASA und der US-Amerikanischen Regierung
+verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr.
+Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen
+Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine
+Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der
+mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen
+Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard
+der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht
+übernommen werden muss und in einem äußerst transparenten Verfahren
+ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund
+für das in AES gesetzte Vertrauen.
+Grundsätzlich ist AES ein symmetrisches Blockchiffresystem. Es arbeitet also bei
+Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die
+Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die
+Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus
+sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.\\
+\textbf{Funktionsweise}\\
+Wird ein 16 Byte Block mit dem AES verschlüsselt, wird dieser Block zunächst in
+eine Tabelle mit vier Zeilen und vier Spalten geschrieben, wobei jedes Feld der
+Tabelle ein Byte enthält. Nun werden die einzelnen Felder mehrfach mit
+unterschiedlichen Teilen des erweiterten Schlüssels chiffriert, wobei über die
+Schlüssellänge k definiert wird, wieviele dieser Verschlüsselungsrunden r es
+gibt (Fall AES-128: 10 Runden).
+Aus dem Schlüssel k werden jetzt (r + 1) Rundenschlüsselgeneriert indem k
+in eine weitere Tabelle mit (im Fall AES-128) vier Zeilen und 44 Spalten
+eingetragen wird. Nachdem der Schlüssel in die ersten Byte-großen Felder der
+Tabelle gelegt wurde, werden die restlichen rekursiv nach bestimmten Rotations-
+und Berechnungsverfahren gefüllt. Nach dieser Vorbereitung werden die Nutzdaten
+in der ersten Tabelle jetzt in mehreren Runden zunächst mit dem jeweiligen
+Rundenschlüssel XOR-Verknüpft. Danach werden die einzenen Felder der Tabelle
+wieder nach festgelegten Prinzipien innerhalb ihrer Spalte nach links
+verschoben. Links herausfallende Werte werden rechts wieder in die Tabelle
+eingefügt, es wird also rotiert. Danach werden die einzelnen Werte innerhalb
+der Spalten nach definierten Verrechnungssystemen (Spaltenwert * [1|2|3] modulo
+(irreduzibles Polynom) | innerhalb des Glasios-Körpers, anschließend
+untereinader XOR-Verknüpft) vermischt. Nachdem dieses Verfahren (Verknüpfung mit
+dem Rundenschlüssel, rotieren der Zeilen, vermischen der Spalten) r-Mal
+ausgeführt wurde ist die Verschlüsselung abgeschlossen.
+Die Entschlüsselung durchläuft, wie bei allen symmetrischen Kryptosystemen,
+exakt die selben Schritte in umgekehrter Reihenfolge.
+\\\cite{4}\cite{5}\\
+\textbf{Counter Mode}\\
+\textbf{SHA2-256}\\
+\textbf{RSA}\\
 \subsection{Konzeptentwurf}
 UML-Diagramm
 \subsubsection{Architektur}
@@ -337,7 +392,6 @@ Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter 
  
 \subsubsection{Kryptosystem}
 Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
-\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
 \subsubsection{GUI}
 Beschreibung und Darstellung der Oberfläche
 \subsubsection{Funktionalitäten}
@@ -388,10 +442,11 @@ Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
 \section{Literatur}
 
 \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
- \bibitem[1]{Oracle}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
- \bibitem[2]{WikiJava}\url{http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29}
- \bibitem[3]{WikiJavaTechnology}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
-
+	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
+	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29}
+	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
+	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+	\bibitem[WAes]{5}\url{http://http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
 \end{thebibliography}
 
 \pagebreak
