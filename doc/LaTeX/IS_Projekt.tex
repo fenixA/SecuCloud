@@ -313,54 +313,9 @@ Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung vo
 OpenJDK ist eine Sammlung von Werkzeugen zur Erzeugung von Software. Diese beinhaltet neben der Laufzeitumgebung Java Runtime Environment (JRE) den Java-Compiler javac, Dokumentationswerkzeuge oder den Java-Archiver jar zur Bündelung von Java-Klassen.
 \subsubsection{Kryptographische Verfahren}
 \textbf{AES}\\
-AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im
-Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen
-Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher
-geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der
-symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den
-Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils
-verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael
-von Vincent Rijmen und Joan Daemen.
-Unter anderem wird er von der NASA und der US-Amerikanischen Regierung
-verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr.
-Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen
-Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine
-Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der
-mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen
-Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard
-der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht
-übernommen werden muss und in einem äußerst transparenten Verfahren
-ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund
-für das in AES gesetzte Vertrauen.
-Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei
-Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die
-Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die
-Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus
-sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.\\
-\textbf{Funktionsweise}\\
-Wird ein 16 Byte Block mit dem AES verschlüsselt, wird dieser Block zunächst in
-eine Tabelle mit vier Zeilen und vier Spalten geschrieben, wobei jedes Feld der
-Tabelle ein Byte enthält. Nun werden die einzelnen Felder mehrfach mit
-unterschiedlichen Teilen des erweiterten Schlüssels chiffriert, wobei über die
-Schlüssellänge k definiert wird, wieviele dieser Verschlüsselungsrunden r es
-gibt (Fall AES-128: 10 Runden).
-Aus dem Schlüssel k werden jetzt (r + 1) Rundenschlüsselgeneriert indem k
-in eine weitere Tabelle mit (im Fall AES-128) vier Zeilen und 44 Spalten
-eingetragen wird. Nachdem der Schlüssel in die ersten Byte-großen Felder der
-Tabelle gelegt wurde, werden die restlichen rekursiv nach bestimmten Rotations-
-und Berechnungsverfahren gefüllt. Nach dieser Vorbereitung werden die Nutzdaten
-in der ersten Tabelle jetzt in mehreren Runden zunächst mit dem jeweiligen
-Rundenschlüssel XOR-Verknüpft. Danach werden die einzenen Felder der Tabelle
-wieder nach festgelegten Prinzipien innerhalb ihrer Spalte nach links
-verschoben. Links herausfallende Werte werden rechts wieder in die Tabelle
-eingefügt, es wird also rotiert. Danach werden die einzelnen Werte innerhalb
-der Spalten nach definierten Verrechnungssystemen (Spaltenwert * [1|2|3] modulo
-(irreduzibles Polynom) | innerhalb des Glasios-Körpers, anschließend
-untereinader XOR-Verknüpft) vermischt. Nachdem dieses Verfahren (Verknüpfung mit
-dem Rundenschlüssel, rotieren der Zeilen, vermischen der Spalten) r-Mal
-ausgeführt wurde ist die Verschlüsselung abgeschlossen.
-Die Entschlüsselung durchläuft, wie bei allen symmetrischen Kryptosystemen,
-exakt die selben Schritte in umgekehrter Reihenfolge.
+AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-Amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.
+\\\textbf{Funktionsweise}\\ 
+Wird ein 16 Byte Block mit dem AES verschlüsselt, wird dieser Block zunächst in eine Tabelle mit vier Zeilen und vier Spalten geschrieben, wobei jedes Feld der Tabelle ein Byte enthält. Nun werden die einzelnen Felder mehrfach mit unterschiedlichen Teilen des erweiterten Schlüssels chiffriert, wobei über die Schlüssellänge k definiert wird, wieviele dieser Verschlüsselungsrunden r es gibt (Fall AES-128: 10 Runden). Aus dem Schlüssel k werden jetzt (r + 1) Rundenschlüsselgeneriert indem k in eine weitere Tabelle mit (im Fall AES-128) vier Zeilen und 44 Spalten eingetragen wird. Nachdem der Schlüssel in die ersten Byte-großen Felder der Tabelle gelegt wurde, werden die restlichen rekursiv nach bestimmten Rotations- und Berechnungsverfahren gefüllt. Nach dieser Vorbereitung werden die Nutzdaten in der ersten Tabelle jetzt in mehreren Runden zunächst mit dem jeweiligen Rundenschlüssel XOR-Verknüpft. Danach werden die einzenen Felder der Tabelle wieder nach festgelegten Prinzipien innerhalb ihrer Spalte nach links verschoben. Links herausfallende Werte werden rechts wieder in die Tabelle eingefügt, es wird also rotiert. Danach werden die einzelnen Werte innerhalb der Spalten nach definierten Verrechnungssystemen (Spaltenwert * [1|2|3] modulo (irreduzibles Polynom) | innerhalb des Glasios-Körpers, anschließend untereinader XOR-Verknüpft) vermischt. Nachdem dieses Verfahren (Verknüpfung mit dem Rundenschlüssel, rotieren der Zeilen, vermischen der Spalten) r-Mal ausgeführt wurde ist die Verschlüsselung abgeschlossen. Die Entschlüsselung durchläuft, wie bei allen symmetrischen Kryptosystemen, exakt die selben Schritte in umgekehrter Reihenfolge.
 \\\cite{4}\cite{5}\\
 \\\textbf{Counter Mode}\\
 Für Blockchiffren wurden im Laufe der Jahre verschiedene sog. Betriebsmodi entwickelt. Ein Betriebsmodus stellt die Art und Weise da in der eine Blockchiffre verwendet wird. Mit der Verwendung von Betriebsmodi ist es unter anderem möglich Blockchiffren   als   Stromchiffren   zu   verwenden,   Nachrichten   mit   mehrfacher   Blocklänge   zu   verschlüsseln   oder selbstsynchronisierende Chiffren zu erzeugen. Einer dieser Betriebsmodi ist der sog. Counter Mode.
@@ -369,30 +324,31 @@ Im Counter Mode wird nicht der Klartext selbst mittels Algorithmus und Schlüsse
 \\\textbf{Kryptographische Hashfunktionen: SHA2-256}\\
 SHA (Secure Hash Algorithm) ist eben so wie der AES eine Standardisierung. In diesem Falle allerdings die Standardisierung eines sicheren Hash Algorithmus. 
 
-Ein sicherer Hash Algorithmus ist in erster Linie eine Hashing Funktion wie jede Andere, also ein Algorithmus, der Prüfsummen auf Eingabewerte beliebiger Länge berechnet. Prüfsummen fanden schon vor der Kryütographie Einsatz in der Informatik, vor allem um die korrekte Übertragung von Daten zu gewährleisten. Ein gutes Beispiel hierfür bietet der CRC (Cyclic Redundancy Check). Wenn aus einem Bitstrom mittels CRC eine Prüfsumme brechnet wurde, kann mittels dieser nach der Übertragung der Daten relativ sicher festgestellt werden, ob alle Daten korrekt übertragen wurden, da der CRC Wert sich durch kleinste Veränderungen im Bitstrom stark verändert. Im Falle der kryptogephischen Hash Funktion ist diese Eigenschaft eben so wichtig, allerdings kommen  in diesem Umfeld weitere Anforderungen hinzu: Eine kryptographische Hash Funktion sollte eine Einwegfunktion sein. Das bedeutet, dass es nicht möglich sein darf, aus einem Berechneten Hashwert die Ursprüglichen Daten zu berechnen. Die meißten Hash Funktionen stellen dies sicher, indem der Hashwert kürzer als die Eingabedaten ist. Durch diese Kompression ist es nicht mehr möglich die ursprünglichen Daten zu ermitteln. Eine weitere Anforderung ist, dass eine kryptographische Hashfunktion kollisionsresistent ist. Bei einer kollisionsresistenten Hashfunktion ist es nicht möglich in effektiver Zeit einen zweiten Datenstrom zu berechnen, der den selben Hashwert erzeugt wie den, den man schon besitzt. Aus dieser Anforderung ergibt sich auch, dass es nicht möglich ist einen Datenstrom derart zu bearbeiten, dass er einen gewünschten Hash produziert. Diese Anforderungen erfüllt CRC garnicht, dafür aber kryptographische Hashfunktionen wie die in SHA standardisierten. Dafür sind sie meißt deutlich komplexer (rechenintensiver) und die erzeugten Hashes sind länger. Der eigentliche Sinn und Zweck von kryptographischen Hashfunktionen liegt vor allem in zwei Anwndungsfällen:
+Ein sicherer Hash Algorithmus ist in erster Linie eine Hashing Funktion wie jede Andere, also ein Algorithmus, der Prüfsummen auf Eingabewerte beliebiger Länge berechnet. Prüfsummen fanden schon vor der Kryptographie Einsatz in der Informatik, vor allem um die korrekte Übertragung von Daten zu gewährleisten. Ein gutes Beispiel hierfür bietet der CRC (Cyclic Redundancy Check). Wenn aus einem Bitstrom mittels CRC eine Prüfsumme brechnet wurde, kann mittels dieser nach der Übertragung der Daten relativ sicher festgestellt werden, ob alle Daten korrekt übertragen wurden, da der CRC Wert sich durch kleinste Veränderungen im Bitstrom stark verändert. Im Falle der kryptogephischen Hash Funktion ist diese Eigenschaft eben so wichtig, allerdings kommen  in diesem Umfeld weitere Anforderungen hinzu: Eine kryptographische Hash Funktion sollte eine Einwegfunktion sein. Das bedeutet, dass es nicht möglich sein darf, aus einem Berechneten Hashwert die Ursprüglichen Daten zu berechnen. Die meißten Hash Funktionen stellen dies sicher, indem der Hashwert kürzer als die Eingabedaten ist. Durch diese Kompression ist es nicht mehr möglich die ursprünglichen Daten zu ermitteln. Eine weitere Anforderung ist, dass eine kryptographische Hashfunktion kollisionsresistent ist. Bei einer kollisionsresistenten Hashfunktion ist es nicht möglich in effektiver Zeit einen zweiten Datenstrom zu berechnen, der den selben Hashwert erzeugt wie den, den man schon besitzt. Aus dieser Anforderung ergibt sich auch, dass es nicht möglich ist einen Datenstrom derart zu bearbeiten, dass er einen gewünschten Hash produziert. Diese Anforderungen erfüllt CRC garnicht, dafür aber kryptographische Hashfunktionen wie die in SHA standardisierten. Dafür sind sie meißt deutlich komplexer (rechenintensiver) und die erzeugten Hashes sind länger. Der eigentliche Sinn und Zweck von kryptographischen Hashfunktionen liegt vor allem in zwei Anwndungsfällen:
 \\\textbf{Sicherstellung von Integrität}\\
 Um die Integrität eines Übertragenen Bitstroms zu garantieren, kann der Hashwert zusätzlich sicher mit übertragen werden (überlicherweise asymmetrisch verschlüsselt). Nach dem erhalt der Nachricht, kann der Empfänger anhand des Hashes überprüfen ob sie unverändert übertragen wurde. Hier liegt auch der Grund der Kollisionssicherheit: Es ist nicht effektiv möglich eine neue sinnvolle Nachricht mit einem manipulierten Inhalt zu erzeugen, die den selben Hash aufweist.
-\\\textbf{Beweiß: Geheimnisbesitz}\\
-Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, vertraut aber der Übertragung nicht und möchte es daher nicht preisgeben, kann sie einen sog. Salt (Eng. Salz, von versalzen) erzeugen, und diesen mit dem Geheimniss zusammen hashen. Dieser Hash inklusive des Salt wird verschickt und der Empfänger kann seinerseits das Geheimnis und den Salt hashen. Kenn die andere Person das Geheimnis, müssen die Hashes sich gleichen. Der Salt dient in diesem Fall, um sicher zu stellen, dass ein eventueller Angreifer den Hash des reinen Passwortes nicht aufzeichnen kann und sich mit dem Besitz des Hashes als kenner des Geheimnisses ausgibt. Außerdem verhindert der Salt, dass Passwortlisten (sog. Rainbowtables) von gehashten Geheimnissen (in diesem Fall : Passwörtern) vorrausberechnet und sie mit gestohlenen Hashes abgleicht. Dieses Verfahren wird zum Beispiel verwendet, wenn Server Passwörter für den Login speichern. So müssen sie die Passwörter nicht im Klartext speichern, und der Schaden bei einem Einbruch kann minimiert werden. 
+\\\textbf{Beweis: Geheimnisbesitz}\\
+Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, vertraut aber der Übertragung nicht und möchte es daher nicht preisgeben, kann sie einen sog. Salt (Eng. Salz, von versalzen) erzeugen, und diesen mit dem Geheimniss zusammen hashen. Dieser Hash inklusive des Salt wird verschickt und der Empfänger kann seinerseits das Geheimnis und den Salt hashen. Ist der anderen Person das Geheimnis bekannt, müssen die Hashes sich gleichen. Der Salt dient in diesem Fall, um sicher zu stellen, dass ein eventueller Angreifer den Hash des reinen Passwortes nicht aufzeichnen kann und sich mit dem Besitz des Hashes als kenner des Geheimnisses ausgibt. Außerdem verhindert der Salt, dass Passwortlisten (sog. Rainbowtables) von gehashten Geheimnissen (in diesem Fall : Passwörtern) vorrausberechnet und sie mit gestohlenen Hashes abgeglichen werden können. Dieses Verfahren wird zum Beispiel verwendet, wenn Server Passwörter für den Login speichern. So müssen sie die Passwörter nicht im Klartext speichern, und der Schaden bei einem Einbruch kann minimiert werden. 
 
-Der SHA2 ist der Nachfolger von SHA1 und ermöglicht die erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe unterschlagen und damit eine geringere Länge des Hashwertes erreicht.
+SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht.
 \\\cite{8}\cite{9}\cite{10}\\
 
 \textbf{RSA}\\
 \subsection{Konzeptentwurf}
 UML-Diagramm
 \subsubsection{Architektur}
-Die Anwendung wurde in nachfolgende Pakete unterteilt:
+Der Software zugrunde liegt eine Architektur, die an das Model-View-Control  Pattern angelehnt ist. Es unterteilt sich in drei packages (in Java eine Abgrenzung von Programmteilen), sowie zwei subpackages (also packages die in anderen enthalten sind):
 \begin{compactitem}
 	\item control:\\
-Kontrollelemente der Anwendung.
-	\item model:\\
-Sammlung der für die Ver- und Entschlüsselung notwendigen Daten.
-	\item model.cc:\\
-Stellt die Verbindung zu Google Cloud Storage via gsutil her.
+	Das package control enthält die Programmlogik. Also ver- und entschlüsselung, Nutzerverwaltung und koordination der Informationen die zu den Dateien vorliegen.
 	\item util:\\
-Implementierung des Kryptosystems.
+	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur speicherung von Informationen notwendig sind. Alle Methoden von 		disen Klassen sind statisch und können jederzeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen und Hilfsfunktionen um Werte umzuwandeln. 
+	\item model:\\
+	Das package model ist für die Daten selbst zuständig, also definiert in welcher weise Informationen gespeichert und nach beendigung des Programmes im Speicher des Computers abgelegt werden.
+	\item model.cc:\\
+	Das subpackage cc gehört zum model und kümmert sich um die Speicherung der Daten in der Cloud. Hier wird ein Interface definiert, wie die Schnittstelle zu Cloudspeichern auszusehen hat, sowie aktuell die Anbindung der Google Cloud mittels der 			gsutil Schnittstelle.
 	\item view:\\
+	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views haben außerdem nur zwei Schnittstellen zum Rest der Software: Die Main Klasse nimmt aktionen auf den Views engegen und steuert darauf hin 			andere Programmteile, von der Klasse FileListHandler erhält das MainWindow die Informationen die in der Tablle angezeigt werden (sprich die aktuell in der Cloud liegenden Dateien).
 Automatisierte UML-Generierung.
 \end{compactitem}
 \subsubsection{Annahmen}
