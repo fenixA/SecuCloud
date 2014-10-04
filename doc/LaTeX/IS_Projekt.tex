@@ -272,18 +272,22 @@ Evaluierung technisch realisierbarer Lösungen, Daseinsberechtigung von Cloud St
 \subsubsection{Programmiersprache}
 Die Hauptprogrammiersprache ist Java. Die Anwendung greift jedoch zusätzlich auf Python und das Java Runtime Environment zu.
 
-\subsubsection{Schnittstelle: gsutill}
-gsutil ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff auf Google Cloud Storage ermöglicht. Zu den Funktionalitäten gehören:
+\subsubsection{Google Cloud Storage}
+
+\subsubsection{Schnittstelle Google Cloud Storage: gsutill}
+\textbf{gsutil} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff von den gängigen Betriebssystemen Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die vewendeten Befehle aufgelistet - ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt:
+
 \begin{compactitem}
-	\item Erstellen und Löschen von Buckets
-	\item Upload, Download und Entfernen von Objekten bzw. Dateien
-	\item Auflisten der Buckets und Objekte
-	\item Verschieben, Kopieren und Umbenennen von Objekten
-	\item Bearbeiten von Objekten
-	\item Bearbeiten der Zugriffssteuerungsliste
+	\item Auflisten: \textbf{ls}\\
+	gsutil ls [Optionen] gs://\textless Bucket\textgreater
+	\item Kopieren: \textbf{cp}\\
+	Upload: gsutil cp [Optionen] \textless Quellpfad lokaler Datei\textgreater~ gs://\textless Bucket\textgreater\\
+	Download:  gsutil cp [Optionen] gs://\textless Bucket\textgreater/\textless Dateiname\textgreater~\textless Zielpfad lokaler Datei\textgreater
+	\item Entfernen: \textbf{rm}\\
+	gsutil rm [Optionen] gs://\textless Bucket\textgreater /\textless Dateiname\textgreater
 \end{compactitem}
 
-Der Prototyp greift hierbei auf die Befehle zum Upload, Download und Entfernen sowie Auflisten der Objekte zu. Die Anweisungen werden im Hintergrund und für den Anwender nicht sichtbar ausgeführt. 
+
 
 \subsubsection{Eclipse IDE for Java Developers}
 Eclipse ist ein Open Source Framework zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert.
