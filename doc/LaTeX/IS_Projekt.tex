@@ -1,0 +1,517 @@
+\documentclass[12pt,a4paper,bibliography=totocnumbered,listof=totocnumbered]{scrartcl}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage[right]{eurosym}
+\usepackage[printonlyused]{acronym}
+\usepackage{subfig}
+\usepackage{floatflt}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage[right]{eurosym}
+\usepackage{picins}
+\usepackage[subfigure,titles]{tocloft}
+\usepackage[pdfpagelabels=true]{hyperref}
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize, captionpos=b, breaklines=true, showstringspaces=false, tabsize=2, frame=lines, numbers=left, numberstyle=\tiny, xleftmargin=2em, framexleftmargin=2em}
+\makeatletter
+\def\l@lstlisting#1#2{\@dottedtocline{1}{0em}{1em}{\hspace{1,5em} Lst. #1}{#2}}
+\makeatother
+
+\geometry{a4paper, top=27mm, left=30mm, right=20mm, bottom=35mm, headsep=10mm, footskip=12mm}
+
+\hypersetup{unicode=false, pdftoolbar=true, pdfmenubar=true, pdffitwindow=false, pdfstartview={FitH},
+	pdftitle={IS-Projekt},
+	pdfauthor={Michael Holzwarth, Felix Friedrich},
+	pdfsubject={Symmetrische Software-Kryptographie IaaS},
+	pdfcreator={\LaTeX\ with package \flqq hyperref\frqq},
+	pdfproducer={pdfTeX \the\pdftexversion.\pdftexrevision},
+	pdfkeywords={Symmetrische Software-Kryptographie, sichere Nutzung, Storage-Services, IaaS, Konzept, Prototyp},
+	pdfnewwindow=true,
+	colorlinks=true,linkcolor=black,citecolor=black,filecolor=magenta,urlcolor=black}
+\pdfinfo{/CreationDate (D:20141010)}
+
+\begin{document}
+
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+
+% Kopf- und Fusszeile
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\leftmark}{\rightmark}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{\thesection\space\contentsname}
+\lfoot{IS-Projekt}
+\cfoot{}
+\rfoot{Seite \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Vorspann
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\theHsection}{\Roman{section}}
+\pagenumbering{Roman}
+
+
+
+% ----------------------------------------------------------------------------------------------------------
+% Titelseite
+% ----------------------------------------------------------------------------------------------------------
+\thispagestyle{empty}
+\begin{center}
+	\includegraphics[scale=1]{hs_aa.png}\\
+	\vspace*{2cm}
+	\Large
+	\textbf{Fakultät}\\
+	\textbf{Elektronik und Informatik}\\
+	\vspace*{2cm}
+	\large
+	\textbf{57640 IS-Projekt}\\
+	\vspace*{0.5cm}
+	\large
+	Projektarbeit\\
+	über das Thema\\
+	\vspace*{1cm}
+	\Huge
+	\textbf{Symmetrische Software-Kryptographie zur sicheren Nutzung von Storage-Services (IaaS)\vspace*{1cm} Konzept und Prototyp}\\
+
+	\vspace*{2cm}
+	
+	\vfill
+	\normalsize
+	\newcolumntype{x}[1]{>{\raggedleft\arraybackslash\hspace{0pt}}p{#1}}
+	\begin{tabular}{x{6cm}p{7.5cm}}
+		\rule{0mm}{5ex}\textbf{Autoren:} & Michael Holzwarth\newline 35429\newline Felix Friedrich\newline 34648 \\ 
+		\rule{0mm}{5ex}\textbf{Betreuender Prof.:} & Prof. Dr. Christian Koot \\ 
+		\rule{0mm}{5ex}\textbf{Abgabedatum:} & 10.10.2014 \\ 
+	\end{tabular} 
+\end{center}
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Abstract
+% ----------------------------------------------------------------------------------------------------------
+\setcounter{page}{1}
+\doublespacing
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{2pt plus 2pt minus 2pt}
+\rhead{KURZFASSUNG}
+\section{Kurzfassung}
+Erfolgt am Ende der Ausarbeitung
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Verzeichnisse
+% ----------------------------------------------------------------------------------------------------------
+% TODO Typ vor Nummer
+\renewcommand{\cfttabpresnum}{Tab. }
+\renewcommand{\cftfigpresnum}{Abb. }
+\settowidth{\cfttabnumwidth}{Abb. 10\quad}
+\settowidth{\cftfignumwidth}{Abb. 10\quad}
+
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{2pt plus 2pt minus 2pt}
+\singlespacing
+\rhead{INHALTSVERZEICHNIS}
+\renewcommand{\contentsname}{II Inhaltsverzeichnis}
+\phantomsection
+\addcontentsline{toc}{section}{\texorpdfstring{II \hspace{0.35em}Inhaltsverzeichnis}{Inhaltsverzeichnis}}
+\addtocounter{section}{1}
+\tableofcontents
+\pagebreak
+\rhead{VERZEICHNISSE}
+\listoffigures
+\listoftables
+\renewcommand{\lstlistlistingname}{Listing-Verzeichnis}
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Inhalt
+% ----------------------------------------------------------------------------------------------------------
+% Abstände Überschrift
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+\titlespacing{\subsection}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+\titlespacing{\subsubsection}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+
+% Kopfzeile
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\subsectionmark}[1]{}
+\renewcommand{\subsubsectionmark}[1]{}
+\lhead{Kapitel \thesection}
+\rhead{\rightmark}
+
+\doublespacing
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theHsection}{\arabic{section}}
+\setcounter{section}{0}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ----------------------------------------------------------------------------------------------------------
+% Einleitung
+% ----------------------------------------------------------------------------------------------------------
+\section{Einleitung}
+\subsection{Motivation}
+Unternehmensdaten müssen aus Gründen der Einhaltung gesetzlicher Vorschriften oder des Unternehmensgeheimnisses vertraulich behandelt und geschützt werden. Die gleiche Sicherheit wie bei der internen Datenhaltung muss auch in ausgelagerten Systemen, der Cloud, mit derselben Sorgfalt gewährleistet sein. Eine Auslagerung der Daten hebt nicht die sicherheitsspezifischen Anforderungen an Vertraulichkeit und Datenschutz auf. Eine große Herausforderung stellt hierbei der Verlust über die absolute Kontrolle der Daten und damit einhergehend die Komplexität des Schutzes dar.
+
+Cloud-Anbieter verfügen über verschiedene Sicherheitsmechanismen zum Schutz vor unbefugtem Datenzugriff von außerhalb. Es existiert jedoch kein garantierter Schutz vor unbefugtem Zugriff innerhalb des Anbieters. Administratoren und weiteres, über die Infrastruktur berechtigtes, Personal besitzen die Möglichkeit auf gespeicherte Daten zuzugreifen.
+
+Dies macht eine verschlüsselte Ablage der Daten notwendig um sicherzustellen, dass die Daten auch innerhalb der Cloud in vollem Umfang den Sicherheitsstandards entsprechen.
+
+\subsection{Problemstellung und Problemabgrenzung}
+\subsubsection{Problemstellung}
+Eine symmetrische Software-Kryptographie soll möglichst Daten, die in eine Cloud ausgelagert werden,  vor Fremdzugriff schützen. Die Konzeption und der Entwurf eines Prototyps sollen evaluieren, wie diese Herausforderung effizient und sicher gelöst werden kann. Dabei steht der betriebssystemunabhängige Zugriff auf die entsprechende Anwendung und das eingesetzte Verschlüsselungsverfahren im Vordergrund. Erarbeitet werden soll die Implementierung für einen einzelnen Cloud-Anbieter. 
+
+Zu den Grundfunktionalitäten des geforderten Prototyps gehören der Cloud-Zugriff, die Verschlüsselung, die Speicherung in der Cloud, eine Dateiübersicht und das lokale Herunterladen der Daten.
+
+Die Verwendung soll durch eine grafische Oberfläche vereinfacht werden.
+
+\subsubsection{Problemabgrenzung}
+Eine Gegenüberstellung weiterer kommerzieller Produkte von Cloud-Anbietern im Bezug auf Implementierung und Performance wird in dieser Arbeit nicht behandelt. Ebenso ist eine Optimierung vorhandener APIs bzw. Schnittstellen und Kryptosystemen nicht Gegenstand dieser Arbeit. Die Hardware des Anwenders wird als sicher betrachtet, weswegen es keinem sicheres Schlüsselmanagement bedarf.
+
+\subsection{Ziel der Arbeit}
+Ziel der Projektarbeit ist es primär eine Anwendung zu entwickeln, die ein aus IT-Sicherheits-Gesichtpunkten sicheres, symmetrisch verschlüsseltes Ablegen von Daten in einer als unsicher geltenden Cloud-Umgebung ermöglicht. Desweiteren wird der Dienstleistungsvorteil sowie das Alleinstellungsmerkmal für Vertiebsintermediäre, durch das zusätzliche Angebot einer solchen Anwendung, betrachtet. Ein weiterer Aspekt ist die Herausarbeitung von Datenschutzproblematiken im Cloud Computing Segment.
+
+\subsection{Gang der Arbeit}
+Kurze Beschreibung der Kapitel - Erfolgt am Ende der Ausarbeitung
+\pagebreak
+
+\section{Methoden}
+\subsection{Grundlagen Cloud Computing}
+\subsubsection{Definition}
+Definition von Cloud Computing nach dem National Institute of Standards and Technology (NIST) und der European Network and Information Security Agency (ENISA):
+
+''Cloud Computing ist ein Modell, das es erlaubt bei Bedarf, jederzeit und überall bequem über ein Netz auf einen geteilten Pool von konfigurierbaren Rechnerressourcen (z. B. Netze, Server, Speichersysteme, Anwendungen und Dienste) zuzugreifen, die schnell und mit minimalem Managementaufwand oder geringer Serviceprovider-Interaktion zur Verfügung gestellt werden können.''
+
+\subsubsection{Charakteristik}
+Nach NIST können Cloud Services in fünf Eigenschaften unterschieden werden:
+\begin{compactitem}
+	\item On-demand Self Service: Es findet keine Interaktion mit dem  Cloud Service Provider (CSP) statt
+	\item Broad Network Access: Zugriff ist nicht an zusätzliche Software gebunden
+	\item Resource Pooling: Ressourcen des CSP sind gebündelt und allen gleichermaßen zugänglich, eine vertragliche Bindung für einen Speicherort ist jedoch möglich
+	\item Rapid Elasticity: Erweiterungen der Services sind flexibel
+	\item Measured Services: Ressourcennutzung wird gemessen und überwacht
+\end{compactitem}
+
+Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) um nachfolgende Punkte erweitert:
+\begin{compactitem}
+	\item Mandantenähigkeit: Ressourcen werden geteilt, Unterscheidung der Mandanten notwendig
+	\item Pay per Use: Nur tatsächlich verwendete Ressourcen müssen bezahl werden
+	\item Service orientierte Architektur: Grundvoraussetzung für Cloud Computing
+\end{compactitem}
+
+\subsubsection{Servicemodelle}
+Cloud Computing kann in drei Kategorien eingeteilt werden:
+\begin{compactitem}
+\item Infrastructure as a Service (IaaS):\\
+...
+\item Plattform as a Service (PaaS):\\
+...
+\item Software as a Service (SaaS):\\
+...
+\end{compactitem}
+
+Im Rahmen dieser Projektarbeit bezieht sich das Konzept auf Infrastructure as a Service (IaaS) - auf dieses wird nachfolgend im Näheren eingegangen.
+
+\subsubsection{IaaS-Typen}
+\begin{compactitem}
+\item Public IaaS Cloud:\\
+Cloud Computing Services für die breite Öffentlichkeit.\\
+Je Server mehrere unabhängige Nutzer.
+\item Private IaaS Cloud:\\
+Cloud Computing Services für Unternehmen.\\
+Je Server ein Unternehmen.
+\item Hybrid IaaS Cloud:\\
+Cloud Computing Services für Unternehmen.\\
+Physikalische Server je nach Anwendungsgebiet entweder Public oder Private.
+\item Personal IaaS Cloud:\\
+Cloud Computing Service durch den Anwender selbst.
+\end{compactitem}
+\pagebreak
+
+\subsubsection{Funktionsweise IaaS}
+
+\subsubsection{Allgemeine Sicherheitskriterien für IaaS}
+\begin{compactitem}
+\item Sicherheitsrichtlinien:\\
+Jede sicherheitsbewusste Organisation betrachtet und prüft sorgfältig die Einhaltung von Sicherheitsrichtlinien. Die Qualität der Sicherheitspolitik eines IaaS-Anbieters ist ein Indikator dafür, wie dieser für die Verantwortung der Sicherheit einsteht.
+\item Unabhängige Sicherheitsbeauftragte:\\
+Sicherheitsbeauftragte sollten unabhängig berichten, aber in enger Zusammenarbeit mit technischem Personal des Cloud-Anbieters stehen. Die Verantwortung des Sicherheitspersonals besteht darin, die ständige Sicherheit des Dienstes zu gewährleisten.
+\item Upgrades und Patches:\\
+Upgrades und Patches sollten in einer zeitgemäßen und sicheren Form umgesetzt werden um Lücken vor der Enthüllung zu beheben und das Sicherheitsniveau stets aufrecht zu erhalten.
+\item Untersuchungen:\\
+Der Cloud-Anbieter muss regelmäßig Schwachstellenanalysen durchführen und die Infrastruktur nach Auffälligkeiten untersuchen. Alle Funde müssen auf die möglichen Auswirkungen hin bewertet und zeitnah behoben werden.
+\item Forensik:\\
+Sicherheitsrelevante Protokolle müssen lang genug beibehalten werden, um die Verfügbarkeit für forensische und gesetzliche Anforderungen zu erfüllen. Solche Protokolle tragen zur Ermittlung bei, wie ein Zwischenfall aufgetreten ist und welche Auswirkungen dieser hat.
+\item Vorfall-Management:\\
+Das Management eines Vorfalls und dessen Gegenmaßnahmen sollte darauf ausgelegt sein, den Umfang zu dokumentieren und für den Kunden transparent zu halten. Für den Kunden eines Cloud-Anbieters sind hierbei die Rahmenwerte der Reaktion (Erkennung, Offenlegung, Behebung und Prüfung) für eine weitere Kooperation notwendig.
+\item Geschäftskontinuität:\\
+RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust, welche nach einem entsprechenden Vorfall akzeptabel ist. Ausgedrückt wird dies zusätzlich in Zeit, der Zeit zwischen entsprechendem Verlust und Rückführung zur letzten zuverlässigen Sicherung. RTO (engl. Recovery Time Objective) definiert die Höchstzeitdauer, die für die Wiederherstellung und vollständigen Zugriff auf die Daten akzeptabel ist.
+\end{compactitem}
+
+
+\subsection{Vorgehensweise}
+
+\subsubsection{Theoretische Analyse}
+Evaluierung technisch realisierbarer Lösungen, Daseinsberechtigung von Cloud Storage Lösungen (\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}, Schnittstellenbetrachtung (gsutil:  \url{https://cloud.google.com/storage/docs/gsutil}), Cloud-Anbieter-Vergleich (\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb})
+
+\subsubsection{Programmiersprache}
+Die Hauptprogrammiersprache ist Java. Die Anwendung greift jedoch zusätzlich auf Python und das Java Runtime Environment zu.
+\subsubsection{gsutil}
+gsutil ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff auf Google Cloud Storage ermöglicht. Zu den Funktionalitäten gehören:
+\begin{compactitem}
+	\item Erstellen und Löschen von Buckets
+	\item Upload, Download und Entfernen von Objekten bzw. Dateien
+	\item Auflisten der Buckets und Objekte
+	\item Verschieben, Kopieren und Umbenennen von Objekten
+	\item Bearbeiten von Objekten
+	\item Bearbeiten der Zugriffssteuerungsliste
+\end{compactitem}
+
+Der Prototyp greift hierbei auf die Befehle zum Upload, Download und Entfernen sowie Auflisten der Objekte zu. Die Anweisungen werden im Hintergrund und für den Anwender nicht sichtbar ausgeführt.
+
+\subsubsection{Eclipse IDE for Java Developers}
+Eclipse ist ein Open Source Framework zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert.
+
+\subsubsection{OpenJDK}
+OpenJDK ist eine Sammlung von Werkzeugen zur Erzeugung von Software. Diese beinhaltet neben der Laufzeitumgebung Java Runtime Environment (JRE) den Java-Compiler javac, Dokumentationswerkzeuge oder den Java-Archiver jar zur Bündelung von Java-Klassen.
+\subsection{Konzeptentwurf}
+UML-Diagramm
+\subsubsection{Architektur}
+Die Anwendung wurde in nachfolgende Pakete unterteilt:
+\begin{compactitem}
+	\item control:\\
+Kontrollelemente der Anwendung.
+	\item model:\\
+Sammlung der für die Ver- und Entschlüsselung notwendigen Daten.
+	\item model.cc:\\
+Stellt die Verbindung zu Google Cloud Storage via gsutil her.
+	\item util:\\
+Implementierung des Kryptosystems.
+	\item view:\\
+Automatisierte UML-Generierung.
+\end{compactitem}
+\subsubsection{Annahmen}
+Der Client und dessen Zugang zur Cloud wird als sicher angenommen.
+\subsubsection{Entscheidungsgrundlage Cloud Service}
+Weshalb Google Cloud Storage eingesetzt wird
+\subsubsection{Betriebssystem}
+Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
+
+ 
+\subsubsection{Kryptosystem}
+Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
+\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+\subsubsection{GUI}
+Beschreibung und Darstellung der Oberfläche
+\subsubsection{Funktionalitäten}
+Erläuterung der Grundfunktionen der Prototyps
+
+\pagebreak
+
+\section{Ergebnisse}
+Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
+
+\pagebreak
+
+\section{Diskussion}
+Ausführliches Fazit zur aktuellen und zukünftigen Notwendigkeit\\
+Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
+
+\subsection{Erweiterung der Funktionalitäten}
+\subsubsection{Schlüsselmanagement durch Key-Server}
+\subsubsection{Selbstsynchronisierung}
+\subsubsection{Blockweise Verschlüsselung}
+\subsubsection{Rechteverwaltung}
+\subsection{Erweiterung der Benutzeroberfläche}
+\subsubsection{Ausbau des Designs}
+\subsubsection{Drag\&Drop}
+
+\pagebreak
+
+\section{Literatur}
+
+\pagebreak
+
+\pagenumbering{Roman}
+\setcounter{page}{1}
+\lhead{Anhang \thesection}
+
+\begin{appendix}
+\section*{Anhang}
+\phantomsection
+\addcontentsline{toc}{section}{Anhang}
+\addtocontents{toc}{\vspace{-0.5em}}
+\section{Programmcode}
+Reiner Programmcode
+\pagebreak
+\section{Dokumentation}
+\subsection{Codedokumentation}
+Ausführliche Dokumentation des Programmcodes zur Verständlichkeit und für die Möglichkeit der Projektfortsetzung
+\subsection{UML}
+UML-Diagramm zur technischen Lösung
+\pagebreak
+
+\subsection{Use-Case}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{UseCase.jpg}
+	 \captionof{figure}{\small Anwendungsfalldiagramm}
+\end{minipage}
+\vspace{1em}
+
+\textbf{AF-001 Authentifizierung:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-001\\
+		\hline
+		Name & Authentifizierung\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte sich anmelden\\
+		\hline
+		Vorbedingung & Programm zeigt den Login-Dialog, Anwender ist im \\ &  Cloud-System registriert und zum Zugriff berechtigt\\
+		\hline
+		Nachbedingung/Ziel & Erfolgreiche Anmeldung am Cloud-System \\
+		\hline
+		Nachbedingung im Sonderfall & Zugriff verweigtert\\ & Erneute Aufforderung zur Anmeldung\\
+		\hline
+		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender gibt Benutzername ein \\ & 3. Anwender gibt Passwort ein \\ & 4. Zugangsdaten werden überprüft \\ & 5. 				Dateiübersicht wird angezeigt \\
+		\hline
+		Sonderfälle & 2a. Anwender gibt falschen oder keinen \\ & Benutzernamen ein \\ & 3a. Anwender gibt falsches oder kein Passwort ein \\ & 4a. Erneutes Laden der Loginmaske\\
+		\hline
+	\end{tabular}
+	\caption{AF-001 Authentifizierung}
+	\label{tab:AF-001 Authentifizierung}
+\end{table}
+\pagebreak
+
+\textbf{AF-002 Dateiupload:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-002\\
+		\hline
+		Name & Dateiupload\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte eine Datei in der Cloud ablegen\\
+		\hline
+		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		\hline
+		Nachbedingung/Ziel & Datei wurde verschlüsselt in der Cloud abgelegt \\
+		\hline
+		Nachbedingung im Sonderfall & Datei kann nicht abgelegt werden\\
+		\hline
+		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene Dateisystem \\ & zum 				Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Doppelklick der linken Maustaste oder Auswählen \\ & der Datei und Bestätigung                  mit ''Öffnen'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
+		\hline
+		Sonderfälle & 5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
+		\hline
+	\end{tabular}
+	\caption{AF-002 Dateiupload}
+	\label{tab:AF-002 Dateiupload}
+\end{table}
+\pagebreak
+
+\textbf{AF-003 Dateidownload:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-003\\
+		\hline
+		Name & Dateidownload\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte eine Datei aus der Cloud \\ & herunterladen\\
+		\hline
+		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		\hline
+		Nachbedingung/Ziel & Datei wurde aus der Cloud heruntergeladen \\ & und entschlüsselt \\
+		\hline
+		Nachbedingung im Sonderfall & Datei kann nicht heruntergeladen werden \\ & Datei wird nicht entschlüsselt\\
+		\hline
+		Normalablauf & 1. Anwender wählt in der Dateiübersicht die \\ & entsprechende Datei aus \\ & 2. Anwender wählt das Menü ''File'' aus \\ & 3. Anwender wählt im Untermenü ''Download'' \\ & 4. Anwender bewegt sich durch das eigene Dateisystem \\ & zum Speicherpfad der zu herunterladenden Datei \\ & 5. Anwender initialisiert durch ''Speichern'' \\ & den Dateidownload \\  & 6. Datei wird heruntergeladen \\ & 7. Datei wird entschlüsselt \\
+		\hline
+		Sonderfälle & 6a. Datei kann nicht heruntergeladen werden \\ & 7a. Datei wird nicht entschlüsselt\\
+		\hline
+	\end{tabular}
+	\caption{AF-003 Dateidownload}
+	\label{tab:AF-003 Dateidownload}
+\end{table}
+
+\textbf{AF-004 Datei l\"oschen:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-004\\
+		\hline
+		Name & Datei löschen\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte eine Datei aus der Cloud löschen\\
+		\hline
+		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		\hline
+		Nachbedingung/Ziel & Datei wurde aus der Cloud gelöscht \\
+		\hline
+		Nachbedingung im Sonderfall & Datei kann nicht gelöscht werden \\
+		\hline
+		Normalablauf & X\\
+		\hline
+		Sonderfälle & X \\
+		\hline
+	\end{tabular}
+	\caption{AF-004 Datei löschen}
+	\label{tab:AF-004 Datei loeschen}
+\end{table}
+\pagebreak
+
+\textbf{Begriffslexikon:}
+
+\begin{compactitem}
+\item Anwender:\\
+Die Rechte und Möglichkeiten des Anwenders begrenzen sich auf das Ablegen lokaler und das Herunterladen von Daten innerhalb der Cloud, sofern diese vorher beim Anbieter vergeben wurden.
+\item Authentifizierung:\\
+Der Login erfordert den Benutzernamen sowie das zugehörige Passwort.
+\item Datei:\\
+Die hochzuladende Datei kann in jedem beliebigen Dateiformat vorliegen.
+\item Dateiübersicht:\\
+Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder. Dies beinhaltet den kryptischen Dateinamen, den originalen Dateinamen, den Zeitstempel des Ablegens sowie die Dateigröße.
+\item GUI:\\
+GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
+\end{compactitem}
+
+\subsection{Installationsanleitung}
+Detaillierte Beschreibung zum Einsatz auf "Fremdsystemen"
+\pagebreak
+\section{Binarys}
+\end{appendix}
+
+
+
+\end{document}
