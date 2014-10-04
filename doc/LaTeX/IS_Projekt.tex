@@ -341,11 +341,9 @@ Neben der Schnittstelle gsutil verfügt Google Cloud Storage über eine \textbf{
 
 \subsubsection{Eclipse IDE for Java Developers}
 Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch plugins kann die Funktionalität von Enclipse noch erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
-
 \subsubsection{GIT}
-<<<<<<< HEAD
-\subsubsection{OpenJDK}
-OpenJDK ist eine Sammlung von Werkzeugen zur Erzeugung von Software. Diese beinhaltet neben der Laufzeitumgebung Java Runtime Environment (JRE) den Java-Compiler javac, Dokumentationswerkzeuge oder den Java-Archiver jar zur Bündelung von Java-Klassen.
+\textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
+\cite{31}
 \subsubsection{Kryptographische Verfahren}
 \textbf{AES}\\
 AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-Amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.
@@ -369,11 +367,7 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 \\\cite{8}\cite{9}\cite{10}\\
 
 \textbf{RSA}\\
-=======
-\textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
-\cite{31}
 
->>>>>>> LaTeX_documentation
 \subsection{Konzeptentwurf}
 UML-Diagramm
 
@@ -382,7 +376,7 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control  Pat
 \begin{compactitem}
 	\item control:\\
 	Das package control enthält die Programmlogik. Also ver- und entschlüsselung, Nutzerverwaltung und koordination der Informationen die zu den Dateien vorliegen.
-	\item util:\\
+	\item control.util:\\
 	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur speicherung von Informationen notwendig sind. Alle Methoden von 		disen Klassen sind statisch und können jederzeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen und Hilfsfunktionen um Werte umzuwandeln. 
 	\item model:\\
 	Das package model ist für die Daten selbst zuständig, also definiert in welcher weise Informationen gespeichert und nach beendigung des Programmes im Speicher des Computers abgelegt werden.
@@ -461,8 +455,13 @@ Die gesamte Installation des Programmes kann durch einen Wizard derart automatis
 \textbf{Traffic Überwachung}\\
 \pagebreak
 
-<<<<<<< HEAD
-\begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
+
+	
+% ----------------------------------------------------------------------------------------------------------
+% Literatur
+% ----------------------------------------------------------------------------------------------------------
+ 
+ \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
 	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
 	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_(Programmiersprache)}
 	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
@@ -473,27 +472,10 @@ Die gesamte Installation des Programmes kann durch einen Wizard derart automatis
 	\bibitem[WSha]{8}\url{http://de.wikipedia.org/wiki/Secure_Hash_Algorithm}
 	\bibitem[WSha2]{9}\url{http://de.wikipedia.org/wiki/SHA-2}
 	\bibitem[NistSha2]{10}\url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}
-
-	
-	
-	
-	
-=======
-% ----------------------------------------------------------------------------------------------------------
-% Literatur
-% ----------------------------------------------------------------------------------------------------------
-\begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
- \bibitem[1]{Oracle}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
- \bibitem[2]{WikiJava}\url{http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29}
- \bibitem[3]{WikiJavaTechnology}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
- 
- 
- 
- \bibitem[Gartner]{30}\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb}
- \bibitem[GIT]{31}\url{http://git-scm.com/book}
- \bibitem[gsutil]{32}\url{https://cloud.google.com/storage/docs/gsutil}
- \bibitem[IEEE]{33}\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}
->>>>>>> LaTeX_documentation
+	\bibitem[Gartner]{30}\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb}
+ 	\bibitem[GIT]{31}\url{http://git-scm.com/book}
+	\bibitem[gsutil]{32}\url{https://cloud.google.com/storage/docs/gsutil}	
+	\bibitem[IEEE]{33}\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}
 \end{thebibliography}
 \pagebreak
 
