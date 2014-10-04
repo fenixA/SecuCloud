@@ -269,13 +269,21 @@ RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust,
 \subsubsection{Theoretische Analyse}
 Evaluierung technisch realisierbarer Lösungen, Daseinsberechtigung von Cloud Storage Lösungen (\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}, Schnittstellenbetrachtung (gsutil:  \url{https://cloud.google.com/storage/docs/gsutil}), Cloud-Anbieter-Vergleich (\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb})
 
-\subsubsection{Programmiersprache}
-Die Anwendung zur sicheren Speicherung in der Cloud wurde komplett in Java 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit began eine der ersten Plattformunabhängigen Programmiersprachhen zu entwickeln. Sie sollte die Computerwelt revolutionieren indem die 
-Java ist eine plattformunabhängige Programmiersprache: 
+\subsubsection{Java}
+Die Anwendung zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit began eine der ersten plattformunabhängigen Programmiersprachhen zu entwickeln. Sie sollte die Computerwelt revolutionieren indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
+Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt, besteht im Kern aus drei Teilen:
+\begin{compactitem}
+	\item JDK: Java Development Kit
+	\item Java: Die Programmiersprache
+	\item JRE: Java Runtime Environment
+\end{compactitem}
 
-%TODO: QUELLE http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html
-%TODO: QUELLE http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29
-%TODO: QUELLE http://de.wikipedia.org/wiki/Java-Technologie#Geschichte
+Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
+Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt orientiert. Das besondere an Java sind außerdem eine vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert, und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
+Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der ja Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, können Java Anwendungen auch auf diesem Laufen, solange sie sich strikt an Java und seine Bibliotheken halten.\\
+Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden.
+\cite{Oracle}\cite{WikiJava}\cite{WikiJavaTechnology}
+
 
 \subsubsection{Google Cloud Storage}
 
@@ -295,8 +303,9 @@ Java ist eine plattformunabhängige Programmiersprache:
 
 
 \subsubsection{Eclipse IDE for Java Developers}
-Eclipse ist ein Open Source Framework zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert.
+Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch plugins kann die Funktionalität von Enclipse noch erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2, Build id: 20140224-0627}  verwendet.
 
+\subsubsection{GIT}
 \subsubsection{OpenJDK}
 OpenJDK ist eine Sammlung von Werkzeugen zur Erzeugung von Software. Diese beinhaltet neben der Laufzeitumgebung Java Runtime Environment (JRE) den Java-Compiler javac, Dokumentationswerkzeuge oder den Java-Archiver jar zur Bündelung von Java-Klassen.
 \subsection{Konzeptentwurf}
@@ -371,13 +380,15 @@ Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
 
 \subsection{Geschäftsmodell: Sichere Cloudspeicher}
 \textbf{Traffic Überwachung}\\
-Beispiel \cite{Call}
 \pagebreak
 
 \section{Literatur}
 
 \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
-   \bibitem[Shortcut]{Call}\url{http://www.schulen-ans-netz.de/neuemedien/fakten/dokus/it-ausstattung-2003.pdf}
+ \bibitem[1]{Oracle}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
+ \bibitem[2]{WikiJava}\url{http://de.wikipedia.org/wiki/Java_%28Programmiersprache%29}
+ \bibitem[3]{WikiJavaTechnology}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
+
 \end{thebibliography}
 
 \pagebreak
