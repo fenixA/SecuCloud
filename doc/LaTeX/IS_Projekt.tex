@@ -44,7 +44,7 @@
 	pdfkeywords={Symmetrische Software-Kryptographie, sichere Nutzung, Storage-Services, IaaS, Konzept, Prototyp},
 	pdfnewwindow=true,
 	colorlinks=true,linkcolor=black,citecolor=black,filecolor=magenta,urlcolor=black}
-\pdfinfo{/CreationDate (D:20141010)}
+\pdfinfo{/CreationDate (D:20141007)}
 
 \begin{document}
 
@@ -97,7 +97,7 @@
 	\begin{tabular}{x{6cm}p{7.5cm}}
 		\rule{0mm}{5ex}\textbf{Autoren:} & Michael Holzwarth\newline 35429\newline Felix Friedrich\newline 34648 \\ 
 		\rule{0mm}{5ex}\textbf{Betreuender Prof.:} & Prof. Dr. Christian Koot \\ 
-		\rule{0mm}{5ex}\textbf{Abgabedatum:} & 10.10.2014 \\ 
+		\rule{0mm}{5ex}\textbf{Abgabedatum:} & 07.10.2014 \\ 
 	\end{tabular} 
 \end{center}
 \pagebreak
@@ -194,24 +194,28 @@ Kurze Beschreibung der Kapitel - Erfolgt am Ende der Ausarbeitung
 \section{Methoden}
 \subsection{Grundlagen Cloud Computing}
 \subsubsection{Definition}
-Definition von Cloud Computing nach dem National Institute of Standards and Technology (NIST) und der European Network and Information Security Agency (ENISA):
+Definition von Cloud Computing nach dem National Institute of Standards and Technology (NIST) und der European Network and Information Security Agency (ENISA) \cite{34}:
 
 ''Cloud Computing ist ein Modell, das es erlaubt bei Bedarf, jederzeit und überall bequem über ein Netz auf einen geteilten Pool von konfigurierbaren Rechnerressourcen (z. B. Netze, Server, Speichersysteme, Anwendungen und Dienste) zuzugreifen, die schnell und mit minimalem Managementaufwand oder geringer Serviceprovider-Interaktion zur Verfügung gestellt werden können.''
+
+Definition von Cloud Computing nach dem Bundesamt für Sicherheit in der Informationstechnik (BSI) \cite{35}:
+
+"Cloud Computing bezeichnet das dynamisch an den Bedarf angepasste Anbieten, Nutzen und Abrechnen von IT-Dienstleistungen über ein Netz. Angebot und Nutzung dieser Dienstleistungen erfolgen dabei ausschließlich über definierte technische Schnittstellen und Protokolle. Die Spannbreite der im Rahmen von Cloud Computing angebotenen Dienstleistungen umfasst das komplette Spektrum der Informationstechnik und beinhaltet unter anderem Infrastruktur (z. B. Rechenleistung, Speicherplatz), Plattformen und Software."
 
 \subsubsection{Notwendigkeit}
 \cite{33}
 
 \subsubsection{Charakteristik}
-Nach NIST können Cloud Services in fünf Eigenschaften unterschieden werden:
+Nach NIST \cite{34} können Cloud Services in fünf Eigenschaften unterschieden werden:
 \begin{compactitem}
-	\item On-demand Self Service: Es findet keine Interaktion mit dem  Cloud Service Provider (CSP) statt
-	\item Broad Network Access: Zugriff ist nicht an zusätzliche Software gebunden
+	\item On-demand Self Service: Keine Interaktion mit dem Cloud Service Provider (CSP)
+	\item Broad Network Access: Ein Zugriff ist nicht an zusätzliche Software gebunden.
 	\item Resource Pooling: Ressourcen des CSP sind gebündelt und allen gleichermaßen zugänglich, eine vertragliche Bindung für einen Speicherort ist jedoch möglich
-	\item Rapid Elasticity: Erweiterungen der Services sind flexibel
+	\item Rapid Elasticity: Flexible Erweiterungen der Services
 	\item Measured Services: Ressourcennutzung wird gemessen und überwacht
 \end{compactitem}
 
-Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) um nachfolgende Punkte erweitert:
+Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) \cite{36} um nachfolgende Punkte erweitert:
 \begin{compactitem}
 	\item Mandantenähigkeit: Ressourcen werden geteilt, Unterscheidung der Mandanten notwendig
 	\item Pay per Use: Nur tatsächlich verwendete Ressourcen müssen bezahl werden
@@ -219,29 +223,38 @@ Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) u
 \end{compactitem}
 
 \subsubsection{Servicemodelle}
-Cloud Computing kann in drei Kategorien eingeteilt werden:
+Cloud Computing kann auf Grundlage des Dienstleistungsangebotes in drei Kategorien bzw. Geschäftsmodelle \cite{34} eingeteilt werden.
+
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=1.0\linewidth]{IaaS_Modelle.png}
+	 \captionof{figure}{\small IaaS Modelle \href{http://office.microsoft.com/de-de/business/was-ist-office-365-fur-unternehmen-FX102997580.aspx}{\cite{37}}}
+\end{minipage}
+\vspace{1em}
+
 \begin{compactitem}
-\item Infrastructure as a Service (IaaS):\\
-...
-\item Plattform as a Service (PaaS):\\
-...
 \item Software as a Service (SaaS):\\
-...
+Software, die über eine Cloud-Infrastruktur angeboten wird. Die Bereitstellung, Betreuung und der Betrieb erfolgt gänzlich durch den Anbieter. Eine Abrechnung erfolgt je Softwareaufruf, was den Erwerb der üblichen Software-Lizenz ersetzt. Beispiele hierfür sind \href{http://www.google.com/enterprise/apps/business/}{\textit{Google Apps}} oder \href{http://office.microsoft.com/de-de/business/was-ist-office-365-fur-unternehmen-FX102997580.aspx}{\textit{Microsoft Office 365}}.
+\item Plattform as a Service (PaaS):\\
+Der Anbieter stellt eine verwaltete Cloud-Infrastruktur zur Verfügung, worauf eigene Software bereitgestellt werden kann. Der Kunde erhält zudem eine integrierte Entwicklungs- und Laufzeitumgebung. Eine Abrechnung erfolgt nutzungsabhängig. Zu den Vertretern von PaaS gehören beispielsweise \href{https://cloud.google.com/appengine/}{\textit{Google App Engine}} oder \href{http://azure.microsoft.com/de-de/}{\textit{Microsoft Azure}}.
+\item Infrastructure as a Service (IaaS):\\
+Reine, bedarfsgerechte Nutzung der Rechnerinfrastruktur des Anbieters. Der Anwender muss alles außer der virtuellen Infrastruktur selbst verwalten. Dies bedeutet zwar einen Mehraufwand, bietet aber gleichzeitig eine größtmögliche Flexibilität. Bekannte Anbieter sind \href{https://cloud.google.com/storage/}{\textit{Google Cloud Storage}} oder Amazon Webservices (AWS) mit \href{http://aws.amazon.com/de/}{\textit{Amazon S3 oder Amazon EC2}}.
 \end{compactitem}
 
-Im Rahmen dieser Projektarbeit bezieht sich das Konzept auf Infrastructure as a Service (IaaS) - auf dieses wird nachfolgend im Näheren eingegangen.
+Im Rahmen dieser Projektarbeit bezieht sich das Konzept auf Infrastructure as a Service (IaaS), worauf nachfolgend im Näheren eingegangen wird.
 
 \subsubsection{IaaS-Typen}
 \begin{compactitem}
 \item Public IaaS Cloud:\\
-Cloud Computing Services für die breite Öffentlichkeit.\\
-Je Server mehrere unabhängige Nutzer.
+Cloud Computing Services für die breite Öffentlichkeit - je Server mehrere unabhängige Nutzer.
 \item Private IaaS Cloud:\\
-Cloud Computing Services für Unternehmen.\\
-Je Server ein Unternehmen.
+Cloud Computing Services für Unternehmen - je Server ein Unternehmen.
 \item Hybrid IaaS Cloud:\\
-Cloud Computing Services für Unternehmen.\\
-Physikalische Server je nach Anwendungsgebiet entweder Public oder Private.
+Cloud Computing Services für Unternehmen - physikalische Server je nach Anwendungsgebiet entweder Public oder Private.
+\item Community Cloud:\\
+Cloud Computing Services für Unternehmen - Zusammenschluss von Interessensgemeinschaften/Institutionen zur gemeinsamen Nutzung.
 \item Personal IaaS Cloud:\\
 Cloud Computing Service durch den Anwender selbst.
 \end{compactitem}
@@ -266,8 +279,9 @@ Das Management eines Vorfalls und dessen Gegenmaßnahmen sollte darauf ausgelegt
 \item Geschäftskontinuität:\\
 RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust, welche nach einem entsprechenden Vorfall akzeptabel ist. Ausgedrückt wird dies zusätzlich in Zeit, der Zeit zwischen entsprechendem Verlust und Rückführung zur letzten zuverlässigen Sicherung. RTO (engl. Recovery Time Objective) definiert die Höchstzeitdauer, die für die Wiederherstellung und vollständigen Zugriff auf die Daten akzeptabel ist.
 \end{compactitem}
+\cite{38}
 
-\subsection{Vorgehensweise}
+\subsection{Technische Analyse/Umsetzung}
 
 \subsubsection{Cloud-Anbieter}
 Der Markt für Cloud Computing in Form von IaaS befindet sich in einem stetigen Wandel und einer raschen Weiterentwicklung. Aus diesem Grund muss die Wahl des Anbieters sehr sorgfältig und unter Betrachtung aller Gesichtspunkte getroffen werden. Die aktuelle Studie "Magic Quadrant for Cloud Infrastructure as a Service" von Gartner \cite{30} vergleicht die Vorzüge und Nachteile der derzeit angebotenen Produkte unter Betrachtung aller gängigen Anwendungsfälle von IaaS. Hierzu gehören beispielsweise:
@@ -279,7 +293,6 @@ Der Markt für Cloud Computing in Form von IaaS befindet sich in einem stetigen 
 	\item Einzelanwendungsfälle und virtuelle Rechenzentren
 	\item Entwurfsmuster für native Cloud Anwendungen und Unternehmensanwendungen
 \end{compactitem}
-\pagebreak
 
 \textbf{Magisches Quadrat}
 \vspace{1em}
@@ -292,18 +305,20 @@ $\;$\\
 \vspace{1em}
 
 \begin{compactitem}
-\item{Marktführer (Leader):}
-\\Der Marktführer-Quadtrant stellt Anbieter dar, dessen Produkte die Marktanforderungen am besten bedienen, am meisten Umsatz generiert und sich somit durchgesetzt haben. Marktführer haben in der Regel einen relativ hohen Marktanteil, ein starkes Umsatzwachstum und positives Kunden-Feedback. Die Produkte der Marktführer verfügen gegenüber Anderer über eine überlegene Vision.
-\item{Herausforderer (Challenger):}
-\\Der Herausforderer-Quadrant zeigt Anbieter mit großem Umsatz, der aber eher auf anderen Produkten oder Dienstleistungen basiert. Ihr IaaS-Angebot ist eher moderat und wird einer Teilmenge der Marktanforderungen gerecht. Viele der angebotenen IaaS-Lösungen sind eine Erweiterung bereits bestehender Systeme.
+\item{Marktführer (Leaders):}
+\\Der Marktführer-Quadtrant stellt Anbieter dar, die über ein für den strategische Einsatz geeignetes Angebot verfügen und ehrgeizige Ziele verfolgen. Sie sind nicht zwangsläufig der beste Anbieter für spezielle Bedürfnisse und bedienen möglicherweise nicht alle Anwendungsfälle, decken aber ein breites Spektrum davon ab. Marktführer besitzen eine Erfolgsbilanz über erfolgreiche Auslieferung, bedeutende Marktanteile und viele referenzierbare Kunden.
+\item{Herausforderer (Challengers):}
+\\In dieser Studie befindet sich keiner der Anbieter im Herausforderer-Quadrant. Im Allgemeinen sind Herausforderer in der Lage einige Marktanforderungen zu befriedigen. Sie liefern einen guten Service, welcher auf eine bestimmte Menge von Anwendungsfällen ausgerichtet ist und verfügen über eine Erfolgsbilanz über erfolgreiche Auslieferung. Herausforderer können sich jedoch nicht schnell genug an die Nachfrage auf dem Markt anpassen.
 \item{Visionäre (Visionairs):}
-\\Der Visionäre-Quadrant besteht aus Anbietern, deren Produkte die Marktanforderungen gut abdecken, aber dessen Bewertung der Umsetzung nicht der der Marktführer entspricht. Dies liegt unter anderem auch an der relativ kleinen Präsenz auf dem IaaS-Markt.
-\item{Nischenprodukt (Niche):}
-\\Der Nischen-Quadrant zeigt vor allem kleine, regionale Anbieter, deren Fokus auf der Entwicklung von IaaS-Lösungen für einzelne Anwendungsfälle liegt. Die Marktanforderungen werden somit nur teilweise erfüllt.
+\\Visionäre haben eine ehrgeizige Vision von der Zukunft und tätigen erhebliche Investitionen zur Entwicklung von einzigartigen Technologien. Zu ihnen zählen neue Marktteilnehmer oder bestehende Unternehmen, die in einen neuen Markt vorstoßen möchten. Ihre Dienste befinden sich noch im Entstehungsprozess, sie verfügen jedoch über eine Vielzahl an Möglichkeiten zur Entwicklung. Obwohl sie eventuell viele Kunden besitzen, reicht das aktuelle Produkt nicht aus um ein breites Spektrum von Anwendungsfällen zu bedienen.
+\item{Nischenspieler (Niche Players):}
+\\Nischenspieler sind womöglich ausgezeichnete Anbieter für Anwendungsfälle auf die sie sich spezialisiert haben, können aber bei weitem nicht alle Anwendungsfälle abdecken. Sie können in diesen Markt neu eingetreten sein oder noch nicht über ausreichend signifikante Marktanteile verfügen. Nischenspieler können Marktführer in einem Gebiet abseits von IaaS sein, befinden sich aber zum aktuellen Zeitpunkt für Cloud-IaaS in relativ frühen Stadien. Je speziefischer die Bedürfnisse, desto wahrscheinlicher ist das passende Produkt in diesem Quadranten zu finden.
 \end{compactitem}
 
-\subsubsection{Schnittstellenfestlegung}
-Der Vergleich möglicher Schnittstellen zu Google Cloud Storage führte zu gsutil. 
+\textbf{Entscheidungsgrundlage Cloud-Anbieter}\\
+In Abbildung X ist ersichtlich, dass die Top-Unternehmen Amazon (Amazon Web Services) und Microsoft (Microsoft Infrastructure Services) bei den aktuellen Marktführern einzuordnen sind, während sich Google mit seinem IaaS-Angebot Google Cloud Storage im Quadrant der Visionäre befindet.
+
+Die Strategie der Google Cloud Plattform basiert auf dem Konzept anderen Unternehmen eine Leistungsfähigkeit anzubieten, wie Google sie selbst verwendet. Dies wird durch Nutzung der innovativen internen technischen Möglichkeiten erreicht. Obwohl Google erst im Dezember 2013 in den IaaS-Markt vorgedrungen ist (seit 2008 Google App Engine als PaaS), befindet sich die angebotene Lösung bereits unter den Visionären. Das liegt unter anderem daran, dass sich Google auf seine Fähigkeiten beschränkt, anstatt diese von Grund auf neu zu strukturieren. Daher wird es auf lange Sicht in der Lage sein das Angebot schneller als seine Konkurrenten voranzubringen. Google verfügt über eine umfassende Vision und ausreichend Erfahrung darüber, wie native Cloud-Anwendungen über einen Lebenszyklus hinweg entwickelt und verwaltet werden. Die Vorstellung von fließenden Grenzen zwischen IaaS und PaaS wird Anwendern in absehbarer Zeit einen Kompromiss zwischen Kontrolle und automatisierter Verwaltung bieten. Die gesamte Unternehmung Google verfügt über eine Vielzahl von Rechenzentren, enorme infrastrukturelle Kapazitäten und ein eigenes globales Hochleistungsnetzwerk. Da der IaaS-Zweig Google Compute Engine (GCE) lediglich geringe Mehrkosten für Google darstellt, kann es den Preis trotz hoher Leistungsfähigkeit aggressiv gestalten kann. Dennoch wird sich Google nicht durch den Preis, sondern durch seine Plattform und zusätzliche Verwaltungsfunktionen von den anderen IaaS-Anbietern unterscheiden. Aktuell ist Google Cloud Storage jedoch ein relativ neues Produkt, sodass noch keine operative Erfolgsbilanz gezogen werden kann. Hinzu kommen kleinere Störungen bis zur Freigabe der allgemeinen Verfügbarkeit von GCE. Eine der größten Herausforderungen besteht darin, das Vertrauen der Unternehmen zu gewinnen und den Support auszubauen. Allerdings wird Google bereits heute als künftiger Marktführer für IaaS wahrgenommen, nicht zuletzt wegen der gewohnten Unterstützung durch Software-Unternehmen und Entwickler. Diesen Vorteil konnten wir uns im Rahmen der Projektarbeit zunutze machen und auf Entwicklungsmöglichkeiten von Google, bspw. durch die Verwendung der Schnittstelle gsutil, zurückgreifen. Da das Ziel dieser Arbeit ebenfalls in einem visionären Quadranten einzuordnen wäre, haben wir uns für Google Cloud Storage und gegen Amazon Web Services und Microsoft Infrastructure Services entschieden.
 
 \subsubsection{Java}
 Die Anwendung zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit began eine der ersten plattformunabhängigen Programmiersprachhen zu entwickeln. Sie sollte die Computerwelt revolutionieren indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
@@ -317,13 +332,11 @@ Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt,
 Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
 Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt orientiert. Das besondere an Java sind außerdem eine vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert, und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der ja Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, können Java Anwendungen auch auf diesem Laufen, solange sie sich strikt an Java und seine Bibliotheken halten.\\
-Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden.
-\cite{Oracle}\cite{WikiJava}\cite{WikiJavaTechnology}
+Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden.\\
+\cite{1}\cite{2}\cite{3}
 
-\subsubsection{Google Cloud Storage}
-
-\subsubsection{Schnittstelle Google Cloud Storage: gsutill}
-\textbf{gsutil}\cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist derzeit inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
+\subsubsection{Schnittstelle Google Cloud Storage: gsutil}
+\textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
 
 \begin{compactitem}
 	\item Auflisten: \textbf{ls}\\
@@ -341,9 +354,11 @@ Neben der Schnittstelle gsutil verfügt Google Cloud Storage über eine \textbf{
 
 \subsubsection{Eclipse IDE for Java Developers}
 Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch plugins kann die Funktionalität von Enclipse noch erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
-\subsubsection{GIT}
+
+\subsubsection{Versionsverwaltung: git}
 \textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
 \cite{31}
+
 \subsubsection{Kryptographische Verfahren}
 \textbf{AES}\\
 AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-Amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.
@@ -367,141 +382,29 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 \\\cite{8}\cite{9}\cite{10}\\
 
 \textbf{RSA}\\
-
-\subsection{Konzeptentwurf}
-UML-Diagramm
+\pagebreak
 
 \subsubsection{Architektur}
-Der Software zugrunde liegt eine Architektur, die an das Model-View-Control  Pattern angelehnt ist. Es unterteilt sich in drei packages (in Java eine Abgrenzung von Programmteilen), sowie zwei subpackages (also packages die in anderen enthalten sind):
+\textbf{UML-Diagramm}\\
+UML-Diagramm Grafik
+
+Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Pattern angelehnt ist. Es unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (Pakete, die in anderen enthalten sind).
+
 \begin{compactitem}
 	\item control:\\
-	Das package control enthält die Programmlogik. Also ver- und entschlüsselung, Nutzerverwaltung und koordination der Informationen die zu den Dateien vorliegen.
+	Das package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Nutzerverwaltung und Koordination der Datei-Informationen.
 	\item control.util:\\
-	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur speicherung von Informationen notwendig sind. Alle Methoden von 		disen Klassen sind statisch und können jederzeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen und Hilfsfunktionen um Werte umzuwandeln. 
+	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur Speicherung von Informationen notwendig sind. Alle Methoden von diesen Klassen sind statisch und können zu jeder Zeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen sowie Hilfsfunktionen zur Umwandlung von Werten. 
 	\item model:\\
-	Das package model ist für die Daten selbst zuständig, also definiert in welcher weise Informationen gespeichert und nach beendigung des Programmes im Speicher des Computers abgelegt werden.
+	Das package model ist für die Daten selbst zuständig, es definiert in welcher Weise Informationen gespeichert und, nach Beendigung des Programmes, im Speicher des Computers abgelegt werden.
 	\item model.cc:\\
-	Das subpackage cc gehört zum model und kümmert sich um die Speicherung der Daten in der Cloud. Hier wird ein Interface definiert, wie die Schnittstelle zu Cloudspeichern auszusehen hat, sowie aktuell die Anbindung der Google Cloud mittels der 			gsutil Schnittstelle.
+	Das subpackage cc gehört zum model und verwaltet die Speicherung der Daten in der Cloud. Darin wird das Interface für die Schnittstelle zu Cloudspeichern definiert. In diesem Prototyp ist dies gsutil zur Anbindung von Google Cloud Storage.
 	\item view:\\
-	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views haben außerdem nur zwei Schnittstellen zum Rest der Software: Die Main Klasse nimmt aktionen auf den Views engegen und steuert darauf hin 			andere Programmteile, von der Klasse FileListHandler erhält das MainWindow die Informationen die in der Tablle angezeigt werden (sprich die aktuell in der Cloud liegenden Dateien).
-Automatisierte UML-Generierung.
+	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
-
-\subsubsection{Annahmen}
-Der Client und dessen Zugang zur Cloud wird, nach Vorgabe, als sicher angesehen.
-
-\subsubsection{Entscheidungsgrundlage Cloud Service}
-Weshalb Google Cloud Storage eingesetzt wird
-
-\subsubsection{Betriebssystem}
-Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
-
-\subsubsection{Kryptosystem}
-Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
-\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
-
-\subsubsection{GUI}
-Beschreibung und Darstellung der Oberfläche
-\subsubsection{Funktionalitäten}
-Erläuterung der Grundfunktionen der Prototyps
-
 \pagebreak
 
-% ----------------------------------------------------------------------------------------------------------
-% Ergebnisse
-% ----------------------------------------------------------------------------------------------------------
-\section{Ergebnisse}
-Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
-
-\pagebreak
-
-% ----------------------------------------------------------------------------------------------------------
-% Diskussion
-% ----------------------------------------------------------------------------------------------------------
-\section{Diskussion}
-Ausführliches Fazit zur aktuellen und zukünftigen Notwendigkeit\\
-Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
-
-\subsection{Erweiterung der Funktionalitäten}
-\subsubsection{Erhöhung der Bedienerfreundlichkeit}
-\textbf{Ausbau des Designs/Multirow}
-\\\textbf{Drag\&Drop}\\
-Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umständen von Vorteil, dass es möglich ist, Dateien per Drag\&Drop in das Programmfenster hinen zu ziehen. Dadurch müsste ein Benutzer nicht jedes mal, wenn er oder sie eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.
-\\\textbf{Autokonfiguration der Schnittstellen}\\
-Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zum Google Drive zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
-\\\textbf{Installations Setup}\\
-Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin Standardmäßig eine Python2x installation.
-\\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
-\\\textbf{Selbstsynchronisierung}\\
-\\\textbf{GoogleAPI: Buckets verwalten}\\
-
-\subsubsection{Serverseitiges Management}
-\textbf{Schlüsselmanagement durch Key-Server}\\
-\\\textbf{Providing Server}\\
-\\\textbf{Serverseitige Rechteverwaltung}\\
-\\\textbf{Loginserver}\\
-\\\textbf{Serverseitige Verwaltung des Dateisystems}\\
-
-\subsubsection{Erweiterte Sicherheit}
-\textbf{OpenJDK}\\
-\\\textbf{Alternative Programmiersprechen}\\
-\\\textbf{Kaskadierte Verschlüsselung}\\
-\\\textbf{Key recovery/Masterkey}\\
-\\\textbf{Blockweise Verschlüsselung}\\
-\\\textbf{Online Dateisystem}\\
-\\\textbf{Rechteverwaltung}\\
-
-\subsection{Geschäftsmodell: Sichere Cloudspeicher}
-\textbf{Traffic Überwachung}\\
-\pagebreak
-
-
-	
-% ----------------------------------------------------------------------------------------------------------
-% Literatur
-% ----------------------------------------------------------------------------------------------------------
- 
- \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
-	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
-	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_(Programmiersprache)}
-	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
-	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
-	\bibitem[WAes]{5}\url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
-	\bibitem[WCounterMode]{6}\url{http://de.wikipedia.org/wiki/Counter_Mode}
-	\bibitem[NistCounterMode]{7}\url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}
-	\bibitem[WSha]{8}\url{http://de.wikipedia.org/wiki/Secure_Hash_Algorithm}
-	\bibitem[WSha2]{9}\url{http://de.wikipedia.org/wiki/SHA-2}
-	\bibitem[NistSha2]{10}\url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}
-	\bibitem[Gartner]{30}\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb}
- 	\bibitem[GIT]{31}\url{http://git-scm.com/book}
-	\bibitem[gsutil]{32}\url{https://cloud.google.com/storage/docs/gsutil}	
-	\bibitem[IEEE]{33}\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}
-\end{thebibliography}
-\pagebreak
-
-% ----------------------------------------------------------------------------------------------------------
-% Anhang
-% ----------------------------------------------------------------------------------------------------------
-\pagenumbering{Roman}
-\setcounter{page}{1}
-\lhead{Anhang \thesection}
-
-\begin{appendix}
-\section*{Anhang}
-\phantomsection
-\addcontentsline{toc}{section}{Anhang}
-\addtocontents{toc}{\vspace{-0.5em}}
-\section{Programmcode}
-Reiner Programmcode
-\pagebreak
-\section{Dokumentation}
-\subsection{Codedokumentation}
-Ausführliche Dokumentation des Programmcodes zur Verständlichkeit und für die Möglichkeit der Projektfortsetzung
-\subsection{UML}
-UML-Diagramm zur technischen Lösung
-\pagebreak
-
-\subsection{Use-Case}
+\textbf{Anwendungsfälle}
 \vspace{1em}
 $\;$\\
 \begin{minipage}{\linewidth}
@@ -626,8 +529,7 @@ $\;$\\
 \end{table}
 \pagebreak
 
-\textbf{Begriffslexikon:}
-
+\textbf{Begriffslexikon Anwendungsfälle:}
 \begin{compactitem}
 \item Anwender:\\
 Die Rechte und Möglichkeiten des Anwenders begrenzen sich auf das Ablegen lokaler und das Herunterladen von Daten innerhalb der Cloud, sofern diese vorher beim Anbieter vergeben wurden.
@@ -640,6 +542,124 @@ Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder
 \item GUI:\\
 GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
 \end{compactitem}
+
+\subsubsection{Annahmen}
+Der Client und dessen Zugang zur Cloud wird, nach Vorgabe, als sicher angesehen.
+
+\subsubsection{Betriebssystem}
+Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
+
+\subsubsection{Kryptosystem}
+Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
+\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+
+\subsubsection{GUI}
+Beschreibung und Darstellung der Oberfläche
+
+\subsubsection{Funktionalitäten}
+Erläuterung der Grundfunktionen der Prototyps
+
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Ergebnisse
+% ----------------------------------------------------------------------------------------------------------
+\section{Ergebnisse}
+Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
+
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Diskussion
+% ----------------------------------------------------------------------------------------------------------
+\section{Diskussion}
+Ausführliches Fazit zur aktuellen und zukünftigen Notwendigkeit\\
+Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
+
+\subsection{Erweiterung der Funktionalitäten}
+\subsubsection{Erhöhung der Bedienerfreundlichkeit}
+\textbf{Ausbau des Designs/Multirow}
+\\\textbf{Drag\&Drop}\\
+Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umständen von Vorteil, dass es möglich ist, Dateien per Drag\&Drop in das Programmfenster hinen zu ziehen. Dadurch müsste ein Benutzer nicht jedes mal, wenn er oder sie eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.
+\\\textbf{Autokonfiguration der Schnittstellen}\\
+Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zum Google Drive zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
+\\\textbf{Installations Setup}\\
+Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin Standardmäßig eine Python2x installation.
+\\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
+\\\textbf{Selbstsynchronisierung}\\
+\\\textbf{GoogleAPI: Buckets verwalten}\\
+
+\subsubsection{Serverseitiges Management}
+\textbf{Schlüsselmanagement durch Key-Server}\\
+\\\textbf{Providing Server}\\
+\\\textbf{Serverseitige Rechteverwaltung}\\
+\\\textbf{Loginserver}\\
+\\\textbf{Serverseitige Verwaltung des Dateisystems}\\
+
+\subsubsection{Erweiterte Sicherheit}
+\textbf{OpenJDK}\\
+\\\textbf{Alternative Programmiersprechen}\\
+\\\textbf{Kaskadierte Verschlüsselung}\\
+\\\textbf{Key recovery/Masterkey}\\
+\\\textbf{Blockweise Verschlüsselung}\\
+\\\textbf{Online Dateisystem}\\
+\\\textbf{Rechteverwaltung}\\
+
+\subsection{Geschäftsmodell: Sichere Cloudspeicher}
+\textbf{Traffic Überwachung}\\
+\pagebreak
+
+
+	
+% ----------------------------------------------------------------------------------------------------------
+% Literatur
+% ----------------------------------------------------------------------------------------------------------
+ 
+ \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
+	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
+	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_(Programmiersprache)}
+	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
+	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+	\bibitem[WAes]{5}\url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
+	\bibitem[WCounterMode]{6}\url{http://de.wikipedia.org/wiki/Counter_Mode}
+	\bibitem[NistCounterMode]{7}\url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}
+	\bibitem[WSha]{8}\url{http://de.wikipedia.org/wiki/Secure_Hash_Algorithm}
+	\bibitem[WSha2]{9}\url{http://de.wikipedia.org/wiki/SHA-2}
+	\bibitem[NistSha2]{10}\url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}
+	\bibitem[Gartner]{30}\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb}
+ 	\bibitem[Git]{31}\url{http://git-scm.com/book}
+	\bibitem[gsutil]{32}\url{https://cloud.google.com/storage/docs/gsutil}	
+	\bibitem[IEEE]{33}\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}
+	\bibitem[NistCc]{34}\url{http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf}, S. 2ff.
+	\bibitem[BsiCc]{35}\url{https://www.bsi.bund.de/DE/Themen/CloudComputing/Grundlagen/Grundlagen_node.html}
+	\bibitem[CsaCc]{36}\url{https://cloudsecurityalliance.org/guidance/csaguide.v3.0.pdf}
+	\bibitem[HmdCc]{37}\url{http://link.springer.com/article/10.1007/BF03340515#},  S.77
+	\bibitem[Winkler]{38} [Winkler – Securing the Cloud]
+	
+\end{thebibliography}
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Anhang
+% ----------------------------------------------------------------------------------------------------------
+\pagenumbering{Roman}
+\setcounter{page}{1}
+\lhead{Anhang \thesection}
+
+\begin{appendix}
+\section*{Anhang}
+\phantomsection
+\addcontentsline{toc}{section}{Anhang}
+\addtocontents{toc}{\vspace{-0.5em}}
+\section{Programmcode}
+Reiner Programmcode
+\pagebreak
+\section{Dokumentation}
+\subsection{Codedokumentation}
+Ausführliche Dokumentation des Programmcodes zur Verständlichkeit und für die Möglichkeit der Projektfortsetzung
+\subsection{UML}
+UML-Diagramm zur technischen Lösung
+\pagebreak
 
 \subsection{Installationsanleitung}
 Detaillierte Beschreibung zum Einsatz auf "Fremdsystemen"
