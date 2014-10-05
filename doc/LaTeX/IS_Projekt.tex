@@ -363,7 +363,7 @@ Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung vo
 \textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
 \cite{31}
 
-\subsubsection{Kryptographische Verfahren}\label{KryptV}
+\subsubsection{Kryptographische Verfahren}
 \textbf{AES}\\
 AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-Amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.
 \\\textbf{Funktionsweise}\\ 
@@ -418,17 +418,45 @@ Die UML Diagramme die im Laufe des Projektes entstanden sind befinden sich im Or
 $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.7\linewidth]{UseCase.jpg}
+	\includegraphics[width=0.8\linewidth]{UseCase.jpg}
 	 \captionof{figure}{\small Anwendungsfalldiagramm}
 \end{minipage}
 \vspace{1em}
 
-\textbf{AF-001 Authentifizierung:}
+\textbf{AF-001 Nutzer erstellen:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
 		Nummer & AF-001\\
+		\hline
+		Name & Nutzer erstellen\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte sich einen Benutzer anlegen\\
+		\hline
+		Vorbedingung & Programm zeigte den Login-Dialog, Anwender hat \\ &  Create ausgewählt\\
+		\hline
+		Nachbedingung/Ziel & Ein neuer Benutzer wurde angelegt \\
+		\hline
+		Nachbedingung im Sonderfall & Es wurde kein Benutzer erstellt \\ & Erneute Aufforderung zur Dateneingabe\\
+		\hline
+		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender wählt Create im Login-Fenster\\ & 3. Anwender gibt Benutzername ein \\ & 4. Anwender gibt Passwort ein \\ & 5. Anwender bestätigt das Passwort durch zweite\\ &Eingabe\\& 6. Benutzer wurde angelegt\\& 7. Login-Fenster wird angezeigt \\
+		\hline
+		Sonderfälle & 3a. Anwender gibt nicht erlaubten Benutzernamen ein \\ & 4a. Anwender gibt nicht erlaubtes Passwort ein \\& 5a. Anwender gibt nicht das identische Passwort ein\\& 6a. Benutzer konnte nicht angelegt werden \\& 7a. Create-Fenster wird erneut angezeigt\\
+		\hline
+	\end{tabular}
+	\caption{AF-001 Nutzer erstellen}
+	\label{tab:AF-001 Nutzer erstellen}
+\end{table}
+
+\textbf{AF-002 Authentifizierung:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-002\\
 		\hline
 		Name & Authentifizierung\\
 		\hline
@@ -442,22 +470,22 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Zugriff verweigtert\\ & Erneute Aufforderung zur Anmeldung\\
 		\hline
-		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender gibt Benutzername ein \\ & 3. Anwender gibt Passwort ein \\ & 4. Zugangsdaten werden überprüft \\ & 5. 				Dateiübersicht wird angezeigt \\
+		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender gibt Benutzername ein \\ & 3. Anwender gibt Passwort ein \\ & 4. Anwender gibt Bucket an \\ &5. Zugangsdaten werden überprüft \\ & 6. Dateiübersicht wird angezeigt \\
 		\hline
-		Sonderfälle & 2a. Anwender gibt falschen oder keinen \\ & Benutzernamen ein \\ & 3a. Anwender gibt falsches oder kein Passwort ein \\ & 4a. Erneutes Laden der Loginmaske\\
+		Sonderfälle & 2a. Anwender gibt falschen Benutzernamen ein \\ & 3a. Anwender gibt falsches Passwort ein \\& 4a. Anwender gibt nicht gestatteten Bucketnamen an\\ & 5a. Erneutes Laden der Loginmaske\\
 		\hline
 	\end{tabular}
-	\caption{AF-001 Authentifizierung}
-	\label{tab:AF-001 Authentifizierung}
+	\caption{AF-002 Authentifizierung}
+	\label{tab:AF-002 Authentifizierung}
 \end{table}
 \pagebreak
 
-\textbf{AF-002 Dateiupload:}
+\textbf{AF-003 Dateiupload:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
-		Nummer & AF-002\\
+		Nummer & AF-003\\
 		\hline
 		Name & Dateiupload\\
 		\hline
@@ -471,22 +499,22 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht abgelegt werden\\
 		\hline
-		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene Dateisystem \\ & zum 				Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Doppelklick der linken Maustaste oder Auswählen \\ & der Datei und Bestätigung                  mit ''Öffnen'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
+		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene  Datei- \\ & system zum Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Auswählen der Datei und Bestätigung mit ''Öffnen'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
 		\hline
-		Sonderfälle & 5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
+		Sonderfälle & 3a. Dateisystem wird nicht unterstützt \\& 5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
 		\hline
 	\end{tabular}
-	\caption{AF-002 Dateiupload}
-	\label{tab:AF-002 Dateiupload}
+	\caption{AF-003 Dateiupload}
+	\label{tab:AF-003 Dateiupload}
 \end{table}
 \pagebreak
 
-\textbf{AF-003 Dateidownload:}
+\textbf{AF-004 Dateidownload:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
-		Nummer & AF-003\\
+		Nummer & AF-004\\
 		\hline
 		Name & Dateidownload\\
 		\hline
@@ -500,21 +528,21 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht heruntergeladen werden \\ & Datei wird nicht entschlüsselt\\
 		\hline
-		Normalablauf & 1. Anwender wählt in der Dateiübersicht die \\ & entsprechende Datei aus \\ & 2. Anwender wählt das Menü ''File'' aus \\ & 3. Anwender wählt im Untermenü ''Download'' \\ & 4. Anwender bewegt sich durch das eigene Dateisystem \\ & zum Speicherpfad der zu herunterladenden Datei \\ & 5. Anwender initialisiert durch ''Speichern'' \\ & den Dateidownload \\  & 6. Datei wird heruntergeladen \\ & 7. Datei wird entschlüsselt \\
+		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Download'' \\  & 4. Datei wird heruntergeladen \\ & 5. Datei wird entschlüsselt \\
 		\hline
-		Sonderfälle & 6a. Datei kann nicht heruntergeladen werden \\ & 7a. Datei wird nicht entschlüsselt\\
+		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\& 4a. Datei kann nicht heruntergeladen werden \\ & 5a. Datei wird nicht entschlüsselt\\
 		\hline
 	\end{tabular}
-	\caption{AF-003 Dateidownload}
-	\label{tab:AF-003 Dateidownload}
+	\caption{AF-004 Dateidownload}
+	\label{tab:AF-004 Dateidownload}
 \end{table}
 
-\textbf{AF-004 Datei l\"oschen:}
+\textbf{AF-005 Datei l\"oschen:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
-		Nummer & AF-004\\
+		Nummer & AF-005\\
 		\hline
 		Name & Datei löschen\\
 		\hline
@@ -528,13 +556,13 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht gelöscht werden \\
 		\hline
-		Normalablauf & X\\
+		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Delete from \\&cloud'' \\  & 4. Datei wird aus der Cloud gelöscht \\ & 5. Dateieintrag in der Übersicht wird entfernt \\& Schlüssel wird entfernt \\
 		\hline
-		Sonderfälle & X \\
+		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\& 4a. Datei kann nicht aus der Cloud gelöscht werden \\ & 5a. Dateieintrag in der Übersicht wird nicht entfernt\\& Schlüssel wird nicht entfernt\\
 		\hline
 	\end{tabular}
-	\caption{AF-004 Datei löschen}
-	\label{tab:AF-004 Datei loeschen}
+	\caption{AF-005 Datei löschen}
+	\label{tab:AF-005 Datei loeschen}
 \end{table}
 \pagebreak
 
@@ -553,6 +581,7 @@ GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die
 \end{compactitem}
 
 \subsection{Kryptosystem}
+<<<<<<< HEAD
 Die Verschlüsselung und das Accountmanagement basieren zurzeit ausschließlich auf den Algorithmen AES128 im CTR Modus und SHA256. Eine asymmetrische Verschlüsselung wurde in Betracht gezogen, hat aber unter der Annahme, dass der Client auf dem die Applikation läuft, als sichere Umgebung gilt. In einer späteren Weiterentwicklung ist es aber durchaus sinnvoll dies in betracht zu ziehen. Vor allem dann, wenn ein Server das Dateisystem bzw. dessen Synchronität verwalten soll, oder mehrere kaskadierte Verschlüsselungsebenen geschaffen werden sollen, um eine erweiterte Rechteverwaltung zu schaffen. Die Beschreibung der Sicherungsverfahren wird im Folgenden in der Reihenfolge, in der sie von einem Benutzer ausgelöst werden, beschrieben.
 \\\\\textbf{Account anlegen}\\
 Wird die Applikation zum ersten mal gestartet, stellt sie also fest, dass bisher keine Benutzer im System registriert sind, schafft sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem schlißen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Nutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. "Salt". Danach wird der Benutzername im Klartext in die Datei HOME/SecuCloud/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Danach berechnet das Programm einen SHA256 Hashwert über ein Byte array bestehend aus dem Salt und dem Passwort. Dieser Hash, sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf die selbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten des einen Nutzers enden und die des nächsten beginnen.
@@ -564,6 +593,9 @@ Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud s
 Wird die CLOSE Schaltfläche des MainWindow betätigt oder das rote X in der Ecke des Programmfensters, werden zunächst alle laufenden Verschlüsselungs- und Uploadprozesse beendet. Danach werden alle gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Byte Array wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/SecuCloud/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Key Länge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet aktuell, es wird sooft hinter einander gehängt, bis 16 Byte übertroffen werden und eventuel überflüssige Zeichen wieder abgeschnitten. Aus diesem Grund kohnt es sich ein ausreichend langes Passwort zu wählen.
 \\\\\textbf{Programmstart mit vorhandener state.cfg}\\
 Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und ensprechen Informationen zu diesen abgelegt wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die setttings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es möglich in Zukunft die state.cfg selbst auch in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden (etwa mitgeführt auf einem USB Stick), ohne die Informationen im Nutzerverzeichnis zu benötigen.
+=======
+Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit
+>>>>>>> LaTeX_documentation_holzi
 
 \subsection{GUI und Funktionalitäten}
 Nachfolgend wird die Oberfläche sowie die Funktionalität des Prototyps beschrieben.
