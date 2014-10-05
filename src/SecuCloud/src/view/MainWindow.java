@@ -42,7 +42,6 @@ public class MainWindow extends javax.swing.JFrame {
 	private JMenuItem entryFileSelect;
 	private JMenuItem entryFileClose;
 	private JMenuItem entryHelpHelp;
-	private JMenuItem entryHelpInfo;
 	private JMenuItem entryHelpAbout;
 	private JMenuItem deleteEntry;
 	private JMenuItem downloadEntry;
@@ -90,7 +89,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 	private void initComponents() {
 		Object rowData[][] = this.initTable();
-		Object columnNames[] = { "Name", "DataKey", "Uploaded"};
+		Object columnNames[] = { "Name", "DataKey", "Uploaded" };
 		nonEditableJTable = new NonEditableJTable(rowData, columnNames);
 		table = new JTable(nonEditableJTable);
 
@@ -125,12 +124,11 @@ public class MainWindow extends javax.swing.JFrame {
 		scrollPane = new JScrollPane(table);
 
 		titleFile = new JMenu("File");
-		titleHelp = new JMenu("About");
+		titleHelp = new JMenu("Help");
 
 		entryFileSelect = new JMenuItem("Select");
 		entryFileClose = new JMenuItem("Close");
 		entryHelpHelp = new JMenuItem("Help");
-		entryHelpInfo = new JMenuItem("Info");
 		entryHelpAbout = new JMenuItem("About");
 
 		entryFileSelect.addActionListener(new ActionListener() {
@@ -166,10 +164,29 @@ public class MainWindow extends javax.swing.JFrame {
 			}
 		});
 
+		this.entryHelpAbout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ac) {
+				try {
+					Main.getInstance().toggle_MainWindow_about();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		this.entryHelpHelp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ac) {
+				try {
+					Main.getInstance().toggle_MainWindow_help();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 		this.titleFile.add(entryFileSelect);
 		this.titleFile.add(entryFileClose);
 		this.titleHelp.add(entryHelpHelp);
-		this.titleHelp.add(entryHelpInfo);
 		this.titleHelp.add(entryHelpAbout);
 
 		this.menuBar.add(titleFile);

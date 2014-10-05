@@ -1,0 +1,26 @@
+Loginsystem/Loginserver (Serverseitige Rechteverwaltung, Providingserver)
+Filelist verschlüsselt in Cloud ablegen (state.cfg)
+MasterKey Wiederherstellung (shared secret)
+Buckets erstellen
+Dateien zwischen Buckets verschieben
+Traffic-Überwachung einzelner Clients
+Gsutil autoconfig
+(py2exe und Jsmooth/jar2exe für Windows)
+Kaskadierte Verschlüsselung (Backup-Versionskontrolle)
+OpenJDK/OpenSource JDK
+Virtuelles Laufwerk
+
+Design:
+MultiRow-Funktionalität
+(Right-Click Fix + Recently Used Fix)
+Multi-Bucket + Drag&Drop
+
+ToDo:
+Logfiles
+Codekorrekturen (Systemname etc.)
+About+Help Window
+DoxyGen/JavaDocs Codekommentierung
+
+ToDo-Theorie:
+Funktionsweise IaaS
+Notwendigkeit von Cloud

@@ -1,0 +1,669 @@
+\documentclass[12pt,a4paper,bibliography=totocnumbered,listof=totocnumbered]{scrartcl}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage[right]{eurosym}
+\usepackage[printonlyused]{acronym}
+\usepackage{subfig}
+\usepackage{floatflt}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\usepackage{paralist}
+\usepackage{array}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage[right]{eurosym}
+\usepackage{picins}
+\usepackage[subfigure,titles]{tocloft}
+\usepackage[pdfpagelabels=true]{hyperref}
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize, captionpos=b, breaklines=true, showstringspaces=false, tabsize=2, frame=lines, numbers=left, numberstyle=\tiny, xleftmargin=2em, framexleftmargin=2em}
+\makeatletter
+\def\l@lstlisting#1#2{\@dottedtocline{1}{0em}{1em}{\hspace{1,5em} Lst. #1}{#2}}
+\makeatother
+
+\geometry{a4paper, top=27mm, left=30mm, right=20mm, bottom=35mm, headsep=10mm, footskip=12mm}
+
+\hypersetup{unicode=false, pdftoolbar=true, pdfmenubar=true, pdffitwindow=false, pdfstartview={FitH},
+	pdftitle={IS-Projekt},
+	pdfauthor={Michael Holzwarth, Felix Friedrich},
+	pdfsubject={Symmetrische Software-Kryptographie IaaS},
+	pdfcreator={\LaTeX\ with package \flqq hyperref\frqq},
+	pdfproducer={pdfTeX \the\pdftexversion.\pdftexrevision},
+	pdfkeywords={Symmetrische Software-Kryptographie, sichere Nutzung, Storage-Services, IaaS, Konzept, Prototyp},
+	pdfnewwindow=true,
+	colorlinks=true,linkcolor=black,citecolor=black,filecolor=magenta,urlcolor=black}
+\pdfinfo{/CreationDate (D:20141007)}
+
+
+\begin{document}
+
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+
+% Kopf- und Fusszeile
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\leftmark}{\rightmark}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{\thesection\space\contentsname}
+\lfoot{IS-Projekt}
+\cfoot{}
+\rfoot{Seite \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Vorspann
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\theHsection}{\Roman{section}}
+\pagenumbering{Roman}
+
+% ----------------------------------------------------------------------------------------------------------
+% Titelseite
+% ----------------------------------------------------------------------------------------------------------
+\thispagestyle{empty}
+\begin{center}
+	\includegraphics[scale=1]{hs_aa.png}\\
+	\vspace*{2cm}
+	\Large
+	\textbf{Fakultät}\\
+	\textbf{Elektronik und Informatik}\\
+	\vspace*{2cm}
+	\large
+	\textbf{57640 IS-Projekt}\\
+	\vspace*{0.5cm}
+	\large
+	Projektarbeit\\
+	über das Thema\\
+	\vspace*{1cm}
+	\Huge
+	\textbf{Symmetrische Software-Kryptographie zur sicheren Nutzung von Storage-Services (IaaS)\vspace*{1cm} Konzept und Prototyp}\\
+
+	\vspace*{2cm}
+	
+	\vfill
+	\normalsize
+	\newcolumntype{x}[1]{>{\raggedleft\arraybackslash\hspace{0pt}}p{#1}}
+	\begin{tabular}{x{6cm}p{7.5cm}}
+		\rule{0mm}{5ex}\textbf{Autoren:} & Michael Holzwarth\newline 35429\newline Felix Friedrich\newline 34648 \\ 
+		\rule{0mm}{5ex}\textbf{Betreuender Prof.:} & Prof. Dr. Christian Koot \\ 
+		\rule{0mm}{5ex}\textbf{Abgabedatum:} & 07.10.2014 \\ 
+	\end{tabular} 
+\end{center}
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Abstract
+% ----------------------------------------------------------------------------------------------------------
+\setcounter{page}{1}
+\doublespacing
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{2pt plus 2pt minus 2pt}
+\rhead{KURZFASSUNG}
+\section{Kurzfassung}
+Erfolgt am Ende der Ausarbeitung
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Verzeichnisse
+% ----------------------------------------------------------------------------------------------------------
+% TODO Typ vor Nummer
+\renewcommand{\cfttabpresnum}{Tab. }
+\renewcommand{\cftfigpresnum}{Abb. }
+\settowidth{\cfttabnumwidth}{Abb. 10\quad}
+\settowidth{\cftfignumwidth}{Abb. 10\quad}
+
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{2pt plus 2pt minus 2pt}
+\singlespacing
+\rhead{INHALTSVERZEICHNIS}
+\renewcommand{\contentsname}{II Inhaltsverzeichnis}
+\phantomsection
+\addcontentsline{toc}{section}{\texorpdfstring{II \hspace{0.35em}Inhaltsverzeichnis}{Inhaltsverzeichnis}}
+\addtocounter{section}{1}
+\tableofcontents
+\pagebreak
+\rhead{VERZEICHNISSE}
+\listoffigures
+\listoftables
+\renewcommand{\lstlistlistingname}{Listing-Verzeichnis}
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Inhalt
+% ----------------------------------------------------------------------------------------------------------
+% Abstände Überschrift
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+\titlespacing{\subsection}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+\titlespacing{\subsubsection}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+
+% Kopfzeile
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\subsectionmark}[1]{}
+\renewcommand{\subsubsectionmark}[1]{}
+\lhead{Kapitel \thesection}
+\rhead{\rightmark}
+
+\doublespacing
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\theHsection}{\arabic{section}}
+\setcounter{section}{0}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ----------------------------------------------------------------------------------------------------------
+% Einleitung
+% ----------------------------------------------------------------------------------------------------------
+\section{Einleitung}
+\subsection{Motivation}
+Unternehmensdaten müssen aus Gründen der Einhaltung gesetzlicher Vorschriften oder des Unternehmensgeheimnisses vertraulich behandelt und geschützt werden. Die gleiche Sicherheit wie bei der internen Datenhaltung muss auch in ausgelagerten Systemen, der Cloud, mit derselben Sorgfalt gewährleistet sein. Eine Auslagerung der Daten hebt nicht die sicherheitsspezifischen Anforderungen an Vertraulichkeit und Datenschutz auf. Eine große Herausforderung stellt hierbei der Verlust über die absolute Kontrolle der Daten und damit einhergehend die Komplexität des Schutzes dar.
+
+Cloud-Anbieter verfügen über verschiedene Sicherheitsmechanismen zum Schutz vor unbefugtem Datenzugriff von außerhalb. Es existiert jedoch kein garantierter Schutz vor unbefugtem Zugriff innerhalb des Anbieters. Administratoren und weiteres, über die Infrastruktur berechtigtes, Personal besitzen die Möglichkeit auf gespeicherte Daten zuzugreifen.
+
+Dies macht eine verschlüsselte Ablage der Daten notwendig um sicherzustellen, dass die Daten auch innerhalb der Cloud in vollem Umfang den Sicherheitsstandards entsprechen.
+
+\subsection{Problemstellung und Problemabgrenzung}
+
+\subsubsection{Annahmen}
+Der Client und dessen Zugang zur Cloud wird, nach Vorgabe, als sicher angesehen.
+\subsubsection{Problemstellung}
+Eine symmetrische Software-Kryptographie soll möglichst Daten, die in eine Cloud ausgelagert werden,  vor Fremdzugriff schützen. Die Konzeption und der Entwurf eines Prototyps sollen evaluieren, wie diese Herausforderung effizient und sicher gelöst werden kann. Dabei steht der betriebssystemunabhängige Zugriff auf die entsprechende Anwendung und das eingesetzte Verschlüsselungsverfahren im Vordergrund. Erarbeitet werden soll die Implementierung für einen einzelnen Cloud-Anbieter. 
+
+Zu den Grundfunktionalitäten des geforderten Prototyps gehören der Cloud-Zugriff, die Verschlüsselung, die Speicherung in der Cloud, eine Dateiübersicht und das lokale Herunterladen der Daten.
+
+Die Verwendung soll durch eine grafische Oberfläche vereinfacht werden.
+
+\subsubsection{Problemabgrenzung}
+Eine Gegenüberstellung weiterer kommerzieller Produkte von Cloud-Anbietern im Bezug auf Implementierung und Performance wird in dieser Arbeit nicht behandelt. Ebenso ist eine Optimierung vorhandener APIs bzw. Schnittstellen und Kryptosystemen nicht Gegenstand dieser Arbeit. Die Hardware des Anwenders wird als sicher betrachtet, weswegen es keinem sicheres Schlüsselmanagement bedarf.
+
+\subsection{Ziel der Arbeit}
+Ziel der Projektarbeit ist es primär eine Anwendung zu entwickeln, die ein aus IT-Sicherheits-Gesichtpunkten sicheres, symmetrisch verschlüsseltes Ablegen von Daten in einer als unsicher geltenden Cloud-Umgebung ermöglicht. Desweiteren wird der Dienstleistungsvorteil sowie das Alleinstellungsmerkmal für Vertiebsintermediäre, durch das zusätzliche Angebot einer solchen Anwendung, betrachtet. Ein weiterer Aspekt ist die Herausarbeitung von Datenschutzproblematiken im Cloud Computing Segment.
+
+\subsection{Gang der Arbeit}
+Kurze Beschreibung der Kapitel - Erfolgt am Ende der Ausarbeitung
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Methoden
+% ----------------------------------------------------------------------------------------------------------
+\section{Methoden}
+\subsection{Grundlagen Cloud Computing}
+\subsubsection{Definition}
+Definition von Cloud Computing nach dem National Institute of Standards and Technology (NIST) und der European Network and Information Security Agency (ENISA) \cite{34}:
+
+''Cloud Computing ist ein Modell, das es erlaubt bei Bedarf, jederzeit und überall bequem über ein Netz auf einen geteilten Pool von konfigurierbaren Rechnerressourcen (z. B. Netze, Server, Speichersysteme, Anwendungen und Dienste) zuzugreifen, die schnell und mit minimalem Managementaufwand oder geringer Serviceprovider-Interaktion zur Verfügung gestellt werden können.''
+
+Definition von Cloud Computing nach dem Bundesamt für Sicherheit in der Informationstechnik (BSI) \cite{35}:
+
+"Cloud Computing bezeichnet das dynamisch an den Bedarf angepasste Anbieten, Nutzen und Abrechnen von IT-Dienstleistungen über ein Netz. Angebot und Nutzung dieser Dienstleistungen erfolgen dabei ausschließlich über definierte technische Schnittstellen und Protokolle. Die Spannbreite der im Rahmen von Cloud Computing angebotenen Dienstleistungen umfasst das komplette Spektrum der Informationstechnik und beinhaltet unter anderem Infrastruktur (z. B. Rechenleistung, Speicherplatz), Plattformen und Software."
+
+\subsubsection{Notwendigkeit}
+\cite{33}
+
+\subsubsection{Charakteristik}
+Nach NIST \cite{34} können Cloud Services in fünf Eigenschaften unterschieden werden:
+\begin{compactitem}
+	\item On-demand Self Service: Keine Interaktion mit dem Cloud Service Provider (CSP)
+	\item Broad Network Access: Ein Zugriff ist nicht an zusätzliche Software gebunden.
+	\item Resource Pooling: Ressourcen des CSP sind gebündelt und allen gleichermaßen zugänglich, eine vertragliche Bindung für einen Speicherort ist jedoch möglich
+	\item Rapid Elasticity: Flexible Erweiterungen der Services
+	\item Measured Services: Ressourcennutzung wird gemessen und überwacht
+\end{compactitem}
+
+Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) \cite{36} um nachfolgende Punkte erweitert:
+\begin{compactitem}
+	\item Mandantenähigkeit: Ressourcen werden geteilt, Unterscheidung der Mandanten notwendig
+	\item Pay per Use: Nur tatsächlich verwendete Ressourcen müssen bezahl werden
+	\item Service orientierte Architektur: Grundvoraussetzung für Cloud Computing
+\end{compactitem}
+
+\subsubsection{Servicemodelle}
+Cloud Computing kann auf Grundlage des Dienstleistungsangebotes in drei Kategorien bzw. Geschäftsmodelle \cite{34} eingeteilt werden.
+
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=1.0\linewidth]{IaaS_Modelle.png}
+	 \captionof{figure}{\small IaaS Modelle \href{http://office.microsoft.com/de-de/business/was-ist-office-365-fur-unternehmen-FX102997580.aspx}{\cite{37}}}
+\end{minipage}
+\vspace{1em}
+
+\begin{compactitem}
+\item Software as a Service (SaaS):\\
+Software, die über eine Cloud-Infrastruktur angeboten wird. Die Bereitstellung, Betreuung und der Betrieb erfolgt gänzlich durch den Anbieter. Eine Abrechnung erfolgt je Softwareaufruf, was den Erwerb der üblichen Software-Lizenz ersetzt. Beispiele hierfür sind \href{http://www.google.com/enterprise/apps/business/}{\textit{Google Apps}} oder \href{http://office.microsoft.com/de-de/business/was-ist-office-365-fur-unternehmen-FX102997580.aspx}{\textit{Microsoft Office 365}}.
+\item Plattform as a Service (PaaS):\\
+Der Anbieter stellt eine verwaltete Cloud-Infrastruktur zur Verfügung, worauf eigene Software bereitgestellt werden kann. Der Kunde erhält zudem eine integrierte Entwicklungs- und Laufzeitumgebung. Eine Abrechnung erfolgt nutzungsabhängig. Zu den Vertretern von PaaS gehören beispielsweise \href{https://cloud.google.com/appengine/}{\textit{Google App Engine}} oder \href{http://azure.microsoft.com/de-de/}{\textit{Microsoft Azure}}.
+\item Infrastructure as a Service (IaaS):\\
+Reine, bedarfsgerechte Nutzung der Rechnerinfrastruktur des Anbieters. Der Anwender muss alles außer der virtuellen Infrastruktur selbst verwalten. Dies bedeutet zwar einen Mehraufwand, bietet aber gleichzeitig eine größtmögliche Flexibilität. Bekannte Anbieter sind \href{https://cloud.google.com/storage/}{\textit{Google Cloud Storage}} oder Amazon Webservices (AWS) mit \href{http://aws.amazon.com/de/}{\textit{Amazon S3 oder Amazon EC2}}.
+\end{compactitem}
+
+Im Rahmen dieser Projektarbeit bezieht sich das Konzept auf Infrastructure as a Service (IaaS), worauf nachfolgend im Näheren eingegangen wird.
+
+\subsubsection{IaaS-Typen}
+\begin{compactitem}
+\item Public IaaS Cloud:\\
+Cloud Computing Services für die breite Öffentlichkeit - je Server mehrere unabhängige Nutzer.
+\item Private IaaS Cloud:\\
+Cloud Computing Services für Unternehmen - je Server ein Unternehmen.
+\item Hybrid IaaS Cloud:\\
+Cloud Computing Services für Unternehmen - physikalische Server je nach Anwendungsgebiet entweder Public oder Private.
+\item Community Cloud:\\
+Cloud Computing Services für Unternehmen - Zusammenschluss von Interessensgemeinschaften/Institutionen zur gemeinsamen Nutzung.
+\item Personal IaaS Cloud:\\
+Cloud Computing Service durch den Anwender selbst.
+\end{compactitem}
+\pagebreak
+
+\subsubsection{Funktionsweise IaaS}
+
+\subsubsection{Allgemeine Sicherheitskriterien für IaaS}
+\begin{compactitem}
+\item Sicherheitsrichtlinien:\\
+Jede sicherheitsbewusste Organisation betrachtet und prüft sorgfältig die Einhaltung von Sicherheitsrichtlinien. Die Qualität der Sicherheitspolitik eines IaaS-Anbieters ist ein Indikator dafür, wie dieser für die Verantwortung der Sicherheit einsteht.
+\item Unabhängige Sicherheitsbeauftragte:\\
+Sicherheitsbeauftragte sollten unabhängig berichten, aber in enger Zusammenarbeit mit technischem Personal des Cloud-Anbieters stehen. Die Verantwortung des Sicherheitspersonals besteht darin, die ständige Sicherheit des Dienstes zu gewährleisten.
+\item Upgrades und Patches:\\
+Upgrades und Patches sollten in einer zeitgemäßen und sicheren Form umgesetzt werden um Lücken vor der Enthüllung zu beheben und das Sicherheitsniveau stets aufrecht zu erhalten.
+\item Untersuchungen:\\
+Der Cloud-Anbieter muss regelmäßig Schwachstellenanalysen durchführen und die Infrastruktur nach Auffälligkeiten untersuchen. Alle Funde müssen auf die möglichen Auswirkungen hin bewertet und zeitnah behoben werden.
+\item Forensik:\\
+Sicherheitsrelevante Protokolle müssen lang genug beibehalten werden, um die Verfügbarkeit für forensische und gesetzliche Anforderungen zu erfüllen. Solche Protokolle tragen zur Ermittlung bei, wie ein Zwischenfall aufgetreten ist und welche Auswirkungen dieser hat.
+\item Vorfall-Management:\\
+Das Management eines Vorfalls und dessen Gegenmaßnahmen sollte darauf ausgelegt sein, den Umfang zu dokumentieren und für den Kunden transparent zu halten. Für den Kunden eines Cloud-Anbieters sind hierbei die Rahmenwerte der Reaktion (Erkennung, Offenlegung, Behebung und Prüfung) für eine weitere Kooperation notwendig.
+\item Geschäftskontinuität:\\
+RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust, welche nach einem entsprechenden Vorfall akzeptabel ist. Ausgedrückt wird dies zusätzlich in Zeit, der Zeit zwischen entsprechendem Verlust und Rückführung zur letzten zuverlässigen Sicherung. RTO (engl. Recovery Time Objective) definiert die Höchstzeitdauer, die für die Wiederherstellung und vollständigen Zugriff auf die Daten akzeptabel ist.
+\end{compactitem}
+\cite{38}
+
+\subsection{Technische Analyse/Umsetzung}
+
+\subsubsection{Cloud-Anbieter}
+Der Markt für Cloud Computing in Form von IaaS befindet sich in einem stetigen Wandel und einer raschen Weiterentwicklung. Aus diesem Grund muss die Wahl des Anbieters sehr sorgfältig und unter Betrachtung aller Gesichtspunkte getroffen werden. Die aktuelle Studie "Magic Quadrant for Cloud Infrastructure as a Service" von Gartner \cite{30} vergleicht die Vorzüge und Nachteile der derzeit angebotenen Produkte unter Betrachtung aller gängigen Anwendungsfälle von IaaS. Hierzu gehören beispielsweise:
+\begin{compactitem}
+	\item Entwicklung und Testverfahren
+	\item Produktionsumfeld (inkl. geschäftskritischer Aufgaben interner und kundenorientierter Anwendungen)
+	\item Automatisierung
+	\item Wiederherstellung im Sonderfall
+	\item Einzelanwendungsfälle und virtuelle Rechenzentren
+	\item Entwurfsmuster für native Cloud Anwendungen und Unternehmensanwendungen
+\end{compactitem}
+
+\textbf{Magisches Quadrat}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Gartner_Magic_Square.png}
+	 \captionof{figure}{\small Magisches Quadrat}
+\end{minipage}
+\vspace{1em}
+
+\begin{compactitem}
+\item{Marktführer (Leaders):}
+\\Der Marktführer-Quadtrant stellt Anbieter dar, die über ein für den strategische Einsatz geeignetes Angebot verfügen und ehrgeizige Ziele verfolgen. Sie sind nicht zwangsläufig der beste Anbieter für spezielle Bedürfnisse und bedienen möglicherweise nicht alle Anwendungsfälle, decken aber ein breites Spektrum davon ab. Marktführer besitzen eine Erfolgsbilanz über erfolgreiche Auslieferung, bedeutende Marktanteile und viele referenzierbare Kunden.
+\item{Herausforderer (Challengers):}
+\\In dieser Studie befindet sich keiner der Anbieter im Herausforderer-Quadrant. Im Allgemeinen sind Herausforderer in der Lage einige Marktanforderungen zu befriedigen. Sie liefern einen guten Service, welcher auf eine bestimmte Menge von Anwendungsfällen ausgerichtet ist und verfügen über eine Erfolgsbilanz über erfolgreiche Auslieferung. Herausforderer können sich jedoch nicht schnell genug an die Nachfrage auf dem Markt anpassen.
+\item{Visionäre (Visionairs):}
+\\Visionäre haben eine ehrgeizige Vision von der Zukunft und tätigen erhebliche Investitionen zur Entwicklung von einzigartigen Technologien. Zu ihnen zählen neue Marktteilnehmer oder bestehende Unternehmen, die in einen neuen Markt vorstoßen möchten. Ihre Dienste befinden sich noch im Entstehungsprozess, sie verfügen jedoch über eine Vielzahl an Möglichkeiten zur Entwicklung. Obwohl sie eventuell viele Kunden besitzen, reicht das aktuelle Produkt nicht aus um ein breites Spektrum von Anwendungsfällen zu bedienen.
+\item{Nischenspieler (Niche Players):}
+\\Nischenspieler sind womöglich ausgezeichnete Anbieter für Anwendungsfälle auf die sie sich spezialisiert haben, können aber bei weitem nicht alle Anwendungsfälle abdecken. Sie können in diesen Markt neu eingetreten sein oder noch nicht über ausreichend signifikante Marktanteile verfügen. Nischenspieler können Marktführer in einem Gebiet abseits von IaaS sein, befinden sich aber zum aktuellen Zeitpunkt für Cloud-IaaS in relativ frühen Stadien. Je speziefischer die Bedürfnisse, desto wahrscheinlicher ist das passende Produkt in diesem Quadranten zu finden.
+\end{compactitem}
+
+\textbf{Entscheidungsgrundlage Cloud-Anbieter}\\
+In Abbildung X ist ersichtlich, dass die Top-Unternehmen Amazon (Amazon Web Services) und Microsoft (Microsoft Infrastructure Services) bei den aktuellen Marktführern einzuordnen sind, während sich Google mit seinem IaaS-Angebot Google Cloud Storage im Quadrant der Visionäre befindet.
+
+Die Strategie der Google Cloud Plattform basiert auf dem Konzept anderen Unternehmen eine Leistungsfähigkeit anzubieten, wie Google sie selbst verwendet. Dies wird durch Nutzung der innovativen internen technischen Möglichkeiten erreicht. Obwohl Google erst im Dezember 2013 in den IaaS-Markt vorgedrungen ist (seit 2008 Google App Engine als PaaS), befindet sich die angebotene Lösung bereits unter den Visionären. Das liegt unter anderem daran, dass sich Google auf seine Fähigkeiten beschränkt, anstatt diese von Grund auf neu zu strukturieren. Daher wird es auf lange Sicht in der Lage sein das Angebot schneller als seine Konkurrenten voranzubringen. Google verfügt über eine umfassende Vision und ausreichend Erfahrung darüber, wie native Cloud-Anwendungen über einen Lebenszyklus hinweg entwickelt und verwaltet werden. Die Vorstellung von fließenden Grenzen zwischen IaaS und PaaS wird Anwendern in absehbarer Zeit einen Kompromiss zwischen Kontrolle und automatisierter Verwaltung bieten. Die gesamte Unternehmung Google verfügt über eine Vielzahl von Rechenzentren, enorme infrastrukturelle Kapazitäten und ein eigenes globales Hochleistungsnetzwerk. Da der IaaS-Zweig Google Compute Engine (GCE) lediglich geringe Mehrkosten für Google darstellt, kann es den Preis trotz hoher Leistungsfähigkeit aggressiv gestalten kann. Dennoch wird sich Google nicht durch den Preis, sondern durch seine Plattform und zusätzliche Verwaltungsfunktionen von den anderen IaaS-Anbietern unterscheiden. Aktuell ist Google Cloud Storage jedoch ein relativ neues Produkt, sodass noch keine operative Erfolgsbilanz gezogen werden kann. Hinzu kommen kleinere Störungen bis zur Freigabe der allgemeinen Verfügbarkeit von GCE. Eine der größten Herausforderungen besteht darin, das Vertrauen der Unternehmen zu gewinnen und den Support auszubauen. Allerdings wird Google bereits heute als künftiger Marktführer für IaaS wahrgenommen, nicht zuletzt wegen der gewohnten Unterstützung durch Software-Unternehmen und Entwickler. Diesen Vorteil konnten wir uns im Rahmen der Projektarbeit zunutze machen und auf Entwicklungsmöglichkeiten von Google, bspw. durch die Verwendung der Schnittstelle gsutil, zurückgreifen. Da das Ziel dieser Arbeit ebenfalls in einem visionären Quadranten einzuordnen wäre, haben wir uns für Google Cloud Storage und gegen Amazon Web Services und Microsoft Infrastructure Services entschieden.
+
+\subsubsection{Java}
+Die Anwendung zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit began eine der ersten plattformunabhängigen Programmiersprachhen zu entwickeln. Sie sollte die Computerwelt revolutionieren indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
+Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt, besteht im Kern aus drei Teilen:
+\begin{compactitem}
+	\item JDK: Java Development Kit
+	\item Java: Die Programmiersprache
+	\item JRE: Java Runtime Environment
+\end{compactitem}
+
+Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
+Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt orientiert. Das besondere an Java sind außerdem eine vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert, und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
+Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der ja Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, können Java Anwendungen auch auf diesem Laufen, solange sie sich strikt an Java und seine Bibliotheken halten.\\
+Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden.\\
+\cite{1}\cite{2}\cite{3}
+
+\subsubsection{Schnittstelle Google Cloud Storage: gsutil}
+\textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei greift gsutil auf die Standardbefehle von Linux zurück, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
+
+\begin{compactitem}
+	\item Auflisten: \textbf{ls}\\
+	gsutil ls [Optionen] gs://\textless Bucket\textgreater
+	\item Kopieren: \textbf{cp}\\
+	Upload: gsutil cp [Optionen] \textless Quellpfad lokaler Datei\textgreater~gs://\textless Bucket\textgreater\\
+	Download:  gsutil cp [Optionen] gs://\textless Bucket\textgreater/\textless Dateiname\textgreater~\textless Zielpfad lokaler Datei\textgreater
+	\item Entfernen: \textbf{rm}\\
+	gsutil rm [Optionen] gs://\textless Bucket\textgreater /\textless Dateiname\textgreater
+\end{compactitem}
+
+Desweiteren verarbeitet gsutil Befehle für das Erstellen und Löschen von Buckets, Verschieben, Umbenennen und Editieren von Objekten sowie zur Rechteverwaltung.
+
+Neben der Schnittstelle gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}.\\
+
+\subsubsection{Eclipse IDE for Java Developers}
+Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch plugins kann die Funktionalität von Enclipse noch erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
+
+\subsubsection{Versionsverwaltung: git}
+\textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
+\cite{31}
+
+\subsubsection{Kryptographische Verfahren}
+\textbf{AES}\\
+AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-Amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.
+\\\textbf{Funktionsweise}\\ 
+Wird ein 16 Byte Block mit dem AES verschlüsselt, wird dieser Block zunächst in eine Tabelle mit vier Zeilen und vier Spalten geschrieben, wobei jedes Feld der Tabelle ein Byte enthält. Nun werden die einzelnen Felder mehrfach mit unterschiedlichen Teilen des erweiterten Schlüssels chiffriert, wobei über die Schlüssellänge k definiert wird, wieviele dieser Verschlüsselungsrunden r es gibt (Fall AES-128: 10 Runden). Aus dem Schlüssel k werden jetzt (r + 1) Rundenschlüsselgeneriert indem k in eine weitere Tabelle mit (im Fall AES-128) vier Zeilen und 44 Spalten eingetragen wird. Nachdem der Schlüssel in die ersten Byte-großen Felder der Tabelle gelegt wurde, werden die restlichen rekursiv nach bestimmten Rotations- und Berechnungsverfahren gefüllt. Nach dieser Vorbereitung werden die Nutzdaten in der ersten Tabelle jetzt in mehreren Runden zunächst mit dem jeweiligen Rundenschlüssel XOR-Verknüpft. Danach werden die einzenen Felder der Tabelle wieder nach festgelegten Prinzipien innerhalb ihrer Spalte nach links verschoben. Links herausfallende Werte werden rechts wieder in die Tabelle eingefügt, es wird also rotiert. Danach werden die einzelnen Werte innerhalb der Spalten nach definierten Verrechnungssystemen (Spaltenwert * [1|2|3] modulo (irreduzibles Polynom) | innerhalb des Glasios-Körpers, anschließend untereinader XOR-Verknüpft) vermischt. Nachdem dieses Verfahren (Verknüpfung mit dem Rundenschlüssel, rotieren der Zeilen, vermischen der Spalten) r-Mal ausgeführt wurde ist die Verschlüsselung abgeschlossen. Die Entschlüsselung durchläuft, wie bei allen symmetrischen Kryptosystemen, exakt die selben Schritte in umgekehrter Reihenfolge.
+\\\cite{4}\cite{5}\\
+\\\textbf{Counter Mode}\\
+Für Blockchiffren wurden im Laufe der Jahre verschiedene sog. Betriebsmodi entwickelt. Ein Betriebsmodus stellt die Art und Weise da in der eine Blockchiffre verwendet wird. Mit der Verwendung von Betriebsmodi ist es unter anderem möglich Blockchiffren   als   Stromchiffren   zu   verwenden,   Nachrichten   mit   mehrfacher   Blocklänge   zu   verschlüsseln   oder selbstsynchronisierende Chiffren zu erzeugen. Einer dieser Betriebsmodi ist der sog. Counter Mode.
+Im Counter Mode wird nicht der Klartext selbst mittels Algorithmus und Schlüssels chiffriert sondern es wird mittels eines (im besten Fall zufällig) gewählten Initialisierungsvektor (Nonce, number only used once) und einem Zähler (Counter) eine Bytefolge in Blocklänge gebildet. Diese wird dann mittels des Schlüssels chiffriert und per XOR Operation mit einem der Blocklänge entsprechen Teil des Klartextes verknüpft. Danach wird der Zähler um eins erhöht und auf die Selbe Weise mit dem Rest der Nachricht fortgefahren. Wichtig zu verstehen ist hierbei, dass der Initialisierungsvektor nicht Teil des Geheimnisses ist (welches ausschließlich der Schlüssel darstellt, siehe Kerckhoffs‘ Prinzip), sondern offen übertragen werden kann. Es dient ausschließlich der Diversifikation gleicher Klartexte und dem Auffüllen einer Blocklänge. Durch den Counter Mode ist es möglich, Blockchiffren als Stromchiffren zu betreiben, da Klartexte beliebiger Länge mit den erzeugten Chiffratbytes bitweise verknüpft werden können. Vorteil bei diesem Modus ist auch, dass Chiffrate im Voraus errechnet werden können, wodurch sich unter Umständen Zeitvorteile ergeben. Fehlerhaft übertragene Bits werden eins zu eins fehlerhaft entschlüsselt, weitere Teile der Nachricht sind nicht betroffen.
+\\\cite{6}\cite{7}\\
+\\\textbf{Kryptographische Hashfunktionen: SHA2-256}\\
+SHA (Secure Hash Algorithm) ist eben so wie der AES eine Standardisierung. In diesem Falle allerdings die Standardisierung eines sicheren Hash Algorithmus. 
+
+Ein sicherer Hash Algorithmus ist in erster Linie eine Hashing Funktion wie jede Andere, also ein Algorithmus, der Prüfsummen auf Eingabewerte beliebiger Länge berechnet. Prüfsummen fanden schon vor der Kryptographie Einsatz in der Informatik, vor allem um die korrekte Übertragung von Daten zu gewährleisten. Ein gutes Beispiel hierfür bietet der CRC (Cyclic Redundancy Check). Wenn aus einem Bitstrom mittels CRC eine Prüfsumme brechnet wurde, kann mittels dieser nach der Übertragung der Daten relativ sicher festgestellt werden, ob alle Daten korrekt übertragen wurden, da der CRC Wert sich durch kleinste Veränderungen im Bitstrom stark verändert. Im Falle der kryptogephischen Hash Funktion ist diese Eigenschaft eben so wichtig, allerdings kommen  in diesem Umfeld weitere Anforderungen hinzu: Eine kryptographische Hash Funktion sollte eine Einwegfunktion sein. Das bedeutet, dass es nicht möglich sein darf, aus einem Berechneten Hashwert die Ursprüglichen Daten zu berechnen. Die meißten Hash Funktionen stellen dies sicher, indem der Hashwert kürzer als die Eingabedaten ist. Durch diese Kompression ist es nicht mehr möglich die ursprünglichen Daten zu ermitteln. Eine weitere Anforderung ist, dass eine kryptographische Hashfunktion kollisionsresistent ist. Bei einer kollisionsresistenten Hashfunktion ist es nicht möglich in effektiver Zeit einen zweiten Datenstrom zu berechnen, der den selben Hashwert erzeugt wie den, den man schon besitzt. Aus dieser Anforderung ergibt sich auch, dass es nicht möglich ist einen Datenstrom derart zu bearbeiten, dass er einen gewünschten Hash produziert. Diese Anforderungen erfüllt CRC garnicht, dafür aber kryptographische Hashfunktionen wie die in SHA standardisierten. Dafür sind sie meißt deutlich komplexer (rechenintensiver) und die erzeugten Hashes sind länger. Der eigentliche Sinn und Zweck von kryptographischen Hashfunktionen liegt vor allem in zwei Anwndungsfällen:
+\\\textbf{Sicherstellung von Integrität}\\
+Um die Integrität eines Übertragenen Bitstroms zu garantieren, kann der Hashwert zusätzlich sicher mit übertragen werden (überlicherweise asymmetrisch verschlüsselt). Nach dem erhalt der Nachricht, kann der Empfänger anhand des Hashes überprüfen ob sie unverändert übertragen wurde. Hier liegt auch der Grund der Kollisionssicherheit: Es ist nicht effektiv möglich eine neue sinnvolle Nachricht mit einem manipulierten Inhalt zu erzeugen, die den selben Hash aufweist.
+\\\textbf{Beweis: Geheimnisbesitz}\\
+Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, vertraut aber der Übertragung nicht und möchte es daher nicht preisgeben, kann sie einen sog. Salt (Eng. Salz, von versalzen) erzeugen, und diesen mit dem Geheimniss zusammen hashen. Dieser Hash inklusive des Salt wird verschickt und der Empfänger kann seinerseits das Geheimnis und den Salt hashen. Ist der anderen Person das Geheimnis bekannt, müssen die Hashes sich gleichen. Der Salt dient in diesem Fall, um sicher zu stellen, dass ein eventueller Angreifer den Hash des reinen Passwortes nicht aufzeichnen kann und sich mit dem Besitz des Hashes als kenner des Geheimnisses ausgibt. Außerdem verhindert der Salt, dass Passwortlisten (sog. Rainbowtables) von gehashten Geheimnissen (in diesem Fall : Passwörtern) vorrausberechnet und sie mit gestohlenen Hashes abgeglichen werden können. Dieses Verfahren wird zum Beispiel verwendet, wenn Server Passwörter für den Login speichern. So müssen sie die Passwörter nicht im Klartext speichern, und der Schaden bei einem Einbruch kann minimiert werden. 
+
+SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht.
+\\\cite{8}\cite{9}\cite{10}\\
+
+\textbf{RSA}\\
+\pagebreak
+
+
+
+% ----------------------------------------------------------------------------------------------------------
+% Ergebnisse
+% ----------------------------------------------------------------------------------------------------------
+\section{Ergebnisse}
+Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
+\subsubsection{Architektur}
+Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Pattern angelehnt ist. Es unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (Pakete, die in anderen enthalten sind).
+
+\begin{compactitem}
+	\item control:\\
+	Das package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Nutzerverwaltung und Koordination der Datei-Informationen.
+	\item control.util:\\
+	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur Speicherung von Informationen notwendig sind. Alle Methoden von 	diesen Klassen sind statisch und können zu jeder Zeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen sowie Hilfsfunktionen zur Umwandlung von Werten.  Außerdem liegt hier die Klasse 				ThreaderInstanceCreator, die dafür sorgt, dass die langsamen Verschlüsselungs- und Uploadprozesse in einen eigenen Thread ausgelagert werden und den weiteren Programmablauf nicht behindern.
+	\item model:\\
+	Das package model ist für die Daten selbst zuständig, es definiert in welcher Weise Informationen gespeichert und, nach Beendigung des Programmes, im Speicher des Computers abgelegt werden.
+	\item model.cc:\\
+	Das subpackage cc gehört zum model und verwaltet die Speicherung der Daten in der Cloud. Darin wird das Interface für die Schnittstelle zu Cloudspeichern definiert. In diesem Prototyp ist dies gsutil zur Anbindung von Google Cloud Storage.
+	\item view:\\
+	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
+\end{compactitem}
+\textbf{UML-Diagramm}\\
+
+\pagebreak
+
+\textbf{Anwendungsfälle}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{UseCase.jpg}
+	 \captionof{figure}{\small Anwendungsfalldiagramm}
+\end{minipage}
+\vspace{1em}
+
+\textbf{AF-001 Authentifizierung:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-001\\
+		\hline
+		Name & Authentifizierung\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte sich anmelden\\
+		\hline
+		Vorbedingung & Programm zeigt den Login-Dialog, Anwender ist im \\ &  Cloud-System registriert und zum Zugriff berechtigt\\
+		\hline
+		Nachbedingung/Ziel & Erfolgreiche Anmeldung am Cloud-System \\
+		\hline
+		Nachbedingung im Sonderfall & Zugriff verweigtert\\ & Erneute Aufforderung zur Anmeldung\\
+		\hline
+		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender gibt Benutzername ein \\ & 3. Anwender gibt Passwort ein \\ & 4. Zugangsdaten werden überprüft \\ & 5. 				Dateiübersicht wird angezeigt \\
+		\hline
+		Sonderfälle & 2a. Anwender gibt falschen oder keinen \\ & Benutzernamen ein \\ & 3a. Anwender gibt falsches oder kein Passwort ein \\ & 4a. Erneutes Laden der Loginmaske\\
+		\hline
+	\end{tabular}
+	\caption{AF-001 Authentifizierung}
+	\label{tab:AF-001 Authentifizierung}
+\end{table}
+\pagebreak
+
+\textbf{AF-002 Dateiupload:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-002\\
+		\hline
+		Name & Dateiupload\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte eine Datei in der Cloud ablegen\\
+		\hline
+		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		\hline
+		Nachbedingung/Ziel & Datei wurde verschlüsselt in der Cloud abgelegt \\
+		\hline
+		Nachbedingung im Sonderfall & Datei kann nicht abgelegt werden\\
+		\hline
+		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene Dateisystem \\ & zum 				Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Doppelklick der linken Maustaste oder Auswählen \\ & der Datei und Bestätigung                  mit ''Öffnen'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
+		\hline
+		Sonderfälle & 5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
+		\hline
+	\end{tabular}
+	\caption{AF-002 Dateiupload}
+	\label{tab:AF-002 Dateiupload}
+\end{table}
+\pagebreak
+
+\textbf{AF-003 Dateidownload:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-003\\
+		\hline
+		Name & Dateidownload\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte eine Datei aus der Cloud \\ & herunterladen\\
+		\hline
+		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		\hline
+		Nachbedingung/Ziel & Datei wurde aus der Cloud heruntergeladen \\ & und entschlüsselt \\
+		\hline
+		Nachbedingung im Sonderfall & Datei kann nicht heruntergeladen werden \\ & Datei wird nicht entschlüsselt\\
+		\hline
+		Normalablauf & 1. Anwender wählt in der Dateiübersicht die \\ & entsprechende Datei aus \\ & 2. Anwender wählt das Menü ''File'' aus \\ & 3. Anwender wählt im Untermenü ''Download'' \\ & 4. Anwender bewegt sich durch das eigene Dateisystem \\ & zum Speicherpfad der zu herunterladenden Datei \\ & 5. Anwender initialisiert durch ''Speichern'' \\ & den Dateidownload \\  & 6. Datei wird heruntergeladen \\ & 7. Datei wird entschlüsselt \\
+		\hline
+		Sonderfälle & 6a. Datei kann nicht heruntergeladen werden \\ & 7a. Datei wird nicht entschlüsselt\\
+		\hline
+	\end{tabular}
+	\caption{AF-003 Dateidownload}
+	\label{tab:AF-003 Dateidownload}
+\end{table}
+
+\textbf{AF-004 Datei l\"oschen:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-004\\
+		\hline
+		Name & Datei löschen\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte eine Datei aus der Cloud löschen\\
+		\hline
+		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		\hline
+		Nachbedingung/Ziel & Datei wurde aus der Cloud gelöscht \\
+		\hline
+		Nachbedingung im Sonderfall & Datei kann nicht gelöscht werden \\
+		\hline
+		Normalablauf & X\\
+		\hline
+		Sonderfälle & X \\
+		\hline
+	\end{tabular}
+	\caption{AF-004 Datei löschen}
+	\label{tab:AF-004 Datei loeschen}
+\end{table}
+\pagebreak
+
+\textbf{Begriffslexikon Anwendungsfälle:}
+\begin{compactitem}
+\item Anwender:\\
+Die Rechte und Möglichkeiten des Anwenders begrenzen sich auf das Ablegen lokaler und das Herunterladen von Daten innerhalb der Cloud, sofern diese vorher beim Anbieter vergeben wurden.
+\item Authentifizierung:\\
+Der Login erfordert den Benutzernamen sowie das zugehörige Passwort.
+\item Datei:\\
+Die hochzuladende Datei kann in jedem beliebigen Dateiformat vorliegen.
+\item Dateiübersicht:\\
+Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder. Dies beinhaltet den kryptischen Dateinamen, den originalen Dateinamen, den Zeitstempel des Ablegens sowie die Dateigröße.
+\item GUI:\\
+GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
+\end{compactitem}
+
+\subsubsection{Betriebssystem}
+Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
+
+\subsubsection{Kryptosystem}
+Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
+\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+
+\subsubsection{GUI}
+Beschreibung und Darstellung der Oberfläche
+
+\subsubsection{Funktionalitäten}
+Erläuterung der Grundfunktionen der Prototyps
+
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Diskussion
+% ----------------------------------------------------------------------------------------------------------
+\section{Diskussion}
+Ausführliches Fazit zur aktuellen und zukünftigen Notwendigkeit\\
+Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
+
+\subsection{Erweiterung der Funktionalitäten}
+\subsubsection{Erhöhung der Bedienerfreundlichkeit}
+\textbf{Ausbau des Designs/Multirow}
+\\\textbf{Drag\&Drop}\\
+Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umständen von Vorteil, dass es möglich ist, Dateien per Drag\&Drop in das Programmfenster hinen zu ziehen. Dadurch müsste ein Benutzer nicht jedes mal, wenn er oder sie eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.
+\\\textbf{Autokonfiguration der Schnittstellen}\\
+Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zum Google Drive zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
+\\\textbf{Installations Setup}\\
+Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin Standardmäßig eine Python2x installation.
+\\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
+\\\textbf{Selbstsynchronisierung}\\
+\\\textbf{GoogleAPI: Buckets verwalten}\\
+
+\subsubsection{Serverseitiges Management}
+\textbf{Schlüsselmanagement durch Key-Server}\\
+\\\textbf{Providing Server}\\
+\\\textbf{Serverseitige Rechteverwaltung}\\
+\\\textbf{Loginserver}\\
+\\\textbf{Serverseitige Verwaltung des Dateisystems}\\
+
+\subsubsection{Erweiterte Sicherheit}
+\textbf{OpenJDK}\\
+\\\textbf{Alternative Programmiersprechen}\\
+\\\textbf{Kaskadierte Verschlüsselung}\\
+\\\textbf{Key recovery/Masterkey}\\
+\\\textbf{Blockweise Verschlüsselung}\\
+\\\textbf{Online Dateisystem}\\
+\\\textbf{Rechteverwaltung}\\
+
+\subsection{Geschäftsmodell: Sichere Cloudspeicher}
+\textbf{Traffic Überwachung}\\
+\pagebreak
+
+
+	
+% ----------------------------------------------------------------------------------------------------------
+% Literatur
+% ----------------------------------------------------------------------------------------------------------
+ 
+ \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
+	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
+	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_(Programmiersprache)}
+	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
+	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+	\bibitem[WAes]{5}\url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
+	\bibitem[WCounterMode]{6}\url{http://de.wikipedia.org/wiki/Counter_Mode}
+	\bibitem[NistCounterMode]{7}\url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}
+	\bibitem[WSha]{8}\url{http://de.wikipedia.org/wiki/Secure_Hash_Algorithm}
+	\bibitem[WSha2]{9}\url{http://de.wikipedia.org/wiki/SHA-2}
+	\bibitem[NistSha2]{10}\url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}
+	\bibitem[Gartner]{30}\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb}
+ 	\bibitem[Git]{31}\url{http://git-scm.com/book}
+	\bibitem[gsutil]{32}\url{https://cloud.google.com/storage/docs/gsutil}	
+	\bibitem[IEEE]{33}\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}
+	\bibitem[NistCc]{34}\url{http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf}, S. 2ff.
+	\bibitem[BsiCc]{35}\url{https://www.bsi.bund.de/DE/Themen/CloudComputing/Grundlagen/Grundlagen_node.html}
+	\bibitem[CsaCc]{36}\url{https://cloudsecurityalliance.org/guidance/csaguide.v3.0.pdf}
+	\bibitem[HmdCc]{37}\url{http://link.springer.com/article/10.1007/BF03340515#},  S.77
+	\bibitem[Winkler]{38} [Winkler – Securing the Cloud]
+	
+\end{thebibliography}
+\pagebreak
+
+% ----------------------------------------------------------------------------------------------------------
+% Anhang
+% ----------------------------------------------------------------------------------------------------------
+\pagenumbering{Roman}
+\setcounter{page}{1}
+\lhead{Anhang \thesection}
+
+\begin{appendix}
+\section*{Anhang}
+\phantomsection
+\addcontentsline{toc}{section}{Anhang}
+\addtocontents{toc}{\vspace{-0.5em}}
+\section{Programmcode}
+Reiner Programmcode
+\pagebreak
+\section{Dokumentation}
+\subsection{Codedokumentation}
+Ausführliche Dokumentation des Programmcodes zur Verständlichkeit und für die Möglichkeit der Projektfortsetzung
+\subsection{UML}
+UML-Diagramm zur technischen Lösung
+\pagebreak
+
+\subsection{Installationsanleitung}
+Detaillierte Beschreibung zum Einsatz auf "Fremdsystemen"
+\pagebreak
+\section{Binarys}
+\end{appendix}
+
+\end{document}
