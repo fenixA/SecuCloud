@@ -110,7 +110,7 @@ public class Main {
 	private String userPassword;
 
 	/** The bucket. */
-	private String bucket = "fenixbucket";
+	private String bucket;
 
 	/** The vector of started threads. */
 	public Vector<Thread> threadVector = new Vector<Thread>();
@@ -347,7 +347,7 @@ public class Main {
 	 * @throws InvalidAlgorithmParameterException
 	 *             the invalid algorithm parameter exception
 	 */
-	private void tryLogin(String userName, String userPassword)
+	private void tryLogin(String userName, String userPassword, String bucket)
 			throws IOException, InterruptedException, InvalidKeyException,
 			NoSuchAlgorithmException, NoSuchProviderException,
 			NoSuchPaddingException, ShortBufferException,
@@ -356,6 +356,7 @@ public class Main {
 		if (settingsFileHandler.verifyUserData(userName, userPassword)) {
 			this.userName = userName;
 			this.userPassword = userPassword;
+			this.bucket = bucket;
 			buildUserDirectory();
 			this.informationContainerStorer = new InformationContainerStorer(
 					this.userPassword);
@@ -538,14 +539,14 @@ public class Main {
 	 * @throws InvalidAlgorithmParameterException
 	 *             the invalid algorithm parameter exception
 	 */
-	public void toggle_LoginWindow_okButton(String userName, String userPassword)
+	public void toggle_LoginWindow_okButton(String userName, String userPassword, String bucket)
 			throws IOException, InterruptedException, InvalidKeyException,
 			NoSuchAlgorithmException, NoSuchProviderException,
 			NoSuchPaddingException, ShortBufferException,
 			IllegalBlockSizeException, BadPaddingException,
 			InvalidAlgorithmParameterException {
 		this.loginWindow.dispose();
-		tryLogin(userName, userPassword);
+		tryLogin(userName, userPassword, bucket);
 	}
 
 	/**

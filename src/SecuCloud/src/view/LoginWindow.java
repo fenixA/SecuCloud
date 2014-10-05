@@ -37,11 +37,17 @@ public class LoginWindow extends JFrame {
 	/** The password label. */
 	private JLabel passwordLabel;
 
+	/** The bucket label. */
+	private JLabel bucketLabel;
+	
 	/** The name text field. */
 	private JTextField nameTextField;
 	
 	/** The password text field. */
 	private JPasswordField passwordTextField;
+	
+	/** The bucket text field. */
+	private JTextField bucketTextField;
 
 	/** The ok button. */
 	private JButton okButton;
@@ -57,8 +63,8 @@ public class LoginWindow extends JFrame {
 
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new GridLayout(3, 2));
-		this.setPreferredSize(new Dimension(300, 125));
+		this.setLayout(new GridLayout(4, 2));
+		this.setPreferredSize(new Dimension(300, 150));
 
 		this.initComponents();
 		this.setResizable(false);
@@ -71,8 +77,10 @@ public class LoginWindow extends JFrame {
 	private void initComponents() {
 		this.nameLabel = new JLabel("Name: ", SwingConstants.LEFT);
 		this.passwordLabel = new JLabel("Password: ", SwingConstants.LEFT);
+		this.bucketLabel = new JLabel("Bucket: ", SwingConstants.LEFT);
 		this.nameTextField = new JTextField();
 		this.passwordTextField = new JPasswordField();
+		this.bucketTextField = new JTextField();
 
 		this.okButton = new JButton("OK");
 		this.okButton.addActionListener(new ActionListener() {
@@ -80,14 +88,13 @@ public class LoginWindow extends JFrame {
 				String password = new String(passwordTextField.getPassword());
 				try {
 					Main.getInstance().toggle_LoginWindow_okButton(
-							nameTextField.getText(), password);
+							nameTextField.getText(), password, bucketTextField.getText());
 				} catch (IOException | InterruptedException
 						| InvalidKeyException | NoSuchAlgorithmException
 						| NoSuchProviderException | NoSuchPaddingException
 						| ShortBufferException | IllegalBlockSizeException
 						| BadPaddingException
 						| InvalidAlgorithmParameterException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -104,12 +111,16 @@ public class LoginWindow extends JFrame {
 
 		this.add(passwordLabel);
 		this.add(passwordTextField);
+		
+		this.add(bucketLabel);
+		this.add(bucketTextField);
 
 		this.add(createButton);
 		this.add(okButton);
 
 		nameTextField.setText("fenix");
 		passwordTextField.setText("183461");
+		bucketTextField.setText("stdbucket");
 
 		this.pack();
 	}
