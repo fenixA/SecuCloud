@@ -395,7 +395,7 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 % ----------------------------------------------------------------------------------------------------------
 \section{Ergebnisse}
 Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
-\subsubsection{Architektur}
+\subsection{Architektur}
 Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Pattern angelehnt ist. Es unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (Pakete, die in anderen enthalten sind).
 
 \begin{compactitem}
@@ -410,11 +410,11 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 	\item view:\\
 	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
-\textbf{UML-Diagramm}\\
+\subsubsection{UML-Diagramm}
 
 \pagebreak
 
-\textbf{Anwendungsfälle}
+\subsubsection{Anwendungsfälle}
 \vspace{1em}
 $\;$\\
 \begin{minipage}{\linewidth}
@@ -553,17 +553,79 @@ Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder
 GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
 \end{compactitem}
 
-\subsubsection{Betriebssystem}
-Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
+\subsection{Kryptosystem}
+Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit
 
-\subsubsection{Kryptosystem}
-Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
-\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+\subsection{GUI}
+Nachfolgend wird die Oberfläche mit ihren Funktionalitäten beschrieben.
 
-\subsubsection{GUI}
-Beschreibung und Darstellung der Oberfläche
+\textbf{Login}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Login.jpg}
+	\captionof{figure}{\small Login}
+	\label{Login}
+\end{minipage}
+\vspace{1em}
 
-\subsubsection{Funktionalitäten}
+\textbf{Account erstellen}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Account.jpg}
+	\captionof{figure}{\small Account erstellen}
+	\label{Account}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Hauptfenster}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Main.jpg}
+	\captionof{figure}{\small Hauptfenster}
+	\label{Hauptfenster}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Dateiauswahl}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Select.jpg}
+	\captionof{figure}{\small Dateiauswahl}
+	\label{Dateiauswahl}
+\end{minipage}
+\vspace{1em}
+
+\textbf{File Menü}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{File.jpg}
+	\captionof{figure}{\small File Menü}
+	\label{File}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Help Menü}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Help.jpg}
+	\captionof{figure}{\small Help Menü}
+	\label{Help}
+\end{minipage}
+\vspace{1em}
+
+\subsection{Funktionalitäten}
 Erläuterung der Grundfunktionen der Prototyps
 
 \pagebreak
@@ -654,20 +716,11 @@ Eine potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläu
 \phantomsection
 \addcontentsline{toc}{section}{Anhang}
 \addtocontents{toc}{\vspace{-0.5em}}
-\section{Programmcode}
-Reiner Programmcode
-\pagebreak
-\section{Dokumentation}
-\subsection{Codedokumentation}
-Ausführliche Dokumentation des Programmcodes zur Verständlichkeit und für die Möglichkeit der Projektfortsetzung
-\subsection{UML}
-UML-Diagramm zur technischen Lösung
-\pagebreak
 
 \subsection{Installationsanleitung}
 Detaillierte Beschreibung zum Einsatz auf "Fremdsystemen"
 \pagebreak
-\section{Binarys}
+\section{Digitaler Anhang}
 \end{appendix}
 
 \end{document}
