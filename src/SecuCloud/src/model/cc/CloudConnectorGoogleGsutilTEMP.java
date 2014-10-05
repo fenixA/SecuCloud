@@ -7,7 +7,6 @@ import model.InformationContainer;
 import control.Main;
 import control.SystemPathCollector;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class CloudConnectorGoogleGsutilTEMP.
  */

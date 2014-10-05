@@ -4,39 +4,38 @@ import java.util.Vector;
 
 import model.InformationContainer;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface CloudConnector.
+ * The Interface CloudConnector defines the interface, a class needs to connect a cloud service.
  */
 public interface CloudConnector {
 
 	/**
 	 * Upload.
 	 *
-	 * @param informationContainer the information container
-	 * @return the information container
+	 * @param informationContainer the {@link InformationContainer} to be uploaded
+	 * @return the {@link InformationContainer} with the added cloud information.
 	 */
 	public InformationContainer upload(InformationContainer informationContainer);
 
 	/**
 	 * Download.
 	 *
-	 * @param informationContainer the information container
+	 * @param informationContainer the {@link InformationContainer} of the file to be downloaded.
 	 * @return true, if successful
 	 */
 	public boolean download(InformationContainer informationContainer);
 
 	/**
-	 * List dir.
+	 * List the cloud directory.
 	 *
 	 * @return the vector
 	 */
 	public Vector<String> listDir();
 	
 	/**
-	 * Removes the.
+	 * Removes a file from the cloud.
 	 *
-	 * @param informationContainer the information container
+	 * @param informationContainer the {@link InformationContainer} of the file to be removed.
 	 * @return true, if successful
 	 */
 	public boolean remove(InformationContainer informationContainer);

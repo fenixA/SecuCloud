@@ -17,7 +17,7 @@ import control.Main;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class CreateAccountWindow.
+ * The Class CreateAccountWindow shows a window to create a new account.
  */
 public class CreateAccountWindow extends javax.swing.JFrame {
 	
@@ -46,7 +46,7 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 	private JButton okButton;
 
 	/**
-	 * Instantiates a new creates the account window.
+	 * Instantiates a new {@link CreateAccountWindow}.
 	 */
 	public CreateAccountWindow() {
 		setTitle("Please create new user!");
@@ -61,7 +61,7 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Inits the components.
+	 * Initializes the window components.
 	 */
 	private void initComponents() {
 		this.nameLabel = new JLabel("Name: ", SwingConstants.LEFT);

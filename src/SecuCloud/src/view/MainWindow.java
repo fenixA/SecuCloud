@@ -24,9 +24,8 @@ import java.util.Vector;
 import control.FileListHandler;
 import control.Main;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class MainWindow.
+ * The Class MainWindow shows the main window of the application.
  */
 public class MainWindow extends javax.swing.JFrame {
 	
@@ -105,7 +104,7 @@ public class MainWindow extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Inits the table.
+	 * Initializes the table.
 	 *
 	 * @return the object[][]
 	 */
@@ -129,7 +128,7 @@ public class MainWindow extends javax.swing.JFrame {
 	}
 
 	/**
-	 * Inits the components.
+	 * Initializes the components.
 	 */
 	private void initComponents() {
 		Object rowData[][] = this.initTable();

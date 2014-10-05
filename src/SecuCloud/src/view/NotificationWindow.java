@@ -4,9 +4,8 @@ import javax.swing.JOptionPane;
 
 import control.Main;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class NotificationWindow.
+ * The Class NotificationWindow shows windows to notify the user.
  */
 public class NotificationWindow {
 

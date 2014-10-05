@@ -22,9 +22,8 @@ import javax.swing.SwingConstants;
 
 import control.Main;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class LoginWindow.
+ * The Class LoginWindow shows the login dialog.
  */
 public class LoginWindow extends JFrame {
 	
@@ -65,7 +64,7 @@ public class LoginWindow extends JFrame {
 	}
 
 	/**
-	 * Inits the components.
+	 * Initializes the components.
 	 */
 	private void initComponents() {
 		this.nameLabel = new JLabel("Name: ", SwingConstants.LEFT);
