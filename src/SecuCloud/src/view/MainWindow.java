@@ -134,17 +134,19 @@ public class MainWindow extends javax.swing.JFrame {
 		entryFileSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ac) {
 				JFileChooser fc = new JFileChooser();
-				fc.showOpenDialog(null);
-				try {
-					Main.getInstance().toggle_MainWindow_fileSelected(
-							fc.getSelectedFile());
-				} catch (InvalidKeyException | NoSuchAlgorithmException
-						| NoSuchProviderException | NoSuchPaddingException
-						| IOException e) {
-					e.printStackTrace();
-				} catch (InvalidAlgorithmParameterException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				int status = fc.showOpenDialog(null);
+				if (status == JFileChooser.APPROVE_OPTION) {
+					try {
+						Main.getInstance().toggle_MainWindow_fileSelected(
+								fc.getSelectedFile());
+					} catch (InvalidKeyException | NoSuchAlgorithmException
+							| NoSuchProviderException | NoSuchPaddingException
+							| IOException e) {
+						e.printStackTrace();
+					} catch (InvalidAlgorithmParameterException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});
@@ -173,7 +175,7 @@ public class MainWindow extends javax.swing.JFrame {
 				}
 			}
 		});
-		
+
 		this.entryHelpHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ac) {
 				try {
