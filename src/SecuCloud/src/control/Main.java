@@ -17,6 +17,7 @@ import javax.crypto.ShortBufferException;
 import control.util.ThreaderInstanceCreator;
 import control.util.CryptToolbox;
 import control.util.ThreaderInstanceCreator.command;
+import view.NotificationWindow;
 import view.CreateAccountWindow;
 import view.LoginWindow;
 import view.MainWindow;
@@ -45,6 +46,8 @@ public class Main {
 
 	private static Main instance;
 	private MainWindow mainWindow;
+	private NotificationWindow aboutNotification;
+	private NotificationWindow helpNotification;
 	private CreateAccountWindow createAccountWindow;
 	private DeleteWindow deleteWindow;
 	private LoginWindow loginWindow;
@@ -60,6 +63,10 @@ public class Main {
 	// getter n setter
 	public String getUserName() {
 		return userName;
+	}
+	
+	public String getSoftwareName() {
+		return this.softwareName;
 	}
 
 	public String getUSER_DATA_DIR() {
@@ -137,7 +144,15 @@ public class Main {
 	private void drawDeleteWindow() {
 		deleteWindow = new DeleteWindow();
 	}
-
+	
+	private void drawAboutNotification() {
+		aboutNotification = new NotificationWindow();
+	}
+	
+	private void drawHelpNotification() {
+		helpNotification = new NotificationWindow();
+	}
+	
 	private void buildUserDirectory() {
 		File user_dir = new File(ROOT_DIR + "/" + userName);
 		if (!user_dir.exists()) {
@@ -226,6 +241,16 @@ public class Main {
 		settingsFileHandler.addUser(userName, userPassword);
 		drawLoginWindow();
 	}
+	
+	public void toggle_MainWindow_about() throws IOException {
+		drawAboutNotification();;
+		this.aboutNotification.aboutNotification();
+	}
+	
+	public void toggle_MainWindow_help() throws IOException {
+		drawHelpNotification();
+		this.helpNotification.helpNotification();
+	}
 
 	private void checkSynchronization() {
 		Vector<String> lost = FileListHandler.getInstance().synchronizeCloudStorage(
@@ -242,6 +267,7 @@ public class Main {
 			}
 		}
 	}
+	
 
 	public void toggle_LoginWindow_okButton(String userName, String userPassword)
 			throws IOException, InterruptedException, InvalidKeyException,
@@ -257,7 +283,7 @@ public class Main {
 		this.loginWindow.dispose();
 		drawCreateAccountWindow();
 	}
-
+	
 	public static void main(String[] args) throws InterruptedException,
 			IOException, InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException,
