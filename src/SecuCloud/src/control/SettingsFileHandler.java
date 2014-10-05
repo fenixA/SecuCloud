@@ -11,24 +11,67 @@ import java.util.Map;
 
 import control.util.CryptToolbox;
 
+/**
+ * The Class SettingsFileHandler handles the applications settings.cfg with the
+ * saved users and performs all actions onit.
+ */
 public class SettingsFileHandler {
+
+	/** The Constant PASSWORD_INFO_LEN. */
 	private static final int PASSWORD_INFO_LEN = Main.HASH_LEN + Main.SALT_LEN;
+
+	/** The Constant MAX_NAME_LEN. */
 	private static final int MAX_NAME_LEN = 256;
+
+	/** The Constant SEPETATOR. */
 	private static final char SEPETATOR = ':';
+
+	/** The settings file name. */
 	private String settingsFileName;
+
+	/** The users. */
 	public int users = 0;
+
+	/** All users login data. */
 	private Map<byte[], byte[]> userData = new HashMap<byte[], byte[]>();
 
+	/**
+	 * Instantiates a new settings file handler.
+	 * 
+	 * @param settingsFileName
+	 *            the settings file name
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public SettingsFileHandler(String settingsFileName) throws IOException {
 		this.settingsFileName = settingsFileName;
 		readSettingsFile();
 	}
 
+	/**
+	 * Builds a new settings file.
+	 * 
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public void buildNewSettingsFile() throws IOException {
 		File settings = new File(this.settingsFileName);
 		settings.createNewFile();
 	}
 
+	/**
+	 * Adds a user. Generates a random salt and saves the users name with the
+	 * salt and the hashed password + salt to settings.cfg.
+	 * 
+	 * @param userName
+	 *            the users name
+	 * @param userPassword
+	 *            the users password
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 */
 	public void addUser(String userName, String userPassword)
 			throws IOException, NoSuchAlgorithmException {
 		System.out.println("SettingsFileHandler.addUser()");
@@ -51,6 +94,20 @@ public class SettingsFileHandler {
 		readSettingsFile();
 	}
 
+	/**
+	 * Verify user data. Checks if the given user name exists and if the
+	 * password is correct.
+	 * 
+	 * @param userName
+	 *            the users name
+	 * @param userPassword
+	 *            the users password
+	 * @return true, if successful
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 */
 	public boolean verifyUserData(String userName, String userPassword)
 			throws IOException, NoSuchAlgorithmException {
 		System.out.println("SettingsFileHandler.verifyUserData()");
@@ -71,6 +128,14 @@ public class SettingsFileHandler {
 		return false;
 	}
 
+	/**
+	 * Read in single user data. Reads one user data set (user name, salt,
+	 * password hash) from given byte array and adds it to the login data map.
+	 * 
+	 * @param input
+	 *            settings file as byte array
+	 * @return the remaining settings file without the computed user data.
+	 */
 	private byte[] readInSingleUser(byte[] input) {
 		System.out.println("SettingsFileHandler.readInSingleUserData()");
 		int cntr = 0;
@@ -101,6 +166,12 @@ public class SettingsFileHandler {
 		return result;
 	}
 
+	/**
+	 * Reads in settings file.
+	 * 
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	private void readSettingsFile() throws IOException {
 		System.out.println("SettingsFileHandler.readSettingsFile()");
 		File settingsFile = new File(this.settingsFileName);

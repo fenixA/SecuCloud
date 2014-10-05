@@ -24,28 +24,63 @@ import java.util.Vector;
 import control.FileListHandler;
 import control.Main;
 
+/**
+ * The Class MainWindow shows the main window of the application.
+ */
 public class MainWindow extends javax.swing.JFrame {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3172688540921699213L;
+	
+	/** The window height. */
 	private int positionCoordinateX = 400, positionCoordinateY = 400,
 			windowWidth = 400, windowHeight = 300;
 
 	// Components
+	/** The menu bar. */
 	private JMenuBar menuBar;
+	
+	/** The table. */
 	private JTable table;
+	
+	/** The non editable j table. */
 	private NonEditableJTable nonEditableJTable;
+	
+	/** The popup menu. */
 	JPopupMenu popupMenu;
+	
+	/** The scroll pane. */
 	JScrollPane scrollPane;
 
+	/** The title file. */
 	private JMenu titleFile;
+	
+	/** The title help. */
 	private JMenu titleHelp;
 
+	/** The entry file select. */
 	private JMenuItem entryFileSelect;
+	
+	/** The entry file close. */
 	private JMenuItem entryFileClose;
+	
+	/** The entry help help. */
 	private JMenuItem entryHelpHelp;
+	
+	/** The entry help about. */
 	private JMenuItem entryHelpAbout;
+	
+	/** The delete entry. */
 	private JMenuItem deleteEntry;
+	
+	/** The download entry. */
 	private JMenuItem downloadEntry;
 
+	/**
+	 * Instantiates a new main window.
+	 *
+	 * @param title the title
+	 */
 	public MainWindow(String title) {
 		this.setTitle(title);
 		this.setBounds(positionCoordinateX, positionCoordinateY, windowWidth,
@@ -68,6 +103,11 @@ public class MainWindow extends javax.swing.JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Initializes the table.
+	 *
+	 * @return the object[][]
+	 */
 	private Object[][] initTable() {
 		int ctr = 0;
 		Vector<InformationContainer> fileList = FileListHandler.getInstance()
@@ -87,6 +127,9 @@ public class MainWindow extends javax.swing.JFrame {
 		return result;
 	}
 
+	/**
+	 * Initializes the components.
+	 */
 	private void initComponents() {
 		Object rowData[][] = this.initTable();
 		Object columnNames[] = { "Name", "DataKey", "Uploaded" };

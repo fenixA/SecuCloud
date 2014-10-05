@@ -5,24 +5,37 @@ import java.util.Vector;
 
 import model.InformationContainer;
 import control.Main;
-import control.SystemPathCollectorGsutilTEMP;
+import control.SystemPathCollector;
 
+/**
+ * The Class CloudConnectorGoogleGsutilTEMP.
+ */
 public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
+	
+	/** The Constant GS_PROTOCOL. */
 	private static final String GS_PROTOCOL = "gs://";
+	
+	/** The Constant CMD_COPY. */
 	private static final String CMD_COPY = "cp";
+	
+	/** The Constant CMD_LIST. */
 	private static final String CMD_LIST = "ls";
 	// private static final String CMD_CREATEBUCKET = "mb";
 	// private static final String CMD_MOVE = "mv";
+	/** The Constant CMD_DELETE. */
 	private static final String CMD_DELETE = "rm";
 
+	/* (non-Javadoc)
+	 * @see model.cc.CloudConnector#upload(model.InformationContainer)
+	 */
 	@Override
 	public InformationContainer upload(InformationContainer informationContainer) {
 		try {
 			Process uploadProcess = Runtime
 					.getRuntime()
 					.exec(new String[] {
-							SystemPathCollectorGsutilTEMP.getPythonPath(),
-							SystemPathCollectorGsutilTEMP.getGsutilPath(),
+							SystemPathCollector.getPythonPath(),
+							SystemPathCollector.getGsutilPath(),
 							CMD_COPY,
 							informationContainer.getLocalEncryptedLocation(),
 							GS_PROTOCOL
@@ -38,13 +51,16 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		return informationContainer;
 	}
 
+	/* (non-Javadoc)
+	 * @see model.cc.CloudConnector#download(model.InformationContainer)
+	 */
 	@Override
 	public boolean download(InformationContainer informationContainer) {
 		try {
 			Process downloadProcess = Runtime.getRuntime().exec(
 					new String[] {
-							SystemPathCollectorGsutilTEMP.getPythonPath(),
-							SystemPathCollectorGsutilTEMP.getGsutilPath(),
+							SystemPathCollector.getPythonPath(),
+							SystemPathCollector.getGsutilPath(),
 							CMD_COPY,
 							GS_PROTOCOL
 									+ informationContainer.getCloudLocation(),
@@ -62,6 +78,9 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see model.cc.CloudConnector#listDir()
+	 */
 	@Override
 	public Vector<String> listDir() {
 		System.out.println("CloudConnectorGoogleGsutilTEMP.listDir()");
@@ -69,8 +88,8 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		try {
 			Process listProcess = Runtime.getRuntime().exec(
 					new String[] {
-							SystemPathCollectorGsutilTEMP.getPythonPath(),
-							SystemPathCollectorGsutilTEMP.getGsutilPath(),
+							SystemPathCollector.getPythonPath(),
+							SystemPathCollector.getGsutilPath(),
 							CMD_LIST,
 							GS_PROTOCOL + Main.getInstance().getBucket() });
 			listProcess.waitFor();
@@ -93,13 +112,16 @@ public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see model.cc.CloudConnector#remove(model.InformationContainer)
+	 */
 	public boolean remove(InformationContainer informationContainer) {
 		try {
 			Process deleteProcess = Runtime
 					.getRuntime()
 					.exec(new String[] {
-							SystemPathCollectorGsutilTEMP.getPythonPath(),
-							SystemPathCollectorGsutilTEMP.getGsutilPath(),
+							SystemPathCollector.getPythonPath(),
+							SystemPathCollector.getGsutilPath(),
 							CMD_DELETE,
 							GS_PROTOCOL
 									+ informationContainer.getCloudLocation() });

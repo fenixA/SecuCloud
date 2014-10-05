@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import model.InformationContainer;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class FileListHandler is a singleton class, which handles system wide a
  * Vector of InformationContainers to represent a list of the files saved in the
