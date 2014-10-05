@@ -67,6 +67,6 @@ public class SystemPathCollector {
 	 * @return the gsutil path
 	 */
 	public static String getGsutilPath() {
-		return "./../../ext/gsutil/gsutil.py";
+		return Main.USER_HOME + "/gsutil/gsutil.py";
 	}
 }
