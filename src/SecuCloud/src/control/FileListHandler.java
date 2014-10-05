@@ -6,19 +6,21 @@ import model.InformationContainer;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class FileListHandler.
+ * The Class FileListHandler is a singleton class, which handles system wide a
+ * Vector of InformationContainers to represent a list of the files saved in the
+ * cloud with their additional information.
  */
 public class FileListHandler {
-	
-	/** The instance. */
+
+	/** The singleton instance. */
 	private static FileListHandler instance;
-	
+
 	/** The file list. */
 	private Vector<InformationContainer> fileList = new Vector<InformationContainer>();
 
 	/**
 	 * Gets the file list.
-	 *
+	 * 
 	 * @return the file list
 	 */
 	public Vector<InformationContainer> getFileList() {
@@ -26,9 +28,10 @@ public class FileListHandler {
 	}
 
 	/**
-	 * Adds the file.
-	 *
-	 * @param informationContainer the information container
+	 * Adds given InformationContainer to file list.
+	 * 
+	 * @param informationContainer
+	 *            the information container to add.
 	 */
 	public void addFile(InformationContainer informationContainer) {
 		this.fileList.add(informationContainer);
@@ -36,9 +39,10 @@ public class FileListHandler {
 	}
 
 	/**
-	 * Delete file.
-	 *
-	 * @param informationContainer the information container
+	 * Delete given InformationContainer from file list.
+	 * 
+	 * @param informationContainer
+	 *            the information container to delete.
 	 */
 	public void deleteFile(InformationContainer informationContainer) {
 		this.fileList.remove(informationContainer);
@@ -47,8 +51,8 @@ public class FileListHandler {
 
 	// Singleton
 	/**
-	 * Gets the single instance of FileListHandler.
-	 *
+	 * Gets the singleton instance of FileListHandler.
+	 * 
 	 * @return single instance of FileListHandler
 	 */
 	public static FileListHandler getInstance() {
@@ -59,10 +63,13 @@ public class FileListHandler {
 	}
 
 	/**
-	 * Synchronize cloud storage.
-	 *
-	 * @param cloudFiles the cloud files
-	 * @return the vector
+	 * Synchronize cloud storage. A function to check if all files in file list
+	 * are contained in the given Vector.
+	 * 
+	 * @param cloudFiles
+	 *            A Vector with all files in the cloud by their encrypted name.
+	 * @return A Vector of files missing in the cloud but having a
+	 *         representation in file list.
 	 */
 	public Vector<String> synchronizeCloudStorage(Vector<String> cloudFiles) {
 		Vector<String> lost = new Vector<String>();
@@ -79,10 +86,12 @@ public class FileListHandler {
 	}
 
 	/**
-	 * Select by encrypted name.
-	 *
-	 * @param encryptedName the encrypted name
-	 * @return the information container
+	 * Select by encrypted name. Returns the InformationContainer of file
+	 * list with given encrypted name.
+	 * 
+	 * @param encryptedName
+	 *            The encrypted name of the selected file.
+	 * @return The InformationContainer with the given encrypted name.
 	 */
 	public InformationContainer selectByEncryptedName(String encryptedName) {
 		for (InformationContainer informationContainer : fileList) {
