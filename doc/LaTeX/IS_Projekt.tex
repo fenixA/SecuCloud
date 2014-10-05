@@ -227,7 +227,6 @@ Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) \
 \end{compactitem}
 
 \subsubsection{Servicemodelle}
-Cloud Computing kann auf Grundlage des Dienstleistungsangebotes in drei Kategorien bzw. Geschäftsmodelle \cite{34} eingeteilt werden.
 
 \vspace{1em}
 $\;$\\
@@ -238,13 +237,15 @@ $\;$\\
 \end{minipage}
 \vspace{1em}
 
+Cloud Computing kann in seiner Art nach dem sogenannten technischen Cloud-Stack unterschieden werden. Dies ist ein Schichtenmodell, in dem die obere Schichten auf den unteren aufbauen kann. Jede Schicht kann Anhand ihres Abstraktionsgrades klassifiziert werden:
+
 \begin{compactitem}
-\item Software as a Service (SaaS):\\
+\item Schicht 3 - Software as a Service (SaaS):\\
 Software, die über eine Cloud-Infrastruktur angeboten wird. Die Bereitstellung, Betreuung und der Betrieb erfolgt gänzlich durch den Anbieter. Eine Abrechnung erfolgt je Softwareaufruf, was den Erwerb der üblichen Software-Lizenz ersetzt. Beispiele hierfür sind \href{http://www.google.com/enterprise/apps/business/}{\textit{Google Apps}} oder \href{http://office.microsoft.com/de-de/business/was-ist-office-365-fur-unternehmen-FX102997580.aspx}{\textit{Microsoft Office 365}}.
-\item Plattform as a Service (PaaS):\\
+\item Schicht 2 - Plattform as a Service (PaaS):\\
 Der Anbieter stellt eine verwaltete Cloud-Infrastruktur zur Verfügung, worauf eigene Software bereitgestellt werden kann. Der Kunde erhält zudem eine integrierte Entwicklungs- und Laufzeitumgebung. Eine Abrechnung erfolgt nutzungsabhängig. Zu den Vertretern von PaaS gehören beispielsweise \href{https://cloud.google.com/appengine/}{\textit{Google App Engine}} oder \href{http://azure.microsoft.com/de-de/}{\textit{Microsoft Azure}}.
-\item Infrastructure as a Service (IaaS):\\
-Reine, bedarfsgerechte Nutzung der Rechnerinfrastruktur des Anbieters. Der Anwender muss alles außer der virtuellen Infrastruktur selbst verwalten. Dies bedeutet zwar einen Mehraufwand, bietet aber gleichzeitig eine größtmögliche Flexibilität. Bekannte Anbieter sind \href{https://cloud.google.com/storage/}{\textit{Google Cloud Storage}} oder Amazon Webservices (AWS) mit \href{http://aws.amazon.com/de/}{\textit{Amazon S3 oder Amazon EC2}}.
+\item Schicht 1 - Infrastructure as a Service (IaaS):\\
+Reine, bedarfsgerechte Nutzung der Rechnerinfrastruktur des Anbieters. Der Anwender muss alles außer der virtuellen Infrastruktur selbst verwalten. Dies bedeutet zwar einen Mehraufwand, bietet aber gleichzeitig eine größtmögliche Skalierbarkeit. Bekannte Anbieter sind \href{https://cloud.google.com/storage/}{\textit{Google Cloud Storage}} oder Amazon Webservices (AWS) mit \href{http://aws.amazon.com/de/}{\textit{Amazon S3 oder Amazon EC2}}.
 \end{compactitem}
 
 Im Rahmen dieser Projektarbeit bezieht sich das Konzept auf Infrastructure as a Service (IaaS), worauf nachfolgend im Näheren eingegangen wird.
@@ -263,8 +264,6 @@ Cloud Computing Services für Unternehmen - Zusammenschluss von Interessensgemei
 Cloud Computing Service durch den Anwender selbst.
 \end{compactitem}
 \pagebreak
-
-\subsubsection{Funktionsweise IaaS}
 
 \subsubsection{Allgemeine Sicherheitskriterien für IaaS}
 \begin{compactitem}
@@ -304,7 +303,8 @@ $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Gartner_Magic_Square.png}
-	 \captionof{figure}{\small Magisches Quadrat}
+	\captionof{figure}{\small Magisches Quadrat}
+	\label{Gartner}
 \end{minipage}
 \vspace{1em}
 
@@ -320,7 +320,7 @@ $\;$\\
 \end{compactitem}
 
 \textbf{Entscheidungsgrundlage Cloud-Anbieter}\\
-In Abbildung X ist ersichtlich, dass die Top-Unternehmen Amazon (Amazon Web Services) und Microsoft (Microsoft Infrastructure Services) bei den aktuellen Marktführern einzuordnen sind, während sich Google mit seinem IaaS-Angebot Google Cloud Storage im Quadrant der Visionäre befindet.
+In Abbildung \ref{Gartner} ist ersichtlich, dass die Top-Unternehmen Amazon (Amazon Web Services) und Microsoft (Microsoft Infrastructure Services) bei den aktuellen Marktführern einzuordnen sind, während sich Google mit seinem IaaS-Angebot Google Cloud Storage im Quadrant der Visionäre befindet.
 
 Die Strategie der Google Cloud Plattform basiert auf dem Konzept anderen Unternehmen eine Leistungsfähigkeit anzubieten, wie Google sie selbst verwendet. Dies wird durch Nutzung der innovativen internen technischen Möglichkeiten erreicht. Obwohl Google erst im Dezember 2013 in den IaaS-Markt vorgedrungen ist (seit 2008 Google App Engine als PaaS), befindet sich die angebotene Lösung bereits unter den Visionären. Das liegt unter anderem daran, dass sich Google auf seine Fähigkeiten beschränkt, anstatt diese von Grund auf neu zu strukturieren. Daher wird es auf lange Sicht in der Lage sein das Angebot schneller als seine Konkurrenten voranzubringen. Google verfügt über eine umfassende Vision und ausreichend Erfahrung darüber, wie native Cloud-Anwendungen über einen Lebenszyklus hinweg entwickelt und verwaltet werden. Die Vorstellung von fließenden Grenzen zwischen IaaS und PaaS wird Anwendern in absehbarer Zeit einen Kompromiss zwischen Kontrolle und automatisierter Verwaltung bieten. Die gesamte Unternehmung Google verfügt über eine Vielzahl von Rechenzentren, enorme infrastrukturelle Kapazitäten und ein eigenes globales Hochleistungsnetzwerk. Da der IaaS-Zweig Google Compute Engine (GCE) lediglich geringe Mehrkosten für Google darstellt, kann es den Preis trotz hoher Leistungsfähigkeit aggressiv gestalten kann. Dennoch wird sich Google nicht durch den Preis, sondern durch seine Plattform und zusätzliche Verwaltungsfunktionen von den anderen IaaS-Anbietern unterscheiden. Aktuell ist Google Cloud Storage jedoch ein relativ neues Produkt, sodass noch keine operative Erfolgsbilanz gezogen werden kann. Hinzu kommen kleinere Störungen bis zur Freigabe der allgemeinen Verfügbarkeit von GCE. Eine der größten Herausforderungen besteht darin, das Vertrauen der Unternehmen zu gewinnen und den Support auszubauen. Allerdings wird Google bereits heute als künftiger Marktführer für IaaS wahrgenommen, nicht zuletzt wegen der gewohnten Unterstützung durch Software-Unternehmen und Entwickler. Diesen Vorteil konnten wir uns im Rahmen der Projektarbeit zunutze machen und auf Entwicklungsmöglichkeiten von Google, bspw. durch die Verwendung der Schnittstelle gsutil, zurückgreifen. Da das Ziel dieser Arbeit ebenfalls in einem visionären Quadranten einzuordnen wäre, haben wir uns für Google Cloud Storage und gegen Amazon Web Services und Microsoft Infrastructure Services entschieden.
 
@@ -395,7 +395,7 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 % ----------------------------------------------------------------------------------------------------------
 \section{Ergebnisse}
 Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
-\subsubsection{Architektur}
+\subsection{Architektur}
 Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Pattern angelehnt ist. Es unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (Pakete, die in anderen enthalten sind).
 
 \begin{compactitem}
@@ -410,11 +410,11 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 	\item view:\\
 	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
-\textbf{UML-Diagramm}\\
+\subsubsection{UML-Diagramm}
 
 \pagebreak
 
-\textbf{Anwendungsfälle}
+\subsubsection{Anwendungsfälle}
 \vspace{1em}
 $\;$\\
 \begin{minipage}{\linewidth}
@@ -553,17 +553,123 @@ Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder
 GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
 \end{compactitem}
 
-\subsubsection{Betriebssystem}
-Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
+\subsection{Kryptosystem}
+Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit
 
-\subsubsection{Kryptosystem}
-Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit\\
-\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
+\subsection{GUI}
+Nachfolgend wird die Oberfläche mit ihren Funktionalitäten beschrieben.
 
-\subsubsection{GUI}
-Beschreibung und Darstellung der Oberfläche
+\textbf{Login}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Login.jpg}
+	\captionof{figure}{\small Login}
+	\label{Login}
+\end{minipage}
+\vspace{1em}
 
-\subsubsection{Funktionalitäten}
+\textbf{Account erstellen}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Create.jpg}
+	\captionof{figure}{\small Account erstellen}
+	\label{Create}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Hauptfenster}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Main.jpg}
+	\captionof{figure}{\small Hauptfenster}
+	\label{Main}
+\end{minipage}
+\vspace{1em}
+
+\textbf{File Menü}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{File.jpg}
+	\captionof{figure}{\small File Menü}
+	\label{File}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Dateiauswahl}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Select.jpg}
+	\captionof{figure}{\small Dateiauswahl}
+	\label{Select}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Help Menü}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Help.jpg}
+	\captionof{figure}{\small Help Menü}
+	\label{Help}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Help Fenster}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{HelpPopUp.jpg}
+	\captionof{figure}{\small Help Fenster}
+	\label{HelpPopUp}
+\end{minipage}
+\vspace{1em}
+
+\textbf{About Fenster}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{AboutPopUp.jpg}
+	\captionof{figure}{\small About Fenster}
+	\label{AboutPopUp}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Kontextmenü}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Kontext.jpg}
+	\captionof{figure}{\small Kontextmenü}
+	\label{Kontext}
+\end{minipage}
+\vspace{1em}
+
+\textbf{Synchronisierungsstatus}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Synchron.jpg}
+	\captionof{figure}{\small Synchronisierungsstatus}
+	\label{Synchron}
+\end{minipage}
+\vspace{1em}
+
+\subsection{Funktionalitäten}
 Erläuterung der Grundfunktionen der Prototyps
 
 \pagebreak
@@ -583,13 +689,17 @@ Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umstän
 \\\textbf{Autokonfiguration der Schnittstellen}\\
 Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zum Google Drive zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
 \\\textbf{Installations Setup}\\
-Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin Standardmäßig eine Python2x installation.
+Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x installation.
 \\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
+\\\textbf{Verschlüsselung von Dateistrukturen}\\
+Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich, welche nach Ausführung mit einer Cloud synchronisiert werden. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Desweiteren hat der Fall eines korrupten Datenträger fatale Auswirkungen auf die darin befindlichen Dateien. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \\
+\cite{38}
 \\\textbf{Selbstsynchronisierung}\\
 \\\textbf{GoogleAPI: Buckets verwalten}\\
 
 \subsubsection{Serverseitiges Management}
 \textbf{Schlüsselmanagement durch Key-Server}\\
+Eine potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rückhaltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, es verringert lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße).\\ \cite{38}
 \\\textbf{Providing Server}\\
 \\\textbf{Serverseitige Rechteverwaltung}\\
 \\\textbf{Loginserver}\\
@@ -650,20 +760,11 @@ Die gesamte Installation des Programmes kann durch einen Wizard derart automatis
 \phantomsection
 \addcontentsline{toc}{section}{Anhang}
 \addtocontents{toc}{\vspace{-0.5em}}
-\section{Programmcode}
-Reiner Programmcode
-\pagebreak
-\section{Dokumentation}
-\subsection{Codedokumentation}
-Ausführliche Dokumentation des Programmcodes zur Verständlichkeit und für die Möglichkeit der Projektfortsetzung
-\subsection{UML}
-UML-Diagramm zur technischen Lösung
-\pagebreak
 
 \subsection{Installationsanleitung}
 Detaillierte Beschreibung zum Einsatz auf "Fremdsystemen"
 \pagebreak
-\section{Binarys}
+\section{Digitaler Anhang}
 \end{appendix}
 
 \end{document}
