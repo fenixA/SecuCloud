@@ -1,5 +1,6 @@
 package control;
 
+import java.util.ListIterator;
 import java.util.Vector;
 
 import model.InformationContainer;
@@ -25,7 +26,19 @@ public class FileListHandler {
 	public Vector<InformationContainer> getFileList() {
 		return this.fileList;
 	}
-
+	
+	public Vector<InformationContainer> getFilesInBucket(){
+		Vector<InformationContainer> result =  new Vector<InformationContainer>();
+		ListIterator<InformationContainer> listIterator = fileList
+				.listIterator();
+		while (listIterator.hasNext()) {
+			InformationContainer tempFileElement = listIterator.next();
+			if(tempFileElement.getCloudLocation().contains(Main.getInstance().getBucket())){
+				result.add(tempFileElement);
+			}
+		}
+		return result;
+	}
 	/**
 	 * Adds given InformationContainer to file list.
 	 * 
