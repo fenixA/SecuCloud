@@ -105,13 +105,8 @@ public class MainWindow extends javax.swing.JFrame {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * Initializes the table.
 	 *
-=======
-	 * Inits the table.
-	 * 
->>>>>>> Latex_documentation_holzi
 	 * @return the object[][]
 	 */
 	private Object[][] initTable() {
