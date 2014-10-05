@@ -5,7 +5,17 @@ import java.io.IOException;
 
 import control.SystemInformationCollector.OsID;
 
-public class SystemPathCollectorGsutilTEMP {
+/**
+ * The Class SystemPathCollector collects the paths of additional software used
+ * by the application.
+ */
+public class SystemPathCollector {
+
+	/**
+	 * Gets the python path of the actual system.
+	 * 
+	 * @return the python path
+	 */
 	public static String getPythonPath() {
 		if (SystemInformationCollector.getOperationSystem() == OsID.linux) {
 			try {
@@ -34,7 +44,7 @@ public class SystemPathCollectorGsutilTEMP {
 			tempFile = new File("C:\\Program Files\\Python27\\python.exe");
 			if (tempFile.exists()) {
 				return tempFile.getAbsolutePath();
-			} 
+			}
 			tempFile = new File("C:\\Programme\\Python27\\python.exe");
 			if (tempFile.exists()) {
 				return tempFile.getAbsolutePath();
@@ -50,7 +60,12 @@ public class SystemPathCollectorGsutilTEMP {
 		}
 		return "";
 	}
-	
+
+	/**
+	 * Gets the gsutil path on actual system.
+	 * 
+	 * @return the gsutil path
+	 */
 	public static String getGsutilPath() {
 		return "./../../ext/gsutil/gsutil.py";
 	}

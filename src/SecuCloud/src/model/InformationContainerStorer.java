@@ -22,15 +22,38 @@ import control.Main;
 import control.util.CryptToolbox;
 import control.util.SupportFunctions;
 
+/**
+ * The Class InformationContainerStorer is able to convert
+ * {@link InformationContainer} to byte arrays, save them encrypted in a file or
+ * restore information from a file and create {@link InformationContainer} of
+ * them.
+ */
 public class InformationContainerStorer {
+
+	/**
+	 * The Constant ARRAY_LEN defines the size of one
+	 * {@link InformationContainer} needs in a byte array.
+	 */
 	private static final int ARRAY_LEN = InformationContainer.ATTRIBUTE_LEN
 			* InformationContainer.ATTRIBUTES;
+
+	/** The Constant STATE_FILE. */
 	private static final String STATE_FILE = "state.cfg";
+
+	/** The expanded password. */
 	private byte[] expandedPassword;
 
+	/** The Constant ENC_ARRAY_LEN. */
 	public static final int ENC_ARRAY_LEN = ARRAY_LEN + Main.AES_BLOCK_SIZE; // plus
 																				// IV
 
+	/**
+	 * Instantiates a new information container storer. Expands the password to
+	 * make it usable for encryptin and saves it.
+	 * 
+	 * @param userPassword
+	 *            the users password
+	 */
 	public InformationContainerStorer(String userPassword) {
 		System.out
 				.println("InformationContainerStorer.InformationContainerStorer()");
@@ -38,6 +61,30 @@ public class InformationContainerStorer {
 				Main.AES_KEY_LEN);
 	}
 
+	/**
+	 * Loads a saved file list from the STATE_FILE by creating
+	 * {@link InformationContainer} from it an add them to the file list of
+	 * {@link FileListHandler}.
+	 * 
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws InvalidKeyException
+	 *             the invalid key exception
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 * @throws NoSuchProviderException
+	 *             the no such provider exception
+	 * @throws NoSuchPaddingException
+	 *             the no such padding exception
+	 * @throws ShortBufferException
+	 *             the short buffer exception
+	 * @throws IllegalBlockSizeException
+	 *             the illegal block size exception
+	 * @throws BadPaddingException
+	 *             the bad padding exception
+	 * @throws InvalidAlgorithmParameterException
+	 *             the invalid algorithm parameter exception
+	 */
 	public void loadFileList() throws IOException, InvalidKeyException,
 			NoSuchAlgorithmException, NoSuchProviderException,
 			NoSuchPaddingException, ShortBufferException,
@@ -67,6 +114,30 @@ public class InformationContainerStorer {
 		}
 	}
 
+	/**
+	 * Stores a file list of the {@link FileListHandler} encrypted by the users
+	 * password to the STATE_FILE.
+	 * 
+	 * @return true, if successful
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws InvalidKeyException
+	 *             the invalid key exception
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 * @throws NoSuchProviderException
+	 *             the no such provider exception
+	 * @throws NoSuchPaddingException
+	 *             the no such padding exception
+	 * @throws ShortBufferException
+	 *             the short buffer exception
+	 * @throws IllegalBlockSizeException
+	 *             the illegal block size exception
+	 * @throws BadPaddingException
+	 *             the bad padding exception
+	 * @throws InvalidAlgorithmParameterException
+	 *             the invalid algorithm parameter exception
+	 */
 	public boolean storeFileList() throws IOException, InvalidKeyException,
 			NoSuchAlgorithmException, NoSuchProviderException,
 			NoSuchPaddingException, ShortBufferException,
@@ -89,6 +160,34 @@ public class InformationContainerStorer {
 		return true;
 	}
 
+	/**
+	 * Store given {@link InformationContainer} to given file by creating a byte
+	 * array from it and encrypting it.
+	 * 
+	 * @param informationContainer
+	 *            the {@link InformationContainer}
+	 * @param outFile
+	 *            the destination of encrypted information
+	 * @return true, if successful
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws InvalidKeyException
+	 *             the invalid key exception
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 * @throws NoSuchProviderException
+	 *             the no such provider exception
+	 * @throws NoSuchPaddingException
+	 *             the no such padding exception
+	 * @throws ShortBufferException
+	 *             the short buffer exception
+	 * @throws IllegalBlockSizeException
+	 *             the illegal block size exception
+	 * @throws BadPaddingException
+	 *             the bad padding exception
+	 * @throws InvalidAlgorithmParameterException
+	 *             the invalid algorithm parameter exception
+	 */
 	private boolean storeInformationContainer(
 			InformationContainer informationContainer, File outFile)
 			throws IOException, InvalidKeyException, NoSuchAlgorithmException,
@@ -112,6 +211,30 @@ public class InformationContainerStorer {
 		}
 	}
 
+	/**
+	 * Load information container from given byte array by decrypting and
+	 * converting it to an {@link InformationContainer}.
+	 * 
+	 * @param input
+	 *            the given byte array
+	 * @return the created {@link InformationContainer}
+	 * @throws InvalidKeyException
+	 *             the invalid key exception
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 * @throws NoSuchProviderException
+	 *             the no such provider exception
+	 * @throws NoSuchPaddingException
+	 *             the no such padding exception
+	 * @throws ShortBufferException
+	 *             the short buffer exception
+	 * @throws IllegalBlockSizeException
+	 *             the illegal block size exception
+	 * @throws BadPaddingException
+	 *             the bad padding exception
+	 * @throws InvalidAlgorithmParameterException
+	 *             the invalid algorithm parameter exception
+	 */
 	private InformationContainer loadInformationContainer(byte[] input)
 			throws InvalidKeyException, NoSuchAlgorithmException,
 			NoSuchProviderException, NoSuchPaddingException,
@@ -123,6 +246,13 @@ public class InformationContainerStorer {
 				.decryptByteArrayAesCTR(input, expandedPassword));
 	}
 
+	/**
+	 * Creates the information container from byte array.
+	 * 
+	 * @param input
+	 *            the input
+	 * @return the created {@link InformationContainer}
+	 */
 	private InformationContainer createInformationContainerFromByteArray(
 			byte[] input) {
 		System.out
@@ -209,13 +339,20 @@ public class InformationContainerStorer {
 		return ic;
 	}
 
+	/**
+	 * Creates the byte array from information container.
+	 * 
+	 * @param informationContainer
+	 *            the given {@link InformationContainer}
+	 * @return the created byte[]
+	 */
 	private byte[] createByteArrayFromInformationContainer(
 			InformationContainer informationContainer) {
 		int ctr = 0;
 		byte[] plain = new byte[ARRAY_LEN];
 		Arrays.fill(plain, (byte) 0);
 
-		String tempString = informationContainer.getLocalPLainLocation();
+		String tempString = informationContainer.getLocalPlainLocation();
 		System.arraycopy(tempString.getBytes(), 0, plain, ctr
 				* InformationContainer.ATTRIBUTE_LEN, tempString.length());
 		ctr++;

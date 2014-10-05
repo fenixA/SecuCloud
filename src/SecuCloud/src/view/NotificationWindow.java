@@ -4,8 +4,15 @@ import javax.swing.JOptionPane;
 
 import control.Main;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NotificationWindow.
+ */
 public class NotificationWindow {
 
+	/**
+	 * Help notification.
+	 */
 	public void helpNotification() {
 
 		String message = "1. Upload File:\n"
@@ -27,6 +34,9 @@ public class NotificationWindow {
 				JOptionPane.QUESTION_MESSAGE);
 	}
 
+	/**
+	 * About notification.
+	 */
 	public void aboutNotification() {
 
 		String message = Main.getInstance().getSoftwareName()

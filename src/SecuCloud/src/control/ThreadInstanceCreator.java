@@ -1,4 +1,4 @@
-package control.util;
+package control;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,31 +9,65 @@ import java.security.NoSuchProviderException;
 
 import javax.crypto.NoSuchPaddingException;
 
-import control.Main;
+import control.util.CryptToolbox;
 import model.InformationContainer;
 import model.cc.CloudConnectorGoogleGsutilTEMP;
 
-public class ThreaderInstanceCreator implements Runnable {
+/**
+ * The Class ThreaderInstanceCreator separates costly functions to different
+ * threads to avoid waiting times for the user.
+ */
+public class ThreadInstanceCreator implements Runnable {
+
+	/**
+	 * The Enum command contains the different commands with which a thread can
+	 * be started.
+	 */
 	public enum command {
-		encryptUploadFile, downloadDecryptFile, removeFile
+
+		/** The encrypt and upload file. */
+		encryptUploadFile,
+		/** The download and decrypt file. */
+		downloadDecryptFile,
+		/** The remove file. */
+		removeFile
 	}
 
+	/** The given information container. */
 	private InformationContainer informationContainer;
+
+	/** The given command. */
 	private command cmd;
+
+	/** The cloud connector. */
 	private CloudConnectorGoogleGsutilTEMP cloudConnectorGoogleGsutilTEMP;
 
-	public ThreaderInstanceCreator(command cmd, InformationContainer informationContainer) {
+	/**
+	 * Instantiates a new threader instance.
+	 * 
+	 * @param cmd
+	 *            the command
+	 * @param informationContainer
+	 *            the information container
+	 */
+	public ThreadInstanceCreator(command cmd,
+			InformationContainer informationContainer) {
 		this.informationContainer = informationContainer;
 		this.cmd = cmd;
 		this.cloudConnectorGoogleGsutilTEMP = new CloudConnectorGoogleGsutilTEMP();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		switch (cmd) {
 		case encryptUploadFile:
 			File selectedFile = new File(
-					informationContainer.getLocalPLainLocation());
+					informationContainer.getLocalPlainLocation());
 			try {
 				CryptToolbox.threadEncryptFileAesCTR(selectedFile,
 						informationContainer.getLocalEncryptedLocation(),
@@ -44,14 +78,16 @@ public class ThreaderInstanceCreator implements Runnable {
 				e.printStackTrace();
 			}
 			this.cloudConnectorGoogleGsutilTEMP.upload(informationContainer);
-			File encryptedFile = new File(informationContainer.getLocalEncryptedLocation());
+			File encryptedFile = new File(
+					informationContainer.getLocalEncryptedLocation());
 			encryptedFile.delete();
 			break;
 		case downloadDecryptFile:
 			this.cloudConnectorGoogleGsutilTEMP.download(informationContainer);
 			try {
 				File f = new File(Main.getInstance().getUSER_TEMP_DIR() + "/"
-						+ informationContainer.getEncryptedName() + Main.DOWNLOAD_EXTENSION);
+						+ informationContainer.getEncryptedName()
+						+ Main.DOWNLOAD_EXTENSION);
 				CryptToolbox.threadDecryptFileAesCTR(f,
 						Main.getInstance().getUSER_DOWNLOAD_DIR() + "/"
 								+ informationContainer.getName(),
@@ -60,7 +96,6 @@ public class ThreaderInstanceCreator implements Runnable {
 			} catch (InvalidKeyException | NoSuchAlgorithmException
 					| NoSuchProviderException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
