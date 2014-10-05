@@ -380,11 +380,14 @@ public class Main {
 			for (int i = 0; i < lost.size(); i++) {
 				InformationContainer informationContainer = FileListHandler
 						.getInstance().selectByEncryptedName(lost.get(i));
-				drawDeleteWindow();
-				if (this.deleteWindow.HandleInput(
-						informationContainer.getName(), lost.get(i)) == true) {
-					FileListHandler.getInstance().deleteFile(
-							informationContainer);
+				if (informationContainer.getCloudLocation().contains(
+						this.bucket)) {
+					drawDeleteWindow();
+					if (this.deleteWindow.HandleInput(
+							informationContainer.getName(), lost.get(i)) == true) {
+						FileListHandler.getInstance().deleteFile(
+								informationContainer);
+					}
 				}
 			}
 		}
@@ -539,8 +542,9 @@ public class Main {
 	 * @throws InvalidAlgorithmParameterException
 	 *             the invalid algorithm parameter exception
 	 */
-	public void toggle_LoginWindow_okButton(String userName, String userPassword, String bucket)
-			throws IOException, InterruptedException, InvalidKeyException,
+	public void toggle_LoginWindow_okButton(String userName,
+			String userPassword, String bucket) throws IOException,
+			InterruptedException, InvalidKeyException,
 			NoSuchAlgorithmException, NoSuchProviderException,
 			NoSuchPaddingException, ShortBufferException,
 			IllegalBlockSizeException, BadPaddingException,

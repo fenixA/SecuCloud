@@ -112,7 +112,7 @@ public class MainWindow extends javax.swing.JFrame {
 	private Object[][] initTable() {
 		int ctr = 0;
 		Vector<InformationContainer> fileList = FileListHandler.getInstance()
-				.getFileList();
+				.getFilesInBucket();
 		Object[][] result = new Object[fileList.size()][];
 		ListIterator<InformationContainer> listIterator = fileList
 				.listIterator();
