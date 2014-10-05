@@ -384,8 +384,6 @@ Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, ve
 
 SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht.
 \\\cite{8}\cite{9}\cite{10}\\
-
-\textbf{RSA}\\
 \pagebreak
 
 
@@ -410,7 +408,8 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 	\item view:\\
 	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
-\subsubsection{UML-Diagramm}
+\subsubsection{UML-Diagramme}
+Die UML Diagramme die im Laufe des Projektes entstanden sind befinden sich im Ordner UML. In der Datei ClassRelations.jpg findet sich eine Übersicht aller Klassen und deren Beziehungen zu einander. Attribute und Methoden wurden hier weg gelassen, da diese der Übersichtlichkeit abträglich wären. Des weiteren gibt es für jedes package bzw. subpackage ein weiteres UML mit den jeweiligen Klassen, deren Beziehungen sowie Attributen und Methoden. Genauere Beschreibungen der einzelnen Methoden, Klassen und Attributen finden sich in der Dokumentation im Ordner Projektdokumentation im digitalen Anhang.
 
 \pagebreak
 
@@ -697,11 +696,13 @@ Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umstän
 Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zum Google Drive zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
 \\\textbf{Installations Setup}\\
 Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x installation.
+\\\textbf{Selbstsynchronisierung}\\
+Um von der Anwendung zur Archivierung weg zu kommen und weitere Verwendungsfelder für die Applikation zu erschließen, ist es durchaus sinnvoll die in der Cloud hinterlegten Dateien selbstständig synchron mit ihren lokalen pendants zu halten: Jedes Mal, wenn indizierte Dateien geändert werden, berechnet die Applikation ein Changeset der alten und der neuen Version und legt auch dieses verschlüsselt in der Cloud ab. Durch eine neue Ansicht kann der Anwender dann durch Versionen gehen und alte nach Bedarf wieder herstellen. Dadurch wäre eine Art Backupsystem geschaffen, dass nicht nur Sicherheit gewährleistet, sondern gleichzeitig auch Redundanz und Hochverfügbarkeit für die versionierten Daten geschaffen wird.
 \\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
+Weiterhin denkbar wäre, die Applikation derart anzulegen, dass sie den Cloudspeicher als virtuelles Laufwerk im System verankert. Daten die darin abgelegt werden, werden on the fly verschlüsselt und in der Cloud gespeichert. Dies könnte auch mittels eines automatisch synchronisierten Ordners geschehen, wie es etwa bei Dropbox der Fall ist. Dann würde die Software abgesehen von der Archivierung auch weitere Anwendungsfälle bekommen. Es ergäbe sich allerdings das Problem, dass es Automatismen geben müsste, die verhindern, dass Daten verloren gehen, wenn der synchrone Ordner auf mehreren Systemen gelichzeitig genutzt würde und zwei Personen zu selben Zeit an der selben Datei arbeiten. Hier wäre eine Art Versionsverwaltung vonnöten, die ähnlich wie GIT Changesets von den Dateien erzeugt und diese wiederherstellbar hält.
 \\\textbf{Verschlüsselung von Dateistrukturen}\\
 Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich, welche nach Ausführung mit einer Cloud synchronisiert werden. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Desweiteren hat der Fall eines korrupten Datenträger fatale Auswirkungen auf die darin befindlichen Dateien. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \\
 \cite{38}
-\\\textbf{Selbstsynchronisierung}\\
 \\\textbf{GoogleAPI: Buckets verwalten}\\
 
 \subsubsection{Serverseitiges Management}
