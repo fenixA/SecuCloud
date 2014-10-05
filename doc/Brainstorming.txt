@@ -20,3 +20,7 @@ Logfiles
 Codekorrekturen (Systemname etc.)
 About+Help Window
 DoxyGen/JavaDocs Codekommentierung
+
+ToDo-Theorie:
+Funktionsweise IaaS
+Notwendigkeit von Cloud
