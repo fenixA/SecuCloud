@@ -118,8 +118,8 @@ public class LoginWindow extends JFrame {
 		this.add(createButton);
 		this.add(okButton);
 
-		nameTextField.setText("fenix");
-		passwordTextField.setText("183461");
+		nameTextField.setText("Username");
+		passwordTextField.setText("Password");
 		bucketTextField.setText("stdbucket");
 
 		this.pack();
