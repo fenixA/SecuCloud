@@ -175,9 +175,25 @@ public class Main {
 					this.userPassword);
 			this.informationContainerStorer.loadFileList();
 			this.drawMainWindow();
-			this.checkSynchronization();
+			this.checkSynchronicity();
 		} else {
 			drawLoginWindow();
+		}
+	}
+
+	private void checkSynchronicity() {
+		Vector<String> lost = FileListHandler.getInstance().synchronizeCloudStorage(
+						new CloudConnectorGoogleGsutilTEMP().listDir());
+		if (lost != null) {
+			for (int i = 0; i < lost.size(); i++) {
+				InformationContainer informationContainer = FileListHandler
+						.getInstance().selectByEncryptedName(lost.get(i));
+				drawDeleteWindow();
+				if (this.deleteWindow.HandleInput(informationContainer.getName(), lost.get(i)) == true) {
+					FileListHandler.getInstance().deleteFile(
+							informationContainer);
+				}
+			}
 		}
 	}
 
@@ -225,22 +241,6 @@ public class Main {
 		this.createAccountWindow.dispose();
 		settingsFileHandler.addUser(userName, userPassword);
 		drawLoginWindow();
-	}
-
-	private void checkSynchronization() {
-		Vector<String> lost = FileListHandler.getInstance().synchronizeCloudStorage(
-						new CloudConnectorGoogleGsutilTEMP().listDir());
-		if (lost != null) {
-			for (int i = 0; i < lost.size(); i++) {
-				InformationContainer informationContainer = FileListHandler
-						.getInstance().selectByEncryptedName(lost.get(i));
-				drawDeleteWindow();
-				if (this.deleteWindow.HandleInput(informationContainer.getName(), lost.get(i)) == true) {
-					FileListHandler.getInstance().deleteFile(
-							informationContainer);
-				}
-			}
-		}
 	}
 
 	public void toggle_LoginWindow_okButton(String userName, String userPassword)

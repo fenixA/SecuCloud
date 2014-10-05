@@ -46,6 +46,7 @@
 	colorlinks=true,linkcolor=black,citecolor=black,filecolor=magenta,urlcolor=black}
 \pdfinfo{/CreationDate (D:20141007)}
 
+
 \begin{document}
 
 \titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
@@ -395,9 +396,6 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 \section{Ergebnisse}
 Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
 \subsubsection{Architektur}
-\textbf{UML-Diagramm}\\
-UML-Diagramm Grafik
-
 Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Pattern angelehnt ist. Es unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (Pakete, die in anderen enthalten sind).
 
 \begin{compactitem}
@@ -412,6 +410,8 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 	\item view:\\
 	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
+\textbf{UML-Diagramm}\\
+
 \pagebreak
 
 \textbf{Anwendungsfälle}
