@@ -23,17 +23,36 @@ import javax.swing.SwingConstants;
 
 import control.Main;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoginWindow.
+ */
 public class LoginWindow extends JFrame {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5433548214205850844L;
+	
+	/** The name label. */
 	private JLabel nameLabel;
+	
+	/** The password label. */
 	private JLabel passwordLabel;
 
+	/** The name text field. */
 	private JTextField nameTextField;
+	
+	/** The password text field. */
 	private JPasswordField passwordTextField;
 
+	/** The ok button. */
 	private JButton okButton;
+	
+	/** The create button. */
 	private JButton createButton;
 
+	/**
+	 * Instantiates a new login window.
+	 */
 	public LoginWindow() {
 		setTitle("Login");
 
@@ -47,6 +66,9 @@ public class LoginWindow extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Inits the components.
+	 */
 	private void initComponents() {
 		this.nameLabel = new JLabel("Name: ", SwingConstants.LEFT);
 		this.passwordLabel = new JLabel("Password: ", SwingConstants.LEFT);

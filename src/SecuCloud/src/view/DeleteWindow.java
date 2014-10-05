@@ -3,8 +3,19 @@ package view;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DeleteWindow.
+ */
 public class DeleteWindow {
 
+	/**
+	 * Handle input.
+	 *
+	 * @param fileName the file name
+	 * @param encryptedName the encrypted name
+	 * @return true, if successful
+	 */
 	public boolean HandleInput(String fileName, String encryptedName) {
 
 		UIManager.put("OptionPane.yesButtonText", "Yes");

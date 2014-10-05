@@ -14,9 +14,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
-import control.util.ThreaderInstanceCreator;
+import control.ThreadInstanceCreator.command;
 import control.util.CryptToolbox;
-import control.util.ThreaderInstanceCreator.command;
 import view.NotificationWindow;
 import view.CreateAccountWindow;
 import view.LoginWindow;
@@ -26,7 +25,6 @@ import model.InformationContainer;
 import model.InformationContainerStorer;
 import model.cc.CloudConnectorGoogleGsutilTEMP;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Main. It is called in startup and is the connection between the
  * different software parts.
@@ -438,7 +436,7 @@ public class Main {
 			NoSuchProviderException, NoSuchPaddingException, IOException,
 			InvalidAlgorithmParameterException {
 		InformationContainer informationContainer = CryptToolbox
-				.encryptFileCTR(selectedFile);
+				.encryptAndUploadFileCTR(selectedFile);
 		FileListHandler.getInstance().addFile(informationContainer);
 	}
 
@@ -451,7 +449,7 @@ public class Main {
 	public void toggle_MainWindow_delete(String encryptedName) {
 		InformationContainer informationContainer = FileListHandler
 				.getInstance().selectByEncryptedName(encryptedName);
-		Thread t = new Thread(new ThreaderInstanceCreator(command.removeFile,
+		Thread t = new Thread(new ThreadInstanceCreator(command.removeFile,
 				informationContainer));
 		t.start();
 		threadVector.add(t);
@@ -467,7 +465,7 @@ public class Main {
 	public void toggle_MainWindow_download(String encryptedName) {
 		InformationContainer informationContainer = FileListHandler
 				.getInstance().selectByEncryptedName(encryptedName);
-		CryptToolbox.decryptFileCTR(informationContainer);
+		CryptToolbox.downloadAndDecryptFileCTR(informationContainer);
 	}
 
 	/**

@@ -4,8 +4,15 @@ import javax.swing.JOptionPane;
 
 import control.Main;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NotificationWindow.
+ */
 public class NotificationWindow {
 
+	/**
+	 * Help notification.
+	 */
 	public void helpNotification() {
 
 		String message = "1. Upload File:\n"
@@ -13,7 +20,9 @@ public class NotificationWindow {
 				+ "The chosen file will be locally encrypted and uploaded to the Cloud.\n\n"
 				+ "2. Download File:\n"
 				+ "Right click on a listed file > Download\n"
-				+ "The chosen file will be downloaded and instantly decrypted to an local directory.\n\n"
+				+ "The chosen file will be downloaded and instantly decrypted to "
+				+ Main.getInstance().getUSER_DOWNLOAD_DIR()
+				+ ".\n\n"
 				+ "3. Delete File:\n"
 				+ "Right click on a listed file > Delete\n"
 				+ "The chosen file will be deleted from the Cloud and the stored Key thrown away.\n\n"
@@ -27,6 +36,9 @@ public class NotificationWindow {
 				JOptionPane.QUESTION_MESSAGE);
 	}
 
+	/**
+	 * About notification.
+	 */
 	public void aboutNotification() {
 
 		String message = Main.getInstance().getSoftwareName()
@@ -37,8 +49,7 @@ public class NotificationWindow {
 				+ "Copyright Felix Friedrich and Michael Holzwarth, 2014.\n"
 				+ "IS-Project in cooperation with Aalen University of Applied Sciences.\n\n"
 				+ "This product includes software developed by Google Inc., \n"
-				+ "Python Software Foundation and Oracle Corporation.\n"
-				+ " ";
+				+ "Python Software Foundation and Oracle Corporation.\n" + " ";
 		String title = "About";
 		JOptionPane.showMessageDialog(null, message, title,
 				JOptionPane.INFORMATION_MESSAGE);

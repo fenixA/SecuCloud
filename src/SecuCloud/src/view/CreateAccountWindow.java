@@ -16,19 +16,39 @@ import javax.swing.SwingConstants;
 
 import control.Main;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CreateAccountWindow.
+ */
 public class CreateAccountWindow extends javax.swing.JFrame {
+	
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -7334076302460580234L;
 
+	/** The name label. */
 	private JLabel nameLabel;
+	
+	/** The first password label. */
 	private JLabel firstPasswordLabel;
+	
+	/** The second password label. */
 	private JLabel secondPasswordLabel;
 
+	/** The name text field. */
 	private JTextField nameTextField;
+	
+	/** The first password text field. */
 	private JPasswordField firstPasswordTextField;
+	
+	/** The second password text field. */
 	private JPasswordField secondPasswordTextField;
 
+	/** The ok button. */
 	private JButton okButton;
 
+	/**
+	 * Instantiates a new creates the account window.
+	 */
 	public CreateAccountWindow() {
 		setTitle("Please create new user!");
 
@@ -42,6 +62,9 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Inits the components.
+	 */
 	private void initComponents() {
 		this.nameLabel = new JLabel("Name: ", SwingConstants.LEFT);
 		this.firstPasswordLabel = new JLabel("Password: ", SwingConstants.LEFT);
