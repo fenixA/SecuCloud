@@ -114,9 +114,9 @@ public class CreateAccountWindow extends javax.swing.JFrame {
 
 		this.add(okButton);
 
-		nameTextField.setText("fenix");
-		firstPasswordTextField.setText("183461");
-		secondPasswordTextField.setText("183461");
+		nameTextField.setText("Username");
+		firstPasswordTextField.setText("Password");
+		secondPasswordTextField.setText("Password");
 
 		this.pack();
 	}
