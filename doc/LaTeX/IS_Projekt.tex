@@ -171,6 +171,9 @@ Cloud-Anbieter verfügen über verschiedene Sicherheitsmechanismen zum Schutz vo
 Dies macht eine verschlüsselte Ablage der Daten notwendig um sicherzustellen, dass die Daten auch innerhalb der Cloud in vollem Umfang den Sicherheitsstandards entsprechen.
 
 \subsection{Problemstellung und Problemabgrenzung}
+
+\subsubsection{Annahmen}
+Der Client und dessen Zugang zur Cloud wird, nach Vorgabe, als sicher angesehen.
 \subsubsection{Problemstellung}
 Eine symmetrische Software-Kryptographie soll möglichst Daten, die in eine Cloud ausgelagert werden,  vor Fremdzugriff schützen. Die Konzeption und der Entwurf eines Prototyps sollen evaluieren, wie diese Herausforderung effizient und sicher gelöst werden kann. Dabei steht der betriebssystemunabhängige Zugriff auf die entsprechende Anwendung und das eingesetzte Verschlüsselungsverfahren im Vordergrund. Erarbeitet werden soll die Implementierung für einen einzelnen Cloud-Anbieter. 
 
@@ -384,6 +387,13 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 \textbf{RSA}\\
 \pagebreak
 
+
+
+% ----------------------------------------------------------------------------------------------------------
+% Ergebnisse
+% ----------------------------------------------------------------------------------------------------------
+\section{Ergebnisse}
+Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
 \subsubsection{Architektur}
 \textbf{UML-Diagramm}\\
 UML-Diagramm Grafik
@@ -394,13 +404,13 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 	\item control:\\
 	Das package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Nutzerverwaltung und Koordination der Datei-Informationen.
 	\item control.util:\\
-	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur Speicherung von Informationen notwendig sind. Alle Methoden von diesen Klassen sind statisch und können zu jeder Zeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen sowie Hilfsfunktionen zur Umwandlung von Werten. 
+	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur Speicherung von Informationen notwendig sind. Alle Methoden von 	diesen Klassen sind statisch und können zu jeder Zeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen sowie Hilfsfunktionen zur Umwandlung von Werten.  Außerdem liegt hier die Klasse 				ThreaderInstanceCreator, die dafür sorgt, dass die langsamen Verschlüsselungs- und Uploadprozesse in einen eigenen Thread ausgelagert werden und den weiteren Programmablauf nicht behindern.
 	\item model:\\
 	Das package model ist für die Daten selbst zuständig, es definiert in welcher Weise Informationen gespeichert und, nach Beendigung des Programmes, im Speicher des Computers abgelegt werden.
 	\item model.cc:\\
 	Das subpackage cc gehört zum model und verwaltet die Speicherung der Daten in der Cloud. Darin wird das Interface für die Schnittstelle zu Cloudspeichern definiert. In diesem Prototyp ist dies gsutil zur Anbindung von Google Cloud Storage.
 	\item view:\\
-	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
+	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
 \pagebreak
 
@@ -543,9 +553,6 @@ Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder
 GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
 \end{compactitem}
 
-\subsubsection{Annahmen}
-Der Client und dessen Zugang zur Cloud wird, nach Vorgabe, als sicher angesehen.
-
 \subsubsection{Betriebssystem}
 Die Anwendung ist derart konzipiert, dass sie sowohl unter Linux als auch unter Windows lauffähig ist. In der Instalationsanleitung [Anhang X] ist aufgeführt, welche Grundvoraussetzungen das operierende System erfüllen muss bzw. welche Vorinstallationen notwendig sind.
 
@@ -558,14 +565,6 @@ Beschreibung und Darstellung der Oberfläche
 
 \subsubsection{Funktionalitäten}
 Erläuterung der Grundfunktionen der Prototyps
-
-\pagebreak
-
-% ----------------------------------------------------------------------------------------------------------
-% Ergebnisse
-% ----------------------------------------------------------------------------------------------------------
-\section{Ergebnisse}
-Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
 
 \pagebreak
 
