@@ -28,10 +28,10 @@ import control.Main;
  * The Class MainWindow shows the main window of the application.
  */
 public class MainWindow extends javax.swing.JFrame {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3172688540921699213L;
-	
+
 	/** The window height. */
 	private int positionCoordinateX = 400, positionCoordinateY = 400,
 			windowWidth = 400, windowHeight = 300;
@@ -39,47 +39,48 @@ public class MainWindow extends javax.swing.JFrame {
 	// Components
 	/** The menu bar. */
 	private JMenuBar menuBar;
-	
+
 	/** The table. */
 	private JTable table;
-	
+
 	/** The non editable j table. */
 	private NonEditableJTable nonEditableJTable;
-	
+
 	/** The popup menu. */
 	JPopupMenu popupMenu;
-	
+
 	/** The scroll pane. */
 	JScrollPane scrollPane;
 
 	/** The title file. */
 	private JMenu titleFile;
-	
+
 	/** The title help. */
 	private JMenu titleHelp;
 
 	/** The entry file select. */
 	private JMenuItem entryFileSelect;
-	
+
 	/** The entry file close. */
 	private JMenuItem entryFileClose;
-	
+
 	/** The entry help help. */
 	private JMenuItem entryHelpHelp;
-	
+
 	/** The entry help about. */
 	private JMenuItem entryHelpAbout;
-	
+
 	/** The delete entry. */
 	private JMenuItem deleteEntry;
-	
+
 	/** The download entry. */
 	private JMenuItem downloadEntry;
 
 	/**
 	 * Instantiates a new main window.
-	 *
-	 * @param title the title
+	 * 
+	 * @param title
+	 *            the title
 	 */
 	public MainWindow(String title) {
 		this.setTitle(title);
@@ -104,8 +105,13 @@ public class MainWindow extends javax.swing.JFrame {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Initializes the table.
 	 *
+=======
+	 * Inits the table.
+	 * 
+>>>>>>> Latex_documentation_holzi
 	 * @return the object[][]
 	 */
 	private Object[][] initTable() {
@@ -141,9 +147,11 @@ public class MainWindow extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				String encryptedName = (String) table.getValueAt(row, 1);
-				Main.getInstance().toggle_MainWindow_delete(encryptedName);
-				popupMenu.setVisible(false);
+				if (table.getSelectedRow() != -1) {
+					String encryptedName = (String) table.getValueAt(row, 1);
+					Main.getInstance().toggle_MainWindow_delete(encryptedName);
+					popupMenu.setVisible(false);
+				}
 			}
 		});
 		downloadEntry = new JMenuItem("Download");
@@ -151,9 +159,12 @@ public class MainWindow extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int row = table.getSelectedRow();
-				String encryptedName = (String) table.getValueAt(row, 1);
-				Main.getInstance().toggle_MainWindow_download(encryptedName);
-				popupMenu.setVisible(false);
+				if (table.getSelectedRow() != -1) {
+					String encryptedName = (String) table.getValueAt(row, 1);
+					Main.getInstance()
+							.toggle_MainWindow_download(encryptedName);
+					popupMenu.setVisible(false);
+				}
 			}
 		});
 
