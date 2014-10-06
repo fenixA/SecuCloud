@@ -1,26 +1,22 @@
-Loginsystem/Loginserver (Serverseitige Rechteverwaltung, Providingserver)
-Filelist verschlüsselt in Cloud ablegen (state.cfg)
-MasterKey Wiederherstellung (shared secret)
-Buckets erstellen
-Dateien zwischen Buckets verschieben
-Traffic-Überwachung einzelner Clients
-Gsutil autoconfig
-(py2exe und Jsmooth/jar2exe für Windows)
-Kaskadierte Verschlüsselung (Backup-Versionskontrolle)
-OpenJDK/OpenSource JDK
-Virtuelles Laufwerk
-
-Design:
-MultiRow-Funktionalität
-(Right-Click Fix + Recently Used Fix)
-Multi-Bucket + Drag&Drop
-
 ToDo:
 Logfiles
-Codekorrekturen (Systemname etc.)
-About+Help Window
-DoxyGen/JavaDocs Codekommentierung
 
 ToDo-Theorie:
-Funktionsweise IaaS
-Notwendigkeit von Cloud
+Forschungsfragen / Ziel der Arbeit / Gang der Arbeit / Kurzfassung
+Notwendigkeit von Cloud Computing
+3-Schichten Modell
+(Cloud-Anbieter-Vergleich)
+Google Project/Bucket
+OpenJDK/OpenSource JDK
+Kaskadierte Verschlüsselung (Backup-Versionskontrolle)
+Traffic-Überwachung einzelner Clients
+MasterKey Wiederherstellung (shared secret)
+Loginsystem/Loginserver (Serverseitige Rechteverwaltung, Providingserver)
+gsutil: Probleme mit großen Dateien + gsutil Befehle im Code
+UseCase ggf. überarbeiten
+
+Subsection Diskussion Bedeutung der Arbeit (Forschungsfragen)
+
+
+Layout
+Quellen korrigieren/erweitern
