@@ -384,8 +384,6 @@ Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, ve
 
 SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht.
 \\\cite{8}\cite{9}\cite{10}\\
-
-\textbf{RSA}\\
 \pagebreak
 
 
@@ -410,7 +408,8 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 	\item view:\\
 	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
-\subsubsection{UML-Diagramm}
+\subsubsection{UML-Diagramme}
+Die UML Diagramme die im Laufe des Projektes entstanden sind befinden sich im Ordner UML. In der Datei ClassRelations.jpg findet sich eine Übersicht aller Klassen und deren Beziehungen zu einander. Attribute und Methoden wurden hier weg gelassen, da diese der Übersichtlichkeit abträglich wären. Des weiteren gibt es für jedes package bzw. subpackage ein weiteres UML mit den jeweiligen Klassen, deren Beziehungen sowie Attributen und Methoden. Genauere Beschreibungen der einzelnen Methoden, Klassen und Attributen finden sich in der Dokumentation im Ordner Projektdokumentation im digitalen Anhang.
 
 \pagebreak
 
@@ -582,7 +581,17 @@ GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die
 \end{compactitem}
 
 \subsection{Kryptosystem}
-Erläuterung des eingesetzten Kryptosystems und Untersuchung dessen Sicherheit
+Die Verschlüsselung und das Accountmanagement basieren zurzeit ausschließlich auf den Algorithmen AES128 im CTR Modus und SHA256. Eine asymmetrische Verschlüsselung wurde in Betracht gezogen, hat aber unter der Annahme, dass der Client auf dem die Applikation läuft, als sichere Umgebung gilt. In einer späteren Weiterentwicklung ist es aber durchaus sinnvoll dies in betracht zu ziehen. Vor allem dann, wenn ein Server das Dateisystem bzw. dessen Synchronität verwalten soll, oder mehrere kaskadierte Verschlüsselungsebenen geschaffen werden sollen, um eine erweiterte Rechteverwaltung zu schaffen. Die Beschreibung der Sicherungsverfahren wird im Folgenden in der Reihenfolge, in der sie von einem Benutzer ausgelöst werden, beschrieben.
+\\\\\textbf{Account anlegen}\\
+Wird die Applikation zum ersten mal gestartet, stellt sie also fest, dass bisher keine Benutzer im System registriert sind, schafft sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem schlißen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Nutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. "Salt". Danach wird der Benutzername im Klartext in die Datei HOME/SecuCloud/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Danach berechnet das Programm einen SHA256 Hashwert über ein Byte array bestehend aus dem Salt und dem Passwort. Dieser Hash, sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf die selbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten des einen Nutzers enden und die des nächsten beginnen.
+\\\\\textbf{Login}\\
+Um sich in seinen Account einzuloggen, muss ein Benutzer seinen Nutzernamen und sein Passwort in die im LoginWindow vorgegebenen Zellen eintragen. Drückt er auf den OK Button, erstellt die Applikation eine Byte Array aus dem Passwort und dem in settings.cfg hinterlegten salt. Dies wird gehasht und das Ergebnis mit dem in settings.cfg eingetragenen verglichen. Stimmen die beiden überein, sind die Nutzerdaten valide und die Applikation wechselt in das MainWindow. Der Vorteil bei der Verwendung eines Salt ist in \ref{KryptV} näher erläutert.
+\\\\\textbf{Dateien ablegen}\\
+Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen, zu speichern. Danach wird die Datei selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt. Für jede Datei wird ein eigener Schlüssel berechnet, da ein Schlüssel immer gefährdeter wird, je öfter er benutzt, bzw. je mehr Daten damit verschlüsselt werden. Außerdem ist es möglich einem anderen Nutzer den Zugriff auf eine einzelene Datei zu gestatten, indem man ihm den Schlüssel aushändigt. 
+\\\\\textbf{Programm schließen}\\
+Wird die CLOSE Schaltfläche des MainWindow betätigt oder das rote X in der Ecke des Programmfensters, werden zunächst alle laufenden Verschlüsselungs- und Uploadprozesse beendet. Danach werden alle gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Byte Array wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/SecuCloud/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Key Länge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet aktuell, es wird sooft hinter einander gehängt, bis 16 Byte übertroffen werden und eventuel überflüssige Zeichen wieder abgeschnitten. Aus diesem Grund kohnt es sich ein ausreichend langes Passwort zu wählen.
+\\\\\textbf{Programmstart mit vorhandener state.cfg}\\
+Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und ensprechen Informationen zu diesen abgelegt wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die setttings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es möglich in Zukunft die state.cfg selbst auch in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden (etwa mitgeführt auf einem USB Stick), ohne die Informationen im Nutzerverzeichnis zu benötigen.
 
 \subsection{GUI und Funktionalitäten}
 Nachfolgend wird die Oberfläche sowie die Funktionalität des Prototyps beschrieben.
@@ -714,18 +723,20 @@ Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umstän
 \\\textbf{Autokonfiguration der Schnittstellen}\\
 Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zum Google Drive zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
 \\\textbf{Installations Setup}\\
-Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x installation.
+Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x installation und verwenden Standardpfade für installierte Anwendungen (/bin, /usr/bin etc.).
+\\\textbf{Selbstsynchronisierung}\\
+Um von der Anwendung zur Archivierung weg zu kommen und weitere Verwendungsfelder für die Applikation zu erschließen, ist es durchaus sinnvoll die in der Cloud hinterlegten Dateien selbstständig synchron mit ihren lokalen pendants zu halten: Jedes Mal, wenn indizierte Dateien geändert werden, berechnet die Applikation ein Changeset der alten und der neuen Version und legt auch dieses verschlüsselt in der Cloud ab. Durch eine neue Ansicht kann der Anwender dann durch Versionen gehen und alte nach Bedarf wieder herstellen. Dadurch wäre eine Art Backupsystem geschaffen, dass nicht nur Sicherheit gewährleistet, sondern gleichzeitig auch Redundanz und Hochverfügbarkeit für die versionierten Daten geschaffen wird.
 \\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
+Weiterhin denkbar wäre, die Applikation derart anzulegen, dass sie den Cloudspeicher als virtuelles Laufwerk im System verankert. Daten die darin abgelegt werden, werden on the fly verschlüsselt und in der Cloud gespeichert. Dies könnte auch mittels eines automatisch synchronisierten Ordners geschehen, wie es etwa bei Dropbox der Fall ist. Dann würde die Software abgesehen von der Archivierung auch weitere Anwendungsfälle bekommen. Es ergäbe sich allerdings das Problem, dass es Automatismen geben müsste, die verhindern, dass Daten verloren gehen, wenn der synchrone Ordner auf mehreren Systemen gelichzeitig genutzt würde und zwei Personen zu selben Zeit an der selben Datei arbeiten. Hier wäre eine Art Versionsverwaltung vonnöten, die ähnlich wie GIT Changesets von den Dateien erzeugt und diese wiederherstellbar hält.
 \\\textbf{Verschlüsselung von Dateistrukturen}\\
 Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich, welche nach Ausführung mit einer Cloud synchronisiert werden. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Desweiteren hat der Fall eines korrupten Datenträger fatale Auswirkungen auf die darin befindlichen Dateien. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \\
 \cite{38}
-\\\textbf{Selbstsynchronisierung}\\
-\\\textbf{GoogleAPI: Buckets verwalten}\\
 
 \subsubsection{Serverseitiges Management}
 \textbf{Schlüsselmanagement durch Key-Server}\\
 Eine potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rückhaltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, es verringert lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße).\\ \cite{38}
 \\\textbf{Providing Server}\\
+Die Tatsache, dass Benutzer zurzeit auf dem selben Cloudspeicher arbeiten und eventuell sogar die selben Buckets nutzen, verursacht zwei grundsätzliche Probleme: Zum Einen kann ein Benutzer theoretisch (wenn auch nicht mit der Applikation selbst, aber mittels des Web Frontends) Daten anderer Nutzer manipulieren oder löschen. Dieses Problem ließe sich noch durch die von den Cloudanbietern selbst angebotene Rechteverwaltung innerhalb des Speichers lösen. Auf der Anderen ist es aber dem CLoudanbieter noch möglich (und mit Rechteverwaltung erst recht) einzusehen, welchem Nutzer welche Dateien zuzuordnen sind, was widerum eine Gefahr im Sinne der IT-Sicherheit darstellt: Der Anbieter (oder jede Person oder Organisation die sich auf irgend eine Weise Zugriff verschafft hat) kann analysen über das Uploadverhalten betreiben und dadurch Schlüsse über deren Inhalt ziehen. An dieser Stelle könnte man über den Einsatz eines providing Servers nachdenken: Dieser Server steht zwischen dem Endanwender und der Cloudspeicher selbst. Alle Daten werden wie gehabt lokal verschlüsselt, dann aber nicht direkt in der Cloud abgelegt, sondern an den providing Server geschickt, der sie auf den oder die Cloudspeicher legt und eine Abbildung der Zugehörigkeiten speichert. Dadurch bleiben die Daten  
 \\\textbf{Serverseitige Rechteverwaltung}\\
 \\\textbf{Loginserver}\\
 \\\textbf{Serverseitige Verwaltung des Dateisystems}\\
@@ -786,7 +797,7 @@ Eine potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläu
 \addcontentsline{toc}{section}{Anhang}
 \addtocontents{toc}{\vspace{-0.5em}}
 
-\subsection{Installationsanleitung}
+\section{Installationsanleitung}
 Detaillierte Beschreibung zum Einsatz auf "Fremdsystemen"
 \pagebreak
 \section{Digitaler Anhang}
