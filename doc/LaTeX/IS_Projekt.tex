@@ -363,7 +363,7 @@ Eclipse ist eine Open Source Entwicklungsumgebung zur gestützten Entwicklung vo
 \textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
 \cite{31}
 
-\subsubsection{Kryptographische Verfahren}\label{KryptV}
+\subsubsection{Kryptographische Verfahren}
 \textbf{AES}\\
 AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-Amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.
 \\\textbf{Funktionsweise}\\ 
@@ -384,8 +384,6 @@ Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, ve
 
 SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht.
 \\\cite{8}\cite{9}\cite{10}\\
-
-\textbf{RSA}\\
 \pagebreak
 
 
@@ -410,7 +408,8 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 	\item view:\\
 	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
 \end{compactitem}
-\subsubsection{UML-Diagramm}
+\subsubsection{UML-Diagramme}
+Die UML Diagramme die im Laufe des Projektes entstanden sind befinden sich im Ordner UML. In der Datei ClassRelations.jpg findet sich eine Übersicht aller Klassen und deren Beziehungen zu einander. Attribute und Methoden wurden hier weg gelassen, da diese der Übersichtlichkeit abträglich wären. Des weiteren gibt es für jedes package bzw. subpackage ein weiteres UML mit den jeweiligen Klassen, deren Beziehungen sowie Attributen und Methoden. Genauere Beschreibungen der einzelnen Methoden, Klassen und Attributen finden sich in der Dokumentation im Ordner Projektdokumentation im digitalen Anhang.
 
 \pagebreak
 
@@ -419,17 +418,45 @@ Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Patt
 $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.7\linewidth]{UseCase.jpg}
+	\includegraphics[width=0.8\linewidth]{UseCase.jpg}
 	 \captionof{figure}{\small Anwendungsfalldiagramm}
 \end{minipage}
 \vspace{1em}
 
-\textbf{AF-001 Authentifizierung:}
+\textbf{AF-001 Nutzer erstellen:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
 		Nummer & AF-001\\
+		\hline
+		Name & Nutzer erstellen\\
+		\hline
+		Akteure & Anwender\\
+		\hline
+		Auslöser & Anwender möchte sich einen Benutzer anlegen\\
+		\hline
+		Vorbedingung & Programm zeigte den Login-Dialog, Anwender hat \\ &  Create ausgewählt\\
+		\hline
+		Nachbedingung/Ziel & Ein neuer Benutzer wurde angelegt \\
+		\hline
+		Nachbedingung im Sonderfall & Es wurde kein Benutzer erstellt \\ & Erneute Aufforderung zur Dateneingabe\\
+		\hline
+		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender wählt Create im Login-Fenster\\ & 3. Anwender gibt Benutzername ein \\ & 4. Anwender gibt Passwort ein \\ & 5. Anwender bestätigt das Passwort durch zweite\\ &Eingabe\\& 6. Benutzer wurde angelegt\\& 7. Login-Fenster wird angezeigt \\
+		\hline
+		Sonderfälle & 3a. Anwender gibt nicht erlaubten Benutzernamen ein \\ & 4a. Anwender gibt nicht erlaubtes Passwort ein \\& 5a. Anwender gibt nicht das identische Passwort ein\\& 6a. Benutzer konnte nicht angelegt werden \\& 7a. Create-Fenster wird erneut angezeigt\\
+		\hline
+	\end{tabular}
+	\caption{AF-001 Nutzer erstellen}
+	\label{tab:AF-001 Nutzer erstellen}
+\end{table}
+
+\textbf{AF-002 Authentifizierung:}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		Nummer & AF-002\\
 		\hline
 		Name & Authentifizierung\\
 		\hline
@@ -443,22 +470,22 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Zugriff verweigtert\\ & Erneute Aufforderung zur Anmeldung\\
 		\hline
-		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender gibt Benutzername ein \\ & 3. Anwender gibt Passwort ein \\ & 4. Zugangsdaten werden überprüft \\ & 5. 				Dateiübersicht wird angezeigt \\
+		Normalablauf & 1. Anwender strartet Programm \\ & 2. Anwender gibt Benutzername ein \\ & 3. Anwender gibt Passwort ein \\ & 4. Anwender gibt Bucket an \\ &5. Zugangsdaten werden überprüft \\ & 6. Dateiübersicht wird angezeigt \\
 		\hline
-		Sonderfälle & 2a. Anwender gibt falschen oder keinen \\ & Benutzernamen ein \\ & 3a. Anwender gibt falsches oder kein Passwort ein \\ & 4a. Erneutes Laden der Loginmaske\\
+		Sonderfälle & 2a. Anwender gibt falschen Benutzernamen ein \\ & 3a. Anwender gibt falsches Passwort ein \\& 4a. Anwender gibt nicht gestatteten Bucketnamen an\\ & 5a. Erneutes Laden der Loginmaske\\
 		\hline
 	\end{tabular}
-	\caption{AF-001 Authentifizierung}
-	\label{tab:AF-001 Authentifizierung}
+	\caption{AF-002 Authentifizierung}
+	\label{tab:AF-002 Authentifizierung}
 \end{table}
 \pagebreak
 
-\textbf{AF-002 Dateiupload:}
+\textbf{AF-003 Dateiupload:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
-		Nummer & AF-002\\
+		Nummer & AF-003\\
 		\hline
 		Name & Dateiupload\\
 		\hline
@@ -472,22 +499,22 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht abgelegt werden\\
 		\hline
-		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene Dateisystem \\ & zum 				Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Doppelklick der linken Maustaste oder Auswählen \\ & der Datei und Bestätigung                  mit ''Öffnen'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
+		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene  Datei- \\ & system zum Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Auswählen der Datei und Bestätigung mit ''Öffnen'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
 		\hline
-		Sonderfälle & 5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
+		Sonderfälle & 3a. Dateisystem wird nicht unterstützt \\& 5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
 		\hline
 	\end{tabular}
-	\caption{AF-002 Dateiupload}
-	\label{tab:AF-002 Dateiupload}
+	\caption{AF-003 Dateiupload}
+	\label{tab:AF-003 Dateiupload}
 \end{table}
 \pagebreak
 
-\textbf{AF-003 Dateidownload:}
+\textbf{AF-004 Dateidownload:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
-		Nummer & AF-003\\
+		Nummer & AF-004\\
 		\hline
 		Name & Dateidownload\\
 		\hline
@@ -501,21 +528,21 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht heruntergeladen werden \\ & Datei wird nicht entschlüsselt\\
 		\hline
-		Normalablauf & 1. Anwender wählt in der Dateiübersicht die \\ & entsprechende Datei aus \\ & 2. Anwender wählt das Menü ''File'' aus \\ & 3. Anwender wählt im Untermenü ''Download'' \\ & 4. Anwender bewegt sich durch das eigene Dateisystem \\ & zum Speicherpfad der zu herunterladenden Datei \\ & 5. Anwender initialisiert durch ''Speichern'' \\ & den Dateidownload \\  & 6. Datei wird heruntergeladen \\ & 7. Datei wird entschlüsselt \\
+		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Download'' \\  & 4. Datei wird heruntergeladen \\ & 5. Datei wird entschlüsselt \\
 		\hline
-		Sonderfälle & 6a. Datei kann nicht heruntergeladen werden \\ & 7a. Datei wird nicht entschlüsselt\\
+		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\& 4a. Datei kann nicht heruntergeladen werden \\ & 5a. Datei wird nicht entschlüsselt\\
 		\hline
 	\end{tabular}
-	\caption{AF-003 Dateidownload}
-	\label{tab:AF-003 Dateidownload}
+	\caption{AF-004 Dateidownload}
+	\label{tab:AF-004 Dateidownload}
 \end{table}
 
-\textbf{AF-004 Datei l\"oschen:}
+\textbf{AF-005 Datei l\"oschen:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
-		Nummer & AF-004\\
+		Nummer & AF-005\\
 		\hline
 		Name & Datei löschen\\
 		\hline
@@ -529,13 +556,13 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht gelöscht werden \\
 		\hline
-		Normalablauf & X\\
+		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Delete from \\&cloud'' \\  & 4. Datei wird aus der Cloud gelöscht \\ & 5. Dateieintrag in der Übersicht wird entfernt \\& Schlüssel wird entfernt \\
 		\hline
-		Sonderfälle & X \\
+		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\& 4a. Datei kann nicht aus der Cloud gelöscht werden \\ & 5a. Dateieintrag in der Übersicht wird nicht entfernt\\& Schlüssel wird nicht entfernt\\
 		\hline
 	\end{tabular}
-	\caption{AF-004 Datei löschen}
-	\label{tab:AF-004 Datei loeschen}
+	\caption{AF-005 Datei löschen}
+	\label{tab:AF-005 Datei loeschen}
 \end{table}
 \pagebreak
 
@@ -560,11 +587,11 @@ Wird die Applikation zum ersten mal gestartet, stellt sie also fest, dass bisher
 \\\\\textbf{Login}\\
 Um sich in seinen Account einzuloggen, muss ein Benutzer seinen Nutzernamen und sein Passwort in die im LoginWindow vorgegebenen Zellen eintragen. Drückt er auf den OK Button, erstellt die Applikation eine Byte Array aus dem Passwort und dem in settings.cfg hinterlegten salt. Dies wird gehasht und das Ergebnis mit dem in settings.cfg eingetragenen verglichen. Stimmen die beiden überein, sind die Nutzerdaten valide und die Applikation wechselt in das MainWindow. Der Vorteil bei der Verwendung eines Salt ist in \ref{KryptV} näher erläutert.
 \\\\\textbf{Dateien ablegen}\\
-Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen, zu speichern. Danach wird die Datei selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt.
+Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen, zu speichern. Danach wird die Datei selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt. Für jede Datei wird ein eigener Schlüssel berechnet, da ein Schlüssel immer gefährdeter wird, je öfter er benutzt, bzw. je mehr Daten damit verschlüsselt werden. Außerdem ist es möglich einem anderen Nutzer den Zugriff auf eine einzelene Datei zu gestatten, indem man ihm den Schlüssel aushändigt. 
 \\\\\textbf{Programm schließen}\\
 Wird die CLOSE Schaltfläche des MainWindow betätigt oder das rote X in der Ecke des Programmfensters, werden zunächst alle laufenden Verschlüsselungs- und Uploadprozesse beendet. Danach werden alle gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Byte Array wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/SecuCloud/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Key Länge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet aktuell, es wird sooft hinter einander gehängt, bis 16 Byte übertroffen werden und eventuel überflüssige Zeichen wieder abgeschnitten. Aus diesem Grund kohnt es sich ein ausreichend langes Passwort zu wählen.
 \\\\\textbf{Programmstart mit vorhandener state.cfg}\\
-Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und ensprechen Informationen zu diesen abgelegt wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die setttings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es möglich in Zukunft die state.cfg selbst auch in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden, ohne die Informationen im Nutzerverzeichnis zu benötigen.
+Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und ensprechen Informationen zu diesen abgelegt wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die setttings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es möglich in Zukunft die state.cfg selbst auch in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden (etwa mitgeführt auf einem USB Stick), ohne die Informationen im Nutzerverzeichnis zu benötigen.
 
 \subsection{GUI und Funktionalitäten}
 Nachfolgend wird die Oberfläche sowie die Funktionalität des Prototyps beschrieben.
@@ -590,8 +617,7 @@ $\;$\\
 	\captionof{figure}{\small Account erstellen}
 	\label{Create}
 \end{minipage}
-\\\\Durch betätigen der Create-Auswahl im Login-Fenster öffnet sich ein weiteres PopUp, in dem ein Benutzer angelegt werden kann.
-
+\\\\Durch betätigen der Create-Auswahl im Login-Fenster öffnet sich ein weiteres PopUp, in dem ein Benutzer angelegt werden kann. Hierfür ist ein eindeutiger Benutzername, ein Passwort und eine Bestätigung des Passwortes notwendig. Entsprechen alle eingegebenen Daten den Anforderungen, wird nach Bestätigung mit OK ein neuer Benutzer erzeugt. Anschließend kann mit diesen Daten der Login im Login-Fenster erfolgen.
 
 \textbf{Hauptfenster}
 \vspace{1em}
@@ -602,7 +628,7 @@ $\;$\\
 	\captionof{figure}{\small Hauptfenster}
 	\label{Main}
 \end{minipage}
-\vspace{1em}
+\\\\Das Hauptfenster zeigt in einer Tabelle die aktuell verfügbaren Daten mit dem Originalnamen, dem zugehörigen verschlüsselten Dateinamen und dem Zeitpunkt des Hochladevorgangs. In der oberen Menüleiste kann das zusätzliche DropDown-Menü File und Help ausgewählt werden. Durch Auswählen einer Zeile mit der linken und Betätigen der rechten Maustaste wird ein Kontextmenü mit Möglichkeiten für diese Zeite/Datei angezeigt.
 
 \textbf{File Menü}
 \vspace{1em}
@@ -613,7 +639,7 @@ $\;$\\
 	\captionof{figure}{\small File Menü}
 	\label{File}
 \end{minipage}
-\vspace{1em}
+\\\\Der Reiter File in der oberen Menüleiste beinhaltet die Auswahlmöglichkeiten Select und Close. Durch Select kann eine lokale Datei zum Verschlüsseln und Upload in die Cloud ausgewählt werden. Close schließt die Anwendung. Die Anzeige der Möglichkeiten kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
 
 \textbf{Dateiauswahl}
 \vspace{1em}
@@ -624,7 +650,7 @@ $\;$\\
 	\captionof{figure}{\small Dateiauswahl}
 	\label{Select}
 \end{minipage}
-\vspace{1em}
+\\\\In der Dateiauswahl Select wird die lokale Ordnerstruktur des Betriebssystems angezeigt. In dieser kann sich der Benutzer frei bewegen und in das Quellverzeichnis von Dateien wechseln. Das Auswählen einer Datei und die Bestätigung mit Öffnen initialisiert den, für den Anwender nicht ersichtlichen, Verschlüsselungsvorgang und Dateiupload. Das Auswahlfenster wird beendet. Wurde die Datei korrekt verschlüsselt und in die Cloud geladen, wird diese im Hauptfenster mit ihren Merkmalen aufgelistet. Bei großen Dateien kann dieser Vorgang eine längere Zeitdauer in Anspruch nehmen. Schließt der Benutzer die gesamte Anwendung vor Auflistung in der Dateiübersicht, so wird diese weiterhin durch Hintergrundprozesse verschlüsselt bzw. hochgeladen. Durch Abbrechen kann das Auswahlfenster für Dateien geschlossen werden.
 
 \textbf{Help Menü}
 \vspace{1em}
@@ -635,7 +661,7 @@ $\;$\\
 	\captionof{figure}{\small Help Menü}
 	\label{Help}
 \end{minipage}
-\vspace{1em}
+\\\\Der Reiter Help in der oberen Menüleiste beinhaltet die Auswahlmöglichkeiten Help und About. Die Auswahl Help öffnet ein zustäzliches Fenster mit Hilfestellungen zur Verwendung, About ein weiteres mit Informationen zu der Software. Die Anzeige der Möglichkeiten kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
 
 \textbf{Help Fenster}
 \vspace{1em}
@@ -646,7 +672,7 @@ $\;$\\
 	\captionof{figure}{\small Help Fenster}
 	\label{HelpPopUp}
 \end{minipage}
-\vspace{1em}
+\\\\Das Help Fenster beschreibt alle Funktionalitäten der Software sowie deren Aufrufe. Mit der Bestätigung durch OK wird dieses  geschlossen.
 
 \textbf{About Fenster}
 \vspace{1em}
@@ -657,7 +683,7 @@ $\;$\\
 	\captionof{figure}{\small About Fenster}
 	\label{AboutPopUp}
 \end{minipage}
-\vspace{1em}
+\\\\Das About Fenster gibt Informationen über die Version, Entwickler, den Hintergrund der Entwicklung und Einsatz von Drittanbieter-Software wieder. Durch OK wird geschlossen.
 
 \textbf{Kontextmenü}
 \vspace{1em}
@@ -668,7 +694,7 @@ $\;$\\
 	\captionof{figure}{\small Kontextmenü}
 	\label{Kontext}
 \end{minipage}
-\vspace{1em}
+\\\\Das Kontextmenü wird durch Auswahl einer Zeile und Betätigen der rechten Maustaste ausgeführt. Es beinhaltet die Möglichkeiten Download und Delete from Cloud. Download initialisiert das temporäre Herunterladen der ausgewählten Datei mit anschließender Entschlüsselung und entschlüsselter Ablage in HOME/SecuCloud/\textless Benutzername\textgreater/download. Mit Delete from Cloud kann eine Datei aus der Cloud zusammen mit dem zugehörigem lokal gespeicherten Schlüssel gelöscht werden. Der Eintrag wird anschließend aus der Dateiübersicht entfernt. Das Kontextmenü kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
 
 \textbf{Synchronisierungsstatus}
 \vspace{1em}
@@ -679,8 +705,7 @@ $\;$\\
 	\captionof{figure}{\small Synchronisierungsstatus}
 	\label{Synchron}
 \end{minipage}
-\vspace{1em}
-
+\\\\Das Fenster über den Synchronisierungsstatus kann vom Anwender selbst nicht geöffnet werden. Es erscheint beim Start der Software nur dann, wenn ein lokaler Eintrag einer Datei (mit zugehörigem für den Benutzer nicht ersichtlichen Schlüssel) existiert, diese sich aber nicht mehr in der Cloud befindet. Beispiel für das Hervorrufen eines solchen Ereignisses ist das manuelle Löschen von Dateien in der Cloud-Umgebung. Durch Yes wird der Eintrag in der Dateiübersicht und und Datenverwaltung der Software gelöscht. Ein Betätigen von No beendet das Fenster bis zum nächsten Start der Software ohne Ausführen von Aktionen.
 \pagebreak
 
 % ----------------------------------------------------------------------------------------------------------
@@ -698,18 +723,20 @@ Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umstän
 \\\textbf{Autokonfiguration der Schnittstellen}\\
 Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zum Google Drive zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
 \\\textbf{Installations Setup}\\
-Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x installation.
+Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch zusatzsoftware wie Python automatisch installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich python für Windowssysteme automatisch mit zu liefern und mit in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x installation und verwenden Standardpfade für installierte Anwendungen (/bin, /usr/bin etc.).
+\\\textbf{Selbstsynchronisierung}\\
+Um von der Anwendung zur Archivierung weg zu kommen und weitere Verwendungsfelder für die Applikation zu erschließen, ist es durchaus sinnvoll die in der Cloud hinterlegten Dateien selbstständig synchron mit ihren lokalen pendants zu halten: Jedes Mal, wenn indizierte Dateien geändert werden, berechnet die Applikation ein Changeset der alten und der neuen Version und legt auch dieses verschlüsselt in der Cloud ab. Durch eine neue Ansicht kann der Anwender dann durch Versionen gehen und alte nach Bedarf wieder herstellen. Dadurch wäre eine Art Backupsystem geschaffen, dass nicht nur Sicherheit gewährleistet, sondern gleichzeitig auch Redundanz und Hochverfügbarkeit für die versionierten Daten geschaffen wird.
 \\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
+Weiterhin denkbar wäre, die Applikation derart anzulegen, dass sie den Cloudspeicher als virtuelles Laufwerk im System verankert. Daten die darin abgelegt werden, werden on the fly verschlüsselt und in der Cloud gespeichert. Dies könnte auch mittels eines automatisch synchronisierten Ordners geschehen, wie es etwa bei Dropbox der Fall ist. Dann würde die Software abgesehen von der Archivierung auch weitere Anwendungsfälle bekommen. Es ergäbe sich allerdings das Problem, dass es Automatismen geben müsste, die verhindern, dass Daten verloren gehen, wenn der synchrone Ordner auf mehreren Systemen gelichzeitig genutzt würde und zwei Personen zu selben Zeit an der selben Datei arbeiten. Hier wäre eine Art Versionsverwaltung vonnöten, die ähnlich wie GIT Changesets von den Dateien erzeugt und diese wiederherstellbar hält.
 \\\textbf{Verschlüsselung von Dateistrukturen}\\
 Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich, welche nach Ausführung mit einer Cloud synchronisiert werden. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Desweiteren hat der Fall eines korrupten Datenträger fatale Auswirkungen auf die darin befindlichen Dateien. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \\
 \cite{38}
-\\\textbf{Selbstsynchronisierung}\\
-\\\textbf{GoogleAPI: Buckets verwalten}\\
 
 \subsubsection{Serverseitiges Management}
 \textbf{Schlüsselmanagement durch Key-Server}\\
 Eine potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rückhaltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, es verringert lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße).\\ \cite{38}
 \\\textbf{Providing Server}\\
+Die Tatsache, dass Benutzer zurzeit auf dem selben Cloudspeicher arbeiten und eventuell sogar die selben Buckets nutzen, verursacht zwei grundsätzliche Probleme: Zum Einen kann ein Benutzer theoretisch (wenn auch nicht mit der Applikation selbst, aber mittels des Web Frontends) Daten anderer Nutzer manipulieren oder löschen. Dieses Problem ließe sich noch durch die von den Cloudanbietern selbst angebotene Rechteverwaltung innerhalb des Speichers lösen. Auf der Anderen ist es aber dem CLoudanbieter noch möglich (und mit Rechteverwaltung erst recht) einzusehen, welchem Nutzer welche Dateien zuzuordnen sind, was widerum eine Gefahr im Sinne der IT-Sicherheit darstellt: Der Anbieter (oder jede Person oder Organisation die sich auf irgend eine Weise Zugriff verschafft hat) kann analysen über das Uploadverhalten betreiben und dadurch Schlüsse über deren Inhalt ziehen. An dieser Stelle könnte man über den Einsatz eines providing Servers nachdenken: Dieser Server steht zwischen dem Endanwender und der Cloudspeicher selbst. Alle Daten werden wie gehabt lokal verschlüsselt, dann aber nicht direkt in der Cloud abgelegt, sondern an den providing Server geschickt, der sie auf den oder die Cloudspeicher legt und eine Abbildung der Zugehörigkeiten speichert. Dadurch bleiben die Daten  
 \\\textbf{Serverseitige Rechteverwaltung}\\
 \\\textbf{Loginserver}\\
 \\\textbf{Serverseitige Verwaltung des Dateisystems}\\
@@ -770,7 +797,7 @@ Eine potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläu
 \addcontentsline{toc}{section}{Anhang}
 \addtocontents{toc}{\vspace{-0.5em}}
 
-\subsection{Installationsanleitung}
+\section{Installationsanleitung}
 Detaillierte Beschreibung zum Einsatz auf "Fremdsystemen"
 \pagebreak
 \section{Digitaler Anhang}

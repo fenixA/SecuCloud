@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.6" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true">  
+  <class id="1" language="java" name="control.SettingsFileHandler" project="SecuCloud" 
+    file="/SecuCloud/src/control/SettingsFileHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="134" x="1370" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="control.FileListHandler" project="SecuCloud" 
+    file="/SecuCloud/src/control/FileListHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="108" x="1050" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="control.SystemPathCollector" project="SecuCloud" 
+    file="/SecuCloud/src/control/SystemPathCollector.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="144" x="245" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="4" language="java" name="control.SystemInformationCollector.OsID" project="SecuCloud" 
+    file="/SecuCloud/src/control/SystemInformationCollector.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="119" x="236" y="419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="5" language="java" name="control.ThreadInstanceCreator.command" project="SecuCloud" 
+    file="/SecuCloud/src/control/ThreadInstanceCreator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="119" x="418" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="6" language="java" name="control.ThreadInstanceCreator" project="SecuCloud" 
+    file="/SecuCloud/src/control/ThreadInstanceCreator.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="156" x="450" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="control.SystemInformationCollector" project="SecuCloud" 
+    file="/SecuCloud/src/control/SystemInformationCollector.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="183" x="41" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="control.Main" project="SecuCloud" file="/SecuCloud/src/control/Main.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="763" y="419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="control.util.SupportFunctions" project="SecuCloud" 
+    file="/SecuCloud/src/control/util/SupportFunctions.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="124" x="246" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="control.util.CryptToolbox" project="SecuCloud" 
+    file="/SecuCloud/src/control/util/CryptToolbox.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="98" x="845" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="model.InformationContainer" project="SecuCloud" 
+    file="/SecuCloud/src/model/InformationContainer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="144" x="803" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <enumeration id="12" language="java" name="model.InformationContainer.Encryption" project="SecuCloud" 
+    file="/SecuCloud/src/model/InformationContainer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="119" x="900" y="419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </enumeration>  
+  <class id="13" language="java" name="model.InformationContainerStorer" project="SecuCloud" 
+    file="/SecuCloud/src/model/InformationContainerStorer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="180" x="964" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="14" language="java" name="model.cc.CloudConnector" project="SecuCloud" 
+    file="/SecuCloud/src/model/cc/CloudConnector.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="115" x="667" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="15" language="java" name="model.cc.CloudConnectorGoogleGsutilTEMP" project="SecuCloud" 
+    file="/SecuCloud/src/model/cc/CloudConnectorGoogleGsutilTEMP.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="218" x="410" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="view.NonEditableJTable" project="SecuCloud" 
+    file="/SecuCloud/src/view/NonEditableJTable.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="128" x="577" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="view.CreateAccountWindow" project="SecuCloud" 
+    file="/SecuCloud/src/view/CreateAccountWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="155" x="860" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="view.LoginWindow" project="SecuCloud" file="/SecuCloud/src/view/LoginWindow.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="101" x="1055" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="view.DeleteWindow" project="SecuCloud" 
+    file="/SecuCloud/src/view/DeleteWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="106" x="714" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="view.NotificationWindow" project="SecuCloud" 
+    file="/SecuCloud/src/view/NotificationWindow.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="134" x="1196" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="view.MainWindow" project="SecuCloud" file="/SecuCloud/src/view/MainWindow.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="97" x="577" y="522"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <association id="22">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="23" name="aboutNotification"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="25">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="26" name="createAccountWindow"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <bendpoint x="385" y="326"/>    
+    <bendpoint x="385" y="419"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="29" name="cmd"/>      
+      <multiplicity id="30" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="31">    
+    <bendpoint x="1049" y="419"/>    
+    <bendpoint x="1049" y="326"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="32">    
+    <bendpoint x="1070" y="419"/>    
+    <bendpoint x="1028" y="326"/>    
+    <bendpoint x="1019" y="223"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="33">    
+    <bendpoint x="254" y="326"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="34">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="35" name="settingsFileHandler"/>      
+      <multiplicity id="36" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="37">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="38">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="39" name="loginWindow"/>      
+      <multiplicity id="40" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="41">    
+    <bendpoint x="812" y="223"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="42">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="43" name="nonEditableJTable"/>      
+      <multiplicity id="44" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="45">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="46" name="fileList"/>      
+      <multiplicity id="47" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="48">    
+    <bendpoint x="427" y="326"/>    
+    <bendpoint x="427" y="419"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="50">    
+    <bendpoint x="406" y="326"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="51">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <nesting id="52">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </nesting>  
+  <dependency id="53">    
+    <bendpoint x="615" y="326"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="54">    
+    <bendpoint x="1198" y="130"/>    
+    <bendpoint x="1198" y="223"/>    
+    <bendpoint x="1198" y="326"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="55">    
+    <bendpoint x="977" y="326"/>    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <realization id="56">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <dependency id="57">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="58">    
+    <bendpoint x="1016" y="130"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <association id="59">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="60" name="informationContainer"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="62">    
+    <bendpoint x="732" y="419"/>    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="63">    
+    <bendpoint x="973" y="130"/>    
+    <bendpoint x="973" y="223"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="64">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="65" name="mainWindow"/>      
+      <multiplicity id="66" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="67">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="68" name="instance"/>      
+      <multiplicity id="69" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="70">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="71" name="encryption"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="73">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <association id="74">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="75" name="cloudConnectorGoogleGsutilTEMP"/>      
+      <multiplicity id="76" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="77">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="78">    
+    <bendpoint x="636" y="326"/>    
+    <bendpoint x="636" y="223"/>    
+    <bendpoint x="658" y="130"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="79" name="informationContainerStorer"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="81">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="82" name="deleteWindow"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="84">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="85">    
+    <bendpoint x="998" y="223"/>    
+    <bendpoint x="998" y="326"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="86">    
+    <bendpoint x="854" y="223"/>    
+    <bendpoint x="772" y="326"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="87">    
+    <bendpoint x="833" y="223"/>    
+    <bendpoint x="751" y="326"/>    
+    <bendpoint x="711" y="419"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="88">    
+    <bendpoint x="875" y="223"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="89">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <nesting id="90">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="12"/>  
+  </nesting>  
+  <association id="91">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="92" name="instance"/>      
+      <multiplicity id="93" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="94">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="95" name="helpNotification"/>      
+      <multiplicity id="96" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="97">    
+    <bendpoint x="419" y="223"/>    
+    <bendpoint x="448" y="326"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
