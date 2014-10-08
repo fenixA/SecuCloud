@@ -712,12 +712,15 @@ $\;$\\
 % Diskussion
 % ----------------------------------------------------------------------------------------------------------
 \section{Diskussion}
+Im folgenden Kapitel werden die Ergebnisse der Projektarbeit in der aktuellen Lage (NSA, Prism etc.) eingeordnet. Außerdem wird auf mögliche Erweiterungen der Applikation, sowie weitere mögliche Konzepte der verschlüsselten Datensicherung in der Cloud, eingegangen. 
+
 Ausführliches Fazit zur aktuellen und zukünftigen Notwendigkeit\\
 Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
 
 \subsection{Erweiterung der Funktionalitäten}
 \subsubsection{Erhöhung der Bedienerfreundlichkeit}
 \textbf{Ausbau des Designs/Multirow}
+Eine sehr simple, aber dennoch äußerst nützliche erweiterung des bestehenden Tools wäre es zu ermöglichen, dass ein Anwender mehrere Zeilen der Tabelle markieren und bearbeiten kann. Dies würde die intuitive Nutzbarkeit erhöhen und den Umgang mit großen Dateimengen erleichtern. 
 \\\textbf{Drag\&Drop}\\
 Um die Benutzerfreundlichkeit des Programmes zu erhöhen, wäre es unter Umständen von Vorteil, dass es möglich ist, Dateien per Drag\&Drop in das Programmfenster hinen zu ziehen. Dadurch müsste ein Benutzer nicht jedes mal, wenn er oder sie eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.
 \\\textbf{Autokonfiguration der Schnittstellen}\\
@@ -729,7 +732,7 @@ Um von der Anwendung zur Archivierung weg zu kommen und weitere Verwendungsfelde
 \\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
 Weiterhin denkbar wäre, die Applikation derart anzulegen, dass sie den Cloudspeicher als virtuelles Laufwerk im System verankert. Daten die darin abgelegt werden, werden on the fly verschlüsselt und in der Cloud gespeichert. Dies könnte auch mittels eines automatisch synchronisierten Ordners geschehen, wie es etwa bei Dropbox der Fall ist. Dann würde die Software abgesehen von der Archivierung auch weitere Anwendungsfälle bekommen. Es ergäbe sich allerdings das Problem, dass es Automatismen geben müsste, die verhindern, dass Daten verloren gehen, wenn der synchrone Ordner auf mehreren Systemen gelichzeitig genutzt würde und zwei Personen zu selben Zeit an der selben Datei arbeiten. Hier wäre eine Art Versionsverwaltung vonnöten, die ähnlich wie GIT Changesets von den Dateien erzeugt und diese wiederherstellbar hält.
 \\\textbf{Verschlüsselung von Dateistrukturen}\\
-Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich, welche nach Ausführung mit einer Cloud synchronisiert werden. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Desweiteren hat der Fall eines korrupten Datenträger fatale Auswirkungen auf die darin befindlichen Dateien. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \\
+Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich, welche nach Ausführung mit einer Cloud synchronisiert werden. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \\
 \cite{38}
 
 \subsubsection{Serverseitiges Management}
@@ -743,7 +746,7 @@ Die Tatsache, dass Benutzer zurzeit auf dem selben Cloudspeicher arbeiten und ev
 
 \subsubsection{Erweiterte Sicherheit}
 \textbf{OpenJDK}\\
-\\\textbf{Alternative Programmiersprechen}\\
+\\\textbf{Alternative Programmiersprachen}\\
 \\\textbf{Kaskadierte Verschlüsselung}\\
 \\\textbf{Key recovery/Masterkey}\\
 \\\textbf{Blockweise Verschlüsselung}\\
