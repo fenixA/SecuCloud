@@ -394,20 +394,52 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 \section{Ergebnisse}
 Ausführliche Beschreibung des erzeugten Systems, der Leistungsfähigkeit,...
 \subsection{Architektur}
-Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Pattern angelehnt ist. Es unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (Pakete, die in anderen enthalten sind).
+Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Entwurfsmuster angelehnt ist. Sie unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (packages, die in anderen enthalten sind). Im Folgenden werden diese, sowie die enthaltenen Klassen näher skizziert. Eine genaue Auflistung der Methoden und Klassenvaiablen kann den UML Diagrammen bzw. der Dokumentation entnommen werden.
 
-\begin{compactitem}
-	\item control:\\
-	Das package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Nutzerverwaltung und Koordination der Datei-Informationen.
-	\item control.util:\\
-	Das subpackage util gehört zum controller und besitzt Funktionen die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur Speicherung von Informationen notwendig sind. Alle Methoden von 	diesen Klassen sind statisch und können zu jeder Zeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen sowie Hilfsfunktionen zur Umwandlung von Werten.  Außerdem liegt hier die Klasse 				ThreaderInstanceCreator, die dafür sorgt, dass die langsamen Verschlüsselungs- und Uploadprozesse in einen eigenen Thread ausgelagert werden und den weiteren Programmablauf nicht behindern.
-	\item model:\\
-	Das package model ist für die Daten selbst zuständig, es definiert in welcher Weise Informationen gespeichert und, nach Beendigung des Programmes, im Speicher des Computers abgelegt werden.
-	\item model.cc:\\
-	Das subpackage cc gehört zum model und verwaltet die Speicherung der Daten in der Cloud. Darin wird das Interface für die Schnittstelle zu Cloudspeichern definiert. In diesem Prototyp ist dies gsutil zur Anbindung von Google Cloud Storage.
-	\item view:\\
-	Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche im MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien) erhält.
-\end{compactitem}
+\textbf{Package: control}\\
+Das package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Nutzerverwaltung und Koordination der Datei-Informationen.\\
+\textbf{Klasse: Main}\\
+Die Klasse Main stellt das Herz der Applikation dar: In ihr liegen Applikationsweit verwendete Definitionen (public static final Variablen), Methoden die von den Views aus aufgerufen werden um auf Benutzerinteraktionen zu reagieren, die meisten anderen Klassen werden hier instanziert, die temporären Benutzerinformationen hinterlegt und mit get() und set() Methonden für andere Module nutzbar gemacht . Sie stellt also den Knotenpunkt dar, der die Module der Applikation verbindet. Main ist an der Programmlogik selbst nur in Form des Programmstartes und der Delegation anderer Aufrufe verantwortlich, Kalkulationen oder Dateioperationen finden hier nicht statt. Sie ist mit dem Singelton Entwurfsmuster implementiert. Auf diese Weise ist sichergestellt, dass alle Programmteile auf die selbe Instanz von Main zugreifen, ohne dass eine entsprechende Referenz an die anderen Klassen übergeben werden müsste.\\
+\textbf{Klasse: FileListHandler}\\
+Auch der FileListHandler ist ein Singleton, kommt also Applikationsweit nur in einer Instanz vor und wird von verschiedenen Programmteilen direkt aufgerufen. Im Kern besteht er aus einem Vector aus InformationContainer Instanzen, sie ist also das temporäre (während des Programmablaufes) Speichermodul für Informationen über die in der Cloud liegenden Dateien. Zusätzlich besitzt sie Methoden zur Operationen auf diesem Vector, etwa neue Dateien hinzuzufügen oder aber Dateien anhand bestimmter Schlüssel zu liefern.\\
+\textbf{Klasse: SettingsFileHandler}\\
+Der SettingsFileHandler verwaltet die Datei (settings.cfg) in der Informationen über in der Applikation registrierte Benutzer gespeichert sind. Er erzeugt sie bei bedarf, liest eine Bestehende ein und macht die Benutzerinformationen anderen Programmteilen zugänglich oder schreibt neue Benutzer hinein.\\
+\textbf{Klasse: SystemInformationCollector}\\
+Der SystemInformationCollector sammelt, wie der Name suggeriert, Informationen über das System auf dem die Applikation gestartet wird. Zurzeit ist dies ausschließlich die Information über das zugrunde liegende Betriebssystem, es sind jedoch für die Zukunft weitere Informationen vorgesehen, etwa die Anzahl der Prozessorkerne um mittels Verteilung der Rechenlast schneller zu ver- und entschlüsseln.\\
+\textbf{Klasse: SystemPathCollector}\\
+Der SystemPathCollector macht anderen Modulen Informationen darüber zugänglich, wo weitere Programme die von unserer Applikation aufgerufen werden, im System zu finden sind. Zurzeit sind dies Python und Gsutil.\\
+\textbf{Klasse: ThreadInstanceCreator}\\
+Der ThreadInstanceCreator ist für das Threading zuständig. Im Laufe der Entwicklung stellte sich heraus, dass vor allem ver- und entschlüsselt, sowie der Up- und Download großer Dateien den Programmablauf erheblich behindern, daher war es nötig diese Operationen in einen weiteren Prozess auszulagern. Dies wird von ThreadInstanceCreator übernommen. Für jede neue Verschlüsselungs- und Uploa-d bzw. Download- und Entschlüsselungsoperation wird eine neue Instanz dieser Klasse als neuer Thread erzeugt. Möglich wird dies über das von Java zur Verfügung gestellte Iinterface Runnable, welches die Klasse implementiert (implements).  Eine neue Instanz bekommt im Konstruktor einen InformationContainer, sowie einen Befehl, was damit zutun ist übergeben und arbeitet ver-/entschlüsselung und down-/upload selbstständig ab.\\
+\textbf{Subpackage: util}\\
+Das subpackage util gehört zum controller und besitzt Methoden die softwareweit unabhängig sind, also keine initialisierten Instanzen benötigen, etwa weil keine Klassenvariablen zur Speicherung von Informationen notwendig sind. Alle Methoden dieser Klassen sind statisch und können zu jeder Zeit von jedem Programmteil verwendet werden. Unter anderem liegen hier die Verschlüsselungsfunktionen sowie Hilfsfunktionen zur Umwandlung von Werten. \\
+\textbf{Klasse: CryptToolbox}\\
+Die CryptToolbox bietet Ver-/entschlüsselung von Dateien oder Bytearrays, Hashing sowie die Generation von kryptographisch sicheren Zufallszahlen. Auch werden hier die ThreadInstanceCreator Instanzen erzeugt, die dann wieder Funktionen der CryptToolbox nutzen.\\
+\textbf{Klasse: SupportFunctions}\\
+Eine kleine Klasse, die Integer in Bytes Konvertieren kann, sowie die Möglichkeit bietet Bytearrays auf der Konsole auszugeben, um das Debugging zu erleichtern.\\
+
+\textbf{Package: model}\\
+Das package model ist für die Daten selbst zuständig, es definiert in welcher Weise Informationen gespeichert und, nach Beendigung des Programmes, lokal im Speicher des Computers abgelegt werden.\\
+\textbf{Klasse: InformationContainer}\\
+Ein InformationContainer stellt in der Programmlogik eine in der Cloud liegende Datei dar. Er besitzt Klassenvaribalen in denen Name, Schlüssel, Dateipfad und weitere Informationen gespeichert sind sowie get() und set() Funktionen um auf und mit diesen Informationen zu arbeiten.\\
+\textbf{Klasse: InformationContainerStorer}\\
+Der InformationContainerStorer besorgt die Speicherung bei Beendigung der Applikation, sowie das Laden der InformationContainer nach Programmstart. Er verwaltet die entsprechende Datei (state.cfg) und stößt an, dass die  InformationContainer vor dem Speichern in Bytearrays umgewandelt und mittels des Benutzerpasswortes verschlüsselt werden.\\
+\textbf{Subpackage: cc}\\
+Das subpackage cc gehört zum model und verwaltet die Speicherung der Daten in der Cloud. Darin wird das Interface für die Schnittstelle zu Cloudspeichern definiert. In diesem Prototyp ist dies gsutil zur Anbindung von Google Cloud Storage.\\
+\textbf{Interface: CloudConnector}\\
+Das Interface CloudConnector definiert, wie eine Schnittstelle zu einem Cloudanbieter aufgebaut sein muss, also welche Methoden sie besitzen muss und welche Übergabeparameter bzw. Rückgabewerte diese haben.\\
+\textbf{Klasse: CloudConnectorGoogleGsutilTEMP}\\
+
+
+\textbf{Package: view}\\
+Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche dem MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien, InformationContainer) liefert.\\
+\textbf{Klasse: MainWindow}\\
+\textbf{Klasse: CreateAccountWindow}\\
+\textbf{Klasse: DeleteWindow}\\
+\textbf{Klasse: LoginWindow}\\
+\textbf{Klasse: NonEditableJTable}\\
+\textbf{Klasse: NotificationWindow}
+
+
 \subsubsection{UML-Diagramme}
 Die UML Diagramme die im Laufe des Projektes entstanden sind befinden sich im Ordner UML. In der Datei ClassRelations.jpg findet sich eine Übersicht aller Klassen und deren Beziehungen zu einander. Attribute und Methoden wurden hier weg gelassen, da diese der Übersichtlichkeit abträglich wären. Des weiteren gibt es für jedes package bzw. subpackage ein weiteres UML mit den jeweiligen Klassen, deren Beziehungen sowie Attributen und Methoden. Genauere Beschreibungen der einzelnen Methoden, Klassen und Attributen finden sich in der Dokumentation im Ordner Projektdokumentation im digitalen Anhang.
 
