@@ -427,8 +427,8 @@ Der InformationContainerStorer besorgt die Speicherung bei Beendigung der Applik
 Das subpackage cc gehört zum model und verwaltet die Speicherung der Daten in der Cloud. Darin wird das Interface für die Schnittstelle zu Cloudspeichern definiert. In diesem Prototyp ist dies gsutil zur Anbindung von Google Cloud Storage.\\
 \textbf{Interface: CloudConnector}\\
 Das Interface CloudConnector definiert, wie eine Schnittstelle zu einem Cloudanbieter aufgebaut sein muss, also welche Methoden sie besitzen muss und welche Übergabeparameter bzw. Rückgabewerte diese haben.\\
-\textbf{Klasse: CloudConnectorGoogleGsutilTEMP}\\
-
+\textbf{Klasse: CloudConnectorGoogleGsutil}\\
+Der CloudConnectorGoogleGsutilTEMP ist eine Implementierung des Interfaces CloudConnector, zur Anbindung des Google Cloud Storage mittels der Python Schnittstelle Gsutil und stellt die in CloudSonnector definierten Methoden zu Operation auf dem Cloudspeicher bereit.\\
 
 \textbf{Package: view}\\
 Das package view stellt das grafische Interface dar. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur resltichen Software: Die Main Klasse, welche Aktionen auf den Views entgegen nimmt und daraufhin 		andere Programmteile steuert, sowie die Klasse FileListHandler, welche dem MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien, InformationContainer) liefert.\\

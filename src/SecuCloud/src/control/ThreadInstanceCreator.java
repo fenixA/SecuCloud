@@ -11,7 +11,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import control.util.CryptToolbox;
 import model.InformationContainer;
-import model.cc.CloudConnectorGoogleGsutilTEMP;
+import model.cc.CloudConnectorGoogleGsutil;
 
 /**
  * The Class ThreaderInstanceCreator separates costly functions to different
@@ -40,7 +40,7 @@ public class ThreadInstanceCreator implements Runnable {
 	private command cmd;
 
 	/** The cloud connector. */
-	private CloudConnectorGoogleGsutilTEMP cloudConnectorGoogleGsutilTEMP;
+	private CloudConnectorGoogleGsutil cloudConnectorGoogleGsutilTEMP;
 
 	/**
 	 * Instantiates a new threader instance.
@@ -54,7 +54,7 @@ public class ThreadInstanceCreator implements Runnable {
 			InformationContainer informationContainer) {
 		this.informationContainer = informationContainer;
 		this.cmd = cmd;
-		this.cloudConnectorGoogleGsutilTEMP = new CloudConnectorGoogleGsutilTEMP();
+		this.cloudConnectorGoogleGsutilTEMP = new CloudConnectorGoogleGsutil();
 	}
 
 	/*
