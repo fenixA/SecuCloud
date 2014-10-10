@@ -23,7 +23,7 @@ import view.MainWindow;
 import view.DeleteWindow;
 import model.InformationContainer;
 import model.InformationContainerStorer;
-import model.cc.CloudConnectorGoogleGsutilTEMP;
+import model.cc.CloudConnectorGoogleGsutil;
 
 /**
  * The Class Main. It is called in startup and is the connection between the
@@ -375,7 +375,7 @@ public class Main {
 	private void checkSynchronicity() {
 		Vector<String> lost = FileListHandler.getInstance()
 				.synchronizeCloudStorage(
-						new CloudConnectorGoogleGsutilTEMP().listDir());
+						new CloudConnectorGoogleGsutil().listDir());
 		if (lost != null) {
 			for (int i = 0; i < lost.size(); i++) {
 				InformationContainer informationContainer = FileListHandler

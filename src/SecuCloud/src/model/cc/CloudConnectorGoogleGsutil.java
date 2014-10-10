@@ -10,7 +10,7 @@ import control.SystemPathCollector;
 /**
  * The Class CloudConnectorGoogleGsutilTEMP.
  */
-public class CloudConnectorGoogleGsutilTEMP implements CloudConnector {
+public class CloudConnectorGoogleGsutil implements CloudConnector {
 	
 	/** The Constant GS_PROTOCOL. */
 	private static final String GS_PROTOCOL = "gs://";

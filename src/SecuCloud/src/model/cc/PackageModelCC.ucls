@@ -3,16 +3,16 @@
   associations="true" dependencies="false" nesting-relationships="true">  
   <interface id="1" language="java" name="model.cc.CloudConnector" project="SecuCloud" 
     file="/SecuCloud/src/model/cc/CloudConnector.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="267" x="231" y="477"/>    
+    <position height="135" width="267" x="201" y="436"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="2" language="java" name="model.cc.CloudConnectorGoogleGsutilTEMP" project="SecuCloud" 
-    file="/SecuCloud/src/model/cc/CloudConnectorGoogleGsutilTEMP.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="267" x="231" y="212"/>    
+  <class id="2" language="java" name="model.cc.CloudConnectorGoogleGsutil" project="SecuCloud" 
+    file="/SecuCloud/src/model/cc/CloudConnectorGoogleGsutil.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="225" width="267" x="201" y="171"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
