@@ -773,6 +773,7 @@ Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
 \subsection{Bedeutung heute}
 TODO
 \subsection{Erweiterung der Funktionalitäten}
+Im folgenden werden Möglichkeiten beschrieben, die bestehende Applikation zu verbessern, ohne dass dazu die grundlegende Architektur verändert werden muss.
 \subsubsection{Erhöhung der Bedienerfreundlichkeit}
 \textbf{Ausbau des Designs/Multirow}\\
 Eine sehr simple, aber dennoch äußerst nützliche erweiterung des bestehenden Tools wäre es zu ermöglichen, dass ein Anwender mehrere Zeilen der Tabelle markieren und bearbeiten kann. Dies würde die intuitive Nutzbarkeit erhöhen und den Umgang mit großen Dateimengen erleichtern. 
@@ -796,26 +797,36 @@ Die folgenden Abschnitte sind kaum mit Quellen versehen, da sie aus eigenen Geda
 \textbf{Schlüsselmanagement durch Key-Server}\\
 Eine potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rückhaltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, es verringert lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße). \cite{38}
 \\\textbf{Loginserver}\\
-TODO
+Um die die Applikation unabhängiger von einem bestimmten Cloudanbieter zu machen wäre ein Konzept mittels Loginserver sinnvoll: Ein Benutzer hat einen Account bei diesem und meldet sich bei Programmstart an. Möchte er eine Datei hochladen, fragt er beim Loginserver an, wohin dies geschehen soll und dieser antwortet mit einem Cloudverzeichnis. Ebenso geschieht es beim Herunterladen der Daten. Möchte der Betrieber des Systems nun einen anderen Cloudanbieter nutzen, etwa weil dieser ein besseres Angebot unterbeitet hat, zieht er alle Daten um und hinterlegt dies beim Loginserver. Der Benutzer merkt von dieser Änderung nichts, aber das Programm arbeitet nun auf einem anderen Speicher als zuvor. Außerdem könnte so auch eine Rechteverwaltung gestaltet werden, sodass der Loginserver den Cloudspeicher verwaltet und den Benuzern selbstständig nur dort Rechte auf dem Speicher gibt, wo sie welche haben sollen und jedes mal neue, wenn sie neue Daten ablegen wollen.
 \\\textbf{Providing Server}\\
 Die Tatsache, dass Benutzer zurzeit auf dem selben Cloudspeicher arbeiten und eventuell sogar die selben Buckets nutzen, verursacht zwei grundsätzliche Probleme: Zum Einen kann ein Benutzer theoretisch (wenn auch nicht mit der Applikation selbst, aber mittels des Webfrontends) Daten anderer Nutzer manipulieren oder löschen. Dieses Problem ließe sich noch durch die von den Cloudanbietern selbst angebotene Rechteverwaltung innerhalb des Speichers lösen. Auf der Anderen ist es aber dem CLoudanbieter noch möglich (und mit Rechteverwaltung erst recht) einzusehen, welchem Nutzer welche Dateien zuzuordnen sind, was widerum eine Gefahr im Sinne der IT-Sicherheit darstellt: Der Anbieter (oder jede Person oder Organisation die sich auf irgend eine Weise Zugriff verschafft hat) kann Analysen über das Uploadverhalten anfertigen und dadurch Schlüsse auf den Inhalt der Daten ziehen. An dieser Stelle könnte man über den Einsatz eines providing Servers nachdenken: Dieser Server steht zwischen dem Endanwender und der Cloudspeicher selbst. Alle Daten werden wie gehabt lokal verschlüsselt, dann aber nicht direkt in der Cloud abgelegt, sondern an den providing Server geschickt, der sie auf den oder die Cloudspeicher legt und eine Abbildung der Zugehörigkeiten speichert. Dadurch bleiben die Daten sicher Verschlüsselt und kein dritter kann Einsicht nehmen. Allerdings sind die Daten aus sicht des Cloudanbieters allesamt der selben Person zuordnen und jeder der sich unrechtmäßig oder auch rechtmäßig (NSA und co.) Zugriff zu der Cloud verschaffen kann, ist nicht in der Lage sie zuzuornen. Sollte sich eine Person oder Organisation Zugriff auf den providing Server verschaffen, kann sie zwar Einsicht in die Zuordnung nehmen, aber sie dennoch nicht entschlüsseln. Ein potentieller Angreifer muss also zwei Server überwinden um die obenen genannten Analysen anzufertigen. Im Sinne der aktuellen Enthüllungen über Geheimdienste und Polizeiorganisationen in den USA aber auch dem Rest der Welt wäre hier durchaus Sinnvoll zwar einen der großen (und dahe billigen) Cloudanbieter der USA zu wählen, die providing Server aber national zu halten. Solange man der eigenen Nation weiter traut als den USA, wurde hier Sicherheit gewonnen. Alternativ könnte für den providing Server auch einen Standort gewählt werden, der sich in einem Land befindet, welches politisch diametral zu den westlichen Industrienationen steht. Dass es einem Geheimdienst möglich ist, durch rechmäßige Verfahren Zugriff auf beide Datenpools zu erhalten wird so sehr unwahrscheinlich und erhöht deren Aufwand weiter.
 \\\textbf{Serverseitige Rechteverwaltung/Teilen von Dateien}\\
 Sollte es einen obenen genannten providing Server geben, ist auch die Rechteverwaltung kein Problem mehr: Der Server verwaltet die Accounts der Nutzer und sorgt dadurch, dass er zwischen geschaltet ist, dass Nutzer nur an Dateien kommen, die ihnen auch gehören bzw. für die sie Rechte von anderen Nutzern erhalten haben. Diese Berechtigungen können vergeben werden indem die Nutzer einender die Schlüssel zukommen lassen und dem Server mitteilen, dass ein weiterer Nutzer Zugriff bekommen soll. Der Schlüsselaustausch darf hier keinesfalls über den login/providing Server geschehen, da dies dafür sorgen würde, dass dritte uneingeschränkt Dateien lesen können (nämlich der Betreiber des Loginservers). Alternativ könnten die Schlüssel über den Server verteilt werden, dann allerdings wieder mit einer asymmetrischen Chiffre verschlüsselt. Wichtig ist hierbei, dass der Austausch der asymmetrischen Schlüssel sicher erfolgt um Man-In-The-Middle Angriffe zu verhindern. Eine Orientierung an den Schlüsselservern des PGP Projektes ist hier Sinnvoll.
 
 \subsubsection{Erweiterte Sicherheit}
-Im folgenden Abschnitt werden Methoden vorgeschlagen, welche die Sicherheit des Systems weiter erhöhen könnten oder durch alternative Sicherheitsmechanismen die Anwendungsbreite der Applikation erhöhen.
+Im folgenden Abschnitt werden Methoden beschrieben, welche die Sicherheit des Systems weiter erhöhen können oder durch alternative Sicherheitsmechanismen die Anwendungsbreite der Applikation erhöhen.
 \\\textbf{OpenJDK}\\
 Im Laufe der Projektarbeit kamen seitens des betreuenden Professors Zweifel auf, ob die Wahl von Java als Plattform und Programmiersprache sinnvoll war, da Java als nicht besonders sicher gilt. Grundsätzlich sollte die Sicherheit von Java in diesem Projekt keine Rolle spielen, da der Rechner auf dem die Applikation läuft, als sicher gilt und die erzeugten Chiffrate überprüfbar korrekt nach den NIST Standards sind. Trotzdem sorgt die Verwendung von Java in diesem Bereich auf der einen Seite für einen bitteren Beigeschmack und außerdem gibt es eine OpenSource Implementierung die als sicherer gilt: OpenJDK. Das Projekt wurde sowohl unter Windows und dem Oracle Java als auch unter Linux und OpenJDK entwickelt und getestet. Dies stellt also eine mögliche Alternative dar und kann bei der Kompilation wie auch beim Betrieb der Applikation ohne einschränkung verwendet werden. 
 \\\textbf{Alternative Programmiersprachen}\\
 Im Rahmen der Überlegungen zu Java und OpenJDK kamen auch Vorschläge zu alternativen Programmiersprachen auf. Hier bot sich vor allem C++ an, da es fur so ziemlich alle Plattformen Kompiler gibt, es strikt Objektorientiert ist und sehr exakten Zugriff auf den Speicher zulässt, was zur Absicherung der Schlüssel auf dem Hostsystem wertvoll ist. Hier erhöht sich zwar der Enwicklungsaufwand (siehe \ref{JavaV}), dafür kann die Applikation auf dem Hostsystem besser abgesichert werden. So wird ein Betrieb auf Fremdsystemen, zum Beispiel von einem USB Stick aus, noch interessanter.
 \\\textbf{Kaskadierte Verschlüsselung}\\
+Zwischenzeitlich gab es Überlegungen dahin gehen, dass aus der Applikation eine Art Teamplattform mit versionsverwaltung zu schaffen. Alleine die Berechnung und Verwaltung der Changesets hätte den Rahmen dieser Projektarbeit gesprengt, allerdings kam in diesem Zusammenhang die Idee auf, Verschlüsselungskaskaden aufzubauen:
+In diesem Falle müssten die Dateien asymmetrisch verschlüsselt werden, TODO
 \\\textbf{Key recovery/Masterkey}\\
+TODO
 \\\textbf{Fraktionierung}\\
+TODO
 \\\textbf{Online Dateisystem}\\
+TODO
+\\\textbf{Verschlüsselte Container}\\
+TODO
 \\\textbf{Rechteverwaltung}\\
+TODO
 
 \subsection{Geschäftsmodell: Sichere Cloudspeicher}
+TODO
 \textbf{Traffic Überwachung}\\
+TODO
 \pagebreak
 
 
