@@ -25,6 +25,8 @@
 \usepackage[pdfpagelabels=true]{hyperref}
 
 
+
+
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
 
@@ -216,14 +218,25 @@ Cloud Computing bietet Unternehmen die Möglichkeit hohe Investitionskosten für
 Gängige Ansätze fordern eine kostenintensive und zeitlich aufwändige Analyse bestehender Systeme und möglicher Erweiterungen. Schwankungen des Bedarfs erschweren eine exakte Kalkulation notwendiger Betriebsmittel, sodass eine Fehl- oder wohlwollend angesetzte Kalkulation zu ungenutzten Kapazitäten und einer unnötigen Belastung der Umwelt führt. Durch Cloud Computing können innerhalb kürzester Zeit Ressourcen bereitsgestellt oder entzogen werden.
 
 ABBILDUNG X\\
-Abbildung X stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Überkapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.
+Abbildung X stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Über-\\kapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.
 
 \textbf{Materielle Wertverluste}
 
+Der stetige technische Fortschritt führt zu einem rapiden Wertverlust der vorhandenen Hardware. Auch die Lebensdauer von stark beanspruchter Hardware, wie beim Einsatz in Servern, macht einen Austausch notwendig. Deshalb ist es nicht sinnvoll für ein Unternehmen einen großen, nicht verwendeten "Vorratsspeicher'' anzulegen. Dieser müsste eventuell noch vor Erreichung seiner maximaler Auslastung ersetzt werden. Dies bedeutet, dass zum einen die Instandhaltung der IT-Infrastruktur Kosten verursacht, zum anderen aber auch innerhalb einer kurzen Zeitspanne die angefallenen Kosten zum Investitionszeitpunkt nicht mehr dem eigentlichen Wert entsprechen. Ein solcher Wertverlust kann durch Cloud Computing vermieden werden. Die Verwaltung und Aktualität der Infrastruktur obliegt einzig dem Anbieter, welcher aufgrund von großer Margen eher in der Lage ist neuste Technik zu einem moderaten Preis einzukaufen und diese Einsparungen an den Kunden weiterzugeben.
 
 \textbf{Höhere Wirtschaftlichkeit}
 
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=1.0\linewidth]{Wirtschaftlichkeit.jpg}
+	 \captionof{figure}{\small Wirtschaftlichkeit {\cite{39}}}
+ 	\label{WirtschaftlichkeitV}
+\end{minipage}
+\vspace{1em}
 
+Anhand der Formel in Abbildung \ref{WirtschaftlichkeitV} kann die Wirtschaftlichkeit des Einsatzes von Cloud Computing kalkuliert werden. Diese gilt prinzipiell für die Berechnung der Rentabilität einer Umstellung der gesamten IT-Infrastruktur auf Cloud Computing, lässt sich jedoch in selber Weise rein auf den ökonomischen Aspekt der Speichernutzung anwenden. Die linke Seite bildet das Ergebnis der Kosten aus Multiplikation der Nettoeinnahmen mit der tatsächlichen Beanspruchung des gebuchten Speichers beim Einsatz von Cloud Computing. Die rechte Seite betrachtet selbiges bei eigener IT-Verwaltung, unter Berücksichtigung der tatsächlichen Auslastung. Der höhere Wert daraus lässt auf eine höhere Kostenersparnis schließen.
 
 \cite{33} \cite{39}
 
@@ -356,8 +369,20 @@ Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt 
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Anwendungen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \cite{1}\cite{2}\\\cite{3}
 
+\subsubsection{Google Cloud Storage}
+Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher Zuverlässigkeit, Verfügbarkeit und Leistung abzulegen. Der Aufbau kann in drei Ebenen \cite{40} eingeteilt werden:
+
+\begin{compactitem}
+	\item Objects:\\
+	Objects sind einzelne Daten, die in Google Cloud Storage gespeichert werden. Sie bestehen aus zwei Komponenten, Objektdaten und Objekt-Metadaten. Objektdaten sind in der Regel Dateien, die gespeichert werden sollen - Objekt-Metadaten eine Sammlung von Objekteigenschaften. Jedes Object gehört zu genau einem Bucket und kann nicht zwischen den Buckets geteilt werden. 
+		\item Buckets:\\
+	Buckets sind der grundlegende Container um Objects zu halten. Objects befinden sich innerhalb eines Buckets des zugehörigen Projects. Darin können Objects organisieret und deren Zugriff verwaltet werden. Im Gegensatz zu einer Struktur aus Verzeichnissen und Ordnern ist keine Verschachtelung möglich. Ein Bucket gehört fest zu einem Project und kann nicht von anderen verwendet werden.
+	\item Projects:\\
+ Jeder Bucket ist genau einem Project zugeordnet. Ein Project besteht aus einer Gruppe von Benutzern, mehreren APIs, Authentifizierung, Überwachungsoptionen und wird mit einem sog. ''Billing Account'' einzeln abgerechnet. Ein Project kann eine beliebige Anzahl an Buckets enthalten.
+\end{compactitem}
+
 \subsubsection{Schnittstelle Google Cloud Storage: gsutil}
-\textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. TODO :BOTO Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt): TODO BUCKET
+\textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. TODO :BOTO Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
 
 \begin{compactitem}
 	\item Auflisten: \textbf{ls}\\
@@ -861,6 +886,7 @@ TODO
 	\bibitem[HmdCc]{37}\url{http://link.springer.com/article/10.1007/BF03340515#},  S.77
 	\bibitem[Winkler]{38} [Winkler – Securing the Cloud]
 	\bibitem[CloudComputing]{39} \url{http://books.google.de/books?hl=de&lr=&id=KJj-0_cPFycC&oi=fnd&pg=PA1&dq=Notwendigkeit+von+Cloud+Computing&ots=O1ppInQq8Q&sig=7CyTpiTQWUIdY8wO__BxgzmXc0I#v=onepage&q&f=false}
+	\bibitem[GCS]{40} \url{https://cloud.google.com/storage/docs/overview#blocks}
 	
 \end{thebibliography}
 \pagebreak
