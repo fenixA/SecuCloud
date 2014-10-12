@@ -226,12 +226,9 @@ ABBILDUNG X\\
 Abbildung X stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Über-\\kapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.
 
 \textbf{Materielle Wertverluste}
-<<<<<<< HEAD
-=======
 
 Der stetige technische Fortschritt führt zu einem rapiden Wertverlust der vorhandenen Hardware. Auch die Lebensdauer von stark beanspruchter Hardware, wie beim Einsatz in Servern, macht einen Austausch notwendig. Deshalb ist es nicht sinnvoll für ein Unternehmen einen großen, nicht verwendeten "Vorratsspeicher'' anzulegen. Dieser müsste eventuell noch vor Erreichung seiner maximaler Auslastung ersetzt werden. Dies bedeutet, dass zum einen die Instandhaltung der IT-Infrastruktur Kosten verursacht, zum anderen aber auch innerhalb einer kurzen Zeitspanne die angefallenen Kosten zum Investitionszeitpunkt nicht mehr dem eigentlichen Wert entsprechen. Ein solcher Wertverlust kann durch Cloud Computing vermieden werden. Die Verwaltung und Aktualität der Infrastruktur obliegt einzig dem Anbieter, welcher aufgrund von großer Margen eher in der Lage ist neuste Technik zu einem moderaten Preis einzukaufen und diese Einsparungen an den Kunden weiterzugeben.
 
->>>>>>> LaTeX_documentation_holzi
 \textbf{Höhere Wirtschaftlichkeit}
 
 \vspace{1em}
@@ -377,10 +374,6 @@ Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt 
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Anwendungen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \cite{1}\cite{2}\\\cite{3}
 
-<<<<<<< HEAD
-\subsubsection{Schnittstelle Google Cloud Storage: gsutil}\label{GsutilV}
-\textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. TODO :BOTO Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt): TODO BUCKET
-=======
 \subsubsection{Google Cloud Storage}
 Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher Zuverlässigkeit, Verfügbarkeit und Leistung abzulegen. Der Aufbau kann in drei Ebenen \cite{40} eingeteilt werden:
 
@@ -393,9 +386,8 @@ Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher
  Jeder Bucket ist genau einem Project zugeordnet. Ein Project besteht aus einer Gruppe von Benutzern, mehreren APIs, Authentifizierung, Überwachungsoptionen und wird mit einem sog. ''Billing Account'' einzeln abgerechnet. Ein Project kann eine beliebige Anzahl an Buckets enthalten.
 \end{compactitem}
 
-\subsubsection{Schnittstelle Google Cloud Storage: gsutil}
+\subsubsection{Schnittstelle Google Cloud Storage: gsutil}\label{GsutilV}
 \textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. TODO :BOTO Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
->>>>>>> LaTeX_documentation_holzi
 
 \begin{compactitem}
 	\item Auflisten: \textbf{ls}\\
