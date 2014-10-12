@@ -206,7 +206,7 @@ Definition von Cloud Computing nach dem Bundesamt für Sicherheit in der Informa
 
 "Cloud Computing bezeichnet das dynamisch an den Bedarf angepasste Anbieten, Nutzen und Abrechnen von IT-Dienstleistungen über ein Netz. Angebot und Nutzung dieser Dienstleistungen erfolgen dabei ausschließlich über definierte technische Schnittstellen und Protokolle. Die Spannbreite der im Rahmen von Cloud Computing angebotenen Dienstleistungen umfasst das komplette Spektrum der Informationstechnik und beinhaltet unter anderem Infrastruktur (z. B. Rechenleistung, Speicherplatz), Plattformen und Software."
 
-\subsubsection{Daseinsberechtigung Cloud Computing}
+\subsubsection{Daseinsberechtigung Cloud Computing}\label{CloudV}
 Cloud Computing bietet Unternehmen die Möglichkeit hohe Investitionskosten für die IT-Infrastruktur in variable laufende Kosten umzuwandeln. Dies ist vor allem für kleinere und mittlere Unternehmen sowie Start-Ups interessant, da nicht nur der enorme Kapitalaufwand bei der Beschaffung von IT-Hardware sondern auch anfallende Kosten für die Administation umgewandelt und minimiert werden können. Die Möglichkeit einer Bereitstellung zusätzlicher Ressourcen bietet zudem eine flexible Alternative zu einer stetigen anforderungsorientierten Erweiterung der IT-Landschaft. Dies ermöglicht eine risikolose, bedarfsgerechte Steuerung der Kapazitäten und Konzentration auf die Kernkompetenz des Unternehmens. Im Allgemeinen betreffen diese Vorzüge alle Bereiche der IT-Infrastruktur (Rechenleistung etc.). Im Projekthintergrund wird nachfolgend im Detail der wirtschaftliche Aspekt der Speichernutzung bei IaaS betrachtet:
 
 \textbf{Elastische Skalierbarkeit}
@@ -770,10 +770,10 @@ $\;$\\
 \section{Diskussion}
 Im folgenden Kapitel werden die Ergebnisse der Projektarbeit in der aktuellen Lage (NSA, Prism etc.) eingeordnet. Außerdem wird auf mögliche Erweiterungen der Applikation, sowie weitere mögliche Konzepte der verschlüsselten Datensicherung in der Cloud, eingegangen. 
 
-Ausführliches Fazit zur aktuellen und zukünftigen Notwendigkeit\\
-Ausblick auf mögliche Erweiterungen und fehlende Implementierungen
-\subsection{Bedeutung heute}
-TODO
+\subsection{Bedeutung}
+Dass Cloud Computing in der heutigen Zeit eine immer größere Bedeutung zukommt und es durchaus auch seine Existenzberechtigung im Sinne von ökonomischen und ökologischen Gesichtspunkten hat soll hier nicht weiter thematisiert werden, da es in \ref{CloudV} ausführlich dargelegt wurde. Das essentielle Problem beim Cloud Computing, dass die meisten Anbieter im Ausland liegen und damit nicht unter deutsches Recht fallen, macht es jedoch für viele Anwendungen unbrauchbar. Auf der einen Seite ist der Datenschutz nicht gewährleistet, was grade bei den empfindlichen deutschen Datenschutzgesetzen gefährlich sein kann. Auf der anderen Seite haben die Enthüllungen der letzten Monate gezeigt, dass sogar auf staatlicher Ebene massiv Industriespionage betrieben wird. Dies ist für die meisten deutschen Firmen, die sich ob des hohen Lohnstandards nur aufgrund von technischem Know-How und moderenen Entwicklungen gegen Konkurrenten aus dem Ausland durchsetzen können, ein ausrechender Grund, Cloud Computing zu meiden. Diese Umstände werden durch Applikationen wie der, die im Rahmen dieses Projektes prototypisch entwickelt wurde, behoben. Durch die vorverschlüsselte Ablage muss die genutzte Infrastruktur nicht mehr als sicher angesehen werden und kann ohne Vorbehalte genutzt werden. Sehr bewusst wurde bei der Konzeptionierung darauf geachtet, auch BSI Standards für die Verschlüsselung abzudecken. Weniger weil es keine weiteren guten Verschlüsselungssysteme gäbe, als vielmehr um dem deutschen Datenschutz gerecht zu werden, und zu zeigen, dass es durchaus möglich ist, im Ausland Daten derart abzusichern, dass sie als sicher im Sinne der deutschen Gesetzgebung gelten.
+
+nämlich, dass die meisten Anbieter im Ausland liegen und damit verbunden sowohl der Datenschutz im rechtlichen Sinne,  als auch der Schutz unternehmenswichtiger Daten im Sinne von geistigem Eigentum und damit verbundener existentieller Bedrohung durch Diebstahl lässt sich allerdings 
 \subsection{Erweiterung der Funktionalitäten}
 Im folgenden werden Möglichkeiten beschrieben, die bestehende Applikation zu verbessern, ohne dass dazu die grundlegende Architektur verändert werden muss.
 \subsubsection{Erhöhung der Bedienerfreundlichkeit}
