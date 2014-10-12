@@ -19,3 +19,9 @@ Google Project/Bucket
 UseCase ggf. überarbeiten
 Forschungsfragen / Ziel der Arbeit / Gang der Arbeit / Kurzfassung
 gsutil: Probleme mit großen Dateien + gsutil Befehle im Code
+
+Einleitung/Forschungsfragen:
+	erwähnung Cloudspeicher nicht für wichtige daten nutzbar da unsicher.
+	nicht vertrauenswürdige infrastrukturen
+	nsa
+	
