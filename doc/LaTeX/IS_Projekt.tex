@@ -178,7 +178,7 @@ Dies macht eine verschlüsselte Ablage der Daten notwendig um sicherzustellen, d
 Der Client und dessen Zugang zur Cloud wird, nach Vorgabe, als sicher angesehen. TODO
 \subsubsection{Problemstellung}
 Eine symmetrische Software-Kryptographie soll möglichst Daten, die in eine Cloud ausgelagert werden,  vor Fremdzugriff schützen. Die Konzeption und der Entwurf eines Prototyps sollen evaluieren, wie diese Herausforderung effizient und sicher gelöst werden kann. Dabei steht der betriebssystemunabhängige Zugriff auf die entsprechende Anwendung und das eingesetzte Verschlüsselungsverfahren im Vordergrund. Erarbeitet werden soll die Implementierung für einen einzelnen Cloud-Anbieter. 
-TODO NSA
+
 Zu den Grundfunktionalitäten des geforderten Prototyps gehören der Cloud-Zugriff, die Verschlüsselung, die Speicherung in der Cloud, eine Dateiübersicht und das lokale Herunterladen der Daten.
 
 Die Verwendung soll durch eine grafische Oberfläche vereinfacht werden.
@@ -187,17 +187,22 @@ Die Verwendung soll durch eine grafische Oberfläche vereinfacht werden.
 Eine Gegenüberstellung weiterer kommerzieller Produkte von Cloud-Anbietern im Bezug auf Implementierung und Performance wird in dieser Arbeit nicht behandelt. Ebenso ist eine Optimierung vorhandener APIs bzw. Schnittstellen und Kryptosystemen nicht Gegenstand dieser Arbeit. Die Hardware des Anwenders wird als sicher betrachtet, weswegen es keines sicheren Schlüsselmanagements bedarf.
 
 \subsection{Ziel der Arbeit}
-TODO
-Ziel der Projektarbeit ist es primär eine Anwendung zu entwickeln, die ein aus IT-Sicherheits-Gesichtpunkten sicheres, symmetrisch verschlüsseltes Ablegen von Daten in einer als unsicher geltenden Cloud-Umgebung ermöglicht. Desweiteren wird der Dienstleistungsvorteil sowie das Alleinstellungsmerkmal für Vertiebsintermediäre, durch das zusätzliche Angebot einer solchen Anwendung, betrachtet. Ein weiterer Aspekt ist die Herausarbeitung von Datenschutzproblematiken im Cloud Computing Segment.
+Ziel der Arbeit ist es herauszuarbeiten, ob und wie Cloudspeicher zur sicheren Ablage von Daten im Sinne des deutschen Datenschutzverständnisses genutzt werden können und eine entsprechende Applikation zu entwickeln. Außerdem ist zu klären, ob der Einsatz einer Cloudplattform sinnvoll und möglich ist, auf Hintergrund der jüngsten Enthüllungen Edward Snowdens und anderer. Diese haben gezeigt, dass eine solche Infrastruktur auf US-Amerikanischem Boden im besonderen aber auch im Ausland im allgemeinen als nicht vertrauenswürdig gelten muss und dort abgelegte Unternehmenswichtige Daten gefährdet sind. Ist es möglich die Vorteile solcher Plattformen dennoch zu nutzen? Wie gefährdet sind die Daten dann noch?
+
+Hinzu kommt die eine Einschätzung ob und wie eine solche Applikation marktfähig entwickelt und vertrieben werden kann.
 
 \subsection{Gang der Arbeit}
-Kurze Beschreibung der Kapitel - Erfolgt am Ende der Ausarbeitung
+Zunächst werden im Kapitel \ref{MethodenV} Methoden alle Grundlagen erläutert, die zum Verständnis der entwickelten Applikation, des Sicherheitskonzeptes und der Entscheidungen, die auf dem Weg dorthin getroffen wurden, notwendig sind. Hier geht es vor allem um die verwendeten Sicherheitsalgorithmen, die Notwendigkeit von Cloudcomputing, dessen wirtschafliche Aspekte und Abgrenzung der verschiedenen Anbieter sowie die zur Entwicklung der Applikation verwendeten Werkzeuge und Technologien. Nachfolgen wird in \ref{ErgebnisseV} Ergebnisse die Applikation selbst in Architektur und Aufbau des Programmcodes und das entworfene Sicherheitskonzept erläutert. Außerdem findet sich hier auch eine detaillierte Beschreibung des graphischen Interfaces und eine Bedienungsanleitung. In \ref{DiskussionV} Diskussion werden die Ergebnisse (die Applikation) im Sinne der Motivation und der Zielsetzung bewertet, sowie Möglichkeiten zur Optimierung der Applikation und eine Aussicht auf zukünftige Weiterentwicklungen gegeben.
+
+In der Ausarbeitung werden teilweise Anglizismen und englische Begriffe in deutssprachingen Fließtexten verwendet, zum Teil in Eindeutschungen. Dies geschieht, da das Zielpuplikum eine informatikinteressierte Fachöffentlichkeit ist. Wir gehen davon aus, dass viele Begriffe der Informatik auch im deutschen Sprachgebrauch auf immer englisch verwendet werden und so in diesem Zusammenhang eindeutiger sind als ihre deutsche Übersetzung. So ist zum Beispiel ein Bytearray ein stehender Begriff, während die Übersetzung Bytefeld einer Erläuterung bedürfen würde.
+
+Die Dokumentation des Programmcodes sowie die UML Diagramme sind auf englisch gehalten, da auch im Programmcode selbst ausschließlich englische Methoden-, Variablen- und Klassennamen verwendet wurden. Dies geschah, da in unseren Augen Englisch die Fachsprache der Informatik ist und außerdem ansonsten eine unleserliche Vermischung von deutschen Variablen und Methodennamen mit der grundsätzlich englischen Notation der Programmiersprachen entstehen würde.
 \pagebreak
 
 % ----------------------------------------------------------------------------------------------------------
 % Methoden
 % ----------------------------------------------------------------------------------------------------------
-\section{Methoden}
+\section{Methoden}\label{MethodenV}
 \subsection{Grundlagen Cloud Computing}
 \subsubsection{Definition}
 Definition von Cloud Computing nach dem National Institute of Standards and Technology (NIST) und der European Network and Information Security Agency (ENISA) \cite{34}:
@@ -219,8 +224,6 @@ ABBILDUNG X\\
 Abbildung X stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Überkapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.
 
 \textbf{Materielle Wertverluste}
-
-
 \textbf{Höhere Wirtschaftlichkeit}
 
 
@@ -356,7 +359,7 @@ Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt 
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Anwendungen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \cite{1}\cite{2}\\\cite{3}
 
-\subsubsection{Schnittstelle Google Cloud Storage: gsutil}
+\subsubsection{Schnittstelle Google Cloud Storage: gsutil}\label{GsutilV}
 \textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. TODO :BOTO Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt): TODO BUCKET
 
 \begin{compactitem}
@@ -396,7 +399,7 @@ Um die Integrität eines übertragenen Bitstroms zu garantieren, kann der Hashwe
 \\\textbf{Beweis: Geheimnisbesitz}\\\label{KryptV}
 Will eine Person einer Anderen beweisen im Besitz eines Geheimnisses zu sein, vertraut aber der Übertragung nicht und möchte es daher nicht preisgeben, kann sie einen sog. Salt (Eng. Salz, von versalzen) erzeugen und diesen mit dem Geheimnis zusammen hashen. Dieser Hash inklusive des Salt wird verschickt und der Empfänger kann seinerseits das Geheimnis und den Salt hashen. Ist der anderen Person das Geheimnis bekannt, müssen die Hashes sich gleichen. Der Salt dient in diesem Fall der Sicherstellung, dass ein eventueller Angreifer den Hash des reinen Passwortes nicht aufzeichnen kann und sich mit dem Besitz des Hashes als Kenner des Geheimnisses ausgibt. Außerdem verhindert der Salt, dass Passwortlisten (sog. Rainbowtables) von gehashten Geheimnissen (in diesem Fall : Passwörtern) vorrausberechnet und mit gestohlenen Hashes abgeglichen werden können. Dieses Verfahren wird zum Beispiel verwendet, wenn Server Passwörter für den Login speichern. So müssen sie die Passwörter nicht im Klartext speichern, und der Schaden bei einem Einbruch kann minimiert werden. TODO
 
-SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht. \cite{8}\cite{9}\cite{10}\\
+SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer der selbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht. \cite{10}\cite{13}\\
 \pagebreak
 
 
@@ -404,7 +407,7 @@ SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hash
 % ----------------------------------------------------------------------------------------------------------
 % Ergebnisse
 % ----------------------------------------------------------------------------------------------------------
-\section{Ergebnisse}
+\section{Ergebnisse}\label{ErgebnisseV}
 TODO Einleitung
 \subsection{Architektur}
 Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Entwurfsmuster angelehnt ist. Sie unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (packages, die in anderen enthalten sind). Im Folgenden werden diese sowie die enthaltenen Klassen näher skizziert. Eine genaue Auflistung der Methoden und Klassenvaiablen kann den UML Diagrammen bzw. der Dokumentation entnommen werden.
@@ -766,7 +769,7 @@ $\;$\\
 % ----------------------------------------------------------------------------------------------------------
 % Diskussion
 % ----------------------------------------------------------------------------------------------------------
-\section{Diskussion}
+\section{Diskussion}\label{DiskussionV}
 Im folgenden Kapitel werden die Ergebnisse der Projektarbeit in der aktuellen Lage (NSA, Prism etc.) eingeordnet. Außerdem wird auf mögliche Erweiterungen der Applikation, sowie weitere mögliche Konzepte der verschlüsselten Datensicherung in der Cloud, eingegangen. 
 
 \subsection{Bedeutung}
@@ -790,7 +793,7 @@ Weiterhin denkbar wäre, die Applikation derart anzulegen, dass sie den Cloudspe
 \\\textbf{Verschlüsselung von Dateistrukturen}\\
 Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \cite{38}
 \\\textbf{Schutz der .boto}\\
-TODO
+Wie in \ref{GsutilV} dargelegt ist, stehen die Verbindungsdaten, welche die Gsutil Schnittstelle nutzt, in der Datei .boto im Home Verzeichnis des Benutzers. Da dies eine Möglichkeit darstellt ohne Passworteingabe auf den Cloudspeicher von Google zuzugreifen, sollte auch diese bei beendigung des Programmes verschlüsselt werden. Dies wird zusätzlich interessant, wenn eine Benutzerverwaltung mit eigenen Nutzeraccounts und zugehörigen Buckets existiert. Jeder in der Anwendung registrierte Nutzer hat dann seine eigene .boto, die nach beendigung der Applikation in seinem Applikationsspeicher (/SecuCloud/\textless Benutzername\textgreater /data/) verschlüsselt abgelegt wird, und nur mittels eines korrekten Benutzerpasswortes zugänglich ist. Simultan zur Behandlung der state.cfg Dateien.
 
 \subsubsection{Serverseitiges Management}
 Die folgenden Abschnitte sind kaum mit Quellen versehen, da sie aus eigenen Gedanken entstanden sind. Sollte es ähnliche Verfahrensweisen in anderen Systemen geben, so ist dies Zufall und bedeutet nicht, dass Quellen vorsätzlich unterschlagen wurden.\\
@@ -839,14 +842,12 @@ TODO
  
  \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
 	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
-	\bibitem[WJava]{2}\url{http://de.wikipedia.org/wiki/Java_(Programmiersprache)}
-	\bibitem[WJavaTechnology]{3}\url{ http://de.wikipedia.org/wiki/Java-Technologie}
+	\bibitem[ArchiveJava]{2}\url{http://web.archive.org/web/20100105045840/http://java.sun.com/features/1998/05/birthday.html}
+	\bibitem[JavaInsel]{3}\url{ openbook.galileocomputing.de/javainsel}
 	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
 	\bibitem[WAes]{5}\url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
-	\bibitem[WCounterMode]{6}\url{http://de.wikipedia.org/wiki/Counter_Mode}
-	\bibitem[NistCounterMode]{7}\url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}
-	\bibitem[WSha]{8}\url{http://de.wikipedia.org/wiki/Secure_Hash_Algorithm}
-	\bibitem[WSha2]{9}\url{http://de.wikipedia.org/wiki/SHA-2}
+	\bibitem[NistCTR]{6}\url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}
+	\bibitem[NistCTRSpec]{7}\url{http://csrc.nist.gov/groups/ST/toolkit/BCM/documents/proposedmodes/ctr/ctr-spec.pdf}
 	\bibitem[NistSha2]{10}\url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}
 	\bibitem[SecShW]{11}\url{http://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing}
 	\bibitem[BsiAlg1]{12}\url{http://www.bundesnetzagentur.de/SharedDocs/Downloads/DE/Sachgebiete/QES/Veroeffentlichungen/Algorithmen/2014Algorithmenkatalog.pdf;jsessionid=44761A7B91153744E5BAC51D89FB1FBD?__blob=publicationFile&v=1}
