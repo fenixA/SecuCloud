@@ -2,12 +2,7 @@ ToDo:
 Logfiles
 
 ToDo-Theorie:
-3-Schichten Modell
-OpenJDK/OpenSource JDK
-Kaskadierte Verschlüsselung (Backup-Versionskontrolle)
 Traffic-Überwachung einzelner Clients
-MasterKey Wiederherstellung (shared secret)
-Loginsystem/Loginserver (Serverseitige Rechteverwaltung, Providingserver)
 
 Subsection Diskussion Bedeutung der Arbeit (Forschungsfragen)
 
