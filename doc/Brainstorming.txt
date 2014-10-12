@@ -1,16 +1,19 @@
-ToDo:
+ToDo:(Maybe)
 Logfiles
+Hashfiles for integrity
 
-ToDo-Theorie:
+ToDo
 Traffic-Überwachung einzelner Clients
-
-Layout
 Quellen korrigieren/erweitern
-
-
+Ehrenwörtliche Erklärung
+Kurzfassung
+Kontext UML's
+TODO's im Text eliminieren
+Discussion überarbeiten
 
 Holzi:
-Google Project/Bucket/.boto/gsutil: Probleme mit großen Dateien + gsutil Befehle im Code
+.boto/gsutil: 
+gsutil: Probleme mit großen Dateien (Ergebnis)
 UseCase ggf. überarbeiten
-Kurzfassung
+
 	
