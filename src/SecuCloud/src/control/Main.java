@@ -186,7 +186,7 @@ public class Main {
 	 * Instantiates a new main.
 	 */
 	public Main() {
-		this.softwareName = "SecuCloud";
+		this.softwareName = "NSAbeGONE";
 	}
 
 	/**
@@ -384,7 +384,7 @@ public class Main {
 						this.bucket)) {
 					drawDeleteWindow();
 					if (this.deleteWindow.HandleInput(
-							informationContainer.getName(), lost.get(i)) == true) {
+							informationContainer.getName(), lost.get(i), 0) == true) {
 						FileListHandler.getInstance().deleteFile(
 								informationContainer);
 					}
@@ -453,11 +453,16 @@ public class Main {
 	public void toggle_MainWindow_delete(String encryptedName) {
 		InformationContainer informationContainer = FileListHandler
 				.getInstance().selectByEncryptedName(encryptedName);
-		Thread t = new Thread(new ThreadInstanceCreator(command.removeFile,
-				informationContainer));
-		t.start();
-		threadVector.add(t);
-		FileListHandler.getInstance().deleteFile(informationContainer);
+		drawDeleteWindow();
+		if (this.deleteWindow.HandleInput(
+				informationContainer.getEncryptedName(),
+				informationContainer.getName(), 1) == true) {
+			Thread t = new Thread(new ThreadInstanceCreator(command.removeFile,
+					informationContainer));
+			t.start();
+			threadVector.add(t);
+			FileListHandler.getInstance().deleteFile(informationContainer);
+		}
 	}
 
 	/**

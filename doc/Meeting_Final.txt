@@ -1,0 +1,38 @@
+-->TODO:
+- AES neu formulieren (kein Eigenplagiat)
+- 60 bis 70 Seiten Textumfang
+- Wikipedia bei AES und Java akzeptabel (besser vermeiden)
+- Daseinsberechtigung: 
+Skaleneffekte, Verbundeffekte, Nachfrageschwankungen (Volatilität)
+- Forschungsfragen: 
+Aufgliedern und Arbeit anpassen oder Frage streichen
+- Technische Analyse/Umsetzung um Kryptosystem und Hash erweitern
+- Zitationsregeln: 
+Töpfer, Grundlagenwerk zu wissenschaftlichen Arbeiten
+\cite{XX}, S. 44 -> [Winkler, S. 44]
+
+
+Abgabe: 
+- Papierformat (auch ungebunden) + Digitale Form, Webseiten Speichern/Drucken
+- .jar + Installationsanleitung
+
+
+
+
+-->Done:
+-> Code: 
+- SecuCloud zu NSAbeGONE
+- Bestätigungsfrage bei ausgelöstem Löschvorgang
+ 
+-> LaTeX:
+- Times als Schriftart
+- Rückdatieren der Ausarbeitung
+- Neuen Command \fullref{} eingeführt und \ref{} im Text dadurch ersetzt:
+Referenzierung auf Label fett, Kapitelnr. + Kapitelname
+- Geschäftsmodell entfernt
+
+-> Allgemein:
+- Eigener Billing-Account durch Prof (not our business)
+- Zunächst kein Whitepaper (actually not our business)
+
+
