@@ -7,6 +7,11 @@ import javax.swing.UIManager;
  * The Class DeleteWindow shows a delete dialog.
  */
 public class DeleteWindow {
+	
+	public static enum command {
+		syncStatus,
+		klickEvent
+	}
 
 	/**
 	 * Handle input.
@@ -17,7 +22,7 @@ public class DeleteWindow {
 	 *            the encrypted file name
 	 * @return true, if successful
 	 */
-	public boolean HandleInput(String fileName, String encryptedName, int x) {
+	public boolean handleInput(String fileName, String encryptedName, command cmd) {
 
 		UIManager.put("OptionPane.yesButtonText", "Yes");
 		UIManager.put("OptionPane.noButtonText", "No");
@@ -25,13 +30,13 @@ public class DeleteWindow {
 		String tmp2 = null;
 		String tmp3 = null;
 
-		switch (x) {
-		case 0:
+		switch (cmd) {
+		case syncStatus:
 			tmp1 = "Data on Cloud not available:";
 			tmp2 = "Delete from filelist?";
 			tmp3 = "Cloud not synchronous!";
 			break;
-		case 1:
+		case klickEvent:
 			tmp1 = "Are you sure to delete:";
 			tmp2 = "from cloud?";
 			tmp3 = "Delete file";
