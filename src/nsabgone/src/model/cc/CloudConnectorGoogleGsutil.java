@@ -33,16 +33,6 @@ public class CloudConnectorGoogleGsutil implements CloudConnector {
 	@Override
 	public InformationContainer upload(InformationContainer informationContainer) {
 		try {
-			File testFile = new File(Main.getInstance().getUSER_DATA_DIR()
-					+ File.separator + "test");
-			FileOutputStream stream = new FileOutputStream(testFile);
-			stream.write(new String(SystemPathCollector.getPythonPath()
-					+ SystemPathCollector.getGsutilPath() + CMD_COPY
-					+ informationContainer.getLocalEncryptedLocation()
-					+ GS_PROTOCOL + informationContainer.getCloudLocation())
-					.getBytes());
-			stream.flush();
-			stream.close();
 			Process uploadProcess = Runtime
 					.getRuntime()
 					.exec(new String[] {
