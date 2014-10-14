@@ -13,7 +13,7 @@ import control.util.CryptToolbox;
 
 /**
  * The Class SettingsFileHandler handles the applications settings.cfg with the
- * saved users and performs all actions onit.
+ * saved users and performs all actions on it.
  */
 public class SettingsFileHandler {
 
