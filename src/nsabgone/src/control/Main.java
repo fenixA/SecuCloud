@@ -44,6 +44,8 @@ public class Main {
 
 	/** The Constant HASH_LEN. */
 	public static final int HASH_LEN = 32;
+	
+	public static final String CLOUD_SEPERATOR = "/";
 
 	/** The Constant USER_HOME. */
 	public static final String USER_HOME = System.getProperty("user.home");
