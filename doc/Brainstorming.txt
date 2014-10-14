@@ -10,6 +10,8 @@ Kurzfassung
 Kontext UML's
 TODO's im Text eliminieren
 Discussion überarbeiten
+Comment new code
+neue UML
 
 Holzi:
 .boto/gsutil: 

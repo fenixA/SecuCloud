@@ -2,6 +2,7 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.StandardCopyOption;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -10,6 +11,7 @@ import java.security.NoSuchProviderException;
 import javax.crypto.NoSuchPaddingException;
 
 import control.util.CryptToolbox;
+import control.util.SupportFunctions;
 import model.InformationContainer;
 import model.cc.CloudConnectorGoogleGsutil;
 
@@ -23,7 +25,7 @@ public class ThreadInstanceCreator implements Runnable {
 	 * The Enum command contains the different commands with which a thread can
 	 * be started.
 	 */
-	public enum command {
+	public static enum command {
 
 		/** The encrypt and upload file. */
 		encryptUploadFile,
@@ -69,30 +71,38 @@ public class ThreadInstanceCreator implements Runnable {
 			File selectedFile = new File(
 					informationContainer.getLocalPlainLocation());
 			try {
-				CryptToolbox.threadEncryptFileAesCTR(selectedFile,
+				File tempFile = CryptToolbox.createTempHashedFile(selectedFile);
+				CryptToolbox.threadEncryptFileAesCTR(tempFile,
 						informationContainer.getLocalEncryptedLocation(),
 						informationContainer.getKey());
+				tempFile.delete();
 			} catch (InvalidKeyException | NoSuchAlgorithmException
 					| NoSuchProviderException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IOException e) {
 				e.printStackTrace();
 			}
 			this.cloudConnectorGoogleGsutilTEMP.upload(informationContainer);
-			File encryptedFile = new File(
-					informationContainer.getLocalEncryptedLocation());
-			encryptedFile.delete();
+			new File(informationContainer.getLocalEncryptedLocation()).delete();
 			break;
 		case downloadDecryptFile:
 			this.cloudConnectorGoogleGsutilTEMP.download(informationContainer);
 			try {
-				File f = new File(Main.getInstance().getUSER_TEMP_DIR() + "/"
+				File tempFile = new File(Main.getInstance().getUSER_TEMP_DIR()
+						+ File.separator
 						+ informationContainer.getEncryptedName()
 						+ Main.DOWNLOAD_EXTENSION);
-				CryptToolbox.threadDecryptFileAesCTR(f,
-						Main.getInstance().getUSER_DOWNLOAD_DIR() + "/"
+				File tempFile2 = CryptToolbox.threadDecryptFileAesCTR(tempFile,
+						Main.getInstance().getUSER_TEMP_DIR() + File.separator
 								+ informationContainer.getName(),
 						informationContainer.getKey());
-				f.delete();
+				tempFile.delete();
+				if (CryptToolbox.verifyFileHashSHA256(tempFile2)) {
+					SupportFunctions.copyFile(tempFile2, Main.getInstance()
+							.getUSER_DOWNLOAD_DIR() + File.separator + tempFile2.getName(),
+							StandardCopyOption.REPLACE_EXISTING);
+					tempFile2.delete();
+				}
+
 			} catch (InvalidKeyException | NoSuchAlgorithmException
 					| NoSuchProviderException | NoSuchPaddingException
 					| InvalidAlgorithmParameterException | IOException e) {

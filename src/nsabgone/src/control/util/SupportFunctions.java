@@ -1,6 +1,10 @@
 package control.util;
 
-// TODO: Auto-generated Javadoc
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
 /**
  * The Class SupportFunctions provides supporting functions.
  */
@@ -53,5 +57,12 @@ public class SupportFunctions {
 			i++;
 		}
 		System.out.println();
+	}
+
+	public static File copyFile(File sourceFile, String destinationString,
+			StandardCopyOption option) throws IOException {
+		File destinationFile = new File(destinationString);
+		Files.copy(sourceFile.toPath(), destinationFile.toPath(), option);
+		return destinationFile;
 	}
 }
