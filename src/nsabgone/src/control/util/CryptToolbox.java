@@ -1,8 +1,10 @@
 package control.util;
 
 import java.security.*;
+import java.util.Arrays;
 import java.io.*;
 import java.math.BigInteger;
+import java.nio.file.StandardCopyOption;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
@@ -260,7 +262,7 @@ public final class CryptToolbox {
 		String encryptedName = generateLocationString();
 		InformationContainer informationContainer = new InformationContainer(
 				selectedFile.getAbsolutePath(), Main.getInstance()
-						.getUSER_TEMP_DIR() + "/" + encryptedName,
+						.getUSER_TEMP_DIR() + File.separator + encryptedName,
 				encryptedName, selectedFile.getName(), tempKey,
 				Encryption.AES_CTR);
 		Thread t = new Thread(new ThreadInstanceCreator(
@@ -330,6 +332,63 @@ public final class CryptToolbox {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
 		md.update(input);
 		return md.digest();
+	}
+
+	public static byte[] hashFileSHA256(File input, int len)
+			throws NoSuchAlgorithmException, IOException {
+		if (len == 0) {
+			len = (int) input.length();
+		}
+		FileInputStream stream = new FileInputStream(input);
+		byte[] temp = new byte[len];
+		for (int i = 0; i < len; i++) {
+			temp[i] = (byte) stream.read();
+		}
+		stream.close();
+		return hashByteArraySHA256(temp);
+	}
+
+	public static byte[] extractHashSHA256FromFile(File input)
+			throws IOException {
+		FileInputStream iStream = new FileInputStream(input);
+		byte[] temp = new byte[(int) input.length()];
+		for (int i = 0; i < input.length(); i++) {
+			temp[i] = (byte) iStream.read();
+		}
+		iStream.close();
+		byte[] hash = new byte[Main.HASH_LEN];
+		System.arraycopy(temp, temp.length - Main.HASH_LEN, hash, 0,
+				Main.HASH_LEN);
+
+		FileOutputStream oStream = new FileOutputStream(input);
+		oStream.write(temp, 0, temp.length - Main.HASH_LEN);
+		oStream.flush();
+		oStream.close();
+		return hash;
+	}
+
+	public static boolean verifyFileHashSHA256(File input)
+			throws NoSuchAlgorithmException, IOException {
+		byte[] firstHash = hashFileSHA256(input, (int) input.length()
+				- Main.HASH_LEN);
+		byte[] secondHash = extractHashSHA256FromFile(input);
+		if (Arrays.equals(firstHash, secondHash)) {
+			return true;
+		}
+		return true;
+	}
+
+	public static File createTempHashedFile(File input)
+			throws NoSuchAlgorithmException, IOException {
+		File returnFile = SupportFunctions.copyFile(input, Main.getInstance()
+				.getUSER_TEMP_DIR() + File.separator + input.getName(),
+				StandardCopyOption.REPLACE_EXISTING);
+
+		FileOutputStream stream = new FileOutputStream(returnFile, true);
+		stream.write(hashFileSHA256(input, 0));
+		stream.flush();
+		stream.close();
+		return returnFile;
 	}
 
 	/**

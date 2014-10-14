@@ -14,7 +14,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 
-import control.ThreadInstanceCreator.command;
 import control.util.CryptToolbox;
 import view.NotificationWindow;
 import view.CreateAccountWindow;
@@ -45,6 +44,8 @@ public class Main {
 
 	/** The Constant HASH_LEN. */
 	public static final int HASH_LEN = 32;
+	
+	public static final String CLOUD_SEPERATOR = "/";
 
 	/** The Constant USER_HOME. */
 	public static final String USER_HOME = System.getProperty("user.home");
@@ -186,7 +187,7 @@ public class Main {
 	 * Instantiates a new main.
 	 */
 	public Main() {
-		this.softwareName = "NSAbeGONE";
+		this.softwareName = "NSAbGONE";
 	}
 
 	/**
@@ -238,8 +239,8 @@ public class Main {
 	 * Collect working paths.
 	 */
 	private void collectWorkingPaths() {
-		ROOT_DIR = USER_HOME + "/" + softwareName;
-		SETTINGS_FILE = ROOT_DIR + "/settings.cfg";
+		ROOT_DIR = USER_HOME + File.separator + softwareName;
+		SETTINGS_FILE = ROOT_DIR + File.separator + "settings.cfg";
 	}
 
 	/**
@@ -297,22 +298,23 @@ public class Main {
 	 * Builds the users directory structure.
 	 */
 	private void buildUserDirectory() {
-		File user_dir = new File(ROOT_DIR + "/" + userName);
+		File user_dir = new File(ROOT_DIR + File.separator + userName);
 		if (!user_dir.exists()) {
 			user_dir.mkdir();
 		}
 		USER_DIR = user_dir.getAbsolutePath();
-		File user_data_dir = new File(USER_DIR + "/data");
+		File user_data_dir = new File(USER_DIR + File.separator + "data");
 		if (!user_data_dir.exists()) {
 			user_data_dir.mkdir();
 		}
 		USER_DATA_DIR = user_data_dir.getAbsolutePath();
-		File user_download_dir = new File(USER_DIR + "/download");
+		File user_download_dir = new File(USER_DIR + File.separator
+				+ "download");
 		if (!user_download_dir.exists()) {
 			user_download_dir.mkdir();
 		}
 		USER_DOWNLOAD_DIR = user_download_dir.getAbsolutePath();
-		File user_temp_dir = new File(USER_DIR + "/temp");
+		File user_temp_dir = new File(USER_DIR + File.separator + "temp");
 		if (!user_temp_dir.exists()) {
 			user_temp_dir.mkdir();
 		}
@@ -383,8 +385,9 @@ public class Main {
 				if (informationContainer.getCloudLocation().contains(
 						this.bucket)) {
 					drawDeleteWindow();
-					if (this.deleteWindow.HandleInput(
-							informationContainer.getName(), lost.get(i), 0) == true) {
+					if (this.deleteWindow.handleInput(
+							informationContainer.getName(), lost.get(i),
+							DeleteWindow.command.syncStatus) == true) {
 						FileListHandler.getInstance().deleteFile(
 								informationContainer);
 					}
@@ -454,10 +457,11 @@ public class Main {
 		InformationContainer informationContainer = FileListHandler
 				.getInstance().selectByEncryptedName(encryptedName);
 		drawDeleteWindow();
-		if (this.deleteWindow.HandleInput(
+		if (this.deleteWindow.handleInput(informationContainer.getName(),
 				informationContainer.getEncryptedName(),
-				informationContainer.getName(), 1) == true) {
-			Thread t = new Thread(new ThreadInstanceCreator(command.removeFile,
+				DeleteWindow.command.klickEvent) == true) {
+			Thread t = new Thread(new ThreadInstanceCreator(
+					ThreadInstanceCreator.command.removeFile,
 					informationContainer));
 			t.start();
 			threadVector.add(t);
