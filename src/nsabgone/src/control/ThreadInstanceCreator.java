@@ -42,7 +42,7 @@ public class ThreadInstanceCreator implements Runnable {
 	private command cmd;
 
 	/** The cloud connector. */
-	private CloudConnectorGoogleGsutil cloudConnectorGoogleGsutilTEMP;
+	private CloudConnectorGoogleGsutil cloudConnectorGoogleGsutil;
 
 	/**
 	 * Instantiates a new threader instance.
@@ -56,7 +56,7 @@ public class ThreadInstanceCreator implements Runnable {
 			InformationContainer informationContainer) {
 		this.informationContainer = informationContainer;
 		this.cmd = cmd;
-		this.cloudConnectorGoogleGsutilTEMP = new CloudConnectorGoogleGsutil();
+		this.cloudConnectorGoogleGsutil = new CloudConnectorGoogleGsutil();
 	}
 
 	/*
@@ -81,11 +81,11 @@ public class ThreadInstanceCreator implements Runnable {
 					| InvalidAlgorithmParameterException | IOException e) {
 				e.printStackTrace();
 			}
-			this.cloudConnectorGoogleGsutilTEMP.upload(informationContainer);
+			this.cloudConnectorGoogleGsutil.upload(informationContainer);
 			new File(informationContainer.getLocalEncryptedLocation()).delete();
 			break;
 		case downloadDecryptFile:
-			this.cloudConnectorGoogleGsutilTEMP.download(informationContainer);
+			this.cloudConnectorGoogleGsutil.download(informationContainer);
 			try {
 				File tempFile = new File(Main.getInstance().getUSER_TEMP_DIR()
 						+ File.separator
@@ -110,7 +110,7 @@ public class ThreadInstanceCreator implements Runnable {
 			}
 			break;
 		case removeFile:
-			this.cloudConnectorGoogleGsutilTEMP.remove(informationContainer);
+			this.cloudConnectorGoogleGsutil.remove(informationContainer);
 			break;
 		}
 	}

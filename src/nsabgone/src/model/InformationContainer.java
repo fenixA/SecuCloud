@@ -1,6 +1,5 @@
 package model;
 
-import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -17,6 +16,7 @@ public class InformationContainer {
 
 	/** The Constant ATTRIBUTES defines the number of attributes. */
 	public static final int ATTRIBUTES = 8;
+	
 
 	/**
 	 * The Enum Encryption defines the different encryption types.
@@ -205,7 +205,7 @@ public class InformationContainer {
 		this.name = name;
 		this.key = key;
 		this.encryption = encryption;
-		this.cloudLocation = Main.getInstance().getBucket() + File.separator
+		this.cloudLocation = Main.getInstance().getBucket() + Main.CLOUD_SEPERATOR
 				+ encryptedName;
 	}
 }
