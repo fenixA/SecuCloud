@@ -19,6 +19,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.ListIterator;
+import java.util.Locale;
 import java.util.Vector;
 
 import control.FileListHandler;
@@ -106,7 +107,7 @@ public class MainWindow extends javax.swing.JFrame {
 
 	/**
 	 * Initializes the table.
-	 *
+	 * 
 	 * @return the object[][]
 	 */
 	private Object[][] initTable() {
@@ -182,6 +183,8 @@ public class MainWindow extends javax.swing.JFrame {
 
 		entryFileSelect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ac) {
+				Locale.setDefault(Locale.US);
+				JComponent.setDefaultLocale(Locale.US);
 				JFileChooser fc = new JFileChooser();
 				int status = fc.showOpenDialog(null);
 				if (status == JFileChooser.APPROVE_OPTION) {

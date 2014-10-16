@@ -185,7 +185,7 @@ Zu den Grundfunktionalitäten des geforderten Prototyps gehören der Cloud-Zugri
 Die Verwendung soll durch eine grafische Oberfläche vereinfacht werden.
 
 \subsubsection{Problemabgrenzung}
-Eine Gegenüberstellung weiterer kommerzieller Produkte von Cloud-Anbietern im Bezug auf Implementierung und Performance wird in dieser Arbeit nicht behandelt. Ebenso ist eine Optimierung vorhandener APIs bzw. Schnittstellen und Kryptosystemen nicht Gegenstand dieser Arbeit. Die Hardware des Anwenders wird als sicher betrachtet, weswegen es keines sicheren Schlüsselmanagements bedarf.
+Eine Gegenüberstellung weiterer kommerzieller Produkte von Cloud-Anbietern im Bezug auf Implementierung und Performance wird in dieser Arbeit nicht behandelt. Ebenso ist eine Optimierung vorhandener APIs bzw. Schnittstellen und Kryptosystemen nicht Gegenstand dieser Arbeit. Die Hardware des Anwenders wird als sicher betrachtet, weswegen es keines sicheren Schlüsselmanagements bedarf. Dateien, welche manuell bzw. ohne die Anwendung in die Cloud geladen werden, werden nicht berücksichtigt.
 
 \subsection{Ziel der Arbeit}
 Ziel der Arbeit ist es herauszuarbeiten, ob und wie Cloudspeicher zur sicheren Ablage von Daten im Sinne des deutschen Datenschutzverständnisses genutzt werden können. Hierfür soll einee entsprechende Applikation entwickeln werden. Außerdem ist zu klären, ob der Einsatz einer Cloudplattform sinnvoll und möglich ist, auf Hintergrund der jüngsten Enthüllungen Edward Snowdens und anderer. Diese haben gezeigt, dass eine solche Infrastruktur auf US-Amerikanischem Boden im besonderen aber auch im Ausland im Allgemeinen als nicht vertrauenswürdig gelten muss und dort abgelegte Unternehmenswichtige Daten gefährdet sind. Ist es möglich die Vorteile solcher Plattformen dennoch zu nutzen? Wie gefährdet sind die Daten dann noch?
@@ -205,7 +205,7 @@ Die Dokumentation des Programmcodes sowie die UML Diagramme sind auf Englisch ge
 % ----------------------------------------------------------------------------------------------------------
 \section{Grundlagen}\label{GrundlagenV}
 \subsection{Cloud Computing}
-TODO: Einleitung
+Da der Begriff Cloud Computing nicht eindeutig definiert und in seinem strukturellen Aufbau zu unterscheiden ist, wird nachfolgend Cloud Computing beschrieben und in diesem Zusammenhang näher auf die Merkmale von Infrastructure as a Service (IaaS) eingegangen.
 \subsubsection{Definition}
 Definition von Cloud Computing nach dem National Institute of Standards and Technology (NIST) und der European Network and Information Security Agency (ENISA) \cite{34}:
 
@@ -222,8 +222,17 @@ Cloud Computing bietet Unternehmen die Möglichkeit hohe Investitionskosten für
 
 Gängige Ansätze fordern eine kostenintensive und zeitlich aufwändige Analyse bestehender Systeme und möglicher Erweiterungen. Schwankungen des Bedarfs erschweren eine exakte Kalkulation notwendiger Betriebsmittel, sodass eine Fehl- oder wohlwollend angesetzte Kalkulation zu ungenutzten Kapazitäten und einer unnötigen Belastung der Umwelt führt. Durch Cloud Computing können innerhalb kürzester Zeit Ressourcen bereitsgestellt oder entzogen werden.
 
-ABBILDUNG X\\
-Abbildung X stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Über-\\kapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=1.0\linewidth]{Speicher.jpg}
+	 \captionof{figure}{\small Speicherbedarf}
+ 	\label{SpeicherV}
+\end{minipage}
+\vspace{1em}
+
+Abbildung \ref{SpeicherV} stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Über-\\kapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.
 
 \textbf{Materielle Wertverluste}
 
@@ -243,7 +252,7 @@ $\;$\\
 
 Anhand der Formel in Abbildung \ref{WirtschaftlichkeitV} kann die Wirtschaftlichkeit des Einsatzes von Cloud Computing kalkuliert werden. Diese gilt prinzipiell für die Berechnung der Rentabilität einer Umstellung der gesamten IT-Infrastruktur auf Cloud Computing, lässt sich jedoch in selber Weise rein auf den ökonomischen Aspekt der Speichernutzung anwenden. Die linke Seite bildet das Ergebnis der Kosten aus Multiplikation der Nettoeinnahmen mit der tatsächlichen Beanspruchung des gebuchten Speichers beim Einsatz von Cloud Computing. Die rechte Seite betrachtet selbiges bei eigener IT-Verwaltung, unter Berücksichtigung der tatsächlichen Auslastung. Der höhere Wert daraus lässt auf eine höhere Kostenersparnis schließen.
 
-TODO: Skaleneffekte, Verbundeffekte, Volatilität, weitere Quellen\\
+TODO: Skaleneffekte, Verbundeffekte, Volatilität, weitere Quellen CC and ROI: Page 80 - effects, Page 78/160f. -  costs, Page 91 - economy)
 
 \cite{33} \cite{39}
 
@@ -409,8 +418,8 @@ Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher
  Jeder Bucket ist genau einem Project zugeordnet. Ein Project besteht aus einer Gruppe von Benutzern, mehreren APIs, Authentifizierung, Überwachungsoptionen und wird mit einem sog. ''Billing Account'' einzeln abgerechnet. Ein Project kann eine beliebige Anzahl an Buckets enthalten.
 \end{compactitem}
 
-\subsection{Schnittstelle Google Cloud Storage: gsutil}\label{GsutilV}
-\textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. TODO :BOTO Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
+\subsection{Schnittstelle Google Cloud Storage: gsutil unt boto}\label{GsutilV}
+\textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
 
 \begin{compactitem}
 	\item Auflisten: \textbf{ls}\\
@@ -424,7 +433,21 @@ Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher
 
 Desweiteren verarbeitet gsutil Befehle für das Erstellen und Löschen von Buckets, Verschieben, Umbenennen und Editieren von Objekten sowie zur Rechteverwaltung.
 
-Neben der Schnittstelle gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}.TODO warum gsutil, WEBSOCKET ETC\\
+\textbf{boto} ist eine OpenSource Python-Bibliothek, welche als Schnittstelle zu Google Cloud Storage dient. Das zugehörige GCS-0auth2-boto-Plugin ist ein Plugin zur Authentifizierung mit OAuth 2.0 Anmeldeinformationen. Neben Google verwendet auch Amazon Web Services dieses als Schnittstelle.
+
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.7\linewidth]{OAuth.png}
+	\captionof{figure}{\small OAuth 2.0}
+	\label{OAuthV}
+\end{minipage}
+\vspace{1em}
+
+In Abbildung \ref{OAuthV} wird das Authentifizierungsverfahren OAuth 2.0 an den Google-Servern dargestellt. Ein Anwender meldet sich im System an, erhält daraufhin einen Authentifizierungscode, bestätigt diesen und kann anschließend mit jeglicher, auf die Google APIs zugreifender, Anwendung Google Cloud Storage verwenden. Die Informationen werden in einer *.boto Datei gespeichert und bleiben somit automatisierend für weitere Zugriffe erhalten.
+
+Neben gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}. TODO warum gsutil, WEBSOCKET ETC\\
 
 \subsection{Eclipse IDE for Java Developers}
 Eclipse ist eine OpenSource Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch Plugins kann die Funktionalität von Enclipse erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
@@ -505,14 +528,29 @@ Die UML Diagramme befinden sich im digitalen Anhang, Ordner UML. In der Datei Cl
 \pagebreak
 
 \subsubsection{Anwendungsfälle}
-\vspace{1em}
+\vspace{0,5em}
 $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=0.8\linewidth]{UseCase.jpg}
 	 \captionof{figure}{\small Anwendungsfalldiagramm}
 \end{minipage}
-\vspace{1em}
+\vspace{0,em}
+
+\textbf{Begriffslexikon Anwendungsfälle:}
+\begin{compactitem}
+\item Anwender:\\
+Die Rechte und Möglichkeiten des Anwenders, sofern diese vorher beim Anbieter vergeben wurden, begrenzen sich auf das Ablegen lokaler und das Herunterladen bzw. Löschen von in der Cloud gespeicherten Dateien.
+\item Authentifizierung:\\
+Der Login erfordert den Benutzernamen sowie das zugehörige Passwort.
+\item Datei:\\
+Die hochzuladende Datei kann in jedem beliebigen Dateiformat vorliegen.
+\item Dateiübersicht:\\
+Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder. Dies beinhaltet den originalen Dateinamen, den kryptischen Dateinamen  sowie den Zeitpunkt des Ablegens.
+\item GUI:\\
+GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
+\end{compactitem}
+\pagebreak
 
 \textbf{AF-001 Nutzer erstellen:}
 \begin{table}[!h]
@@ -541,6 +579,7 @@ $\;$\\
 	\caption{AF-001 Nutzer erstellen}
 	\label{tab:AF-001 Nutzer erstellen}
 \end{table}
+\pagebreak
 
 \textbf{AF-002 Authentifizierung:}
 \begin{table}[!h]
@@ -590,9 +629,9 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht abgelegt werden\\
 		\hline
-		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene  Datei- \\ & system zum Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Auswählen der Datei und Bestätigung mit ''Öffnen'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
+		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene  Datei- \\ & system zum Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Auswählen der Datei und Bestätigung mit ''Open'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
 		\hline
-		Sonderfälle & 3a. Dateisystem wird nicht unterstützt \\& 5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
+		Sonderfälle & 3a. Dateisystem wird nicht unterstützt \\& 4a. Keine Datei ausgewählt \\ & 4b. Anwender wählt "Cancel" \\ &  5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
 		\hline
 	\end{tabular}
 	\caption{AF-003 Dateiupload}
@@ -627,6 +666,7 @@ $\;$\\
 	\caption{AF-004 Dateidownload}
 	\label{tab:AF-004 Dateidownload}
 \end{table}
+\pagebreak
 
 \textbf{AF-005 Datei l\"oschen:}
 \begin{table}[!h]
@@ -647,9 +687,9 @@ $\;$\\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht gelöscht werden \\
 		\hline
-		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Delete from \\&cloud'' \\  & 4. Datei wird aus der Cloud gelöscht \\ & 5. Dateieintrag in der Übersicht wird entfernt \\& Schlüssel wird entfernt \\
+		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Delete from \\&cloud'' \\ & 4. Delete Fenster erscheint \\ & 5. Anwender bestätigt mit Ok \\  & 6. Datei wird aus der Cloud gelöscht \\ & 7. Dateieintrag in der Übersicht wird entfernt \\& Schlüssel wird entfernt \\
 		\hline
-		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\& 4a. Datei kann nicht aus der Cloud gelöscht werden \\ & 5a. Dateieintrag in der Übersicht wird nicht entfernt\\& Schlüssel wird nicht entfernt\\
+		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\ & 4a. Delete Fenster erscheint nicht \\ & 5a. Anwender wählt No \\ & 6a. Datei kann nicht aus der Cloud gelöscht werden \\ & 7a. Dateieintrag in der Übersicht wird nicht entfernt\\& Schlüssel wird nicht entfernt\\
 		\hline
 	\end{tabular}
 	\caption{AF-005 Datei löschen}
@@ -657,30 +697,16 @@ $\;$\\
 \end{table}
 \pagebreak
 
-\textbf{Begriffslexikon Anwendungsfälle:}
-\begin{compactitem}
-\item Anwender:\\
-Die Rechte und Möglichkeiten des Anwenders, sofern diese vorher beim Anbieter vergeben wurden, begrenzen sich auf das Ablegen lokaler und das Herunterladen bzw. Löschen von in der Cloud gespeicherten Dateien.
-\item Authentifizierung:\\
-Der Login erfordert den Benutzernamen sowie das zugehörige Passwort.
-\item Datei:\\
-Die hochzuladende Datei kann in jedem beliebigen Dateiformat vorliegen.
-\item Dateiübersicht:\\
-Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder. Dies beinhaltet den kryptischen Dateinamen, den originalen Dateinamen sowie den Zeitstempel des Ablegens.
-\item GUI:\\
-GUI (engl. Graphical User Interface) ist eine grafische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
-\end{compactitem}
-
 \subsection{Kryptosystem}
 Die Verschlüsselung und das Accountmanagement basieren zurzeit ausschließlich auf den Algorithmen AES128 im CTR Modus und SHA256. Eine asymmetrische Verschlüsselung wurde in Betracht gezogen, schied jeodch unter der Annahme, dass der Client auf dem die Applikation läuft, als sichere Umgebung gilt, aus. In einer späteren Weiterentwicklung ist es aber durchaus sinnvoll dies erneut zu evaluieren. Vor allem dann, wenn ein Server das Dateisystem bzw. dessen Synchronität verwalten soll, oder mehrere kaskadierte Verschlüsselungsebenen geschaffen werden sollen, um eine erweiterte Rechteverwaltung zu ermöglichen. Die Beschreibung der Sicherungsverfahren wird nachfolgend in der Reihenfolge, in der sie von einem Benutzer ausgelöst werden, beschrieben.
 \\\\\textbf{Account anlegen}\\
-Wird die Applikation zum ersten Mal gestartet, stellt sie also fest, dass bisher keine Benutzer im System registriert sind, schafft sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem schließen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Nutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. ''Salt". Danach wird der Benutzername im Klartext in die Datei HOME/SecuCloud/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Anschließend berechnet das Programm einen SHA256 Hashwert über ein Byte array bestehend aus dem Salt und dem Passwort. Dieser Hash sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf die selbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten des einen Nutzers enden und die des nächsten beginnen. TODO
+Wird die Applikation zum ersten Mal gestartet, stellt sie also fest, dass bisher keine Benutzer im System registriert sind, schafft sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem schließen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Nutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. ''Salt". Danach wird der Benutzername im Klartext in die Datei HOME/NSAbGONE/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Anschließend berechnet das Programm einen SHA256 Hashwert über ein Byte array bestehend aus dem Salt und dem Passwort. Dieser Hash sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf die selbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten des einen Nutzers enden und die des nächsten beginnen. TODO
 \\\\\textbf{Login}\\
 Um sich in seinen Account einzuloggen, muss ein Benutzer seinen Nutzernamen und sein Passwort in die im LoginWindow vorgegebenen Zellen eintragen. Drückt er auf den OK Button, erstellt die Applikation ein Byte Array aus dem Passwort und dem in settings.cfg hinterlegten Salt. Dies wird gehasht und das Ergebnis mit dem in settings.cfg eingetragenen verglichen. Stimmen die beiden überein, sind die Nutzerdaten valide und die Applikation wechselt in das MainWindow. Der Vorteil bei der Verwendung eines Salt ist in \fullref{KryptV} näher erläutert.
 \\\\\textbf{Dateien ablegen}\\
 Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen, zu speichern. Danach wird die Datei selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt. Für jede Datei wird ein eigener Schlüssel berechnet, da ein Schlüssel immer gefährdeter wird, je öfter er benutzt, bzw. je mehr Daten damit verschlüsselt werden. Außerdem ist es möglich einem anderen Nutzer den Zugriff auf eine einzelene Datei zu gestatten, indem man ihm den Schlüssel aushändigt. 
 \\\\\textbf{Programm schließen}\\
-Wird die CLOSE Schaltfläche des MainWindow betätigt oder das X in der Ecke des Programmfensters, werden alle laufenden Verschlüsselungs- und Uploadprozesse abgearbeitet. Anschließend werden die gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Byte Array wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/SecuCloud/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Schlüssellänge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet, es wird so oft hintereinander gehängt, bis 16 Byte erreicht oder überschritten werden. Eventuell überflüssige Zeichen werden anschließend abgeschnitten. Aus diesem Grund lohnt es sich ein ausreichend langes Passwort zu wählen.
+Wird die CLOSE Schaltfläche des MainWindow betätigt oder das X in der Ecke des Programmfensters, werden alle laufenden Verschlüsselungs- und Uploadprozesse abgearbeitet. Anschließend werden die gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Byte Array wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/NSAbGONE/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Schlüssellänge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet, es wird so oft hintereinander gehängt, bis 16 Byte erreicht oder überschritten werden. Eventuell überflüssige Zeichen werden anschließend abgeschnitten. Aus diesem Grund lohnt es sich ein ausreichend langes Passwort zu wählen.
 \\\\\textbf{Programmstart mit vorhandener state.cfg}\\
 Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und ensprechen Informationen zu diesen gespeichert wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die setttings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es zukünftig denkbar die state.cfg selbst in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden (etwa mitgeführt auf einem USB Stick), ohne die Informationen im Nutzerverzeichnis zu benötigen.
 \\\\\textbf{BSI Standards}\\
@@ -745,7 +771,7 @@ $\;$\\
 	\captionof{figure}{\small Dateiauswahl}
 	\label{Select}
 \end{minipage}
-\\\\In der Dateiauswahl Select wird die lokale Ordnerstruktur des Betriebssystems angezeigt. In dieser kann sich der Benutzer frei bewegen und in das Quellverzeichnis von Dateien wechseln. Das Auswählen einer Datei und die Bestätigung mit Öffnen initialisiert den, für den Anwender nicht ersichtlichen, Verschlüsselungsvorgang und Dateiupload. Das Auswahlfenster wird beendet. Wurde die Datei korrekt verschlüsselt und in die Cloud geladen, wird diese im Hauptfenster mit ihren Merkmalen aufgelistet. Bei großen Dateien kann dieser Vorgang eine längere Zeitdauer in Anspruch nehmen. Schließt der Benutzer die gesamte Anwendung vor Auflistung in der Dateiübersicht, so wird diese weiterhin durch Hintergrundprozesse verschlüsselt bzw. hochgeladen. Durch Abbrechen kann das Auswahlfenster für Dateien geschlossen werden.
+\\\\In der Dateiauswahl Select wird die lokale Ordnerstruktur des Betriebssystems angezeigt. In dieser kann sich der Benutzer frei bewegen und in das Quellverzeichnis von Dateien wechseln. Das Auswählen einer Datei und die Bestätigung mit Open initialisiert den, für den Anwender nicht ersichtlichen, Verschlüsselungsvorgang und Dateiupload. Das Auswahlfenster wird beendet. Wurde die Datei korrekt verschlüsselt und in die Cloud geladen, wird diese im Hauptfenster mit ihren Merkmalen aufgelistet. Bei großen Dateien kann dieser Vorgang eine längere Zeitdauer in Anspruch nehmen. Schließt der Benutzer die gesamte Anwendung vor Auflistung in der Dateiübersicht, so wird diese weiterhin durch Hintergrundprozesse verschlüsselt bzw. hochgeladen. Durch Cancel kann das Auswahlfenster für Dateien geschlossen werden.
 
 \textbf{Help Menü}
 \vspace{1em}
@@ -789,7 +815,18 @@ $\;$\\
 	\captionof{figure}{\small Kontextmenü}
 	\label{Kontext}
 \end{minipage}
-\\\\Das Kontextmenü wird durch Auswahl einer Zeile und Betätigen der rechten Maustaste ausgeführt. Es beinhaltet die Möglichkeiten Download und Delete from Cloud. Download initialisiert das temporäre Herunterladen der ausgewählten Datei mit anschließender Entschlüsselung und entschlüsselter Ablage in HOME/SecuCloud/\textless Benutzername\textgreater/download. Mit Delete from Cloud kann eine Datei aus der Cloud zusammen mit dem zugehörigem lokal gespeicherten Schlüssel gelöscht werden. Der Eintrag wird anschließend aus der Dateiübersicht entfernt. Das Kontextmenü kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
+\\\\Das Kontextmenü wird durch Auswahl einer Zeile und Betätigen der rechten Maustaste ausgeführt. Es beinhaltet die Möglichkeiten Download und Delete from Cloud. Download initialisiert das temporäre Herunterladen der ausgewählten Datei mit anschließender Entschlüsselung und entschlüsselter Ablage in HOME/NSAbGONE/\textless Benutzername\textgreater/download. Mit Delete from Cloud kann eine Datei aus der Cloud zusammen mit dem zugehörigem lokal gespeicherten Schlüssel gelöscht werden. Der Eintrag wird anschließend aus der Dateiübersicht entfernt. Das Kontextmenü kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
+
+\textbf{Delete Fenster}
+\vspace{1em}
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.4\linewidth]{Delete.jpg}
+	\captionof{figure}{\small Delete Fenster}
+	\label{Delete}
+\end{minipage}
+\\\\Ein durch Delete from Cloud im Kontextmenü initialisierter Löschvorgang muss in einer zusätzlichen Abfrage bestätigt werden. Angezeigt wird der originale und der krytpische Dateiname. Durch bestätigen mit YES wird die ausgewählte Datei gelöscht, bei Auswahl von No der Löschvorgang abgebrochen.
 
 \textbf{Synchronisierungsstatus}
 \vspace{1em}
@@ -819,8 +856,8 @@ Im folgenden werden Möglichkeiten beschrieben, die bestehende Applikation zu ve
 Eine sehr simple, aber dennoch äußerst nützliche Erweiterung des bestehenden Tools wäre es zu ermöglichen, dass ein Anwender mehrere Zeilen der Tabelle markieren und bearbeiten kann. Dies würde die intuitive Nutzbarkeit erhöhen und den Umgang mit großen Dateimengen erleichtern. 
 \\\textbf{Drag\&Drop}\\
 Um die Benutzerfreundlichkeit des Programmes zu erhöhen wäre es vorteilhaft, Dateien per Drag\&Drop in das Programmfenster hinen zu ziehen. Dadurch müsste ein Benutzer nicht jedes mal, wenn er eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.
-\\\textbf{Autokonfiguration der Schnittstellen}\\
-Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen.
+\\\textbf{Schnittstellen}\\
+Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen. Desweiteren haben Testfälle unter Einsatz von gsutil haben gezeigt, dass dieses nicht performant genug für die Verarbeitung von großen Dateien ist. Bereits bei einer Dateigröße von 50MB kam es zu langen Verzögerungen im Datei-Upload, in manchen Fällen sogar zu Abbrüchen. Dieses Verhalten war zu Beginn der Projektarbeit nicht ersichtlich und ist, auf Grund fehlender Reproduzierbarkeit, nicht zu erklären. Eine Weiterentwicklung dieser oder die Wahl einer alternativen Schnittstelle ist für eine zukünftige Implementierung sinnvoll. TODO
 \\\textbf{Installations Setup}\\
 Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch Zusatzsoftware wie Python installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich Python für Windowssysteme automatisch bereit zu stellen und in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x Installation und verwenden Standardpfade für installierte Anwendungen (/bin, /usr/bin etc.).
 \\\textbf{Selbstsynchronisierung}\\
@@ -830,7 +867,7 @@ Weiterhin denkbar wäre, die Applikation derart anzulegen, dass sie den Cloudspe
 \\\textbf{Verschlüsselung von Dateistrukturen}\\
 Im Rahmen der zur Verfügung stehenden Zeit für die Bearbeitung der Projektarbeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Dies führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \cite{38}
 \\\textbf{Schutz der .boto}\\
-Wie in \fullref{GsutilV} dargelegt ist, stehen die Verbindungsdaten, welche die Gsutil Schnittstelle nutzt, in der Datei .boto im Home Verzeichnis des Benutzers. Da dies eine Möglichkeit darstellt ohne Passworteingabe auf den Cloudspeicher von Google zuzugreifen, sollte auch diese bei beendigung des Programmes verschlüsselt werden. Dies wird zusätzlich interessant, wenn eine Benutzerverwaltung mit eigenen Nutzeraccounts und zugehörigen Buckets existiert. Jeder in der Anwendung registrierte Nutzer hat dann seine eigene .boto, die nach beendigung der Applikation in seinem Applikationsspeicher (/SecuCloud/\textless Benutzername\textgreater /data/) verschlüsselt abgelegt wird, und nur mittels eines korrekten Benutzerpasswortes zugänglich ist. Simultan zur Behandlung der state.cfg Dateien.
+Wie in \fullref{GsutilV} dargelegt ist, stehen die Verbindungsdaten, welche die Gsutil Schnittstelle nutzt, in der Datei .boto im Home Verzeichnis des Benutzers. Da dies eine Möglichkeit darstellt ohne Passworteingabe auf den Cloudspeicher von Google zuzugreifen, sollte auch diese bei beendigung des Programmes verschlüsselt werden. Dies wird zusätzlich interessant, wenn eine Benutzerverwaltung mit eigenen Nutzeraccounts und zugehörigen Buckets existiert. Jeder in der Anwendung registrierte Nutzer hat dann seine eigene .boto, die nach beendigung der Applikation in seinem Applikationsspeicher (/NSAbGONE/\textless Benutzername\textgreater /data/) verschlüsselt abgelegt wird, und nur mittels eines korrekten Benutzerpasswortes zugänglich ist. Simultan zur Behandlung der state.cfg Dateien.
 
 \subsubsection{Serverseitiges Management}
 Die folgenden Abschnitte sind kaum mit Quellen versehen, da sie aus eigenen Gedanken entstanden sind. Sollte es ähnliche Verfahrensweisen in anderen Systemen geben, so ist dies Zufall und bedeutet nicht, dass Quellen vorsätzlich unterschlagen wurden.\\

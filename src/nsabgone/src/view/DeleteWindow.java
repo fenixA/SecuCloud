@@ -37,9 +37,9 @@ public class DeleteWindow {
 			tmp3 = "Cloud not synchronous!";
 			break;
 		case klickEvent:
-			tmp1 = "Are you sure to delete:";
+			tmp1 = "Are you sure you want to delete:";
 			tmp2 = "from cloud?";
-			tmp3 = "Delete file";
+			tmp3 = "Delete file?";
 			break;
 		default:
 			break;
