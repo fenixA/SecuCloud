@@ -17,11 +17,24 @@ Abgabe:
 - .jar + Installationsanleitung
 
 
+-->Alter Input:
+ToDo:
+Logfiles
+
+ToDo-Theorie:
+Traffic-Überwachung einzelner Clients
+
+Layout:
+Quellen korrigieren/erweitern
+
+Holzi:
+.boto/gsutil: Probleme mit großen Dateien (Ergebnisse)
+
 
 
 -->Done:
 -> Code: 
-- SecuCloud zu NSAbeGONE
+- SecuCloud zu NSAbGONE
 - Bestätigungsfrage bei ausgelöstem Löschvorgang
  
 -> LaTeX:
@@ -30,6 +43,8 @@ Abgabe:
 - Neuen Command \fullref{} eingeführt und \ref{} im Text dadurch ersetzt:
 Referenzierung auf Label fett, Kapitelnr. + Kapitelname
 - Geschäftsmodell entfernt
+- UseCase überarbeiten
+- Refactoring von SecuCloud im Dokument
 
 -> Allgemein:
 - Eigener Billing-Account durch Prof (not our business)
