@@ -345,7 +345,23 @@ Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt Objekt 
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der Prozessessorgebunden wäre, und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Anwendungen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \cite{1}\cite{2}\\\cite{3}
 
-\subsection{Kryptographische Verfahren}
+\subsection{Kryptographie}
+Wenn man an Kryptographie denkt, dann hat man meißt das Ver- und Entschlüsseln von Botschaften im Kopf, mit dem Anspruch, dass nur berechtigte Personen in der Lage sind, dise zu lesen. Dies ist zwar nicht ganz falsch, vernachlässigt aber wichtige Aspekte die von essentieller Bedeutung für die moderne Kryptographie sind: Kryptographie umfasst heute die vier Kernziele
+\begin{compactitem}
+	\item Vertraulichkeit
+	\item Integrität
+	\item Authentizität
+	\item Verbindlichkeit
+\end{compactitem}
+.\\Der Aspekt der \textbf{Vertraulichkeit} ist der im Einleitungssatz erwähnte. Vertraulichkeit bedeutet, dass eine Botschaft derart geschützt ist, dass sie ausschließlich von authorisierten Personen gelesen werden kann. Dies wird im Computerzeitalter mittels Verschlüsselungsalgorithmen erreicht. Allerdings schützt Vertraulichkeit nicht davor, dass eine Botschaft manipuliert wird. Um dies sicher zu stellen muss bei einem Kryptosystem die \textbf{Integretät} der Botschaft sichergestellt werden. Dies bedeutet nicht, dass eine Botschaft nicht manipuliert werden könnte, es bedeutet nur, dass eine Manipulation sofort entdeckt werden kann und die Botschaft entsprechend als nicht integer entlarvt werden kann. Nun sind wir in der Lage eine Botschaft zu erzeugen, die weder von Fremden gelesen, noch unbemerkt manupuliert werden könnte. Allerdings kann nicht sicher gestellt werden, dass die Botschaft von dem in ihr erwähnten Absender kommt. Zu diesem Zweck gibt es noch die Aspekte \textbf{Authentizität und Verbindlichkeit}. Durch Authentizität ist sichergestellt, dass eine Botschaft tatsächlich von der Person kommt, die um Absender erwähnt ist. Meist geht dies Hand in Hand mit Verbindlichkeit: Ist es möglich festzustellen, dass nur die betreffende Person die Botschaft geschickt hat, ist es dieser Person auch nicht möglich, das Schicken der Botschaft abzustreiten. (Schneier, Seite 2)
+
+Im Folgenden sollen vor allem die Aspekte der Vertraulichkeit und Integrität näher erläutert werden, da sie von Bedeutung für den entwickelten Prototypen sind und daher für das Verständnis des Konzeptes wichtig sind.
+
+\textbf{Verschlüsselung}\\
+Wie schon erwähnt, stellt die Verschlüsselung von Nachrichten eine Möglichkeit dar, Vertraulichkeit zwischen zwei Kommunikationspartner herzustellen. Zu diesem Zweck werden schon seit Jahrhunderten neue Verschlüsselungsverfahren entworfen um dem Gegner immer einen Schritt voraus zu sein. Die meißten davon sind mittlerweile hinfällig. Selbst wenn sie keine essentielle Schwachstelle haben, gehen die meißten vor den enormen Rechenkapazitäten von Computern in die Knie. Daher werden in der modenen Kryptographie Verschlüssel-ungsverfahren mit gigantischen Schlüsselräumen, das Bundesamt für Sicherheit in der Informationstechnik spricht von min. 100 Bit, also 2\textsuperscript{100} möglichen Schlüsseln  (TODO BSI2, Seite 15), verwendet. Diese Verschlüsselungsalgorithmen teilen sich in zwei Hauptgruppen: Symmetrische und asymmetrische Chiffren.
+\\\textbf{Symmetrische Chiffren}(Schneier, S.4)\\ 
+Symmetrische Chiffren sind Verschlüsselungsverfahren die zum Ver- und Entschlüsseln das selbe Geheimnis nutzen, also symmetrisch sind. Manche dieser Verfahren arbeiten auch mit zwei sich unterscheidenden Geheimnissen wobei aus dem einen mit sehr geringem Aufwand das andere Erzeugt werden kann. In diesem Sinne beschreibt symmetrisch die Tatsache, dass der Besitzer eines Geheimnisses sowohl verschlüsselte Nachrichten erzeugen, als auch entschlüsseln kann.
+\\\textbf{Hashing}\\
 \textbf{AES}\\
 AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums Standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-Amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vielen mehr. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Diese sehr hohe Verbreitung ist vor allem auf seine Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Grade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei Ver- und Entschlüsselung mit den selben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.
 \\\textbf{Funktionsweise}\\ 
@@ -455,10 +471,10 @@ Eclipse ist eine OpenSource Entwicklungsumgebung zur gestützten Entwicklung von
 \subsection{Versionsverwaltung: git}
 \textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von Atlassian SourceTree TODO LINK als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich. \cite{31}
 
-\subsection{Kryptosystem: AES128}
+\subsection{Kryptographische Algorithmen}
+\textbf{AES128}
 TODO: Beschreiben im Bezug auf die Applikation
-
-\subsection{Hashfunktionen}
+\\\textbf{SHA256}
 TODO: Beschreiben im Bezug auf die Applikation
 
 \pagebreak
