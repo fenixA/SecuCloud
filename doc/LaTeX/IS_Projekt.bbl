@@ -1,0 +1,203 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{WPG{\etalchar{+}}10}
+
+\bibitem[All11]{36}
+Cloud~Security Alliance.
+\newblock {SECURITY GUIDANCE FOR CRITICAL AREAS OF FOCUS IN CLOUD COMPUTING
+  V3.0}.
+\newblock \url{https://cloudsecurityalliance.org/guidance/csaguide.v3.0.pdf},
+  2011.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Cha09]{31}
+Scott Chacon.
+\newblock {\em Pro Git}.
+\newblock Books for professionals by professionals. Apress, 2009.
+
+\bibitem[EMP13]{41}
+Thomas Erl, Zaigham Mahmood, and Ricardo Puttini.
+\newblock {\em Cloud computing: concepts, technology \& architecture}.
+\newblock Prentice Hall, ServiceTech Press, Upper Saddle River, N.J.; Munich
+  [u.a.], 1. print. edition, 2013.
+
+\bibitem[fEGT14]{12}
+Bundesnetzagentur für Elektrizität, Gas, and Post und~Eisenbahnen
+  Telekommunikation.
+\newblock {Bekanntmachung zur elektronischen Signatur nach dem Signaturgesetz
+  und der Signaturverordnung}.
+\newblock
+  \url{http://www.bundesnetzagentur.de/SharedDocs/Downloads/DE/Sachgebiete/QES/Veroeffentlichungen/Algorithmen/2014Algorithmenkatalog.pdf;jsessionid=44761A7B91153744E5BAC51D89FB1FBD?__blob=publicationFile\&v=1},
+  2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[fSidI14a]{35}
+Bundesamt für Sicherheit in~der Informationstechnik.
+\newblock {Cloud Computing Grundlagen}.
+\newblock
+  \url{https://www.bsi.bund.de/DE/Themen/CloudComputing/Grundlagen/Grundlagen_node.html},
+  2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[fSidI14b]{13}
+Bundesamt für Sicherheit in~der Informationstechnik.
+\newblock {Kryptographische Verfahren: Empfehlungen und Schlüssellängen}.
+\newblock
+  \url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102_pdf.pdf?__blob=publicationFile},
+  2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[HH11]{43}
+Ben Halpert and Ben Halpert, editors.
+\newblock {\em Auditing cloud computing: a security and privacy guide}.
+\newblock Wiley-VCH, Hoboken, NJ, c2011.
+
+\bibitem[HSG10]{37}
+Matthias Henneberger, Jörg Strebel, and Fabio Garzotto.
+\newblock Ein entscheidungsmodell für den einsatz von cloud computing in
+  unternehmen.
+\newblock {\em HMD Praxis der Wirtschaftsinformatik}, 47(5):76--84, 2010.
+
+\bibitem[Inc14a]{32}
+Google Inc.
+\newblock {gsutil Tool}.
+\newblock \url{https://cloud.google.com/storage/docs/gsutil}, 2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Inc14b]{47}
+Google Inc.
+\newblock {Python Example}.
+\newblock \url{https://cloud.google.com/storage/docs/gspythonlibrary}, 2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Inc14c]{46}
+Google Inc.
+\newblock {Using OAuth 2.0 to Access Google APIs}.
+\newblock \url{https://developers.google.com/accounts/docs/OAuth2}, 2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Inc14d]{40}
+Google Inc.
+\newblock {What is Google Cloud Storage - Building Blocks}.
+\newblock \url{https://cloud.google.com/storage/docs/overview#blocks}, 2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[LRWXX]{7}
+Helger Lipmaa, Phillip Rogaway, and David Wagner.
+\newblock {Comments to NIST concerning AES Modes of Operations: CTR-Mode
+  Encryption}.
+\newblock
+  \url{http://csrc.nist.gov/groups/ST/toolkit/BCM/documents/proposedmodes/ctr/ctr-spec.pdf},
+  20XX.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[LTG{\etalchar{+}}14]{30}
+Lydia Leong, Douglas Toombs, Bob Gill, Gregor Petri, and Tiny Haynes.
+\newblock {Gartner: Magic Quadrant for Cloud Infrastructure as a Service}.
+\newblock
+  \url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6\&ct=140528\&st=sb},
+  2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[mic14]{2}
+Sun microsystems.
+\newblock {Java Technology: The Early Years}.
+\newblock
+  \url{http://web.archive.org/web/20100105045840/http://java.sun.com/features/1998/05/birthday.html},
+  2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Mil09]{44}
+Michael Miller.
+\newblock {\em Cloud computing: Web-based applications that change the way you
+  work and collaborate online ; [includes coverage of Google collaboration
+  tools, Apple's MobileMe, and much more!]}.
+\newblock Que, Indianapolis, IN, 2009.
+
+\bibitem[MSLL14]{45}
+Mohapatra, Sanjay, Lokhande, and Laxmikant.
+\newblock {\em Cloud Computing and ROI}.
+\newblock Springer Verlag, 2014.
+
+\bibitem[MWRS11]{39}
+C.~Meinel, C.~Willems, S.~Roschke, and M.~Schnjakin.
+\newblock {\em Virtualisierung und Cloud Computing: Konzepte,
+  Technologiestudie, Markt{\"u}bersicht}.
+\newblock Technische Berichte des Hasso-Plattner-Instituts f{\"u}r
+  Softwaresystemtechnik an der Universit{\"a}t Potsdam. Univ.-Verlag, 2011.
+
+\bibitem[Ora14]{1}
+Oracle.
+\newblock {The History of Java Technology}.
+\newblock
+  \url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html},
+  2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[oST01a]{4}
+National~Institute of~Standards and Technology.
+\newblock {ADVANCED ENCRYPTION STANDARD (AES)}.
+\newblock \url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf},
+  2001.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[oST01b]{6}
+National~Institute of~Standards and Technology.
+\newblock {Recommendation for Block Cipher Modes of Operation}.
+\newblock
+  \url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}, 2001.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[oST11]{34}
+National~Institute of~Standards and Technology.
+\newblock {The NIST Definition Of Cloud Computing}.
+\newblock
+  \url{http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf}, 2011.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[oST12]{10}
+National~Institute of~Standards and Technology.
+\newblock {Secure Hash Standard (SHS)}.
+\newblock
+  \url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}, 2012.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Sch06]{42}
+Bruce Schneier.
+\newblock {\em Angewandte Kryptographie: Protokolle, Algorithmen und Sourcecode
+  in C; [der Klassiker]}.
+\newblock Pearson Studium, München [u.a.], 2006.
+
+\bibitem[Ull12]{3}
+Christian Ullenboom.
+\newblock {\em Java 7 - mehr als eine Insel: das Handbuch zu den
+  Java-SE-Bibliotheken; [Nebenläufigkeit, Datenstrukturen und Algorithmen,
+  Ein/Ausgabe, XML, Swing, Grafik- und Netzwerkprogrammierung, RMI, JavaServer
+  Pages und Servlets, JDBC, Reflection u.v.m.]}.
+\newblock Galileo Press, Bonn, 1. aufl. edition, 2012.
+
+\bibitem[Wik14a]{5}
+Wikipedia.
+\newblock {Advanced Encryption Standard}.
+\newblock \url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard},
+  2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Wik14b]{11}
+Wikipedia.
+\newblock {Shamir's Secret Sharing}.
+\newblock \url{http://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing}, 2014.
+\newblock [Online; letzter Zugriff: 01.10.2014].
+
+\bibitem[Win11]{38}
+Vic Winkler.
+\newblock {\em Securing the cloud: cloud computer security techniques and
+  tactics}.
+\newblock Elsevier Syngress, Amsterdam; Heidelberg [u.a.], 2011.
+
+\bibitem[WPG{\etalchar{+}}10]{33}
+Jiyi Wu, Lingdi Ping, Xiaoping Ge, Ya~Wang, and Jianqing Fu.
+\newblock Cloud storage as the infrastructure of cloud computing.
+\newblock In {\em Intelligent Computing and Cognitive Informatics (ICICCI),
+  2010 International Conference on}, June 2010.
+
+\end{thebibliography}
