@@ -25,6 +25,7 @@
 \usepackage[pdfpagelabels=true]{hyperref}
 \usepackage{times}
 
+
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
 
@@ -216,7 +217,7 @@ Definition von Cloud Computing nach dem Bundesamt für Sicherheit in der Informa
 "Cloud Computing bezeichnet das dynamisch an den Bedarf angepasste Anbieten, Nutzen und Abrechnen von IT-Dienstleistungen über ein Netz. Angebot und Nutzung dieser Dienstleistungen erfolgen dabei ausschließlich über definierte technische Schnittstellen und Protokolle. Die Spannbreite der im Rahmen von Cloud Computing angebotenen Dienstleistungen umfasst das komplette Spektrum der Informationstechnik und beinhaltet unter anderem Infrastruktur (z. B. Rechenleistung, Speicherplatz), Plattformen und Software."
 
 \subsubsection{Daseinsberechtigung}\label{CloudV}
-Cloud Computing bietet Unternehmen die Möglichkeit hohe Investitionskosten für die IT-Infrastruktur in variable laufende Kosten umzuwandeln. Dies ist vor allem für kleinere und mittlere Unternehmen sowie Start-Ups interessant, da nicht nur der enorme Kapitalaufwand bei der Beschaffung von IT-Hardware sondern auch anfallende Kosten für die Administation umgewandelt und minimiert werden können. Die Möglichkeit einer Bereitstellung zusätzlicher Ressourcen bietet zudem eine flexible Alternative zu einer stetigen anforderungsorientierten Erweiterung der IT-Landschaft. Dies ermöglicht eine risikolose, bedarfsgerechte Steuerung der Kapazitäten und Konzentration auf die Kernkompetenz des Unternehmens. Im Allgemeinen betreffen diese Vorzüge alle Bereiche der IT-Infrastruktur (Rechenleistung etc.). Im Projekthintergrund wird nachfolgend im Detail der wirtschaftliche Aspekt der Speichernutzung bei IaaS betrachtet:
+Cloud Computing bietet Unternehmen die Möglichkeit hohe Investitionskosten für die IT-Infrastruktur in variable laufende Kosten umzuwandeln. Dies ist vor allem für kleinere und mittlere Unternehmen sowie Start-Ups interessant, da nicht nur der enorme Kapitalaufwand bei der Beschaffung von IT-Hardware sondern auch anfallende Kosten für die Administation umgewandelt und minimiert werden können. Die Möglichkeit einer Bereitstellung zusätzlicher Ressourcen bietet zudem eine flexible Alternative zu einer stetigen anforderungsorientierten Erweiterung der IT-Landschaft. Dies ermöglicht eine risikolose, bedarfsgerechte Steuerung der Kapazitäten und Konzentration auf die Kernkompetenz des Unternehmens. Im Allgemeinen betreffen diese Vorzüge alle Bereiche der IT-Infrastruktur (Rechenleistung etc.) \cite[S. 35]{39}. Im Projekthintergrund wird nachfolgend im Detail der wirtschaftliche Aspekt der Speichernutzung bei IaaS betrachtet \cite[S. 35 ff.]{39}:
 
 \textbf{Elastische Skalierbarkeit}
 
@@ -245,19 +246,20 @@ $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=1.0\linewidth]{Wirtschaftlichkeit.jpg}
-	 \captionof{figure}{\small Wirtschaftlichkeit {\cite{39}}}
+	 \captionof{figure}{\small Wirtschaftlichkeit {\cite[S. 39]{39}}}
  	\label{WirtschaftlichkeitV}
 \end{minipage}
 \vspace{1em}
 
 Anhand der Formel in Abbildung \ref{WirtschaftlichkeitV} kann die Wirtschaftlichkeit des Einsatzes von Cloud Computing kalkuliert werden. Diese gilt prinzipiell für die Berechnung der Rentabilität einer Umstellung der gesamten IT-Infrastruktur auf Cloud Computing, lässt sich jedoch in selber Weise rein auf den ökonomischen Aspekt der Speichernutzung anwenden. Die linke Seite bildet das Ergebnis der Kosten aus Multiplikation der Nettoeinnahmen mit der tatsächlichen Beanspruchung des gebuchten Speichers beim Einsatz von Cloud Computing. Die rechte Seite betrachtet selbiges bei eigener IT-Verwaltung, unter Berücksichtigung der tatsächlichen Auslastung. Der höhere Wert daraus lässt auf eine höhere Kostenersparnis schließen.
 
-TODO: Skaleneffekte, Verbundeffekte, Volatilität, weitere Quellen CC and ROI: Page 80 - effects, Page 78/160f. -  costs, Page 91 - economy)
+TODO: Skaleneffekte, Verbundeffekte, Volatilität\\
+Quellen in Text verteilen - CC and ROI: S. 80 - effects, S. 78/160f. -  costs, S. 91 - economy
 
-\cite{33} \cite{39}
+\cite{33} \cite[S. 78/80/91/160f.]{45}
 
 \subsubsection{Charakteristik}
-Nach NIST \cite{34} können Cloud Services in fünf Eigenschaften unterschieden werden:
+Nach NIST \cite[S. 2f.]{34} können Cloud Services in fünf Eigenschaften unterschieden werden:
 \begin{compactitem}
 	\item On-demand Self Service: Keine Interaktion mit dem Cloud Service Provider (CSP)
 	\item Broad Network Access: Ein Zugriff ist nicht an zusätzliche Software gebunden.
@@ -266,7 +268,7 @@ Nach NIST \cite{34} können Cloud Services in fünf Eigenschaften unterschieden 
 	\item Measured Services: Ressourcennutzung wird gemessen und überwacht
 \end{compactitem}
 
-Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) \cite{36} um nachfolgende Punkte erweitert:
+Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) \cite[S. 14 ff.]{36} um nachfolgende Punkte erweitert:
 \begin{compactitem}
 	\item Mandantenähigkeit: Ressourcen werden geteilt, Unterscheidung der Mandanten notwendig
 	\item Pay per Use: Nur tatsächlich verwendete Ressourcen müssen bezahl werden
@@ -280,7 +282,7 @@ $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=1.0\linewidth]{IaaS_Modelle.png}
-	 \captionof{figure}{\small IaaS Modelle \href{http://office.microsoft.com/de-de/business/was-ist-office-365-fur-unternehmen-FX102997580.aspx}{\cite{37}}}
+	 \captionof{figure}{\small IaaS Modelle {\cite[S. 77]{37}}}
 \end{minipage}
 \vspace{1em}
 
@@ -292,10 +294,12 @@ Software, die über eine Cloud-Infrastruktur angeboten wird. Die Bereitstellung,
 \item Schicht 2 - Plattform as a Service (PaaS):\\
 Der Anbieter stellt eine verwaltete Cloud-Infrastruktur zur Verfügung, worauf eigene Software bereitgestellt werden kann. Der Kunde erhält zudem eine integrierte Entwicklungs- und Laufzeitumgebung. Eine Abrechnung erfolgt nutzungsabhängig. Zu den Vertretern von PaaS gehören beispielsweise \href{https://cloud.google.com/appengine/}{\textit{Google App Engine}} oder \href{http://azure.microsoft.com/de-de/}{\textit{Microsoft Azure}}.
 \item Schicht 1 - Infrastructure as a Service (IaaS):\\
-Reine, bedarfsgerechte Nutzung der Rechnerinfrastruktur des Anbieters. Der Anwender muss alles außer der virtuellen Infrastruktur selbst verwalten. Dies bedeutet zwar einen Mehraufwand, bietet aber gleichzeitig eine größtmögliche Skalierbarkeit. Bekannte Anbieter sind \href{https://cloud.google.com/storage/}{\textit{Google Cloud Storage}} oder Amazon Webservices (AWS) mit \href{http://aws.amazon.com/de/}{\textit{Amazon S3 oder Amazon EC2}}. TODO
+Reine, bedarfsgerechte Nutzung der Rechnerinfrastruktur des Anbieters. Der Anwender muss alles außer der virtuellen Infrastruktur selbst verwalten. Dies bedeutet zwar einen Mehraufwand, bietet aber gleichzeitig eine größtmögliche Skalierbarkeit. Bekannte Anbieter sind \href{https://cloud.google.com/storage/}{\textit{Google Cloud Storage}} oder Amazon Webservices (AWS) mit \href{http://aws.amazon.com/de/}{\textit{Amazon S3 oder Amazon EC2}}.
 \end{compactitem}
 
 Im Rahmen dieser Projektarbeit bezieht sich das Konzept auf Infrastructure as a Service (IaaS), worauf nachfolgend im Näheren eingegangen wird.
+
+TODO Citation
 
 \subsubsection{IaaS-Typen}
 \begin{compactitem}
@@ -310,7 +314,8 @@ Cloud Computing Services für Unternehmen - Zusammenschluss von Interessensgemei
 \item Personal IaaS Cloud:\\
 Cloud Computing Service durch den Anwender selbst.
 \end{compactitem}
-\pagebreak
+
+TODO Citation
 
 \subsubsection{Allgemeine Sicherheitskriterien für IaaS}
 \begin{compactitem}
@@ -329,7 +334,7 @@ Das Management eines Zwischenfalles und dessen Gegenmaßnahmen sollte darauf aus
 \item Geschäftskontinuität:\\
 RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust, welche nach einem entsprechenden Vorfall akzeptabel ist. Ausgedrückt wird dies zusätzlich in Zeit, der Zeit zwischen entsprechendem Verlust und Rückführung zur letzten zuverlässigen Sicherung. RTO (engl. Recovery Time Objective) definiert die Höchstzeitdauer, die für die Wiederherstellung und vollständigen Zugriff auf die Daten akzeptabel ist.
 \end{compactitem}
-\cite{38}
+\cite[TODO S.]{38}
 
 \subsection{Java}\label{JavaV}
 Die Anwendung zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit began eine der ersten plattformunabhängigen Programmiersprachen zu entwickeln. Sie sollte die Computerwelt revolutionieren indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
@@ -434,7 +439,7 @@ Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher
  Jeder Bucket ist genau einem Project zugeordnet. Ein Project besteht aus einer Gruppe von Benutzern, mehreren APIs, Authentifizierung, Überwachungsoptionen und wird mit einem sog. ''Billing Account'' einzeln abgerechnet. Ein Project kann eine beliebige Anzahl an Buckets enthalten.
 \end{compactitem}
 
-\subsection{Schnittstelle Google Cloud Storage: gsutil unt boto}\label{GsutilV}
+\subsection{Schnittstelle Google Cloud Storage: gsutil und boto}\label{GsutilV}
 \textbf{gsutil} \cite{32} ist eine Python-Anwendung, welche einen konsolenbasierten Zugriff der gängigen Betriebssysteme Linux/Unix, Mac OS oder Windows auf Google Cloud Storage ermöglicht. Voraussetzung ist ein installiertes Python in der Version 2.6.x oder 2.7.x,  Python 3.x ist dazu derzeit inkompatibel. Dabei nutzt gsutil die Notation der Standardbefehle von Linux, welche direkt in einer Konsole oder durch eine Anwendung aufgerufen werden können. Damit gsutil als Schnittstelle zum eigenen Google Cloud Storage verwendet werden kann, muss dieses initial durch einen Authentifizierungscode mit dem zugehörigen Account verknüpft werden. Nachfolgend sind die für das Projekt relevanten Befehle aufgelistet (ein Ausführen von gsutil mit einem Python-Interpreter und eine korrekte Authentifizierung ist vorausgesetzt):
 
 \begin{compactitem}
@@ -449,21 +454,21 @@ Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher
 
 Desweiteren verarbeitet gsutil Befehle für das Erstellen und Löschen von Buckets, Verschieben, Umbenennen und Editieren von Objekten sowie zur Rechteverwaltung.
 
-\textbf{boto} ist eine OpenSource Python-Bibliothek, welche als Schnittstelle zu Google Cloud Storage dient. Das zugehörige GCS-0auth2-boto-Plugin ist ein Plugin zur Authentifizierung mit OAuth 2.0 Anmeldeinformationen. Neben Google verwendet auch Amazon Web Services dieses als Schnittstelle.
+\textbf{boto} \cite{47} ist eine OpenSource Python-Bibliothek, welche als Schnittstelle zu Google Cloud Storage dient. Das zugehörige GCS-0auth2-boto-Plugin ist ein Plugin zur Authentifizierung mit OAuth 2.0 Anmeldeinformationen. Neben Google verwendet auch Amazon Web Services dieses als Schnittstelle.
 
 \vspace{1em}
 $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
 	\includegraphics[width=0.7\linewidth]{OAuth.png}
-	\captionof{figure}{\small OAuth 2.0}
+	\captionof{figure}{\small OAuth 2.0 \cite{46}}
 	\label{OAuthV}
 \end{minipage}
 \vspace{1em}
 
-In Abbildung \ref{OAuthV} wird das Authentifizierungsverfahren OAuth 2.0 an den Google-Servern dargestellt. Ein Anwender meldet sich im System an, erhält daraufhin einen Authentifizierungscode, bestätigt diesen und kann anschließend mit jeglicher, auf die Google APIs zugreifender, Anwendung Google Cloud Storage verwenden. Die Informationen werden in einer *.boto Datei gespeichert und bleiben somit automatisierend für weitere Zugriffe erhalten.
+In Abbildung \ref{OAuthV} wird das Authentifizierungsverfahren OAuth 2.0 an den Google-Servern dargestellt. Ein Anwender meldet sich im System an, erhält daraufhin einen Authentifizierungscode, bestätigt diesen und kann anschließend mit jeglicher, auf die Google APIs zugreifender, Anwendung Google Cloud Storage verwenden. Die Informationen werden in einer *.boto Datei gespeichert und bleiben somit automatisierend für weitere Zugriffe erhalten. \cite{46}
 
-Neben gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}. TODO warum gsutil, WEBSOCKET ETC\\
+Neben gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}.
 
 \subsection{Eclipse IDE for Java Developers}
 Eclipse ist eine OpenSource Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java Entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch Plugins kann die Funktionalität von Enclipse erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen, oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
@@ -924,32 +929,13 @@ Zurzeit gibt es in derApplikation keinerlei Rechteverwaltung auf dem Cloudspeich
 % ----------------------------------------------------------------------------------------------------------
 % Literatur
 % ----------------------------------------------------------------------------------------------------------
+ \bibliography{literature}
+ \bibliographystyle{alpha}
  
- \begin{thebibliography}{xxxxxxxxxxxxxxxxxxx}
-	\bibitem[Oracle]{1}\url{http://www.oracle.com/technetwork/java/javase/overview/javahistory-index-198355.html}
-	\bibitem[ArchiveJava]{2}\url{http://web.archive.org/web/20100105045840/http://java.sun.com/features/1998/05/birthday.html}
-	\bibitem[JavaInsel]{3}\url{ openbook.galileocomputing.de/javainsel}
-	\bibitem[NistAes]{4}\url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf}
-	\bibitem[WAes]{5}\url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard}
-	\bibitem[NistCTR]{6}\url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}
-	\bibitem[NistCTRSpec]{7}\url{http://csrc.nist.gov/groups/ST/toolkit/BCM/documents/proposedmodes/ctr/ctr-spec.pdf}
-	\bibitem[NistSha2]{10}\url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}
-	\bibitem[SecShW]{11}\url{http://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing}
-	\bibitem[BsiAlg1]{12}\url{http://www.bundesnetzagentur.de/SharedDocs/Downloads/DE/Sachgebiete/QES/Veroeffentlichungen/Algorithmen/2014Algorithmenkatalog.pdf;jsessionid=44761A7B91153744E5BAC51D89FB1FBD?__blob=publicationFile&v=1}
-	\bibitem[BsiAlg2]{13}\url{https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102_pdf.pdf?__blob=publicationFile}
-	\bibitem[Gartner]{30}\url{http://www.gartner.com/technology/reprints.do?id=1-1UKQQA6&ct=140528&st=sb}
- 	\bibitem[Git]{31}\url{http://git-scm.com/book}
-	\bibitem[gsutil]{32}\url{https://cloud.google.com/storage/docs/gsutil}	
-	\bibitem[IEEE]{33}\url{http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=5565955&url=http%3A%2F%2Fieeexplore.ieee.org%2Fxpls%2Fabs_all.jsp%3Farnumber%3D5565955}
-	\bibitem[NistCc]{34}\url{http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf}, S. 2ff.
-	\bibitem[BsiCc]{35}\url{https://www.bsi.bund.de/DE/Themen/CloudComputing/Grundlagen/Grundlagen_node.html}
-	\bibitem[CsaCc]{36}\url{https://cloudsecurityalliance.org/guidance/csaguide.v3.0.pdf}
-	\bibitem[HmdCc]{37}\url{http://link.springer.com/article/10.1007/BF03340515#},  S.77
-	\bibitem[Winkler]{38} [Winkler – Securing the Cloud]
-	\bibitem[CloudComputing]{39} \url{http://books.google.de/books?hl=de&lr=&id=KJj-0_cPFycC&oi=fnd&pg=PA1&dq=Notwendigkeit+von+Cloud+Computing&ots=O1ppInQq8Q&sig=7CyTpiTQWUIdY8wO__BxgzmXc0I#v=onepage&q&f=false}
-	\bibitem[GCS]{40} \url{https://cloud.google.com/storage/docs/overview#blocks}
-	
-\end{thebibliography}
+ \nocite{41}
+ \nocite{42}
+ \nocite{43}
+ \nocite{44}
 \pagebreak
 
 % ----------------------------------------------------------------------------------------------------------

@@ -1,0 +1,20 @@
+Die Literaturangaben sind nun in eine externe Bibtex-Datei ausgelagert.
+Die Nummerierung als Verweis blieb dabei erhalten, das Zitierverfahren unverändert.
+
+--> Neue Quellen in der Datei "literature.bib" hinzufügen:
+- für Bücher @book, für Online-Quellen @misc (Beispiele siehe literature.bib)
+- Verweisvergabe (Nr) beispielsweise: @misc{Nr,...
+- Mehrere Autoren werden mit "and" getrennt
+- Quellen ohne Verweis werden durch \nocite{Nr} im Latex-Dokument hinzugefügt, diese tauchen
+sonst nicht im Literaturverzeichnis auf - Quellen mit Verweis werden automatisch hinzugefügt
+- Abkürzungen innerhalb der [] werden automatisch erstellt
+
+--> Seitenzahlen zu Quellen im *.tex hinzufügen:
+\cite[S. XX]{Nr}
+
+--> Kompiliervorgang nur! nach bearbeiten/hinzufügen von Quellen:
+- *.tex mit pdfLaTeX kompilieren
+- *.tex mit BibTeX kompilieren
+- *.tex mit BibTeX kompilieren
+- *.tex mit pdfLaTeX kompilieren
+- *.tex mit pdfLaTeX kompilieren
