@@ -175,14 +175,7 @@ Christian Ullenboom.
   Pages und Servlets, JDBC, Reflection u.v.m.]}.
 \newblock Galileo Press, Bonn, 1. aufl. edition, 2012.
 
-\bibitem[Wik14a]{5}
-Wikipedia.
-\newblock {Advanced Encryption Standard}.
-\newblock \url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard},
-  2014.
-\newblock [Online; letzter Zugriff: 01.10.2014].
-
-\bibitem[Wik14b]{11}
+\bibitem[Wik14]{11}
 Wikipedia.
 \newblock {Shamir's Secret Sharing}.
 \newblock \url{http://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing}, 2014.
