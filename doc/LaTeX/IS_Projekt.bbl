@@ -159,6 +159,7 @@
   2014. --
 \newblock [Online; letzter Zugriff: 01.10.2014]
 
+<<<<<<< HEAD
 \bibitem[Sch06]{42}
 \textsc{Schneier}, Bruce:
 \newblock \emph{Angewandte Kryptographie: Protokolle, Algorithmen und
@@ -177,6 +178,11 @@
 \bibitem[ST01b]{6}
 \textsc{Standards}, National~I. ; \textsc{Technology}:
 \newblock \emph{{Recommendation for Block Cipher Modes of Operation}}.
+=======
+\bibitem[oST01]{6}
+National~Institute of~Standards and Technology.
+\newblock {Recommendation for Block Cipher Modes of Operation}.
+>>>>>>> latex_doc_felix
 \newblock
   \url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}, 2001.
   --
@@ -197,6 +203,11 @@
   \url{http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf}, 2012.
   --
 \newblock [Online; letzter Zugriff: 01.10.2014]
+
+\bibitem[SSP08]{48}
+Joachim Swoboda, Stephan Spitz, and Michael Pramateftakis.
+\newblock {\em Kryptographie und IT-Sicherheit: Grundlagen und Anwendungen}.
+\newblock Vieweg + Teubner, Wiesbaden, 1. aufl. edition, 2008.
 
 \bibitem[Ull12]{3}
 \textsc{Ullenboom}, Christian:
