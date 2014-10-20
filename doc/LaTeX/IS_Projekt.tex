@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,bibliography=totocnumbered,listof=totocnumbered]{scrartcl}
+\documentclass[13pt,a4paper,bibliography=totocnumbered,listof=totocnumbered]{scrartcl}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -89,10 +89,10 @@
 	Projektarbeit\\
 	über das Thema\\
 	\vspace*{1cm}
-	\Huge
+	\Large
 	\textbf{Symmetrische Software-Kryptographie zur sicheren Nutzung von Storage-Services (IaaS)\\\vspace*{1cm} Konzept und Prototyp}\\
 
-	\vspace*{2cm}
+	\vspace*{1cm}
 	
 	\vfill
 	\normalsize
@@ -346,10 +346,15 @@ Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt,
 	\item JRE: Java Runtime Environment
 \end{compactitem}
 
-Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
-Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt objektorientiert. Das Besondere an Java ist außerdem eine Vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben, die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
+\subsubsection{Java Development Kit}
+Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.
+
+\subsubsection{Programmiersprache Java}
+Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt objektorientiert. Das Besondere an Java ist außerdem eine Vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben, die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.
+
+\subsubsection{Java Runtime Environment}
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der prozessorgebunden wäre und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Anwendungen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
-Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \cite{1}\cite{2}\\\cite{3}
+Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \\\cite{1}\cite{2}\cite{3}
 
 \subsection{Kryptographie}\label{KryptV}
 Unter dem Begriff Kryptographie wird meist das Ver- und Entschlüsseln von Botschaften verstanden, mit dem Anspruch, dass nur berechtigte Personen in der Lage sind, diese zu lesen. Dies ist zwar nur bedingt falsch, vernachlässigt aber wichtige Aspekte, die von essentieller Bedeutung für die moderne Kryptographie sind: Kryptographie umfasst heute die vier Kernziele
@@ -373,7 +378,7 @@ Diese Chiffren wiederum teilen sich in zwei Gruppen: Strom- und Blockchiffren. D
 Während Bruce Schneier in seinem Standardwerk Angewandte Kryptographie noch beschreibt TODO QUELLE , dass Stromchiffren beliebter seien und bald ein Umbruch erfolgen könnte, sind Blockchiffren heute deutlich verbreiteter, was wohl auch an Standards wie AES liegt. AES ist ein Verschlüsselungsstandard des US-amerikanischen National Institute of Standardisation (NIST) und soll im folgenden als der häufigste Vertreter der symmetrischen Chiffren näher erläutert werden:\\
 \\\textbf{AES}\\ TODO Citation \cite{4}
 AES (Advanced Encryption Standard) ist ein Kryptosystem, welches im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums standardisiert wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Kryptosysteme abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vieler anderer. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Die sehr hohe Verbreitung ist vor allem seiner Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Gerade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei der Ver- und Entschlüsselung mit denselben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.\\
-\\\\\textbf{Betriebsmodi}\\
+\\\textbf{Betriebsmodi}\\
 Für Blockchiffren (teilweise auch für Stromchiffren) wurden im Laufe der Jahre verschiedene sog. Betriebsmodi entwickelt. Ein Betriebsmodus stellt die Art und Weise dar, in der eine Blockchiffre verwendet wird. Sie wurden eingeführt, da die Verwendung einer Blockchiffre in ihrer reinen Form problematisch werden kann. Zum einen gehört dazu die Tatsache, dass die Eingabe der Blocklänge entsprechen muss und ein Padding Gefahren für die Sicherheit mitbringen kann. Hinzu kommt, dass eine Chiffre bei gleichem Schlüssel und gleicher Eingabe immer das selbe Chiffrat erzeugt, was kryptographische Analysen erleichtert. Der einfachste denkbare Betriebsmodus nennt sich Electronic Codebook Mode. Hier wird die Nachricht in Blöcke von gleicher Blocklänge zerteilt und jeweils einzeln verschlüsselt. Dieser löst keines der oben gennante Probleme, ermöglicht es aber die Nachricht paralel zu verschlüsseln, also einen Geschwindigkeitsvorteil auf rechenstarken Systemen zu erzeugen. Weitere Betriebsmodi erzeugen aus einer zugrundeliegenden Blockchiffre eine Stromchiffre oder machen Chiffratblöcke von vorangegangenen abhängig um dafür zu sorgen, dass die Eindeutigkeit von Chiffratblöcken aufgehoben wird. Im Folgenden soll einer dieser Betriebsmodi, der Counter Mode, näher erläutert werden.\\
  \cite[S. 223ff.]{42}\\
 \\\textbf{Counter Mode}\\
