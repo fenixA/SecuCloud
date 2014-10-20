@@ -2,52 +2,23 @@
 - AES neu formulieren (kein Eigenplagiat)
 - 60 bis 70 Seiten Textumfang
 - Wikipedia bei AES und Java akzeptabel (besser vermeiden)
-- Daseinsberechtigung: 
-Skaleneffekte, Verbundeffekte, Nachfrageschwankungen (Volatilit‰t)
+
 - Forschungsfragen: 
 Aufgliedern und Arbeit anpassen oder Frage streichen
 - Technische Analyse/Umsetzung um Kryptosystem und Hash erweitern
-- Zitationsregeln: 
-Tˆpfer, Grundlagenwerk zu wissenschaftlichen Arbeiten
-\cite{XX}, S. 44 -> [Winkler, S. 44]
-
+- Installationsanleitung
 
 Abgabe: 
 - Papierformat (auch ungebunden) + Digitale Form, Webseiten Speichern/Drucken
 - .jar + Installationsanleitung
 
-
--->Alter Input:
-ToDo:
-Logfiles
-
-ToDo-Theorie:
-Traffic-‹berwachung einzelner Clients
-
-Layout:
-Quellen korrigieren/erweitern
-
 Holzi:
-.boto/gsutil: Probleme mit groﬂen Dateien (Ergebnisse)
-
-
-
--->Done:
--> Code: 
-- SecuCloud zu NSAbGONE
-- Best‰tigungsfrage bei ausgelˆstem Lˆschvorgang
- 
--> LaTeX:
-- Times als Schriftart
-- R¸ckdatieren der Ausarbeitung
-- Neuen Command \fullref{} eingef¸hrt und \ref{} im Text dadurch ersetzt:
-Referenzierung auf Label fett, Kapitelnr. + Kapitelname
-- Gesch‰ftsmodell entfernt
-- UseCase ¸berarbeiten
-- Refactoring von SecuCloud im Dokument
-
--> Allgemein:
-- Eigener Billing-Account durch Prof (not our business)
-- Zun‰chst kein Whitepaper (actually not our business)
+- .boto/gsutil: Probleme mit groﬂen Dateien (Ergebnisse)
+	fragmentierung
+	beta status
+	sehr neu (google cloud)
+- bibtech deutsch
+- Daseinsberechtigung(diskussion): 
+Skaleneffekte, Verbundeffekte, Nachfrageschwankungen (Volatilit‰t)
 
 
