@@ -22,7 +22,6 @@ Holzi:
 	fragmentierung
 	beta status
 	sehr neu (google cloud)
-- bibtech deutsch
 - Daseinsberechtigung(diskussion): 
 Skaleneffekte, Verbundeffekte, Nachfrageschwankungen (Volatilität)
 
