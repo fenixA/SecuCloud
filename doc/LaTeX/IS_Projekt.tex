@@ -34,7 +34,7 @@
 \def\l@lstlisting#1#2{\@dottedtocline{1}{0em}{1em}{\hspace{1,5em} Lst. #1}{#2}}
 \makeatother
 
-\geometry{a4paper, top=27mm, left=30mm, right=20mm, bottom=35mm, headsep=10mm, footskip=12mm}
+\geometry{a4paper, top=27mm, left=30mm, right=25mm, bottom=35mm, headsep=10mm, footskip=12mm}
 
 \hypersetup{unicode=false, pdftoolbar=true, pdfmenubar=true, pdffitwindow=false, pdfstartview={FitH},
 	pdftitle={IS-Projekt},
@@ -145,9 +145,9 @@ Erfolgt am Ende der Ausarbeitung
 % Inhalt
 % ----------------------------------------------------------------------------------------------------------
 % Abstände Überschrift
-\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
-\titlespacing{\subsection}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
-\titlespacing{\subsubsection}{0pt}{12pt plus 4pt minus 2pt}{-6pt plus 2pt minus 2pt}
+\titlespacing{\section}{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing{\subsection}{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing{\subsubsection}{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
 % Kopfzeile
 \renewcommand{\sectionmark}[1]{\markright{#1}}
@@ -155,8 +155,8 @@ Erfolgt am Ende der Ausarbeitung
 \renewcommand{\subsubsectionmark}[1]{}
 \lhead{Kapitel \thesection}
 \rhead{\rightmark}
-%\onehalfspacing
-\doublespacing
+\onehalfspacing
+%\doublespacing
 \renewcommand{\thesection}{\arabic{section}}
 \renewcommand{\theHsection}{\arabic{section}}
 \setcounter{section}{0}
@@ -904,7 +904,7 @@ Eine sehr simple, aber dennoch äußerst nützliche Erweiterung des bestehenden 
 \\\textbf{Drag\&Drop}\\
 Um die Benutzerfreundlichkeit des Programmes zu erhöhen wäre es vorteilhaft, Dateien per Drag\&Drop in das Programmfenster hinein zu ziehen. Dadurch müsste ein Benutzer nicht jedesmal, wenn er eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.
 \\\textbf{Schnittstellen}\\
-Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen. Desweiteren haben Testfälle unter Einsatz von gsutil gezeigt, dass dieses nicht performant genug für die Verarbeitung von großen Dateien ist. Bereits bei einer Dateigröße von 50MB kam es zu langen Verzögerungen im Datei-Upload, in manchen Fällen sogar zu Abbrüchen. Dieses Verhalten war zu Beginn der Projektarbeit nicht ersichtlich und ist, auf Grund fehlender Reproduzierbarkeit, nicht zu erklären. Eine Weiterentwicklung dieser oder die Wahl einer alternativen Schnittstelle ist für eine zukünftige Implementierung sinnvoll. TODO GROSSE DATEIEN
+Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen. Desweiteren haben Testfälle unter Einsatz von gsutil gezeigt, dass dieses nicht performant genug für die Verarbeitung von großen Dateien ist. Bereits bei einer Dateigröße von 50MB kam es zu langen Verzögerungen im Datei-Upload, in manchen Fällen sogar zu Abbrüchen. Dieses Verhalten war zu Beginn der Projektarbeit nicht ersichtlich und ist, auf Grund fehlender Reproduzierbarkeit, nicht zu erklären. Eine Weiterentwicklung dieser oder die Wahl einer alternativen Schnittstelle ist für eine zukünftige Implementierung sinnvoll. TODO
 \\\textbf{Installations Setup}\\
 Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch Zusatzsoftware wie Python installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich Python für Windowssysteme automatisch bereit zu stellen und in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x Installation und verwenden Standardpfade für installierte Anwendungen (/bin, /usr/bin etc.).
 \\\textbf{Selbstsynchronisierung}\\
