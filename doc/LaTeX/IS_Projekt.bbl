@@ -133,14 +133,7 @@ Oracle.
   2014.
 \newblock [Online; letzter Zugriff: 01.10.2014].
 
-\bibitem[oST01a]{4}
-National~Institute of~Standards and Technology.
-\newblock {ADVANCED ENCRYPTION STANDARD (AES)}.
-\newblock \url{http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf},
-  2001.
-\newblock [Online; letzter Zugriff: 01.10.2014].
-
-\bibitem[oST01b]{6}
+\bibitem[oST01]{6}
 National~Institute of~Standards and Technology.
 \newblock {Recommendation for Block Cipher Modes of Operation}.
 \newblock
@@ -166,6 +159,11 @@ Bruce Schneier.
 \newblock {\em Angewandte Kryptographie: Protokolle, Algorithmen und Sourcecode
   in C; [der Klassiker]}.
 \newblock Pearson Studium, München [u.a.], 2006.
+
+\bibitem[SSP08]{48}
+Joachim Swoboda, Stephan Spitz, and Michael Pramateftakis.
+\newblock {\em Kryptographie und IT-Sicherheit: Grundlagen und Anwendungen}.
+\newblock Vieweg + Teubner, Wiesbaden, 1. aufl. edition, 2008.
 
 \bibitem[Ull12]{3}
 Christian Ullenboom.
