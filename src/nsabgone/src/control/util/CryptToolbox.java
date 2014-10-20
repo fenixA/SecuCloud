@@ -16,6 +16,7 @@ import control.ThreadInstanceCreator.command;
 import model.InformationContainer;
 import model.InformationContainer.Encryption;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class CryptToolbox is a collection cryptographic functions or functions
  * needed to start a successful encryption.
@@ -334,6 +335,15 @@ public final class CryptToolbox {
 		return md.digest();
 	}
 
+	/**
+	 * Hash file sh a256.
+	 *
+	 * @param input file to hash
+	 * @param len part size to be hashed
+	 * @return the calculated hash
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static byte[] hashFileSHA256(File input, int len)
 			throws NoSuchAlgorithmException, IOException {
 		if (len == 0) {
@@ -348,6 +358,13 @@ public final class CryptToolbox {
 		return hashByteArraySHA256(temp);
 	}
 
+	/**
+	 * Extract hash from the end of a file.
+	 *
+	 * @param input the file to extract from
+	 * @return the extracted hash
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static byte[] extractHashSHA256FromFile(File input)
 			throws IOException {
 		FileInputStream iStream = new FileInputStream(input);
@@ -367,6 +384,14 @@ public final class CryptToolbox {
 		return hash;
 	}
 
+	/**
+	 * Verify the hash at the end of a file by the files data
+	 *
+	 * @param input the File
+	 * @return true, if successful
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static boolean verifyFileHashSHA256(File input)
 			throws NoSuchAlgorithmException, IOException {
 		byte[] firstHash = hashFileSHA256(input, (int) input.length()
@@ -378,6 +403,14 @@ public final class CryptToolbox {
 		return true;
 	}
 
+	/**
+	 * Creates a temporary file with a sha256 attached to the end
+	 *
+	 * @param input the file to hash
+	 * @return the temporary file
+	 * @throws NoSuchAlgorithmException the no such algorithm exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static File createTempHashedFile(File input)
 			throws NoSuchAlgorithmException, IOException {
 		File returnFile = SupportFunctions.copyFile(input, Main.getInstance()

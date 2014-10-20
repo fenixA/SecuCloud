@@ -159,7 +159,6 @@
   2014. --
 \newblock [Online; letzter Zugriff: 01.10.2014]
 
-<<<<<<< HEAD
 \bibitem[Sch06]{42}
 \textsc{Schneier}, Bruce:
 \newblock \emph{Angewandte Kryptographie: Protokolle, Algorithmen und
@@ -167,6 +166,18 @@
 \newblock München [u.a.] : Pearson Studium, 2006. --
 \newblock  XXII, 844 S.. --
 \newblock ISBN 3--8273--7228--3
+
+\bibitem[SSP08]{48}
+\textsc{Swoboda}, Joachim ; \textsc{Spitz}, Stephan  ; \textsc{Pramateftakis},
+  Michael:
+\newblock \emph{Kryptographie und IT-Sicherheit: Grundlagen und Anwendungen}.
+\newblock 1. Aufl.
+\newblock Wiesbaden : Vieweg + Teubner, 2008. --
+\newblock  XVIII, 263 S.
+\newblock
+  \url{http://deposit.d-nb.de/cgi-bin/dokserv?id=2844602&prov=M&dok_var=1&dok_ext=htm}.
+  --
+\newblock ISBN 3--8348--0248--4
 
 \bibitem[ST01a]{4}
 \textsc{Standards}, National~I. ; \textsc{Technology}:
@@ -178,11 +189,6 @@
 \bibitem[ST01b]{6}
 \textsc{Standards}, National~I. ; \textsc{Technology}:
 \newblock \emph{{Recommendation for Block Cipher Modes of Operation}}.
-=======
-\bibitem[oST01]{6}
-National~Institute of~Standards and Technology.
-\newblock {Recommendation for Block Cipher Modes of Operation}.
->>>>>>> latex_doc_felix
 \newblock
   \url{http://csrc.nist.gov/publications/nistpubs/800-38a/sp800-38a.pdf}, 2001.
   --
@@ -204,11 +210,6 @@ National~Institute of~Standards and Technology.
   --
 \newblock [Online; letzter Zugriff: 01.10.2014]
 
-\bibitem[SSP08]{48}
-Joachim Swoboda, Stephan Spitz, and Michael Pramateftakis.
-\newblock {\em Kryptographie und IT-Sicherheit: Grundlagen und Anwendungen}.
-\newblock Vieweg + Teubner, Wiesbaden, 1. aufl. edition, 2008.
-
 \bibitem[Ull12]{3}
 \textsc{Ullenboom}, Christian:
 \newblock \emph{Java 7 - mehr als eine Insel: das Handbuch zu den
@@ -220,7 +221,14 @@ Joachim Swoboda, Stephan Spitz, and Michael Pramateftakis.
 \newblock  1433 S.. --
 \newblock ISBN 978--3--8362--1507--7
 
-\bibitem[Wik14]{11}
+\bibitem[Wik14a]{5}
+\textsc{Wikipedia}:
+\newblock \emph{{Advanced Encryption Standard}}.
+\newblock \url{http://de.wikipedia.org/wiki/Advanced_Encryption_Standard},
+  2014. --
+\newblock [Online; letzter Zugriff: 01.10.2014]
+
+\bibitem[Wik14b]{11}
 \textsc{Wikipedia}:
 \newblock \emph{{Shamir's Secret Sharing}}.
 \newblock \url{http://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing}, 2014.

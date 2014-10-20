@@ -1,0 +1,259 @@
+/* ------ lists ------ */
+.summary {
+font-size: 11pt;
+background-color: #F0F8FE;
+margin-left: auto;
+margin-right: auto;
+padding: 3px;
+}
+
+.instructions {
+
+padding: 5px;
+border: 1px #eaf3ec solid;
+background-color: #FFFFFF;
+
+}
+
+.reference_content {
+  display: block; 
+  padding-left: 30pt;
+  padding-top: 10px;
+
+}
+
+.gray_border {
+  outline: thin solid #CCC;
+  padding: 3px;
+ }
+
+li pre {
+  margin: .5em 0 .6em 0;
+}
+
+li p {
+  padding: .5em 0 .6em 0;
+  margin: 0;
+}
+
+ol.alpha {
+  list-style: lower-alpha;
+}
+
+ol.alphacap {
+  list-style: upper-alpha;
+}
+
+ol.roman {
+  list-style: lower-roman;
+}
+
+ol.romancap {
+  list-style: upper-roman;
+}
+
+.tablelist {
+  margin: 0 0 1em 0;
+}
+
+.listhead li {
+  font-weight: bold;
+}
+
+.listhead li *, /*ie*/.listhead li li {
+  font-weight: normal;
+}
+
+.code li {
+  font-family: monospace;
+  font-size: 10pt;
+}
+
+.code li p, .code li li {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+li p.note, li p.warning, li p.caution {
+  margin: .8em 0 0 0;
+  padding: .2em .5em .2em .9em;
+}
+
+/* table of contents */
+
+ol.toc, div.toc ol {
+  margin: 1em 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+ol.toc li, div.toc ol li {
+  font-weight: bold;
+  margin: .5em 0 0 1.5em;
+  padding: 0;
+}
+
+ol.toc li ol, div.toc ol li ol {
+  margin: 0;
+  padding: 0;
+}
+
+ol.toc li ol li, div.toc ol li ol li {
+  padding: 0;
+  margin: .1em 0 0 1em;
+  font-weight: normal;
+  list-style: none;
+}
+
+table ol.toc {
+  margin-left: 0;
+}
+
+ul.toc, div.toc ul{
+  margin:1.5em 0 0 25px;
+  padding:0;
+  list-style:none;
+}
+
+ul.toc li, div.toc ul li{
+  font-weight:bold;
+  margin:.5em 0 0 1.5em;
+  padding:0;
+}
+
+ul.toc li ul, div.toc ul li ul{
+  margin:0;
+  padding:0;
+  }
+
+ul.toc li ul li, div.toc ul li ul li{
+  padding:0;
+  margin:.1em 0 0 1em;
+  font-weight:normal;
+  list-style:none;
+}
+
+table ul.toc{
+  margin-left:0;
+}
+
+/* apireference.css */
+
+.apiindent {
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+.authrequired {
+  font-size: 70%;
+  font-variant: small-caps;
+  font-weight: normal;
+  margin-left: .5em;
+}
+.required {
+  font-size: 70%;
+  font-variant: small-caps;
+  font-weight: normal;
+  margin-left: .5em;
+}
+.apiscope {
+  font-weight: bold;
+  font-size: 9pt;
+}
+.apiobject {
+  color: #333;
+  font-size: 8pt !important;
+}
+
+/* custom prettyprinting */
+
+pre, code {
+  color: #000;
+}
+.apimethod {
+  font-style: italic;
+}
+pre span.apimethod {
+  font-style: normal;
+  font-weight: bold;
+}
+
+/* Suppress the double title in sphinx-generated gsutil documentation. */
+div.gsutil-generated > h1 {
+  display: none;
+}
+
+/* Make the gsutil command option tables not get squished. */
+table.option-list td.option-group {
+  min-width: 75px;
+}
+
+/* Make the gsutil synopsis at the top of each command page a fixed-width font.
+ */
+p.synopsis {
+  font: 1em "Droid Sans Mono",monospace;
+  line-height: 1.5;
+  margin: 1.5em 0;
+  white-space: pre;
+}
+
+
+/* An override the generated inline TOC style for .md (and .html) files
+ *
+ * Can reference the file directly:
+ *   <link rel="stylesheet" type="text/css" href="/+/css/inline-toc.css" />
+ *
+ * Or import into your stylesheets:
+ *   @import url('/+/css/inline-toc.css');
+ */
+#gc-content ol.toc,
+#gc-content ul.toc {
+list-style-type: none;
+}
+
+nav.inline-toc {
+  float: right;
+  width: 300px;
+  background: #F1F1F1;
+  padding-top: 9px;
+  padding-bottom: 12px;
+  padding-left: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-left: 0.8em;
+  margin-bottom: 0.5em;
+  overflow: auto;
+}
+nav.inline-toc ol.toc,
+nav.inline-toc ul.toc {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 1em;
+}
+#gc-content nav.inline-toc ol.toc li,
+#gc-content nav.inline-toc ul.toc li {
+  font-weight: normal;
+  line-height: 15px;
+}
+#gc-content nav.inline-toc > ol.toc > li ol,
+#gc-content nav.inline-toc > ul.toc > li ul {
+  padding-left: 0;
+}
+#gc-content nav.inline-toc > ol.toc > li,
+#gc-content nav.inline-toc > ul.toc > li {
+  padding-top: 4px;
+  padding-bottom: 3px;
+  padding-left: 2em;
+  text-indent: -2em;
+}
+#gc-content nav.inline-toc > ol.toc > li > ol > li,
+#gc-content nav.inline-toc > ul.toc > li > ul > li {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 2em;
+  text-indent: -2em;
+}
+nav.inline-toc ol ol ol {
+  display: none;
+}
+/* Prevent the background images from flowing behind the floated TOC */
+#gc-content h2, aside.special, .note, .caution, .warning, .alert-message {
+  overflow: auto;
+}

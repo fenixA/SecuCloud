@@ -180,14 +180,14 @@ Dies macht eine verschlüsselte Ablage der Daten notwendig um sicherzustellen, d
 Da die Notwendigkeit an Sicherheit daraus resultiert, dass fremde Systeme grundsätzliche ersteinmal als unsicher gelten müssen, gehen wir bei der Entwicklung des Prototypen davon aus, dass der Client auf dem die Applikation läuft als sicher gilt. Szenarien in denen auch dieser als korrumpiert gilt, lassen sich grundsätzlich nicht mehr absichern.
 
 \subsubsection{Problemstellung}
-Eine symmetrische Software-Kryptographie soll möglichst Daten, die in eine Cloud ausgelagert werden,  vor Fremdzugriff schützen. Die Konzeption und der Entwurf eines Prototyps sollen evaluieren, wie diese Herausforderung effizient und sicher gelöst werden kann. Dabei steht der betriebssystemunabhängige Zugriff auf die entsprechende Anwendung und das eingesetzte Verschlüsselungsverfahren im Vordergrund. Erarbeitet werden soll die Implementierung für einen einzelnen Cloud-Anbieter. 
+Eine symmetrische Software-Kryptographie soll möglichst Daten, die in eine Cloud ausgelagert werden,  vor Fremdzugriff schützen. Die Konzeption und der Entwurf eines Prototyps sollen evaluieren, wie diese Herausforderung effizient und sicher gelöst werden kann. Dabei steht der betriebssystemunabhängige Zugriff auf die entsprechende Applikation und das eingesetzte Verschlüsselungsverfahren im Vordergrund. Erarbeitet werden soll die Implementierung für einen einzelnen Cloud-Anbieter. 
 
 Zu den Grundfunktionalitäten des geforderten Prototyps gehören der Cloud-Zugriff, die Verschlüsselung, die Speicherung in der Cloud, eine Dateiübersicht und das lokale Herunterladen der Daten.
 
-Die Verwendung soll durch eine grafische Oberfläche vereinfacht werden.
+Die Verwendung soll durch eine graphische Oberfläche vereinfacht werden.
 
 \subsubsection{Problemabgrenzung}
-Eine Gegenüberstellung weiterer kommerzieller Produkte von Cloud-Anbietern im Bezug auf Implementierung und Performance wird in dieser Arbeit nicht behandelt. Ebenso ist eine Optimierung vorhandener APIs bzw. Schnittstellen und Kryptosystemen nicht Gegenstand dieser Arbeit. Die Hardware des Anwenders wird als sicher betrachtet, weswegen es keines sicheren Schlüsselmanagements bedarf. Dateien, welche manuell bzw. ohne die Anwendung in die Cloud geladen werden, werden nicht berücksichtigt.
+Eine Gegenüberstellung weiterer kommerzieller Produkte von Cloud-Anbietern im Bezug auf Implementierung und Performance wird in dieser Arbeit nicht behandelt. Ebenso ist eine Optimierung vorhandener APIs bzw. Schnittstellen und Kryptosystemen nicht Gegenstand dieser Arbeit. Die Hardware des Anwenders wird als sicher betrachtet, weswegen es keines sicheren Schlüsselmanagements bedarf. Dateien, welche manuell bzw. ohne die Applikation in die Cloud geladen werden, werden nicht berücksichtigt.
 
 \subsection{Ziel der Arbeit}
 Ziel der Arbeit ist es herauszuarbeiten, ob und wie Cloudspeicher zur sicheren Ablage von Daten im Sinne des deutschen Datenschutzverständnisses genutzt werden können. Hierfür soll eine entsprechende Applikation entwickeln werden. Außerdem ist zu klären, ob der Einsatz einer Cloudplattform sinnvoll und möglich ist, auf Hintergrund der jüngsten Enthüllungen Edward Snowdens und anderer. Diese haben gezeigt, dass eine solche Infrastruktur auf US-amerikanischem Boden im Besonderen, aber auch im Ausland im Allgemeinen als nicht vertrauenswürdig gelten muss und dort abgelegte unternehmenswichtige Daten gefährdet sind. Ist es möglich die Vorteile solcher Plattformen dennoch zu nutzen? Wie gefährdet sind die Daten dann noch?
@@ -334,7 +334,7 @@ RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust,
 \cite[S. 93 ff., 224f.]{38}
 
 \subsection{Java}\label{JavaV}
-Die Anwendung zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit begann, eine der ersten plattformunabhängigen Programmiersprachen zu entwickeln. Sie sollte die Computerwelt revolutionieren, indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
+Die Applikation zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit begann, eine der ersten plattformunabhängigen Programmiersprachen zu entwickeln. Sie sollte die Computerwelt revolutionieren, indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
 \cite{1}\cite{2}\cite[S. 52]{3}\\
 
 Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt, besteht im Kern aus drei Teilen:
@@ -345,7 +345,7 @@ Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt,
 \end{compactitem}
 
 \subsubsection{Java Development Kit}
-Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Anwendungen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
+Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Applikationen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
 \cite[S. 63f]{3}\\
 
 \subsubsection{Programmiersprache Java}
@@ -353,8 +353,8 @@ Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt objekto
 \cite[S. 55, 60]{3}
 
 \subsubsection{Java Runtime Environment}
-Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Anwendungen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der prozessorgebunden wäre und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Anwendungen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
-Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Software dienen, wie ein grafisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \\
+Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Applikationen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der prozessorgebunden wäre und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Applikationen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
+Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Applikation dienen, wie ein graphisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \\
 \cite[S. 63f]{3}
 
 \subsection{Kryptographie}\label{KryptV}
@@ -531,13 +531,13 @@ Für Blockchiffren empfiehlt das BSI zurzeit die Standards AES128, AES192, AES25
 % Ergebnisse
 % ----------------------------------------------------------------------------------------------------------
 \section{Ergebnisse}\label{ErgebnisseV}
-Im Folgenden Kapitel wird der entwickelte Prototyp näher erläutert, zunächst durch eine Beschreibung der Klassendefinitionen und der Architektur. Nachfolgenend wird das zugrunde liegende kryptographische System erläutert und das graphische Interface sowie die Funktionalität aus Anwendersicht beschrieben.
+Im Folgenden Kapitel wird der entwickelte Prototyp näher erläutert, zunächst durch eine Beschreibung der Klassendefinitionen und der Architektur. Nachfolgenend wird das zugrunde liegende kryptographische System erläutert und das graphische Interface sowie die Funktionalität aus Benutzersicht beschrieben.
 
 \subsection{Architektur}
-Der Software zugrunde liegt eine Architektur, die an das Model-View-Control Entwurfsmuster angelehnt ist. Sie unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (packages, die in anderen enthalten sind). Im Folgenden werden diese sowie die enthaltenen Klassen näher skizziert. Eine genaue Auflistung der Methoden und Klassenvariablen kann den UML Diagrammen bzw. der Dokumentation entnommen werden.
+Der Applikation zugrunde liegt eine Architektur, die an das Model-View-Control Entwurfsmuster angelehnt ist. Sie unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (packages, die in anderen enthalten sind). Im Folgenden werden diese sowie die enthaltenen Klassen näher skizziert. Eine genaue Auflistung der Methoden und Klassenvariablen kann den UML Diagrammen bzw. der Dokumentation entnommen werden.
 
 \subsubsection{Package: control}
-Das Package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Nutzerverwaltung und Koordination der Datei-Informationen.\\\\
+Das Package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Benutzerverwaltung und Koordination der Datei-Informationen.\\\\
 \textbf{Klasse: Main}\\
 Die Klasse Main stellt das Herz der Applikation dar: In ihr liegen applikationsweit verwendete Definitionen (public static final Variablen) und Methoden, die von den Views aus aufgerufen werden um auf Benutzerinteraktionen zu reagieren. Die meisten anderen Klassen werden hier instanziert, die temporären Benutzerinformationen hinterlegt und mit get() und set() Methoden für andere Module nutzbar gemacht. Sie stellt also den Knotenpunkt dar, der die Module der Applikation verbindet. Main ist an der Programmlogik selbst nur in Form des Programmstartes und der Delegation anderer Aufrufe beteiligt. Kalkulationen oder Dateioperationen finden hier nicht statt. Sie ist mit dem Singelton Entwurfsmuster implementiert. So ist sichergestellt, dass alle Programmteile auf dieselbe Instanz von Main zugreifen, ohne dass eine entsprechende Referenz an die anderen Klassen übergeben werden müsste.\\\\
 \textbf{Klasse: FileListHandler}\\
@@ -575,11 +575,11 @@ Das Package view enhält alle Teile des graphischen Interfaces. In diesem werden
 \textbf{Klasse: MainWindow}\\
 Das MainWindow ist die Hauptoberfläche der Applikation. Hier wird eine Liste der in der Cloud befindlichen Dateien angezeigt, es können weitere zum Upload ausgewählt oder aus der Cloud gedownloaded bzw. gelöscht werden.\\\\
 \textbf{Klasse: CreateAccountWindow}\\
-Das CreateAccountWindow erscheint, wenn der Benutzer entweder noch keinen Account angelegt hat oder aber wenn die Schaltfläche Create im LoginWindow ausgewählt wird. Hier muss vom Benutzer sein gewünschter Nutzername, sein Passwort sowie eine Wiederholung, zur Vorbeugung eines Tippfehlers, eingeben werden.\\\\
+Das CreateAccountWindow erscheint, wenn der Benutzer entweder noch keinen Account angelegt hat oder aber wenn die Schaltfläche Create im LoginWindow ausgewählt wird. Hier muss vom Benutzer sein gewünschter Benutzername, sein Passwort sowie eine Wiederholung, zur Vorbeugung eines Tippfehlers, eingeben werden.\\\\
 \textbf{Klasse: DeleteWindow}\\
 Das DeleteWindow erscheint, wenn die Applikation beim Start feststellt, dass im lokalen Speicher InformationContainer hinterlegt sind, die kein Pendant mehr in der Cloud besitzen. Dies kann geschehen, wenn sie manuell per Webinterface gelöscht wurden oder der Upload fehl schlug. Der Benutzer sieht hier, um welche Datei es sich handelt (Klarname, ID in der Cloud) und kann selbst enscheiden ob der InformationContainer zur Sicherheit behalten werden sollte, oder entfert werden kann.\\\\
 \textbf{Klasse: LoginWindow}\\
-Das LoginWindow fordert den Benutzer auf, seine Nutzerdaten einzugeben um sich in der Applikation einzuloggen. Dies sind sein Nutzername, das dazugehörige Passwort sowie der Bucket auf dem der Nutzer arbeiten möchte. Dies ist zurzeit sehr Google Storage spezifisch, allerdings ist die Applikation aus dem Grund modularisiert aufgebaut. Hier können später weitere Cloud-Anbieter mit alternativen LoginWindows angebunden werden.\\\\
+Das LoginWindow fordert den Benutzer auf, seine Benutzerdaten einzugeben um sich in der Applikation einzuloggen. Dies sind sein Benutzername, das dazugehörige Passwort sowie der Bucket auf dem der Benutzer arbeiten möchte. Dies ist zurzeit sehr Google Storage spezifisch, allerdings ist die Applikation aus dem Grund modularisiert aufgebaut. Hier können später weitere Cloud-Anbieter mit alternativen LoginWindows angebunden werden.\\\\
 \textbf{Klasse: NonEditableJTable}\\
 Die NonEditableJTable ist eine Hilfsklasse. Sie erbt vom DefaultTableModel (Javaklasse die die Methoden von JTables definiert) und überschreibt die Funktion isCellEditable(int row, int column), sodass sie immer false zurück gibt. Im MainWindow erhält die angezeigte Tabelle dieses Model, damit der Benutzer die Tabelle nicht manuell bearbeiten kann, was zurzeit in der Applikation keinen Sinn machen würde und Fehler im Programmablauf erzeugen könnte.\\\\
 \textbf{Klasse: NotificationWindow}\\
@@ -603,8 +603,8 @@ $\;$\\
 
 \subsubsection{Begriffslexikon Anwendungsfälle:}
 \begin{compactitem}
-\item Anwender:\\
-Die Rechte und Möglichkeiten des Anwenders, sofern diese vorher beim Anbieter vergeben wurden, begrenzen sich auf das Ablegen lokaler und das Herunterladen bzw. Löschen von in der Cloud gespeicherten Dateien.
+\item Benutzer:\\
+Die Rechte und Möglichkeiten des Benutzers, sofern diese vorher beim Anbieter vergeben wurden, begrenzen sich auf das Ablegen lokaler und das Herunterladen bzw. Löschen von in der Cloud gespeicherten Dateien.
 \item Authentifizierung:\\
 Der Login erfordert den Benutzernamen sowie das zugehörige Passwort.
 \item Datei:\\
@@ -612,36 +612,36 @@ Die hochzuladende Datei kann in jedem beliebigen Dateiformat vorliegen.
 \item Dateiübersicht:\\
 Die Dateiübersicht gibt tabellarisch die in der Cloud abgelegten Dateien wieder. Dies beinhaltet den originalen Dateinamen, den kryptischen Dateinamen  sowie den Zeitpunkt des Ablegens.
 \item GUI:\\
-GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, die dem Anwender die Interaktion mit dem System vereinfacht.
+GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, die dem Benutzer die Interaktion mit dem System vereinfacht.
 \end{compactitem}
 \pagebreak
 
-\subsubsection{AF-001 Nutzer erstellen:}
+\subsubsection{AF-001 Benutzer erstellen:}
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|l|l|}
 		\hline
 		Nummer & AF-001\\
 		\hline
-		Name & Nutzer erstellen\\
+		Name & Benutzer erstellen\\
 		\hline
-		Akteure & Anwender\\
+		Akteure & Benutzer\\
 		\hline
-		Auslöser & Anwender möchte einen Benutzer anlegen\\
+		Auslöser & Benutzer möchte einen Benutzer anlegen\\
 		\hline
-		Vorbedingung & Programm zeigte den Login-Dialog, Anwender hat \\ &  Create ausgewählt\\
+		Vorbedingung & Programm zeigte den Login-Dialog, Benutzer hat \\ &  Create ausgewählt\\
 		\hline
 		Nachbedingung/Ziel & Ein neuer Benutzer wurde angelegt \\
 		\hline
 		Nachbedingung im Sonderfall & Es wurde kein Benutzer erstellt \\ & Erneute Aufforderung zur Dateneingabe\\
 		\hline
-		Normalablauf & 1. Anwender startet Programm \\ & 2. Anwender wählt Create im Login-Fenster\\ & 3. Anwender gibt Benutzername ein \\ & 4. Anwender gibt Passwort ein \\ & 5. Anwender bestätigt das Passwort durch zweite\\ &Eingabe\\& 6. Benutzer wurde angelegt\\& 7. Login-Fenster wird angezeigt \\
+		Normalablauf & 1. Benutzer startet Programm \\ & 2. Benutzer wählt Create im Login-Fenster\\ & 3. Benutzer gibt Benutzername ein \\ & 4. Benutzer gibt Passwort ein \\ & 5. Benutzer bestätigt das Passwort durch zweite\\ &Eingabe\\& 6. Benutzer wurde angelegt\\& 7. Login-Fenster wird angezeigt \\
 		\hline
-		Sonderfälle & 3a. Anwender gibt nicht erlaubten Benutzernamen ein \\ & 4a. Anwender gibt nicht erlaubtes Passwort ein \\& 5a. Anwender gibt nicht das identische Passwort ein\\& 6a. Benutzer konnte nicht angelegt werden \\& 7a. Create-Fenster wird erneut angezeigt\\
+		Sonderfälle & 3a. Benutzer gibt nicht erlaubten Benutzernamen ein \\ & 4a. Benutzer gibt nicht erlaubtes Passwort ein \\& 5a. Benutzer gibt nicht das identische Passwort ein\\& 6a. Benutzer konnte nicht angelegt werden \\& 7a. Create-Fenster wird erneut angezeigt\\
 		\hline
 	\end{tabular}
-	\caption{AF-001 Nutzer erstellen}
-	\label{tab:AF-001 Nutzer erstellen}
+	\caption{AF-001 Benutzer erstellen}
+	\label{tab:AF-001 Benutzer erstellen}
 \end{table}
 \pagebreak
 
@@ -654,19 +654,19 @@ GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, di
 		\hline
 		Name & Authentifizierung\\
 		\hline
-		Akteure & Anwender\\
+		Akteure & Benutzer\\
 		\hline
-		Auslöser & Anwender möchte sich anmelden\\
+		Auslöser & Benutzer möchte sich anmelden\\
 		\hline
-		Vorbedingung & Programm zeigt den Login-Dialog, Anwender ist im \\ &  Cloud-System registriert und zum Zugriff berechtigt\\
+		Vorbedingung & Programm zeigt den Login-Dialog, Benutzer ist im \\ &  Cloud-System registriert und zum Zugriff berechtigt\\
 		\hline
 		Nachbedingung/Ziel & Erfolgreiche Anmeldung am Cloud-System \\
 		\hline
 		Nachbedingung im Sonderfall & Zugriff verweigert\\ & Erneute Aufforderung zur Anmeldung\\
 		\hline
-		Normalablauf & 1. Anwender startet Programm \\ & 2. Anwender gibt Benutzername ein \\ & 3. Anwender gibt Passwort ein \\ & 4. Anwender gibt Bucket an \\ &5. Zugangsdaten werden überprüft \\ & 6. Dateiübersicht wird angezeigt \\
+		Normalablauf & 1. Benutzer startet Programm \\ & 2. Benutzer gibt Benutzername ein \\ & 3. Benutzer gibt Passwort ein \\ & 4. Benutzer gibt Bucket an \\ &5. Zugangsdaten werden überprüft \\ & 6. Dateiübersicht wird angezeigt \\
 		\hline
-		Sonderfälle & 2a. Anwender gibt falschen Benutzernamen ein \\ & 3a. Anwender gibt falsches Passwort ein \\& 4a. Anwender gibt nicht gestatteten Bucketnamen an\\ & 5a. Erneutes Laden der Loginmaske\\
+		Sonderfälle & 2a. Benutzer gibt falschen Benutzernamen ein \\ & 3a. Benutzer gibt falsches Passwort ein \\& 4a. Benutzer gibt nicht gestatteten Bucketnamen an\\ & 5a. Erneutes Laden der Loginmaske\\
 		\hline
 	\end{tabular}
 	\caption{AF-002 Authentifizierung}
@@ -683,19 +683,19 @@ GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, di
 		\hline
 		Name & Dateiupload\\
 		\hline
-		Akteure & Anwender\\
+		Akteure & Benutzer\\
 		\hline
-		Auslöser & Anwender möchte eine Datei in der Cloud ablegen\\
+		Auslöser & Benutzer möchte eine Datei in der Cloud ablegen\\
 		\hline
-		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		Vorbedingung & Benutzer hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
 		\hline
 		Nachbedingung/Ziel & Datei wurde verschlüsselt in der Cloud abgelegt \\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht abgelegt werden\\
 		\hline
-		Normalablauf & 1. Anwender wählt das Menü ''File'' aus \\ & 2. Anwender wählt im Untermenü ''Select'' \\ & 3. Anwender bewegt sich durch das eigene  Datei- \\ & system zum Speicherpfad der hochzuladenden Datei \\ & 4. Anwender initialisiert den Dateiupload durch \\ &  Auswählen der Datei und Bestätigung mit ''Open'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
+		Normalablauf & 1. Benutzer wählt das Menü ''File'' aus \\ & 2. Benutzer wählt im Untermenü ''Select'' \\ & 3. Benutzer bewegt sich durch das eigene  Datei- \\ & system zum Speicherpfad der hochzuladenden Datei \\ & 4. Benutzer initialisiert den Dateiupload durch \\ &  Auswählen der Datei und Bestätigung mit ''Open'' \\  & 5. Datei wird verschlüsselt \\ & 6. Datei wird hochgeladen \\
 		\hline
-		Sonderfälle & 3a. Dateisystem wird nicht unterstützt \\& 4a. Keine Datei ausgewählt \\ & 4b. Anwender wählt "Cancel" \\ &  5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
+		Sonderfälle & 3a. Dateisystem wird nicht unterstützt \\& 4a. Keine Datei ausgewählt \\ & 4b. Benutzer wählt "Cancel" \\ &  5a. Datei wird nicht verschlüsselt \\ & 6a. Datei kann nicht hochgeladen werden\\
 		\hline
 	\end{tabular}
 	\caption{AF-003 Dateiupload}
@@ -712,17 +712,17 @@ GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, di
 		\hline
 		Name & Dateidownload\\
 		\hline
-		Akteure & Anwender\\
+		Akteure & Benutzer\\
 		\hline
-		Auslöser & Anwender möchte eine Datei aus der Cloud \\ & herunterladen\\
+		Auslöser & Benutzer möchte eine Datei aus der Cloud \\ & herunterladen\\
 		\hline
-		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		Vorbedingung & Benutzer hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
 		\hline
 		Nachbedingung/Ziel & Datei wurde aus der Cloud heruntergeladen \\ & und entschlüsselt \\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht heruntergeladen werden \\ & Datei wird nicht entschlüsselt\\
 		\hline
-		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Download'' \\  & 4. Datei wird heruntergeladen \\ & 5. Datei wird entschlüsselt \\
+		Normalablauf & 1. Benutzer wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Benutzer öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Benutzer wählt im Kontextmenü ''Download'' \\  & 4. Datei wird heruntergeladen \\ & 5. Datei wird entschlüsselt \\
 		\hline
 		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\& 4a. Datei kann nicht heruntergeladen werden \\ & 5a. Datei wird nicht entschlüsselt\\
 		\hline
@@ -741,19 +741,19 @@ GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, di
 		\hline
 		Name & Datei löschen\\
 		\hline
-		Akteure & Anwender\\
+		Akteure & Benutzer\\
 		\hline
-		Auslöser & Anwender möchte eine Datei aus der Cloud löschen\\
+		Auslöser & Benutzer möchte eine Datei aus der Cloud löschen\\
 		\hline
-		Vorbedingung & Anwender hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
+		Vorbedingung & Benutzer hat sich erfolgreich authentifiziert \\ & Dateiübersicht wird angezeigt\\
 		\hline
 		Nachbedingung/Ziel & Datei wurde aus der Cloud gelöscht \\
 		\hline
 		Nachbedingung im Sonderfall & Datei kann nicht gelöscht werden \\
 		\hline
-		Normalablauf & 1. Anwender wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Anwender öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Anwender wählt im Kontextmenü ''Delete from \\&cloud'' \\ & 4. Delete Fenster erscheint \\ & 5. Anwender bestätigt mit Ok \\  & 6. Datei wird aus der Cloud gelöscht \\ & 7. Dateieintrag in der Übersicht wird entfernt \\& Schlüssel wird entfernt \\
+		Normalablauf & 1. Benutzer wählt in der Dateiübersicht mit linkem \\&Mausklick den Eintrag der entsprechenden Datei aus \\ & 2. Benutzer öffnet das Kontextmenü mit rechtem\\& Mausklick \\ & 3. Benutzer wählt im Kontextmenü ''Delete from \\&cloud'' \\ & 4. Delete Fenster erscheint \\ & 5. Benutzer bestätigt mit Ok \\  & 6. Datei wird aus der Cloud gelöscht \\ & 7. Dateieintrag in der Übersicht wird entfernt \\& Schlüssel wird entfernt \\
 		\hline
-		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\ & 4a. Delete Fenster erscheint nicht \\ & 5a. Anwender wählt No \\ & 6a. Datei kann nicht aus der Cloud gelöscht werden \\ & 7a. Dateieintrag in der Übersicht wird nicht entfernt\\& Schlüssel wird nicht entfernt\\
+		Sonderfälle & 1a. Kein Eintrag vorhanden\\& 1b. Kein Eintrag ausgewählt\\ & 3a. Kontextmenü öffnet sich nicht \\ & 4a. Delete Fenster erscheint nicht \\ & 5a. Benutzer wählt No \\ & 6a. Datei kann nicht aus der Cloud gelöscht werden \\ & 7a. Dateieintrag in der Übersicht wird nicht entfernt\\& Schlüssel wird nicht entfernt\\
 		\hline
 	\end{tabular}
 	\caption{AF-005 Datei löschen}
@@ -764,17 +764,17 @@ GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, di
 \subsection{Kryptosystem}
 Die Verschlüsselung und das Accountmanagement basieren zurzeit ausschließlich auf den Algorithmen AES128 im CTR Modus und SHA256. Eine asymmetrische Verschlüsselung wurde in Betracht gezogen, schied jedoch aus unter der Annahme, dass der Client auf dem die Applikation läuft, als sichere Umgebung gilt. In einer späteren Weiterentwicklung ist es aber durchaus sinnvoll dies erneut zu evaluieren. Vor allem dann, wenn ein Server das Dateisystem bzw. dessen Synchronität verwalten oder mehrere kaskadierte Verschlüsselungsebenen geschaffen werden sollen, um eine erweiterte Rechteverwaltung zu ermöglichen. Die Beschreibung der Sicherungsverfahren wird nachfolgend in der Reihenfolge, in der sie von einem Benutzer ausgelöst werden, beschrieben.
 \subsubsection{Account anlegen}
-Wird die Applikation zum ersten Mal gestartet, stellt sie also fest, dass bisher keine Benutzer im System registriert sind, schafft sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem Schließen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Nutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. ''Salt". Danach wird der Benutzername im Klartext in die Datei HOME/NSAbGONE/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Anschließend berechnet das Programm einen SHA256 Hashwert über ein Bytearray bestehend aus dem Salt und dem Passwort. Dieser Hash sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf dieselbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten des einen Nutzers enden und die des nächsten beginnen. TODO SCHRIFTSPRACHE
+Wird die Applikation zum ersten Mal gestartet, stellt sie also fest, dass bisher keine Benutzer im System registriert sind, schafft sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem Schließen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Benutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. ''Salt". Danach wird der Benutzername im Klartext in die Datei HOME/NSAbGONE/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Anschließend berechnet das Programm einen SHA256 Hashwert über ein Bytearray bestehend aus dem Salt und dem Passwort. Dieser Hash sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf dieselbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten des einen Benutzers enden und die des nächsten beginnen. TODO SCHRIFTSPRACHE
 \subsubsection{Login}
-Um sich in seinen Account einzuloggen, muss ein Benutzer seinen Nutzernamen und sein Passwort in die im LoginWindow vorgegebenen Zellen eintragen. Drückt er auf den OK Button, erstellt die Applikation ein Bytearray aus dem Passwort und dem in settings.cfg hinterlegten Salt. Dies wird gehasht und das Ergebnis mit dem in settings.cfg eingetragenen verglichen. Stimmen die beiden überein, sind die Nutzerdaten valide und die Applikation wechselt in das MainWindow. Der Vorteil bei der Verwendung eines Salt ist in \fullref{KryptV} näher erläutert.
+Um sich in seinen Account einzuloggen, muss ein Benutzer seinen Benutzernamen und sein Passwort in die im LoginWindow vorgegebenen Zellen eintragen. Drückt er auf den OK Button, erstellt die Applikation ein Bytearray aus dem Passwort und dem in settings.cfg hinterlegten Salt. Dies wird gehasht und das Ergebnis mit dem in settings.cfg eingetragenen verglichen. Stimmen die beiden überein, sind die Benutzerdaten valide und die Applikation wechselt in das MainWindow. Der Vorteil bei der Verwendung eines Salt ist in \fullref{KryptV} näher erläutert.
 \subsubsection{Dateien ablegen}
-Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit, einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen zu speichern. Dann wird ein Hash über die gesamte Datei gebildet und eine temporäre Kopie angehängt, bevor diese dann selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt wird. Für jede Datei wird ein eigener Schlüssel berechnet, da ein Schlüssel immer gefährdeter wird, je öfter er benutzt, bzw. je mehr Daten damit verschlüsselt werden. Außerdem ist es möglich einem anderen Nutzer den Zugriff auf eine einzelene Datei zu gestatten, indem man diesem den Schlüssel aushändigt. 
+Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit, einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen zu speichern. Dann wird ein Hash über die gesamte Datei gebildet und eine temporäre Kopie angehängt, bevor diese dann selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt wird. Für jede Datei wird ein eigener Schlüssel berechnet, da ein Schlüssel immer gefährdeter wird, je öfter er benutzt, bzw. je mehr Daten damit verschlüsselt werden. Außerdem ist es möglich einem anderen Benutzer den Zugriff auf eine einzelene Datei zu gestatten, indem man diesem den Schlüssel aushändigt. 
 \subsubsection{Programm schließen}
 Wird die CLOSE Schaltfläche des MainWindow betätigt oder das X in der Ecke des Programmfensters, werden alle laufenden Verschlüsselungs- und Uploadprozesse abgearbeitet. Anschließend werden die gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Bytearray wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/NSAbGONE/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Schlüssellänge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet, es wird so oft hintereinander gehängt, bis 16 Byte erreicht oder überschritten werden. Eventuell überflüssige Zeichen werden anschließend abgeschnitten. Aus diesem Grund lohnt es sich ein ausreichend langes Passwort zu wählen.
 \subsubsection{Programmstart mit vorhandener state.cfg}
-Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und entsprechend Informationen dazu gespeichert wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar, warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die settings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich, die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es zukünftig denkbar die state.cfg selbst in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden (etwa mitgeführt auf einem USB Stick), ohne die Informationen im Nutzerverzeichnis zu benötigen.
+Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und entsprechend Informationen dazu gespeichert wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar, warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die settings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich, die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es zukünftig denkbar die state.cfg selbst in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden (etwa mitgeführt auf einem USB Stick), ohne die Informationen im Benutzerverzeichnis zu benötigen.
 \subsubsection{Datei herunterladen}
-Wählt der Nutzer eine Datei zum Download aus, wird diese zunächst heruntergeladen und in einem temporären Verzeichnis gespeichert. Mit dem hinterlegten Schlüssel und dem Initialisierungsvektor wird sie dann entschlüsselt und der Hash extrahiert. Dann wird über die Datei ein neuer Hash erzeugt und die beiden verglichen, um sicher zu stellen, dass sie nicht manipuliert wurde. Ist dies nicht der Fall wird sie in das Downloadverzeichnis abgelegt und der Benutzer kann sie verwenden.
+Wählt der Benutzer eine Datei zum Download aus, wird diese zunächst heruntergeladen und in einem temporären Verzeichnis gespeichert. Mit dem hinterlegten Schlüssel und dem Initialisierungsvektor wird sie dann entschlüsselt und der Hash extrahiert. Dann wird über die Datei ein neuer Hash erzeugt und die beiden verglichen, um sicher zu stellen, dass sie nicht manipuliert wurde. Ist dies nicht der Fall wird sie in das Downloadverzeichnis abgelegt und der Benutzer kann sie verwenden.
 
 \subsection{GUI und Funktionalitäten}\label{GUIV}
 Nachfolgend wird die Oberfläche sowie die Funktionalität des Prototyps beschrieben.
@@ -787,7 +787,7 @@ $\;$\\
 	\captionof{figure}{\small Login}
 	\label{Login}
 \end{minipage}
-\\\\Bei jedem Systemstart öffnet sich ein PopUp-Fenster mit einer Eingabemaske für die Benutzerauthentifizierung. Existiert der eingegebene Benutzer nicht oder ist das zugehörige Passwort falsch, wird das Login-Fenster neu geladen. Mit Create kann ein neuer Benutzer angelegt werden. Desweiteren muss der Anwender das Bucket, auf dem er arbeiten möchte, eintragen. Der Authentifizierungsvorgang beginnt durch Bestätigung von OK.
+\\\\Bei jedem Systemstart öffnet sich ein PopUp-Fenster mit einer Eingabemaske für die Benutzerauthentifizierung. Existiert der eingegebene Benutzer nicht oder ist das zugehörige Passwort falsch, wird das Login-Fenster neu geladen. Mit Create kann ein neuer Benutzer angelegt werden. Desweiteren muss der Benutzer das Bucket, auf dem er arbeiten möchte, eintragen. Der Authentifizierungsvorgang beginnt durch Bestätigung von OK.
 
 \subsubsection{Account erstellen}
 $\;$\\
@@ -817,7 +817,7 @@ $\;$\\
 	\captionof{figure}{\small File Menü}
 	\label{File}
 \end{minipage}
-\\\\Der Reiter File in der oberen Menüleiste beinhaltet die Auswahlmöglichkeiten Select und Close. Durch Select kann eine lokale Datei zum Verschlüsseln und Upload in die Cloud ausgewählt werden. Close schließt die Anwendung. Die Anzeige der Möglichkeiten kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
+\\\\Der Reiter File in der oberen Menüleiste beinhaltet die Auswahlmöglichkeiten Select und Close. Durch Select kann eine lokale Datei zum Verschlüsseln und Upload in die Cloud ausgewählt werden. Close schließt die Applikation. Die Anzeige der Möglichkeiten kann durch einen Klick auf eine freie Fläche innerhalb der Applikation oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
 
 \subsubsection{Dateiauswahl}
 $\;$\\
@@ -827,7 +827,7 @@ $\;$\\
 	\captionof{figure}{\small Dateiauswahl}
 	\label{Select}
 \end{minipage}
-\\\\In der Dateiauswahl Select wird die lokale Ordnerstruktur des Betriebssystems angezeigt. In dieser kann sich der Benutzer frei bewegen und in das Quellverzeichnis von Dateien wechseln. Das Auswählen einer Datei und die Bestätigung mit Open initialisiert den für den Anwender nicht ersichtlichen Verschlüsselungsvorgang und Dateiupload. Das Auswahlfenster wird beendet. Wurde die Datei korrekt verschlüsselt und in die Cloud geladen, wird diese im Hauptfenster mit ihren Merkmalen aufgelistet. Bei großen Dateien kann dieser Vorgang eine längere Zeit in Anspruch nehmen. Schließt der Benutzer die gesamte Anwendung vor Auflistung in der Dateiübersicht, so wird diese weiterhin durch Hintergrundprozesse verschlüsselt bzw. hochgeladen. Durch Cancel kann das Auswahlfenster für Dateien geschlossen werden.
+\\\\In der Dateiauswahl Select wird die lokale Ordnerstruktur des Betriebssystems angezeigt. In dieser kann sich der Benutzer frei bewegen und in das Quellverzeichnis von Dateien wechseln. Das Auswählen einer Datei und die Bestätigung mit Open initialisiert den für den Benutzer nicht ersichtlichen Verschlüsselungsvorgang und Dateiupload. Das Auswahlfenster wird beendet. Wurde die Datei korrekt verschlüsselt und in die Cloud geladen, wird diese im Hauptfenster mit ihren Merkmalen aufgelistet. Bei großen Dateien kann dieser Vorgang eine längere Zeit in Anspruch nehmen. Schließt der Benutzer die gesamte Applikation vor Auflistung in der Dateiübersicht, so wird diese weiterhin durch Hintergrundprozesse verschlüsselt bzw. hochgeladen. Durch Cancel kann das Auswahlfenster für Dateien geschlossen werden.
 
 \subsubsection{Help Menü}
 $\;$\\
@@ -837,7 +837,7 @@ $\;$\\
 	\captionof{figure}{\small Help Menü}
 	\label{Help}
 \end{minipage}
-\\\\Der Reiter Help in der oberen Menüleiste beinhaltet die Auswahlmöglichkeiten Help und About. Die Auswahl Help öffnet ein zustäzliches Fenster mit Hilfestellungen zur Verwendung, About ein weiteres mit Informationen zur Software. Die Anzeige der Möglichkeiten kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
+\\\\Der Reiter Help in der oberen Menüleiste beinhaltet die Auswahlmöglichkeiten Help und About. Die Auswahl Help öffnet ein zustäzliches Fenster mit Hilfestellungen zur Verwendung, About ein weiteres mit Informationen zur Applikation. Die Anzeige der Möglichkeiten kann durch einen Klick auf eine freie Fläche innerhalb der Applikation oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
 
 \subsubsection{Help Fenster}
 $\;$\\
@@ -847,7 +847,7 @@ $\;$\\
 	\captionof{figure}{\small Help Fenster}
 	\label{HelpPopUp}
 \end{minipage}
-\\\\Das Help Fenster beschreibt alle Funktionalitäten der Software sowie deren Aufrufe. Mit der Bestätigung von OK wird dieses  geschlossen.
+\\\\Das Help Fenster beschreibt alle Funktionalitäten der Applikation sowie deren Aufrufe. Mit der Bestätigung von OK wird dieses  geschlossen.
 
 \subsubsection{About Fenster}
 $\;$\\
@@ -867,7 +867,7 @@ $\;$\\
 	\captionof{figure}{\small Kontextmenü}
 	\label{Kontext}
 \end{minipage}
-\\\\Das Kontextmenü wird durch Auswahl einer Zeile und Betätigen der rechten Maustaste ausgeführt. Es beinhaltet die Möglichkeiten Download und Delete from Cloud. Download initialisiert das temporäre Herunterladen der ausgewählten Datei mit anschließender Entschlüsselung und entschlüsselter Ablage in HOME/NSAbGONE/\textless Benutzername\textgreater/download. Mit Delete from Cloud kann eine Datei aus der Cloud zusammen mit dem zugehörigem lokal gespeicherten Schlüssel gelöscht werden. Der Eintrag wird anschließend aus der Dateiübersicht entfernt. Das Kontextmenü kann durch einen Klick auf eine freie Fläche innerhalb der Anwendung oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
+\\\\Das Kontextmenü wird durch Auswahl einer Zeile und Betätigen der rechten Maustaste ausgeführt. Es beinhaltet die Möglichkeiten Download und Delete from Cloud. Download initialisiert das temporäre Herunterladen der ausgewählten Datei mit anschließender Entschlüsselung und entschlüsselter Ablage in HOME/NSAbGONE/\textless Benutzername\textgreater/download. Mit Delete from Cloud kann eine Datei aus der Cloud zusammen mit dem zugehörigem lokal gespeicherten Schlüssel gelöscht werden. Der Eintrag wird anschließend aus der Dateiübersicht entfernt. Das Kontextmenü kann durch einen Klick auf eine freie Fläche innerhalb der Applikation oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
 
 \subsubsection{Delete Fenster}
 $\;$\\
@@ -887,7 +887,7 @@ $\;$\\
 	\captionof{figure}{\small Synchronisierungsstatus}
 	\label{Synchron}
 \end{minipage}
-\\\\Das Fenster über den Synchronisierungsstatus kann der Anwender selbst nicht öffnen. Es erscheint beim Start der Software nur dann, wenn ein lokaler Eintrag einer Datei (mit zugehörigem für den Benutzer nicht ersichtlichen Schlüssel) existiert, diese sich aber nicht mehr in der Cloud befindet. Beispiel für das Hervorrufen eines solchen Ereignisses ist das manuelle Löschen von Dateien in der Cloud-Umgebung. Durch Yes wird der Eintrag in der Dateiübersicht und Datenverwaltung der Software gelöscht. Ein Betätigen von No beendet das Fenster bis zum nächsten Start der Software ohne Ausführen von Aktionen.
+\\\\Das Fenster über den Synchronisierungsstatus kann der Benutzer selbst nicht öffnen. Es erscheint beim Start der Applikation nur dann, wenn ein lokaler Eintrag einer Datei (mit zugehörigem für den Benutzer nicht ersichtlichen Schlüssel) existiert, diese sich aber nicht mehr in der Cloud befindet. Beispiel für das Hervorrufen eines solchen Ereignisses ist das manuelle Löschen von Dateien in der Cloud-Umgebung. Durch Yes wird der Eintrag in der Dateiübersicht und Datenverwaltung der Applikation gelöscht. Ein Betätigen von No beendet das Fenster bis zum nächsten Start der Applikation ohne Ausführen von Aktionen.
 \pagebreak
 
 % ----------------------------------------------------------------------------------------------------------
@@ -903,34 +903,34 @@ Dass Cloud Computing in der heutigen Zeit eine immer größere Bedeutung zukommt
 Im folgenden werden Möglichkeiten beschrieben, die bestehende Applikation zu verbessern, ohne dass dazu die grundlegende Architektur verändert werden muss.
 \subsubsection{Erhöhung der Bedienerfreundlichkeit}
 \textbf{Ausbau des Designs/Multirow}\\
-Eine sehr simple, aber dennoch äußerst nützliche Erweiterung des bestehenden Tools wäre es dem Anwender zu ermöglichen, mehrere Zeilen der Tabelle zu markieren und zu bearbeiten. Dies würde die intuitive Nutzbarkeit erhöhen und den Umgang mit großen Dateimengen erleichtern. \\
+Eine sehr simple, aber dennoch äußerst nützliche Erweiterung des bestehenden Tools wäre es dem Benutzer zu ermöglichen, mehrere Zeilen der Tabelle zu markieren und zu bearbeiten. Dies würde die intuitive Nutzbarkeit erhöhen und den Umgang mit großen Dateimengen erleichtern. \\
 \\\textbf{Drag\&Drop}\\
 Um die Benutzerfreundlichkeit des Programmes zu erhöhen wäre es vorteilhaft, Dateien per Drag\&Drop in das Programmfenster hinein zu ziehen. Dadurch müsste ein Benutzer nicht jedesmal, wenn er eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.\\
 \\\textbf{Schnittstellen}\\
-Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Software als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Software selbst geschehen. Desweiteren haben Testfälle unter Einsatz von gsutil gezeigt, dass dieses nicht performant genug für die Verarbeitung von großen Dateien ist. Bereits bei einer Dateigröße von 50MB kam es zu langen Verzögerungen im Datei-Upload, in manchen Fällen sogar zu Abbrüchen. Dieses Verhalten war zu Beginn der Projektarbeit nicht ersichtlich und ist, auf Grund fehlender Reproduzierbarkeit, nicht zu erklären. Eine Weiterentwicklung dieser oder die Wahl einer alternativen Schnittstelle ist für eine zukünftige Implementierung sinnvoll. TODO\\
+Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Applikation als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Applikation selbst geschehen. Desweiteren haben Testfälle unter Einsatz von gsutil gezeigt, dass dieses nicht performant genug für die Verarbeitung von großen Dateien ist. Bereits bei einer Dateigröße von 50MB kam es zu langen Verzögerungen im Datei-Upload, in manchen Fällen sogar zu Abbrüchen. Dieses Verhalten war zu Beginn der Projektarbeit nicht ersichtlich und ist, auf Grund fehlender Reproduzierbarkeit, nicht zu erklären. Eine Weiterentwicklung dieser oder die Wahl einer alternativen Schnittstelle ist für eine zukünftige Implementierung sinnvoll. TODO\\
 \\\textbf{Installations Setup}\\
 Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch Zusatzsoftware wie Python installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich Python für Windowssysteme automatisch bereit zu stellen und in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x Installation und verwenden Standardpfade für installierte Anwendungen (/bin, /usr/bin etc.).\\
 \\\textbf{Selbstsynchronisierung}\\
-Um weitere Verwendungsfelder für die Applikation zu erschließen, ist es sinnvoll die in der Cloud hinterlegten Dateien selbstsynchron mit ihren lokalen Pendants zu halten: Jedes Mal, wenn indizierte Dateien geändert werden, berechnet die Applikation ein Changeset der alten und der neuen Version und legt es auch verschlüsselt in der Cloud ab. Durch eine neue Ansicht kann der Anwender dann durch Versionen gehen und alte nach Bedarf wieder herstellen. Dadurch wäre eine Art Backupsystem geschaffen, dass nicht nur Sicherheit gewährleistet, sondern gleichzeitig Redundanz und Hochverfügbarkeit für die versionierten Daten geschaffen wird.\\
+Um weitere Verwendungsfelder für die Applikation zu erschließen, ist es sinnvoll die in der Cloud hinterlegten Dateien selbstsynchron mit ihren lokalen Pendants zu halten: Jedes Mal, wenn indizierte Dateien geändert werden, berechnet die Applikation ein Changeset der alten und der neuen Version und legt es auch verschlüsselt in der Cloud ab. Durch eine neue Ansicht kann der Benutzer dann durch Versionen gehen und alte nach Bedarf wieder herstellen. Dadurch wäre eine Art Backupsystem geschaffen, dass nicht nur Sicherheit gewährleistet, sondern gleichzeitig Redundanz und Hochverfügbarkeit für die versionierten Daten geschaffen wird.\\
 \\\textbf{Virtuelles Laufwerk/Synchrone Dateistrukturen}\\
 Weiterhin wäre denkbar, die Applikation derart anzulegen, dass sie den Cloudspeicher als virtuelles Laufwerk im System verankert. Daten die darin abgelegt werden, werden on the fly verschlüsselt und in der Cloud gespeichert. Dies könnte auch mittels eines automatisch synchronisierten Ordners geschehen, wie es etwa bei Dropbox der Fall ist. Dann müsste es aber Automatismen geben, die verhindern, dass Daten verloren gehen, wenn der synchrone Ordner auf mehreren Systemen gleichzeitig genutzt und zwei Personen zur selben Zeit an derselben Datei arbeiten würden. Hier wäre eine Art Versionsverwaltung von Nöten, die ähnlich wie GIT Changesets von den Dateien erzeugt und diese verfügbar hält.\\
 \\\textbf{Verschlüsselung von Dateistrukturen}\\
 Im Rahmen derfür die Bearbeitung dieser Projektarbeit zur Verfügung stehenden Zeit, wurde eine Verschlüsselung auf dem Datei-Level gewählt. Dies bedeutet, dass gezielt einzelne Dateien zur Verschlüsselung ausgewählt werden können. Ein Kryptosystem wäre jedoch auch für den Einsatz auf weiteren Leveln möglich. Hierzu gehört die Verschlüsselung auf dem Datenträger-Level, d.h. das gesamte Betriebssystem inklusive der beinhaltenden Anwendungen und Daten werden auf einem verschlüsselten Datenträger abgelegt. Das führt jedoch zu starken Einbußen der Performance und Zuverlässigkeit. Ein weiteres Level bildet das Dateisystem. In diesem werden komplette Verzeichnisse als Container ver- und entschlüsselt. Dieser Anwendungsfall bietet zudem die Möglichkeiten, Daten nach ihrer Sensibilität einzustufen und jeweils in ihrer Gesamtheit mit einem eigenen Schlüssel zu versehen. Das letzte Level stellt das Anwendungs-Level dar. Darin verwaltet eine Anwendung die Ver- und Entschlüsselung von Daten. \cite[S. 141f]{38}\\
 \\\textbf{Schutz der .boto}\\
-Wie in \fullref{GsutilV} dargelegt ist, stehen die Verbindungsdaten, welche die Gsutil Schnittstelle nutzt, in der Datei .boto im Home Verzeichnis des Benutzers. Diese Möglichkeit erlaubt, ohne Passworteingabe auf den Cloudspeicher von Google zuzugreifen. Daher sollte diese auch bei Beendigung des Programmes verschlüsselt werden. Dies wird zusätzlich interessant, wenn eine Benutzerverwaltung mit eigenen Nutzeraccounts und zugehörigen Buckets existiert. Jeder in der Anwendung registrierte Nutzer hat dann seine eigene .boto, die nach Beendigung der Applikation in seinem Applikationsspeicher (/NSAbGONE/\textless Benutzername\textgreater /data/) verschlüsselt abgelegt wird und nur mittels eines korrekten Benutzerpasswortes zugänglich ist - ähnlich wie bei der Behandlung der state.cfg Dateien.\\
+Wie in \fullref{GsutilV} dargelegt ist, stehen die Verbindungsdaten, welche die Gsutil Schnittstelle nutzt, in der Datei .boto im Home Verzeichnis des Benutzers. Diese Möglichkeit erlaubt, ohne Passworteingabe auf den Cloudspeicher von Google zuzugreifen. Daher sollte diese auch bei Beendigung des Programmes verschlüsselt werden. Dies wird zusätzlich interessant, wenn eine Benutzerverwaltung mit eigenen Benutzeraccounts und zugehörigen Buckets existiert. Jeder in der Applikation registrierte Benutzer hat dann seine eigene .boto, die nach Beendigung der Applikation in seinem Applikationsspeicher (/NSAbGONE/\textless Benutzername\textgreater /data/) verschlüsselt abgelegt wird und nur mittels eines korrekten Benutzerpasswortes zugänglich ist - ähnlich wie bei der Behandlung der state.cfg Dateien.\\
 \\\textbf{Parallelisierte Kryptographie}\\
 Zurzeit werden die Daten verschlüsselt indem für jeden Vershlüsselungsvorgang ein eigener Thread gestartet wird. Dies dient, wie schon erwähnt, dem flüssigeren Programmablauf, ist aber immernoch relativ langsam. In Zukunft sollte dies durch eine aufteilung in mehrere Threads geschehen um die Berechnung zu parallelisieren und den/die Prozesssoren besser auslasten zu können: Die zu verschlüsselnde Datei wird in so viele Abschnitte zerteilt, wie das Arbeitssystem Prozessorkerne besitzt. Nun werden entsprechend viele Threads mit den Teilstücken gestartet und diese parallel verschlüsselt. Anschließend werden die Teile wieder zusammengesetzt und in die Cloud geladen.
 
 \subsubsection{Serverseitiges Management}
 Die folgenden Abschnitte sind kaum mit Quellen versehen, da sie aus eigenen Gedanken entstanden sind. Sollte es ähnliche Verfahrensweisen in anderen Systemen geben, so ist dies Zufall und bedeutet nicht, dass Quellen vorsätzlich unterschlagen wurden.\\\\
 \textbf{Schlüsselmanagement durch Key-Server}\\
-Ein potentieller Einsatz der Software auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rückhaltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, sondern lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße). TODO \cite{38}\\
+Ein potentieller Einsatz der Applikation auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rückhaltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, sondern lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße). TODO \cite{38}\\
 \\\textbf{Loginserver}\\
 Um die Applikation unabhängiger von einem bestimmten Cloudanbieter zu halten, wäre ein Konzept mittels Loginserver sinnvoll: Ein Benutzer hat einen Account bei diesem und meldet sich bei Programmstart an. Möchte er eine Datei hochladen, fragt er beim Loginserver an, wohin dies geschehen soll und dieser antwortet mit einem Cloudverzeichnis. Ebenso geschieht es beim Herunterladen der Daten. Möchte der Betrieber des Systems nun einen anderen Cloud-Anbieter nutzen, etwa weil dieser ein besseres Angebot unterbeitet hat, zieht er alle Daten um und hinterlegt dies beim Loginserver. Der Benutzer merkt von dieser Änderung nichts, aber das Programm arbeitet nun auf einem anderen Speicher als zuvor. Außerdem könnte so auch eine Rechteverwaltung gestaltet werden, sodass der Loginserver den Cloudspeicher verwaltet und den Benuzern selbstständig nur dort Rechte auf dem Speicher gibt, wo sie welche haben sollen und jedesmal neue, wenn sie neue Daten ablegen wollen.\\
 \\\textbf{Providing Server}\label{provV}\\
-Die Tatsache, dass Benutzer zurzeit auf dem selben Cloudspeicher arbeiten und eventuell sogar die selben Buckets nutzen, verursacht zwei grundsätzliche Probleme: Zum Einen kann ein Benutzer theoretisch (wenn auch nicht mit der Applikation selbst, aber mittels des Webfrontends) Daten anderer Nutzer manipulieren oder löschen. Dieses Problem ließe sich, durch die von den Cloud-Anbietern selbst angebotene Rechteverwaltung innerhalb des Speichers, lösen. Zum Anderen ist es dem Cloud-Anbieter noch möglich einzusehen, welchem Nutzer welche Dateien zuzuordnen sind, was wiederum eine Gefahr im Sinne der IT-Sicherheit darstellt: Der Anbieter (oder jede Person oder Organisation die sich auf irgendeine Weise Zugriff verschafft hat) kann Analysen über das Uploadverhalten anfertigen und dadurch Schlüsse auf den Inhalt der Daten ziehen. An dieser Stelle könnte man über den Einsatz eines Providing Servers nachdenken: Dieser Server steht zwischen dem Endanwender und dem Cloudspeicher selbst. Alle Daten werden weiterhin lokal verschlüsselt, aber nicht direkt in der Cloud abgelegt, sondern an den Providing Server gesendet, welcher sie anschließend auf den oder die Cloudspeicher legt und eine Abbildung der Zugehörigkeiten speichert. Dadurch bleiben die Daten sicher verschlüsselt und und für einen Dritten nicht ersichtlich. Allerdings sind die Daten aus Sicht des Cloudanbieters derselben Person zuzuordnen und jeder der sich unrechtmäßig oder auch rechtmäßig Zugriff zu der Cloud verschaffen kann, ist nicht in der Lage sie zuzuornen. Sollte sich eine Person oder Organisation Zugriff auf den Providing Server verschaffen, kann sie zwar Einsicht in die Zuordnung nehmen, aber sie dennoch nicht entschlüsseln. Ein potentieller Angreifer muss also zwei Server überwinden um die oben genannten Analysen anzufertigen. Im Sinne der aktuellen Enthüllungen über Geheimdienste und Polizeiorganisationen in den USA, aber auch dem Rest der Welt, wäre hier durchaus sinnvoll zwar einen der großen (und daher billigen) Cloudanbieter der USA zu wählen, die Providing Server aber national zu halten. Solange man der eigenen Nation mehr traut als den USA, wurde hier Sicherheit gewonnen. Alternativ könnte für den Providing Server auch ein Land gewählt werden, welches politisch diametral zu den westlichen Industrienationen steht. Dass es einem Geheimdienst möglich ist, durch rechtmäßige Verfahren Zugriff auf beide Datenpools zu erhalten wird so sehr unwahrscheinlich und erhöht den Aufwand weiter.\\
+Die Tatsache, dass Benutzer zurzeit auf dem selben Cloudspeicher arbeiten und eventuell sogar die selben Buckets nutzen, verursacht zwei grundsätzliche Probleme: Zum Einen kann ein Benutzer theoretisch (wenn auch nicht mit der Applikation selbst, aber mittels des Webfrontends) Daten anderer Benutzer manipulieren oder löschen. Dieses Problem ließe sich, durch die von den Cloud-Anbietern selbst angebotene Rechteverwaltung innerhalb des Speichers, lösen. Zum Anderen ist es dem Cloud-Anbieter noch möglich einzusehen, welchem Benutzer welche Dateien zuzuordnen sind, was wiederum eine Gefahr im Sinne der IT-Sicherheit darstellt: Der Anbieter (oder jede Person oder Organisation die sich auf irgendeine Weise Zugriff verschafft hat) kann Analysen über das Uploadverhalten anfertigen und dadurch Schlüsse auf den Inhalt der Daten ziehen. An dieser Stelle könnte man über den Einsatz eines Providing Servers nachdenken: Dieser Server steht zwischen dem Endanwender und dem Cloudspeicher selbst. Alle Daten werden weiterhin lokal verschlüsselt, aber nicht direkt in der Cloud abgelegt, sondern an den Providing Server gesendet, welcher sie anschließend auf den oder die Cloudspeicher legt und eine Abbildung der Zugehörigkeiten speichert. Dadurch bleiben die Daten sicher verschlüsselt und und für einen Dritten nicht ersichtlich. Allerdings sind die Daten aus Sicht des Cloudanbieters derselben Person zuzuordnen und jeder der sich unrechtmäßig oder auch rechtmäßig Zugriff zu der Cloud verschaffen kann, ist nicht in der Lage sie zuzuornen. Sollte sich eine Person oder Organisation Zugriff auf den Providing Server verschaffen, kann sie zwar Einsicht in die Zuordnung nehmen, aber sie dennoch nicht entschlüsseln. Ein potentieller Angreifer muss also zwei Server überwinden um die oben genannten Analysen anzufertigen. Im Sinne der aktuellen Enthüllungen über Geheimdienste und Polizeiorganisationen in den USA, aber auch dem Rest der Welt, wäre hier durchaus sinnvoll zwar einen der großen (und daher billigen) Cloudanbieter der USA zu wählen, die Providing Server aber national zu halten. Solange man der eigenen Nation mehr traut als den USA, wurde hier Sicherheit gewonnen. Alternativ könnte für den Providing Server auch ein Land gewählt werden, welches politisch diametral zu den westlichen Industrienationen steht. Dass es einem Geheimdienst möglich ist, durch rechtmäßige Verfahren Zugriff auf beide Datenpools zu erhalten wird so sehr unwahrscheinlich und erhöht den Aufwand weiter.\\
 \\\textbf{Serverseitige Rechteverwaltung/Teilen von Dateien}\\
-Sollte es einen oben genannten Providing Server geben, stellt die Rechteverwaltung kein Problem dar: Der Server verwaltet die Accounts der Nutzer und sorgt dafür, dass er zwischengeschaltet ist, dass Nutzer nur an Dateien kommen, die ihnen auch gehören bzw. für die sie Rechte von anderen Nutzern erhalten haben. Diese Berechtigungen können vergeben werden indem die Nutzer einander die Schlüssel zukommen lassen und dem Server mitteilen, dass ein weiterer Nutzer Zugriff bekommen soll. Der Schlüsselaustausch darf hier keinesfalls über den login/providing Server geschehen, da dies dafür sorgen würde, dass Dritte uneingeschränkt Dateien lesen können (nämlich der Betreiber des Loginservers). Alternativ könnten die Schlüssel über den Server verteilt werden, dann allerdings wieder mit einer asymmetrischen Chiffre verschlüsselt. Wichtig ist hierbei, dass der Austausch der asymmetrischen Schlüssel sicher erfolgt um Man-In-The-Middle Angriffe zu verhindern. Eine Orientierung an den Schlüsselservern des PGP Projektes ist hier sinnvoll.
+Sollte es einen oben genannten Providing Server geben, stellt die Rechteverwaltung kein Problem dar: Der Server verwaltet die Accounts der Benutzer und sorgt dafür, dass er zwischengeschaltet ist, dass Benutzer nur an Dateien kommen, die ihnen auch gehören bzw. für die sie Rechte von anderen Benutzern erhalten haben. Diese Berechtigungen können vergeben werden indem die Benutzer einander die Schlüssel zukommen lassen und dem Server mitteilen, dass ein weiterer Benutzer Zugriff bekommen soll. Der Schlüsselaustausch darf hier keinesfalls über den login/providing Server geschehen, da dies dafür sorgen würde, dass Dritte uneingeschränkt Dateien lesen können (nämlich der Betreiber des Loginservers). Alternativ könnten die Schlüssel über den Server verteilt werden, dann allerdings wieder mit einer asymmetrischen Chiffre verschlüsselt. Wichtig ist hierbei, dass der Austausch der asymmetrischen Schlüssel sicher erfolgt um Man-In-The-Middle Angriffe zu verhindern. Eine Orientierung an den Schlüsselservern des PGP Projektes ist hier sinnvoll.
 
 \subsubsection{Erweiterte Sicherheit}
 Im folgenden Abschnitt werden Methoden beschrieben, die die Sicherheit des Systems weiter erhöhen oder durch alternative Sicherheitsmechanismen die Anwendungsbreite der Applikation erweitern.
@@ -944,15 +944,15 @@ In diesem Falle ist eine asymmetrische Chiffre unabdingbar. Die Daten werden zun
 
 Gedacht war die Umsetzung und Nutzung derart: Ein Unternehmen, nehmen wir hier als Beispiel ein Architekturbüro, arbeitet direkt auf einem Cloudspeicher anstatt auf firmeninternen Ablagen, um die Vorteile von dessen zu nutzen und den Mitarbeitern unterwegs Zugriff auf die Daten zu gewähren. Jeder Architekt erhält nun den Ebenenschlüssel der Ebene, der er zugeordnet ist und kann durch sein Interface auf alle Daten direkt zugreifen; ob von einem Laptop, dem Büro oder dem Smartphone spielt hier keine Rolle. Steigt er eine Ebene auf oder ab, erhält er entsprechend den neuen Ebenenschlüssel. Damit ein findiger Architekt nicht hingehen kann und sein Ebenenschlüssel speichert, bevor er herabgestuft wird, werden die symmetrischen Schlüssel jede Nacht neu asymmetrisch verschlüsselt. Die Firma betreibt einen eigenen kleinen Server, der diese neuen Ebenenschlüssel erzeugt und anhand der Berechtigungen verteilt. Ausserdem wird einem entlassenen Mitarbeiter auch der gesamte Zugriff auf den Cloudspeicher verwehrt, sodass er mit seinen (noch gültigen) Schlüsseln nichts mehr anfangen kann.\\
 \\\textbf{Key recovery/Masterkey}\\
-Bei allen Vorteilen die ein System mit lokaler Verschlüsselung bietet, entsteht auch immer ein Nachteil: Sollte der Nutzer (oder Kunde) seine(n) Schlüssel verlieren, sind alle gespeicherten Daten verloren sofern das System richtig arbeitet. Eine Lösung dieses Problems, die die Sicherheit zwar schmälert, aber dritten keinen Einblick in die Daten gewährt soll in diesem Abschnitt vorgestellt werden.
+Bei allen Vorteilen die ein System mit lokaler Verschlüsselung bietet, entsteht auch immer ein Nachteil: Sollte der Benutzer (oder Kunde) seine(n) Schlüssel verlieren, sind alle gespeicherten Daten verloren sofern das System richtig arbeitet. Eine Lösung dieses Problems, die die Sicherheit zwar schmälert, aber dritten keinen Einblick in die Daten gewährt soll in diesem Abschnitt vorgestellt werden.
 
-Voraussetzung für diese Möglichkeit ist ein System, bei dem der Nutzer seine Daten symmertrisch verschlüsselt und auch die Abbildungstabelle (Schlüssel und Zuordung zu Dateien) asymmetrisch chiffriert in der Cloud ablegt, wie es zum Beispiel in \fullref{provV} beschrieben wird. In diesem Fall hat der Nutzer mit dem privaten asymmetrischen Schlüssel eine Art Masterkey, mit dem auf die Gesamtheit seiner Daten zugegriffen werden kann. Die Idee ist nun, diesen Masterkey zu einem Shared-Secret zu machen. Der Nutzer generiert also selbstständig (dies ist wichtig für die Vertraulichkeit!) aus seinem Masterkey zwei Gehemnisse, die nur gemeinsam eine Wiederherstellung des Schlüssels erlauben. Den einen Teil behält er selbst. Dieser kann bei einer vertrauenswürdigen Person hinterlegt werden, im Tresor einer Bank etc.. Den zweiten Teil gibt er an eine Instanz ab, bei der er mit seinen Personalien registriert ist (erhöhte Sicherheit: biometrische Verfahren). Im Falle eines Geschäftsmodells ist dies die Firma, die den Service anbietet. Verliert der Nutzer seinen Schlüssel, ist es möglich mittels der beiden Geheimnisse seinen Masterkey erneut zu erzeugen. Gleichzeitig kann aber die Instanz mit dem zweiten Teilschlüssel alleine nichts anfangen und auch der Besitzer des ersten Teils kann sich selbstständig keine Zugriff auf die Daten verschaffen. \cite{11}\\
+Voraussetzung für diese Möglichkeit ist ein System, bei dem der Benutzer seine Daten symmertrisch verschlüsselt und auch die Abbildungstabelle (Schlüssel und Zuordung zu Dateien) asymmetrisch chiffriert in der Cloud ablegt, wie es zum Beispiel in \fullref{provV} beschrieben wird. In diesem Fall hat der Benutzer mit dem privaten asymmetrischen Schlüssel eine Art Masterkey, mit dem auf die Gesamtheit seiner Daten zugegriffen werden kann. Die Idee ist nun, diesen Masterkey zu einem Shared-Secret zu machen. Der Benutzer generiert also selbstständig (dies ist wichtig für die Vertraulichkeit!) aus seinem Masterkey zwei Gehemnisse, die nur gemeinsam eine Wiederherstellung des Schlüssels erlauben. Den einen Teil behält er selbst. Dieser kann bei einer vertrauenswürdigen Person hinterlegt werden, im Tresor einer Bank etc.. Den zweiten Teil gibt er an eine Instanz ab, bei der er mit seinen Personalien registriert ist (erhöhte Sicherheit: biometrische Verfahren). Im Falle eines Geschäftsmodells ist dies die Firma, die den Service anbietet. Verliert der Benutzer seinen Schlüssel, ist es möglich mittels der beiden Geheimnisse seinen Masterkey erneut zu erzeugen. Gleichzeitig kann aber die Instanz mit dem zweiten Teilschlüssel alleine nichts anfangen und auch der Besitzer des ersten Teils kann sich selbstständig keine Zugriff auf die Daten verschaffen. \cite{11}\\
 \\\textbf{Fraktionierung}\\
 Einer der effektivsten Ansatzpunkte für einen Angriff auf die Verschlüsselung ist zurzeit eine Analyse der Dateigrößen und damit verbunden Rückschlüsse auf deren Inhalt. Dies ist nicht nur gefährlich, weil solche Informationen manchem Angreifer schon ausreichen, sondern auch, weil darüber Vermutungen über den Dateityp angestellt werden können. Dies wiederum bedeutet, dass Teile des Klartextes bekannt sind, da viele Dateitypen teils sehr große Header haben, die sich im Inhalt kaum unterscheiden. Ein Angriff auf die Verschlüsselung selbst hingegen hat sehr viel größere Chancen, wenn Teile des Klartextes bekannt sind. Diese Methode nennt sich Known-Plain-Text Angriff. Um diese Schwachstelle zu entfernen ist es nützlich, die Dateien vor der Verschlüsselung zu fraktionieren, also in Teile einer definierten Größe zu zerteilen. Ist eine Datei kleiner als die Blockgröße wird sie aufgefüllt mit später entfernbaren Bytefolgen. Nun liegen im Cloudspeicher nicht zusammenhängende Bitblöcke, die keinerlei Auskunft über Dateityp oder Inhalt zulassen. Im Falle eines Providing Servers weiß der Cloudanbieter nicht einmal wem welcher Block gehört und der providing Server nicht, welche Blöcke des Kunden zusammen gehören und eine Datei bilden oder deren Reihenfolge. Die Applikation könnte die Blöcke nämlich in zufälliger Rehenfolge verschlüsseln und hochladen.\\
 \\\textbf{Verschlüsselte Container}\\
-Manche Sicherheitssysteme (zum Beispiel TrueCrypt) arbeiten mit verschlüsselten Containern. Dies bedeutet, dass zunächst festgelegt wird, wie groß die verschlüsselte Datenmenge maximal sein darf. In dieser Größe wird nun eine Datei angelegt, gefüllt mit zufälligen Bits. Wenn der Anwender eine Datei in diesen Container hinein speichern möchte, verschlüsselt er sie und überschreibt einen Teil der Zufallsbits mit dem Chiffrat. Ein Angreifer der des Containers habhaft wird ist nicht in der Lage zu sagen, ob, wie viel, und wo Dateien in dem Container liegen, was die Entschlüsselung beinahe unmöglich macht. Auf das Projekt abgebildet würde dies allerdings einen Vorteil des Cloudspeichers zerstören, nämlich nur so viel Speicher bezahlen zu müssen wie tatsächlich gebraucht wird. In einem gewissen Maße bildet aber der Cloudspeicher selbst bei Fraktionierung der Daten diesen Vorteil: Der Angreifer sieht Datenfragmente und kann keine Aussage darüber treffen, wo Deteien beginnen oder enden, wieviele es gesamt oder wie groß sie sind.\\
+Manche Sicherheitssysteme (zum Beispiel TrueCrypt) arbeiten mit verschlüsselten Containern. Dies bedeutet, dass zunächst festgelegt wird, wie groß die verschlüsselte Datenmenge maximal sein darf. In dieser Größe wird nun eine Datei angelegt, gefüllt mit zufälligen Bits. Wenn der Benutzer eine Datei in diesen Container hinein speichern möchte, verschlüsselt er sie und überschreibt einen Teil der Zufallsbits mit dem Chiffrat. Ein Angreifer der des Containers habhaft wird ist nicht in der Lage zu sagen, ob, wie viel, und wo Dateien in dem Container liegen, was die Entschlüsselung beinahe unmöglich macht. Auf das Projekt abgebildet würde dies allerdings einen Vorteil des Cloudspeichers zerstören, nämlich nur so viel Speicher bezahlen zu müssen wie tatsächlich gebraucht wird. In einem gewissen Maße bildet aber der Cloudspeicher selbst bei Fraktionierung der Daten diesen Vorteil: Der Angreifer sieht Datenfragmente und kann keine Aussage darüber treffen, wo Deteien beginnen oder enden, wieviele es gesamt oder wie groß sie sind.\\
 \\\textbf{Rechteverwaltung}\\
-Zurzeit gibt es in derApplikation keinerlei Rechteverwaltung auf dem Cloudspeicher selbst. Ein Nutzer mit Zugriffsrechten auf den Cloudspeicher, also ein Anwender der Applikation, kann theoretisch per Webinterface die Daten anderer manipulieren. Dies muss auf Dauer geändert werden, entweder über die interne Rechteverwaltung der Cloudanbieter oder durch Login und Providing, wie in \fullref{provV} beschrieben wurden. Es kann in der Applikation selbst geschen oder manuell im Cloudspeicher, wenn neue Nutzer hinzu kommen. Im Falle von Google Cloud Storage wäre es möglich, bei Neuanlegen eines Nutzers einen für ihn vorgesehener Bucket zu erstellen, auf den nur der Nutzer allein Schreibrechte hat. Leserechte sind aufgrund der Verschlüsselung eher unkrtitisch. Außerdem ist der Hintergrund der Software ja das Misstrauen gegenüber dem Cloudanbieter selbst, der ohnehin Schreib- und Leserechte auf alle Dateien besitzt.
+Zurzeit gibt es in derApplikation keinerlei Rechteverwaltung auf dem Cloudspeicher selbst. Ein Benutzer mit Zugriffsrechten auf den Cloudspeicher, also ein Benutzer der Applikation, kann theoretisch per Webinterface die Daten anderer manipulieren. Dies muss auf Dauer geändert werden, entweder über die interne Rechteverwaltung der Cloudanbieter oder durch Login und Providing, wie in \fullref{provV} beschrieben wurden. Es kann in der Applikation selbst geschen oder manuell im Cloudspeicher, wenn neue Benutzer hinzu kommen. Im Falle von Google Cloud Storage wäre es möglich, bei Neuanlegen eines Benutzer einen für ihn vorgesehener Bucket zu erstellen, auf den nur der Benutzer allein Schreibrechte hat. Leserechte sind aufgrund der Verschlüsselung eher unkrtitisch. Außerdem ist der Hintergrund der Applikation ja das Misstrauen gegenüber dem Cloudanbieter selbst, der ohnehin Schreib- und Leserechte auf alle Dateien besitzt.
 
 TODO Discussion: Skaleneffekte, Verbundeffekte, Volatilität\\
 CC and ROI: S. 80 - effects \cite[S. 80]{45}

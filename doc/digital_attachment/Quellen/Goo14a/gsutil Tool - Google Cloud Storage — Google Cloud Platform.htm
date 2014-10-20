@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html class="maia-cloud moz" lang="de"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}</style>
+    <meta charset="utf-8">
+    <meta name="xsrf_token" content="brppXwRsQC1TyURpD4hp_DoxNDEzODQ0NDA1NDE0Mjcw">
+    <script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/analytics.js" async="" type="text/javascript"></script><script async="" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/cbgapi.loaded_1"></script><script async="" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/cbgapi.loaded_0"></script><script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/gtm.js" async=""></script><script>(function(){function e(a){this.t={};this.tick=function(a,c,b){var d=void 0!=b?b:(new Date).getTime();this.t[a]=[d,c];if(void 0==b)try{window.console.timeStamp("CSI/"+a)}catch(e){}};this.tick("start",null,a)}var a;window.performance&&(a=window.performance.timing);var f=a?new e(a.responseStart):new e;window.jstiming={Timer:e,load:f};if(a){var c=a.navigationStart,d=a.responseStart;0<c&&d>=c&&(window.jstiming.srt=d-c)}if(a){var b=window.jstiming.load;0<c&&d>=c&&(b.tick("_wtsrt",void 0,c),b.tick("wtsrt_",
+"_wtsrt",d),b.tick("tbsd_","wtsrt_"))}try{a=null,window.chrome&&window.chrome.csi&&(a=Math.floor(window.chrome.csi().pageT),b&&0<c&&(b.tick("_tbnd",void 0,window.chrome.csi().startE),b.tick("tbnd_","_tbnd",c))),null==a&&window.gtbExternal&&(a=window.gtbExternal.pageT()),null==a&&window.external&&(a=window.external.pageT,b&&0<c&&(b.tick("_tbnd",void 0,window.external.startE),b.tick("tbnd_","_tbnd",c))),a&&(window.jstiming.pt=a)}catch(g){}})();
+</script>
+      <link rel="stylesheet" type="text/css" href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/screen-maia.css">
+      <link href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/css.css" rel="stylesheet" type="text/css">
+    
+    <link rel="shortcut icon" href="https://cloud.google.com/images/gcp-favicon.ico">
+    <link rel="apple-touch-icon" href="https://cloud.google.com/_static/889047b07f/images/apple-touch-icon.png">
+    <link href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/css_002.css" rel="stylesheet" type="text/css">
+    
+    
+      <link href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/maia.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" type="text/css" href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/maia-cloud.css">
+    
+    
+    
+    
+      
+
+
+
+<!-- GTM implementation -->
+
+<!-- Start dataLayer -->
+  <script>
+    dataLayer = [{
+      'country': '',
+      'region': '',
+      'language': 'de'
+    }];
+  </script>
+<!-- End dataLayer -->
+
+
+<link rel="stylesheet" type="text/css" href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/default-docs.css">
+
+
+<link rel="shortcut icon" href="https://cloud.google.com/images/gcp-favicon.ico">
+<link rel="apple-touch-icon" href="https://cloud.google.com/images/apple-touch-icon.png">
+<meta name="google-site-verification" content="8dOEM3Xenm6yaBc83y2WKgqQG0iHI7Ph6Rl_YLIZLQ8">
+<meta name="viewport" content="initial-scale=1, minimum-scale=1,
+  width=device-width">
+<!-- GSAP animation frameworks -->
+<script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/jquery_002.js"></script>
+<script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/TweenMax.js"></script>
+<script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/TimelineMax.js"></script>
+<script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/floodlight.js"></script>
+<script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/angular.js"></script>
+<script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/angular-sanitize.js"></script>
+<script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/base.js"></script>
+
+    
+    
+    <script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/jquery.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://cloud.google.com/_static/889047b07f/js/html5shim/html5.js"></script>
+    <![endif]-->
+
+    
+  <script type="text/javascript">
+    var contentTimer = new window.jstiming.Timer();
+
+    var ___gcfg = ___gcfg || {};
+    ___gcfg.lang = 'de';
+  </script>
+  
+  <title>gsutil Tool - Google Cloud Storage — Google Cloud Platform</title>
+  
+  
+
+  
+    
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5CVQBG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5CVQBG');</script>
+<!-- End Google Tag Manager -->
+    
+  
+
+  
+    
+    
+    
+    <link href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/local_css.css" rel="stylesheet" type="text/css">
+    
+    
+  
+
+
+    
+
+    <style>
+    
+    </style>
+  </head>
+  <body class="  two-column docs helpouts normal-width">
+  <div class="maia-max">
+
+    
+
+    <div id="maia-header">
+      <div class="maia-aux">
+        <h1><a href="https://cloud.google.com/"><img src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/gcp-logo.png" alt="Google Cloud Platform"> </a></h1>
+
+        
+        <div id="maia-social" class="maia-util">
+          
+          <div class="signed-out">
+            <a href="https://www.google.com/accounts/ServiceLogin?service=ahsid&amp;passive=true&amp;continue=https://cloud.google.com/storage/docs/gsutil&amp;ltmpl=" id="loginLink" class="maia-button">Anmelden</a>
+          </div>
+          
+        </div>
+        
+
+        
+        
+
+          
+            
+<div class="search-container">
+  <form action="https://cloud.google.com/search" class="maia-search">
+    <input placeholder="Search this site" name="q" type="text">
+    <button class="maia-button" type="submit" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Search">
+      <span class="maia-search-icon">Suche</span>
+    </button>
+  </form>
+
+  
+  <div class="cloud-social">
+    
+    <div class="cloud-signed-out">
+      <a href="https://www.google.com/accounts/ServiceLogin?service=ahsid&amp;passive=true&amp;continue=https://cloud.google.com/storage/docs/gsutil&amp;ltmpl=" id="loginLink" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Sign in">Anmelden </a>
+    </div>
+    
+  </div>
+  
+</div>
+
+          
+
+        
+
+
+      </div>
+    </div>
+    
+
+    
+    <div class="kd-butterbar">
+      <span>
+        <span class="message"></span>
+        
+        <a href="#" class="kd-butterbar-dismiss">Ausblenden</a>
+      </span>
+    </div>
+    
+    <div itemscope="" itemtype="http://schema.org/Article">
+      
+
+      
+      
+        <div id="maia-nav-x" class="maia-nav">
+          <div class="maia-aux">
+          
+          
+            
+              <div class="cp-cta">
+                <a class="cp-track maia-button maia-button-secondary white-button" id="contact-nav" href="https://cloud.google.com/contact/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Contact Sales" data-g-label="Global Nav: Click">Anfrage beim Vertrieb</a>
+                <a class="cp-track maia-button blue-button" id="try-nav" href="https://console.developers.google.com/?getstarted=https://cloud.google.com&amp;hl=de" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Try It Now" data-g-label="Global Nav: Click">Jetzt ausprobieren</a>
+              </div>
+
+              <script>
+              
+              if (window.location.pathname == '/appengine/') {
+                $('#try-nav').attr('href', 'https://console.developers.google.com/start/appengine');
+              }
+              </script>
+            
+          
+
+          <ul>
+            
+            
+            
+            <li>
+              <a href="https://cloud.google.com/why-google/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Vorteile von Google">Vorteile von Google</a>
+              
+            </li>
+            
+            <li id="main-nav-product-dropdown" class="dropdown">
+              <a href="https://cloud.google.com/products/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Produkte">Produkte</a>
+              
+            </li>
+            
+            <li>
+              <a href="https://cloud.google.com/solutions/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Lösungen">Lösungen</a>
+              
+            </li>
+            
+            <li>
+              <a href="https://cloud.google.com/customers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Kunden">Kunden</a>
+              
+            </li>
+            
+            <li>
+              <a href="https://cloud.google.com/developers/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Entwickler">Entwickler</a>
+              
+            </li>
+            
+            <li>
+              <a href="https://cloud.google.com/support/" event="autotrack-data-g" data-g-event="Global Nav" data-g-action="Nav Bar" data-g-label="Support">Support</a>
+              
+            </li>
+            
+
+            
+            
+            </ul>
+          </div>
+        </div>
+
+        
+        
+          
+        
+
+      
+      
+
+      
+
+<div id="gc-appnav" class="maia-aux">
+  <ol class="breadcrumbs">
+    
+    <li><a href="https://cloud.google.com/products/">Produkte</a></li>
+    
+    <li><a href="https://cloud.google.com/docs/">Documentation</a></li>
+    
+    <li><a href="https://cloud.google.com/storage/docs/">Google Cloud Storage</a></li>
+    
+  </ol>
+</div>
+
+
+
+      
+      
+      
+          <div class="maia-aux" id="gc-appbar">
+
+          
+          
+
+<h1><a href="https://cloud.google.com/storage/docs/">Google Cloud Storage</a></h1>
+
+
+
+<div class="plusone-container" style="height:27px">
+  <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 90px; height: 20px;"><iframe title="+1" data-gapiattached="true" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/fastbutton.htm" name="I0_1413844409765" id="I0_1413844409765" vspace="0" tabindex="0" style="position: static; top: 0px; width: 90px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div>
+</div>
+
+
+
+  
+
+
+
+
+
+<div class="google-feedback-container">
+  
+  <a href="" class="google-feedback" data-p="81864" data-b="documentation" data-context="">Problem mit der Dokumentation melden</a>
+</div>
+
+
+
+
+
+ 
+
+          
+        </div>
+      
+      
+
+      
+        
+          <div id="maia-main" class="main">
+        
+        
+  
+  
+      
+      
+      <div id="gc-sidebar" class="wide">
+        
+
+  
+
+
+
+  <nav class="gc-toc"><ul><li class=""><a href="https://cloud.google.com/storage/docs/overview" title="What is Google Cloud Storage?" data-title="What is Google Cloud Storage?"><span>What is Google Cloud Storage?</span></a></li><li class=""><a href="https://cloud.google.com/storage/pricing" title="Pricing" data-title="Pricing"><span>Pricing</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Getting Started">Getting Started</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/signup" title="Sign Up" data-title="Sign Up"><span>Sign Up</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gettingstarted-console" title="Using the Developer Console" data-title="Using the Developer Console"><span>Using the Developer Console</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gettingstarted-gsutil" title="Using the gsutil Tool" data-title="Using the gsutil Tool"><span>Using the gsutil Tool</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/access-public-data" title="Accessing Public Data" data-title="Accessing Public Data"><span>Accessing Public Data</span></a></li></ul></li></ul><hr><ul><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Developer's Guide">Developer's Guide</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/concepts-techniques" title="Concepts and Techniques" data-title="Concepts and Techniques"><span>Concepts and Techniques</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/bucketnaming" title="Bucket and Object Naming Guidelines" data-title="Bucket and Object Naming Guidelines"><span>Bucket and Object Naming Guidelines</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Auth, Projects, and Collaboration">Auth, Projects, and Collaboration</span><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/authentication" title="Authentication" data-title="Authentication"><span>Authentication</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/authentication#oauth" title="OAuth 2.0 Authentication" data-title="OAuth 2.0 Authentication"><span>OAuth 2.0 Authentication</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/authentication#cookieauth" title="Cookie-based Authentication" data-title="Cookie-based Authentication"><span>Cookie-based Authentication</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/authentication#service_accounts" title="Service Account Authentication" data-title="Service Account Authentication"><span>Service Account Authentication</span></a></li></ul></li><li class=""><a href="https://cloud.google.com/storage/docs/accesscontrol" title="Access Control" data-title="Access Control"><span>Access Control</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/projects" title="Using Projects" data-title="Using Projects"><span>Using Projects</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/collaboration" title="Sharing and Collaboration" data-title="Sharing and Collaboration"><span>Sharing and Collaboration</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Storage Policy">Storage Policy</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/durable-reduced-availability" title="Durable Reduced Availability" data-title="Durable Reduced Availability"><span>Durable Reduced Availability</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/object-versioning" title="Object Versioning" data-title="Object Versioning"><span>Object Versioning</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/lifecycle" title="Object Lifecycle Management" data-title="Object Lifecycle Management"><span>Object Lifecycle Management</span></a></li><li class="experimental"><a href="https://cloud.google.com/storage/docs/regional-buckets" title="Regional Buckets" data-title="Regional Buckets"><span>Regional Buckets<sup>Experimental!</sup></span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Website Features">Website Features</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/website-configuration" title="Configuring a Bucket as a Website" data-title="Configuring a Bucket as a Website"><span>Configuring a Bucket as a Website</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/accesslogs" title="Access Logs" data-title="Access Logs"><span>Access Logs</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cross-origin" title="Cross-Origin Resource Sharing" data-title="Cross-Origin Resource Sharing"><span>Cross-Origin Resource Sharing</span></a></li></ul></li><li class=""><a href="https://cloud.google.com/storage/docs/composite-objects" title="Composite Objects and Parallel Uploads" data-title="Composite Objects and Parallel Uploads"><span>Composite Objects and Parallel Uploads</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/hashes-etags" title="Hashes and ETags" data-title="Hashes and ETags"><span>Hashes and ETags</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/object-change-notification" title="Object Change Notification" data-title="Object Change Notification"><span>Object Change Notification</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/generations-preconditions" title="Generations and Preconditions" data-title="Generations and Preconditions"><span>Generations and Preconditions</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/interoperability" title="Google Cloud Storage Interoperability" data-title="Google Cloud Storage Interoperability"><span>Google Cloud Storage Interoperability</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/google-integration" title="Integration with Google Cloud Platform" data-title="Integration with Google Cloud Platform"><span>Integration with Google Cloud Platform</span></a></li></ul></li></ul><hr><ul><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Cloud Storage API">Cloud Storage API</span><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="XML API">XML API</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/xml-api-overview" title="API Overview" data-title="API Overview"><span>API Overview</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/reference-guide" title="API Reference" data-title="API Reference"><span>API Reference</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/reference-uris" title="Request URIs" data-title="Request URIs"><span>Request URIs</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/reference-headers" title="Headers and Query Parameters" data-title="Headers and Query Parameters"><span>Headers and Query Parameters</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/reference-methods" title="Reference Methods" data-title="Reference Methods"><span>Reference Methods</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/reference-status" title="Status Codes" data-title="Status Codes"><span>Status Codes</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/migrating" title="Migrating from Amazon S3 to Google Cloud Storage" data-title="Migrating from Amazon S3 to Google Cloud Storage"><span>Migrating from Amazon S3 to Google Cloud Storage</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/migrating#migration-simple" title="Simple Migration" data-title="Simple Migration"><span>Simple Migration</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/migrating#migration-full" title="Full Migration" data-title="Full Migration"><span>Full Migration</span></a></li></ul></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api" title="JSON API (v1)" data-title="JSON API (v1)"><span>JSON API (v1)</span></a><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/how-tos" title="How-To Guides" data-title="How-To Guides"><span>How-To Guides</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/how-tos/performance" title="Performance Tips" data-title="Performance Tips"><span>Performance Tips</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/how-tos/authorizing" title="Authorize Requests" data-title="Authorize Requests"><span>Authorize Requests</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload" title="Upload Objects" data-title="Upload Objects"><span>Upload Objects</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/how-tos/batch" title="Batch Requests" data-title="Batch Requests"><span>Batch Requests</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/how-tos/migrate" title="Migrating to v1" data-title="Migrating to v1"><span>Migrating to v1</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1" title="API Reference" data-title="API Reference"><span>API Reference</span></a><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls" title="BucketAccessControls" data-title="BucketAccessControls"><span>BucketAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/buckets" title="Buckets" data-title="Buckets"><span>Buckets</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/buckets/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/channels" title="Channels" data-title="Channels"><span>Channels</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/channels/stop" title="stop" data-title="stop"><span>stop</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/defaultObjectAccessControls" title="DefaultObjectAccessControls" data-title="DefaultObjectAccessControls"><span>DefaultObjectAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/defaultObjectAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/defaultObjectAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/defaultObjectAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/defaultObjectAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/defaultObjectAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/defaultObjectAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls" title="ObjectAccessControls" data-title="ObjectAccessControls"><span>ObjectAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/objects" title="Objects" data-title="Objects"><span>Objects</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/compose" title="compose" data-title="compose"><span>compose</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/copy" title="copy" data-title="copy"><span>copy</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/update" title="update" data-title="update"><span>update</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/objects/watchAll" title="watchAll" data-title="watchAll"><span>watchAll</span></a></li></ul></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/parameters" title="Standard Query Parameters" data-title="Standard Query Parameters"><span>Standard Query Parameters</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/status-codes" title="Status Codes" data-title="Status Codes"><span>Status Codes</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Previous API Versions">Previous API Versions</span><ul style="display: none;"><li class="deprecated"><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="v1beta2">v1beta2<sup>Deprecated</sup></span><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2/how-tos" title="How-To Guides" data-title="How-To Guides"><span>How-To Guides</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/how-tos/performance" title="Performance Tips" data-title="Performance Tips"><span>Performance Tips</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/how-tos/authorizing" title="Authorize Requests" data-title="Authorize Requests"><span>Authorize Requests</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/how-tos/upload" title="Upload Objects" data-title="Upload Objects"><span>Upload Objects</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/how-tos/batch" title="Batch Requests" data-title="Batch Requests"><span>Batch Requests</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2" title="API Reference" data-title="API Reference"><span>API Reference</span></a><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2/bucketAccessControls" title="BucketAccessControls" data-title="BucketAccessControls"><span>BucketAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/bucketAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/bucketAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/bucketAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/bucketAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/bucketAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/bucketAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2/buckets" title="Buckets" data-title="Buckets"><span>Buckets</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/buckets/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/buckets/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/buckets/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/buckets/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/buckets/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/buckets/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2/objectAccessControls" title="ObjectAccessControls" data-title="ObjectAccessControls"><span>ObjectAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objectAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objectAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objectAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objectAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objectAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objectAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects" title="Objects" data-title="Objects"><span>Objects</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/compose" title="compose" data-title="compose"><span>compose</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/copy" title="copy" data-title="copy"><span>copy</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/update" title="update" data-title="update"><span>update</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/objects/watchAll" title="watchAll" data-title="watchAll"><span>watchAll</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2/defaultObjectAccessControls" title="DefaultObjectAccessControls" data-title="DefaultObjectAccessControls"><span>DefaultObjectAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/defaultObjectAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/defaultObjectAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/defaultObjectAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/defaultObjectAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/defaultObjectAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/defaultObjectAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta2/channels" title="Channels" data-title="Channels"><span>Channels</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/channels/stop" title="stop" data-title="stop"><span>stop</span></a></li></ul></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/parameters" title="Standard Query Parameters" data-title="Standard Query Parameters"><span>Standard Query Parameters</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="API Resources">API Resources</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/libraries" title="Libraries" data-title="Libraries"><span>Libraries</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Installation">Installation</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/api-lib/dotnet" title=".NET Library" data-title=".NET Library"><span>.NET Library</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/api-lib/java" title="Java Library" data-title="Java Library"><span>Java Library</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta2/api-lib/python" title="Python Library" data-title="Python Library"><span>Python Library</span></a></li></ul></li></ul></li></ul></li><li class="deprecated"><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="v1beta1">v1beta1<sup>Deprecated</sup></span><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta1/how-tos" title="How-To Guides" data-title="How-To Guides"><span>How-To Guides</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/how-tos/performance" title="Improve Performance" data-title="Improve Performance"><span>Improve Performance</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/how-tos/authorizing" title="Authorize Requests" data-title="Authorize Requests"><span>Authorize Requests</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/how-tos/upload" title="Upload Objects" data-title="Upload Objects"><span>Upload Objects</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/how-tos/batch" title="Batch Requests" data-title="Batch Requests"><span>Batch Requests</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta1" title="Reference" data-title="Reference"><span>Reference</span></a><ul style="display: none;"><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta1/bucketAccessControls" title="BucketAccessControls" data-title="BucketAccessControls"><span>BucketAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/bucketAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/bucketAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/bucketAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/bucketAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/bucketAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/bucketAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta1/buckets" title="Buckets" data-title="Buckets"><span>Buckets</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/buckets/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/buckets/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/buckets/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/buckets/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/buckets/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/buckets/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta1/objectAccessControls" title="ObjectAccessControls" data-title="ObjectAccessControls"><span>ObjectAccessControls</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objectAccessControls/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objectAccessControls/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objectAccessControls/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objectAccessControls/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objectAccessControls/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objectAccessControls/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1beta1/objects" title="Objects" data-title="Objects"><span>Objects</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objects/delete" title="delete" data-title="delete"><span>delete</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objects/get" title="get" data-title="get"><span>get</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objects/insert" title="insert" data-title="insert"><span>insert</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objects/list" title="list" data-title="list"><span>list</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objects/patch" title="patch" data-title="patch"><span>patch</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/objects/update" title="update" data-title="update"><span>update</span></a></li></ul></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1beta1/parameters" title="Standard Query Parameters" data-title="Standard Query Parameters"><span>Standard Query Parameters</span></a></li></ul></li></ul></li></ul></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/release_notes" title="Release Notes" data-title="Release Notes"><span>Release Notes</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Google APIs Client Libraries">Google APIs Client Libraries</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/libraries" title="Samples and Libraries" data-title="Samples and Libraries"><span>Samples and Libraries</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/json_api/v1/json-api-examples" title="JSON API Examples" data-title="JSON API Examples"><span>JSON API Examples</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/json-api-java-samples" title="Java Example" data-title="Java Example"><span>Java Example</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/json-api-javascript-samples" title="JavaScript Example" data-title="JavaScript Example"><span>JavaScript Example</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/json-api-go-samples" title="Go Example" data-title="Go Example"><span>Go Example</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/json-api-php-samples" title="PHP Example" data-title="PHP Example"><span>PHP Example</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/json-api-python-samples" title="Python Example" data-title="Python Example"><span>Python Example</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/json_api/v1/quickstarts" title="Quickstarts" data-title="Quickstarts"><span>Quickstarts</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/xml-api-examples" title="XML API Examples" data-title="XML API Examples"><span>XML API Examples</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/xml-api-java-samples" title="Java Examples" data-title="Java Examples"><span>Java Examples</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gspythonlibrary" title="Python Example" data-title="Python Example"><span>Python Example</span></a></li></ul></li></ul></li></ul></li><li class=""><a class="tlw-control tlw-expanded">▾</a><span class="tlw-title tlw-control-title" data-title="Cloud Storage Tools">Cloud Storage Tools</span><ul><li class=""><a class="tlw-control tlw-collapsed">▸</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/cloud-console" title="Google Developers Console" data-title="Google Developers Console"><span>Google Developers Console</span></a><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_creatingbuckets" title="Creating a bucket" data-title="Creating a bucket"><span>Creating a bucket</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_uploadingdata" title="Uploading data to a bucket" data-title="Uploading data to a bucket"><span>Uploading data to a bucket</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_downloadingdata" title="Downloading data from a bucket" data-title="Downloading data from a bucket"><span>Downloading data from a bucket</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_creatingfolders" title="Creating and using folders" data-title="Creating and using folders"><span>Creating and using folders</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_deletingitems" title="Deleting objects, folders, and buckets" data-title="Deleting objects, folders, and buckets"><span>Deleting objects, folders, and buckets</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_sharingdata" title="Sharing your data publicly" data-title="Sharing your data publicly"><span>Sharing your data publicly</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_permissions" title="Setting object permissions and metadata" data-title="Setting object permissions and metadata"><span>Setting object permissions and metadata</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_filtering" title="Filtering objects to view" data-title="Filtering objects to view"><span>Filtering objects to view</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/cloud-console#_addingmember" title="Adding a member to a project" data-title="Adding a member to a project"><span>Adding a member to a project</span></a></li></ul></li><li class="active"><a class="tlw-control tlw-expanded">▾</a><a class="tlw-title" href="https://cloud.google.com/storage/docs/gsutil" title="gsutil Tool" data-title="gsutil Tool"><span>gsutil Tool</span></a><ul><li class=""><a href="https://cloud.google.com/storage/docs/gsutil_install" title="Installing gsutil" data-title="Installing gsutil"><span>Installing gsutil</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="gsutil Commands">gsutil Commands</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/acl" title="acl" data-title="acl"><span>acl</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/cat" title="cat" data-title="cat"><span>cat</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/compose" title="compose" data-title="compose"><span>compose</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/config" title="config" data-title="config"><span>config</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/cors" title="cors" data-title="cors"><span>cors</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/cp" title="cp" data-title="cp"><span>cp</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/defacl" title="defacl" data-title="defacl"><span>defacl</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/du" title="du" data-title="du"><span>du</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/hash" title="hash" data-title="hash"><span>hash</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/help" title="help" data-title="help"><span>help</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/lifecycle" title="lifecycle" data-title="lifecycle"><span>lifecycle</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/logging" title="logging" data-title="logging"><span>logging</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/ls" title="ls" data-title="ls"><span>ls</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/mb" title="mb" data-title="mb"><span>mb</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/mv" title="mv" data-title="mv"><span>mv</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/notification" title="notification" data-title="notification"><span>notification</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/perfdiag" title="perfdiag" data-title="perfdiag"><span>perfdiag</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/rb" title="rb" data-title="rb"><span>rb</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/rm" title="rm" data-title="rm"><span>rm</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/rsync" title="rsync" data-title="rsync"><span>rsync</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/setmeta" title="setmeta" data-title="setmeta"><span>setmeta</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/signurl" title="signurl" data-title="signurl"><span>signurl</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/stat" title="stat" data-title="stat"><span>stat</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/test" title="test" data-title="test"><span>test</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/update" title="update" data-title="update"><span>update</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/version" title="version" data-title="version"><span>version</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/versioning" title="versioning" data-title="versioning"><span>versioning</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/commands/web" title="web" data-title="web"><span>web</span></a></li></ul></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/AccessingPublicDataWithoutCredentials" title="Accessing Public Data Without Credentials" data-title="Accessing Public Data Without Credentials"><span>Accessing Public Data Without Credentials</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/CRC32CandInstallingcrcmod" title="CRC32C and Installing crcmod" data-title="CRC32C and Installing crcmod"><span>CRC32C and Installing crcmod</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/CloudStorageAPIs" title="Cloud Storage APIs" data-title="Cloud Storage APIs"><span>Cloud Storage APIs</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/ContributingCodetogsutil" title="Contributing Code to gsutil" data-title="Contributing Code to gsutil"><span>Contributing Code to gsutil</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/CredentialTypesSupportingVariousUseCases" title="Credential Types Supporting Various Use Cases" data-title="Credential Types Supporting Various Use Cases"><span>Credential Types Supporting Various Use Cases</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/HowSubdirectoriesWork" title="How Subdirectories Work" data-title="How Subdirectories Work"><span>How Subdirectories Work</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/ObjectVersioningandConcurrencyControl" title="Object Versioning and Concurrency Control" data-title="Object Versioning and Concurrency Control"><span>Object Versioning and Concurrency Control</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/RetryHandlingStrategy" title="Retry Handling Strategy" data-title="Retry Handling Strategy"><span>Retry Handling Strategy</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/ScriptingProductionTransfers" title="Scripting Production Transfers" data-title="Scripting Production Transfers"><span>Scripting Production Transfers</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/TopLevelCommandLineOptions" title="Top-Level Command-Line Options" data-title="Top-Level Command-Line Options"><span>Top-Level Command-Line Options</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames" title="Wildcard Names" data-title="Wildcard Names"><span>Wildcard Names</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/WorkingWithObjectMetadata" title="Working With Object Metadata" data-title="Working With Object Metadata"><span>Working With Object Metadata</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/gsutil/addlhelp/WorkingWithProjects" title="Working With Projects" data-title="Working With Projects"><span>Working With Projects</span></a></li></ul></li><li class="experimental"><a href="https://cloud.google.com/storage/docs/early-access" title="Offline Disk Import" data-title="Offline Disk Import"><span>Offline Disk Import<sup>Experimental!</sup></span></a></li><li class="experimental"><a href="https://cloud.google.com/storage/docs/online-cloud-import" title="Online Cloud Import" data-title="Online Cloud Import"><span>Online Cloud Import<sup>Experimental!</sup></span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Support">Support</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/storage/docs/resources-support" title="Support Overview" data-title="Support Overview"><span>Support Overview</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/resources-support#videos" title="Videos" data-title="Videos"><span>Videos</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/resources-support#samples" title="Samples, Articles, Best Practices" data-title="Samples, Articles, Best Practices"><span>Samples, Articles, Best Practices</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/resources-support#support-packages" title="Support &amp; Help" data-title="Support &amp; Help"><span>Support &amp; Help</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/resources-support#community" title="Community" data-title="Community"><span>Community</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/faq" title="FAQ" data-title="FAQ"><span>FAQ</span></a></li></ul></li></ul><hr><ul><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Other Cloud Platform Services">Other Cloud Platform Services</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/appengine/" title="App Engine" data-title="App Engine"><span>App Engine</span></a></li><li class=""><a href="https://cloud.google.com/bigquery/" title="BigQuery" data-title="BigQuery"><span>BigQuery</span></a></li><li class=""><a href="https://cloud.google.com/datastore/" title="Cloud Datastore" data-title="Cloud Datastore"><span>Cloud Datastore</span></a></li><li class=""><a href="https://cloud.google.com/cloud-sql/" title="Cloud SQL" data-title="Cloud SQL"><span>Cloud SQL</span></a></li><li class=""><a href="https://cloud.google.com/compute/" title="Compute Engine" data-title="Compute Engine"><span>Compute Engine</span></a></li><li class=""><a href="https://cloud.google.com/prediction/" title="Prediction API" data-title="Prediction API"><span>Prediction API</span></a></li><li class=""><a href="https://cloud.google.com/translate/" title="Translate API" data-title="Translate API"><span>Translate API</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Legal">Legal</span><ul style="display: none;"><li class=""><a href="https://cloud.google.com/cloud/terms/" title="Terms of Service" data-title="Terms of Service"><span>Terms of Service</span></a></li><li class=""><a href="https://cloud.google.com/storage/sla" title="Service Level Agreement" data-title="Service Level Agreement"><span>Service Level Agreement</span></a></li><li class=""><a href="https://cloud.google.com/storage/docs/dmca" title="DMCA Policy" data-title="DMCA Policy"><span>DMCA Policy</span></a></li></ul></li></ul></nav>
+
+
+
+      </div>
+      
+
+      <div id="gc-content" class="wide-sidebar">
+        
+        <div>
+  
+          
+  
+  <h1 itemprop="name" class="page-title">gsutil Tool</h1>
+  
+  <div itemprop="articleBody">
+  
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<div id="related-sidebar">
+
+  
+                   
+
+  
+
+
+  
+    
+
+    
+    
+
+    <div id="related-stackoverflow">
+      <a href="http://stackoverflow.com/questions/tagged/google-cloud-storage+gsutil"><img src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/stack_overflow_questions.png" title="Stack Overflow Questions" height="53" width="240" border="0"></a>
+
+        <div class="feed hfeed rendered" data-limit="5"><article class="hentry">
+              <a href="http://stackoverflow.com/questions/14409499/how-can-i-use-gsutil-with-multiple-accounts" class="link" data-category="Sidebar" data-action="Stack Overflow question click">
+                <header class="entry-title">How can I use gsutil with multiple accounts?</header>
+              </a>
+          </article><article class="hentry">
+              <a href="http://stackoverflow.com/questions/23988567/gsutil-returns-unauthorized-client" class="link" data-category="Sidebar" data-action="Stack Overflow question click">
+                <header class="entry-title">gsutil returns "Unauthorized client"</header>
+              </a>
+          </article><article class="hentry">
+              <a href="http://stackoverflow.com/questions/14530480/i-cannot-upload-large-2gb-files-to-the-google-cloud-storage-web-ui" class="link" data-category="Sidebar" data-action="Stack Overflow question click">
+                <header class="entry-title">I cannot upload large (&gt; 2GB) files to the Google Cloud Storage web UI</header>
+              </a>
+          </article><article class="hentry">
+              <a href="http://stackoverflow.com/questions/25311093/accessing-read-only-google-storage-buckets-from-hadoop" class="link" data-category="Sidebar" data-action="Stack Overflow question click">
+                <header class="entry-title">Accessing read-only Google Storage buckets from Hadoop</header>
+              </a>
+          </article><article class="hentry">
+              <a href="http://stackoverflow.com/questions/23681911/gsutil-cp-concurrent-execution-leads-to-local-file-corruption" class="link" data-category="Sidebar" data-action="Stack Overflow question click">
+                <header class="entry-title">gsutil cp: concurrent execution leads to local file corruption</header>
+              </a>
+          </article></div>
+        <div class="more">
+          <a href="http://stackoverflow.com/questions/tagged/google-cloud-storage+gsutil?sort=votes" data-category="Sidebar" data-action="Stack Overflow See more link">
+            See more...
+          </a>
+        </div>
+  </div>
+  
+
+</div>
+
+
+
+<link rel="stylesheet" href="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/sidebar.css" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>gsutil is a Python application that lets you access Google Cloud 
+Storage from the command line. You can use gsutil to do a wide range of 
+bucket and object management tasks, including:</p>
+<ul>
+  <li>Creating and deleting buckets.</li>
+  <li>Uploading, downloading, and deleting objects.</li>
+  <li>Listing buckets and objects.</li>
+  <li>Moving, copying, and renaming objects.</li>
+  <li>Editing object and bucket ACLs.</li>
+</ul>
+
+<h2>Contents</h2>
+<ol class="toc">
+<li><a href="#gettingstarted">Getting Started</a></li>
+<li><a href="#builtinhelp">Built-In Help</a></li>
+<li><a href="#about">About gsutil</a></li>
+</ol>
+
+<h2 id="gettingstarted">Getting Started</h2>
+<h4>Accessing Publicly Accessible Data</h4>
+<p>To get started using gsutil, you can simply <a href="https://cloud.google.com/storage/docs/gsutil_install">download and install</a>
+ the application, and use it to access publicly-accessible data. You do 
+not need to sign up for a Google Cloud Storage or a Google account to 
+use gsutil for this purpose.</p>
+<p>For example, you can download and install the gsutil client and run 
+the following command to download data from a publicly-accessible bucket
+ called <code>uspto</code>:</p>
+
+<pre>gsutil ls gs://uspto-pair/applications/0800401*</pre>
+
+<p>You should see a listing of objects whose name starts with <code>gs://uspto-pair/applications/0800401</code>.</p>
+
+<h4>Reading and Writing Data as an Authenticated User</h4>
+<p>If you would like to use gsutil to access objects and buckets that 
+are protected, you need to authenticate to Google Cloud Storage. You can
+ do so in one of two ways, depending on your use case:</p>
+
+<ul class="listhead">
+<li>Reading and Writing Protected Data using your Google Account
+<p>If another individual has already set up a Google Cloud Storage 
+account and has added you to the project as a team member, or if you 
+have been added to an object's or bucket's ACLs, you do not need to 
+activate Google Cloud Storage to access the specified data. <a href="https://cloud.google.com/storage/docs/gsutil_install">Download and install</a> the application and <a href="https://cloud.google.com/storage/docs/gsutil_install.html#authenticate">authenticate to the Google Cloud Storage service</a> to access the protected data. You do not need to set up billing.</p></li>
+
+<li>Creating a New Instance of Google Cloud Storage
+<p>If you would like to create a new instance of Google Cloud Storage, you need to <a href="https://cloud.google.com/storage/docs/signup">activate the Google Cloud Storage service</a> and <a href="https://cloud.google.com/storage/docs/pricingandterms">set up billing</a>. After you have signed up for the Google Cloud Storage service, <a href="https://cloud.google.com/storage/docs/gsutil_install">download and install</a> gsutil and <a href="https://cloud.google.com/storage/docs/gsutil_install.html#authenticate">authenticate to the Google Cloud Storage service</a> to begin using Google Cloud Storage.</p></li>
+</ul>
+<p class="backtotop"><a href="#top">Back to top</a></p>
+
+<h2 id="builtinhelp">Built-In Help</h2>
+<p>gsutil contains thorough built-in help about every command as well as a number of topics, which you can get by running:
+</p><pre>gsutil help
+</pre>
+This command will output a list of all commands and available help 
+topics, and you can then get detailed help for each command or topic. 
+For example, you can get help about the gsutil cp command by running:
+<pre>gsutil help cp
+</pre>
+<p>The gsutil help pages are also available online in the sidebar. For example, the cp help page is available <a href="https://cloud.google.com/storage/docs/gsutil/commands/cp">here</a>.</p>
+<p class="backtotop"><a href="#top">Back to top</a></p>
+<h2 id="about">About gsutil</h2>
+<p>gsutil is an open-source project. To download the developer version of gsutil or volunteer to help develop gsutil, visit the <a href="https://github.com/GoogleCloudPlatform/gsutil/">gsutil project</a> on GitHub.</p>
+<p class="backtotop"><a href="#top">Back to top</a></p>
+
+
+  
+  </div>
+
+  
+        </div>
+        
+<div id="gc-content-footer">
+
+<div id="gc-content-license">
+
+    
+      
+        <p>Sofern nicht anders angegeben, ist der Inhalt dieser Seite unter der <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons – Namensnennung&nbsp;3.0-Lizenz</a> lizenziert und Codebeispiele sind unter der <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache&nbsp;2.0-Lizenz</a> lizenziert. Weitere Informationen <a href="https://cloud.google.com/site-policies">finden Sie in unseren Websiterichtlinien</a>.</p>
+      
+    
+    
+    
+
+</div>
+
+
+</div>
+
+
+      </div>
+  
+
+        
+      </div>
+        
+      
+      
+
+      
+  
+      
+      <div id="maia-signature"></div>
+      <div id="maia-footer">
+
+            
+              
+    <div id="maia-footer-local">
+      <div class="maia-aux">
+        <div class="ent-footer-top">
+          <div class="g-plus-wrapper">
+            <div id="___plusone_1" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 106px; height: 24px;"><iframe title="+1" data-gapiattached="true" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/fastbutton_002.htm" name="I1_1413844409781" id="I1_1413844409781" vspace="0" tabindex="0" style="position: static; top: 0px; width: 106px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div>
+          </div>
+          <div class="g-plus-link"><a href="https://plus.google.com/+googlecloudplatform" rel="publisher">Google+</a></div>
+        </div>
+        <div class="ent-footer-links">
+          <div class="ent-footer-unit">
+            <h4><a href="https://cloud.google.com/why-google/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Why Google">Vorteile von Google</a></h4>
+            <ul>
+              <li><a href="https://cloud.google.com/why-google/#infrastructure" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Infrastructure">Infrastruktur</a></li>
+              <li><a href="https://cloud.google.com/why-google/#product" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Product">Produkt</a></li>
+              <li><a href="https://cloud.google.com/why-google/#services" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Services">Dienste</a></li>
+              <li><a href="https://cloud.google.com/why-google/#scalability" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Scalability">Skalierbarkeit</a></li>
+              <li><a href="https://cloud.google.com/why-google/#performance" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Performance">Leistung</a></li>
+              <li><a href="https://cloud.google.com/why-google/#support" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Why Google" data-g-label="Support">Support</a></li>
+            </ul>
+          </div>
+          <div class="ent-footer-unit">
+            <h4><a href="https://cloud.google.com/products/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Products">Produkte</a></h4>
+            <ul>
+              <li><a href="https://cloud.google.com/products/app-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="App Engine">Google App Engine</a></li>
+              <li><a href="https://cloud.google.com/products/compute-engine/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Compute Engine">Compute Engine</a></li>
+              <li><a href="https://cloud.google.com/products/cloud-storage/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Storage">Cloud Storage</a></li>
+              <li><a href="https://cloud.google.com/products/cloud-sql/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud SQL">Cloud SQL</a></li>
+              <li><a href="https://cloud.google.com/products/cloud-datastore/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Datastore">Cloud Datastore</a></li>
+              <li><a href="https://cloud.google.com/products/bigquery" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="BigQuery">BigQuery</a></li>
+              <li><a href="https://cloud.google.com/products/prediction-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Prediction API">Prediction API</a></li>
+              <li><a href="https://cloud.google.com/products/translate-api/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Translate API">Translate API</a></li>
+              <li><a href="https://cloud.google.com/products/cloud-endpoints/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Cloud Endpoints">Cloud Endpoints</a></li>
+              <li><a href="https://cloud.google.com/products/calculator/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Products" data-g-label="Pricing Calculator">Preisrechner</a></li>
+            </ul>
+          </div>
+          <div class="ent-footer-unit">
+            <h4><a href="https://cloud.google.com/solutions/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Solutions">Lösungen</a></h4>
+            <ul>
+              <li><a href="https://cloud.google.com/solutions/mobile/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Mobile">Mobil</a></li>
+              <li><a href="https://cloud.google.com/solutions/gaming/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Gaming">Spiele</a></li>
+              <li><a href="https://cloud.google.com/solutions/hadoop/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Solutions" data-g-label="Hadoop">Hadoop</a></li>
+            </ul>
+          </div>
+          <div class="ent-footer-unit">
+            <h4><a href="https://cloud.google.com/customers/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Customers" data-g-label="Customers">Kunden</a></h4>
+          </div>
+          <div class="ent-footer-unit">
+            <h4><a href="https://cloud.google.com/docs/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Documentation" data-g-label="Documentation">Dokumentation</a></h4>
+          </div>
+          <div class="ent-footer-unit">
+            <h4><a href="https://cloud.google.com/support/" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Support">Support</a></h4>
+            <ul>
+              <li><a href="https://support.google.com/cloud/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Platform Support Help Center">Hilfe</a></li>
+              <li><a href="https://support.google.com/cloudbilling/" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Cloud Billing Help Center">Abrechnungshilfe</a></li>
+              <li><a href="https://enterprise.google.com/supportcenter" target="_blank" event="autotrack-data-g" data-g-event="Footer" data-g-action="Footer Links: Support" data-g-label="Google Enterprise Support Center">Google Enterprise Support Center</a></li>
+            </ul>
+          </div>
+          
+        </div>
+        <br class="clear">
+      </div>
+    </div>
+
+<!-- Secondary right-side scroll-nav -->
+<script>
+  new lfl.ui.ScrollNav({});
+  new lfl.cloud.GlobalProductMenu();
+</script>
+
+              
+            
+
+        <div id="maia-footer-global">
+          
+            
+            <div class="maia-locales">
+              <form action="/i18n/setlang/" method="post">
+              <input name="xsrf_token" value="brppXwRsQC1TyURpD4hp_DoxNDEzODQ0NDA1NDE0Mjcw" type="hidden">
+              <select name="language" onchange="this.form.submit(); return false;">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="de" selected="selected">Deutsch</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="pt-br">Português</option>
+                <option value="es">Español</option>
+                <option value="zh-tw">中文（繁體中文）</option>
+              </select>
+              </form>
+            </div>
+            
+          
+
+          <div class="maia-aux">
+            <ul>
+              <li><a href="http://www.google.com/">Google</a></li>
+              <li><a href="https://developers.google.com/site-terms">Nutzungsbedingungen</a></li>
+              <li><a href="http://www.google.com/intl/en/privacy/">Datenschutzerklärung</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      
+  
+
+    </div>
+    <div id="needAuth" class="msgDialogContent">
+      
+      <h1>Authentifizierung erforderlich</h1>
+      
+      <div>
+        Dazu müssen Sie in <a href="http://www.google.com/+">Google+</a> angemeldet sein.
+      </div>
+      <button>Anmelden</button>
+      <button>Abbrechen</button>
+    </div>
+    <div id="signingIn" class="msgDialogContent">
+      
+      <h1>Anmeldung...</h1>
+      <div>
+        
+        Google Developers braucht hierfür Ihre Erlaubnis.
+      </div>
+      
+      <button>Erneut versuchen</button>
+      
+      <button>Abbrechen</button>
+    </div>
+    <div id="search-autocomplete" class="search-results search-autocomplete" style="display:none"></div>
+    <script type="text/javascript" async="" defer="defer" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/api.js"></script>
+    
+      <script>
+        (function($) {
+          var cssHref = $('#screen-foot').attr('data-href');
+          $('#screen-foot').attr('href', cssHref);
+        })(jQuery);
+      </script>
+    
+    <script id="jqueryui" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/jquery-ui.js"></script>
+    
+    <script type="text/javascript" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/a"></script>
+    <script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/script_foot.js"></script>
+    <script>
+      (function($) {
+        devsite.devsite.Init($, 'cloud', '',
+            'de', true,
+            '889047b07f');
+      })(jQuery);
+
+      
+      devsite.localInit = function() {
+        
+      };
+    </script>
+    
+    <!-- Google Code for PXL - Developers - Codesite - HP - 90d Remarketing List -->
+    <script type="text/javascript">
+    $('#setlang select').each(function() {
+      if (navigator.userAgent.match(/msie/i)) {
+        $(this).change(function() {
+          $('#setlang').submit();
+        });
+      } else {
+        $(this).kdSelect({'change': function() {
+          $('#setlang').submit();
+        }});
+      }
+    });
+    </script>
+    <script type="text/javascript">
+      /* <![CDATA[ */
+      var google_conversion_id = 992540712;
+      var google_conversion_language = "en";
+      var google_conversion_format = "3";
+      var google_conversion_color = "ffffff";
+      var google_conversion_label = "qio2CKCPwQMQqPCj2QM";
+      var google_conversion_value = 0;
+      /* ]]> */
+    </script>
+    <script type="text/javascript" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/conversion.js">
+    </script>
+
+    
+    <script src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/maia.js"></script>
+    
+
+    
+    
+
+    
+    <script type="text/javascript">
+    var axel = Math.random() + "";
+    var a = axel * 10000000000000;
+    document.write('<iframe src="https://2507573.fls.doubleclick.net/activityi;src=2507573;type=other026;cat=googl875;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+    </script><iframe src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/activityi.htm" style="display:none" frameborder="0" height="1" width="1"></iframe>
+    <noscript>
+    <iframe src="https://2507573.fls.doubleclick.net/activityi;src=2507573;type=other026;cat=googl875;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+    </noscript>
+    
+
+    <noscript>
+      <div style="display:none;">
+        <img style="display:none;" src="//www.googleadservices.com/pagead/conversion/992540712/?label=qio2CKCPwQMQqPCj2QM&amp;guid=ON&amp;script=0"/>
+      </div>
+    </noscript>
+    
+
+
+
+<script type="text/javascript" defer="defer">
+
+
+$(document).ready(function() {
+    contentTimer.name = 'content';
+    contentTimer.tick('ol');
+    window.jstiming.report(contentTimer);
+
+});
+</script>
+<script gapi_processed="true" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/plusone.js" async="" defer="defer"></script>
+
+
+
+
+  </div><!-- END DIV.MAIA-MAX -->
+  
+
+  
+
+<iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;" src="gsutil%20Tool%20-%20Google%20Cloud%20Storage%20%E2%80%94%20Google%20Cloud%20Platform-Dateien/postmessageRelay.htm" id="oauth2relay775533406" name="oauth2relay775533406"></iframe></body></html>

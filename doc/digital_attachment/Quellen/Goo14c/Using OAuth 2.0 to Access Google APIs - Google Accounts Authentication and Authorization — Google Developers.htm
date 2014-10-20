@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html class="devsite" lang="de"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="xsrf_token" content="wvG7e0wiAvqUBAbDSmXoZzoxNDEzODQ0NTQ4MzM0NjQw">
+    <script src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/analytics.js" async=""></script><script async="" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/cbgapi.loaded_1"></script><script async="" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/cbgapi.loaded_0"></script><script gapi_processed="true" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/platform.js" async="" type="text/javascript"></script><script>(function(){function e(a){this.t={};this.tick=function(a,c,b){var d=void 0!=b?b:(new Date).getTime();this.t[a]=[d,c];if(void 0==b)try{window.console.timeStamp("CSI/"+a)}catch(e){}};this.tick("start",null,a)}var a;window.performance&&(a=window.performance.timing);var f=a?new e(a.responseStart):new e;window.jstiming={Timer:e,load:f};if(a){var c=a.navigationStart,d=a.responseStart;0<c&&d>=c&&(window.jstiming.srt=d-c)}if(a){var b=window.jstiming.load;0<c&&d>=c&&(b.tick("_wtsrt",void 0,c),b.tick("wtsrt_",
+"_wtsrt",d),b.tick("tbsd_","wtsrt_"))}try{a=null,window.chrome&&window.chrome.csi&&(a=Math.floor(window.chrome.csi().pageT),b&&0<c&&(b.tick("_tbnd",void 0,window.chrome.csi().startE),b.tick("tbnd_","_tbnd",c))),null==a&&window.gtbExternal&&(a=window.gtbExternal.pageT()),null==a&&window.external&&(a=window.external.pageT,b&&0<c&&(b.tick("_tbnd",void 0,window.external.startE),b.tick("tbnd_","_tbnd",c))),a&&(window.jstiming.pt=a)}catch(g){}})();
+</script>
+      <link rel="stylesheet" type="text/css" href="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/screen-maia.css">
+      <link href="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/css.css" rel="stylesheet" type="text/css">
+    
+      
+        <link rel="stylesheet" type="text/css" href="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/screen-docs.css">
+      
+      
+      <link href="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/screen-foot.css" rel="stylesheet" type="text/css" id="screen-foot" data-href="https://developers.google.com/_static/889047b07f/css/screen-foot.css">
+    
+    <link rel="shortcut icon" href="https://developers.google.com/_static/889047b07f/images/favicon.ico">
+    <link rel="apple-touch-icon" href="https://developers.google.com/_static/889047b07f/images/apple-touch-icon.png">
+    <link href="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/css_002.css" rel="stylesheet" type="text/css">
+    
+    
+    
+      <link rel="search" type="application/opensearchdescription+xml" title="Google Developers" href="https://developers.google.com/search/opensearch.xml">
+    
+    
+    
+    
+    <script src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/jquery.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://developers.google.com/_static/889047b07f/js/html5shim/html5.js"></script>
+    <![endif]-->
+
+    
+  <script type="text/javascript">
+    var contentTimer = new window.jstiming.Timer();
+
+    var ___gcfg = ___gcfg || {};
+    ___gcfg.lang = 'de';
+  </script>
+  
+  <title>Using OAuth 2.0 to Access Google APIs - Google Accounts Authentication and Authorization — Google Developers</title>
+  
+  
+
+  
+
+  
+    
+    
+    
+  
+
+
+    
+
+    <style>
+    
+    </style>
+  </head>
+  <body class=" slim   two-column docs helpouts normal-width">
+  <div class="maia-max">
+
+    
+    <div id="sandbar">
+      
+        
+          
+
+
+
+
+
+<div id="maia-header" class="maia-header">
+  <header id="googlebar">
+    <div id="logo-wrapper">
+      <a id="logo" href="https://developers.google.com/">
+        <img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/developers-logo.svg" alt="Google">
+      </a>
+      <script>
+      if (navigator.userAgent.match(/msie/i) && navigator.appVersion.indexOf['8'] ==0) {
+        $('#gc-logo img').attr({src:'https://developers.google.com/_static/889047b07f/images/developers-logo.png'});
+      }
+      </script>
+    </div>
+
+    <div id="search-wrapper" class="head-sec search-wrapper2 ">
+      <form class="search" action="/search/results" method="GET" id="top-search">
+        <div id="searchbox" class="searchbox"><span class="button button-blue mini">Google Accounts Authentication and Authorization<pre>  X</pre></span>
+           
+           <input name="q" class="q" id="q" placeholder="Suche" autocomplete="off" type="text">
+        </div>
+        <button style="position: relative; top: 0px; left: 0px;" id="search-button" class="button button-blue big">
+          <img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/search.png" alt="Search">
+        </button>
+        
+          <input name="p" id="search_project" value="/accounts" data-project-name="Google Accounts Authentication and Authorization" data-project-path="/accounts" data-query-match="" type="hidden">
+        
+        
+
+
+  
+  <input id="suggest-category-label-2" value="Pages in Google Accounts Authentication and Authorization" type="hidden">
+  
+  <input id="suggest-category-label-3" value="Reference in Google Accounts Authentication and Authorization" type="hidden">
+
+
+<input id="suggest-category-label-1" value="Produkte" type="hidden">
+
+<input id="suggest-all-results-label" value="See all results for" type="hidden">
+
+      </form>
+    </div>
+
+    
+
+    <div id="social-wrapper" class="social">
+      
+      <span class="signed-out">
+        <a href="https://www.google.com/accounts/ServiceLogin?service=ahsid&amp;passive=true&amp;continue=https://developers.google.com/accounts/docs/OAuth2&amp;ltmpl=" id="loginLink" class="button">Anmelden</a>
+      </span>
+      
+    </div>
+  </header>
+</div>
+
+<script>
+  if (window.jQuery) {
+    $(document).ready(function() {
+      if (window.devsite && window.devsite.search) {
+        window.devsite.search.init('de')
+      }
+      
+    });
+  }
+</script>
+
+        
+      
+    </div><!-- end div.sandbar -->
+    
+
+    
+    <div class="kd-butterbar">
+      <span>
+        <span class="message"></span>
+        
+        <a href="#" class="kd-butterbar-dismiss">Ausblenden</a>
+      </span>
+    </div>
+    
+    <div id="gc-wrapper" itemscope="" itemtype="http://schema.org/Article">
+      
+        
+          <input class="google-analytics-id-json" value="{&quot;dimensions&quot;: {&quot;dimension1&quot;: &quot;Signed out&quot;}, &quot;gaid&quot;: &quot;UA-24532603-1&quot;}" type="hidden">
+        
+          <input class="google-analytics-id-json" value="{&quot;dimensions&quot;: {&quot;dimension1&quot;: &quot;Signed out&quot;}, &quot;gaid&quot;: &quot;UA-49880327-1&quot;}" type="hidden">
+        
+      
+
+      
+
+      
+
+<div id="gc-appnav" class="maia-aux">
+  <ol class="breadcrumbs">
+    
+    <li><a href="https://developers.google.com/products/">Produkte</a></li>
+    
+    <li><a href="https://developers.google.com/accounts/">Google Accounts Authentication and Authorization</a></li>
+    
+  </ol>
+</div>
+
+
+
+      
+      
+      
+          <div class="maia-aux" id="gc-appbar">
+
+          
+          
+
+<h1><a href="https://developers.google.com/accounts/">Google Accounts Authentication and Authorization</a></h1>
+
+
+
+<div class="plusone-container" style="height:27px">
+  <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 90px; height: 20px;"><iframe title="+1" data-gapiattached="true" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/fastbutton.htm" name="I0_1413844552103" id="I0_1413844552103" vspace="0" tabindex="0" style="position: static; top: 0px; width: 90px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div>
+</div>
+
+
+
+  
+
+
+
+<div class="helpouts-container">
+  <a href="https://helpouts.google.com/partner/landing/provider/googledevelopers?utm_source=devsite_pb&amp;utm_medium=banner&amp;utm_campaign=devsite_pb_banner" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="In-Page Helpouts Banner">
+    <img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/helpouts-banner.png" alt="Help developers solve problems with Google Helpouts">
+  </a>
+</div>
+
+
+
+
+
+
+
+ 
+
+          
+        </div>
+      
+      
+
+      
+        
+          <div id="gc-main" class="main">
+        
+        
+  
+  
+      
+      
+      <div id="gc-sidebar">
+        
+
+  
+
+
+
+  <nav class="gc-toc"><ul><li class=""><a href="https://developers.google.com/accounts/docs/GettingStarted" title="Choosing an Auth Mechanism" data-title="Choosing an Auth Mechanism"><span>Choosing an Auth Mechanism</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Authentication">Authentication</span><ul style="display: none;"><li class=""><a href="https://developers.google.com/accounts/docs/OAuth2Login" title="OAuth 2.0 for Login (OpenID Connect)" data-title="OAuth 2.0 for Login (OpenID Connect)"><span>OAuth 2.0 for Login (OpenID Connect)</span></a></li><li class=""><a href="https://developers.google.com/accounts/docs/OpenID" title="OpenID 2.0 (Migration)" data-title="OpenID 2.0 (Migration)"><span>OpenID 2.0 (Migration)</span></a></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Older Protocols">Older Protocols</span><ul style="display: none;"><li class="deprecated"><a href="https://developers.google.com/accounts/docs/OpenID2" title="OpenID 2.0" data-title="OpenID 2.0"><span>OpenID 2.0<sup>Deprecated</sup></span></a></li><li class="deprecated"><a href="https://developers.google.com/accounts/docs/OAuth2LoginV1" title="OAuth 2.0 for Login" data-title="OAuth 2.0 for Login"><span>OAuth 2.0 for Login<sup>Deprecated</sup></span></a></li></ul></li></ul></li><li class=""><a class="tlw-control tlw-expanded">▾</a><span class="tlw-title tlw-control-title" data-title="API Authorization">API Authorization</span><ul><li class="active"><a class="tlw-control tlw-expanded">▾</a><a class="tlw-title" href="https://developers.google.com/accounts/docs/OAuth2" title="OAuth 2.0" data-title="OAuth 2.0"><span>OAuth 2.0</span></a><ul><li class=""><a href="https://developers.google.com/accounts/docs/OAuth2WebServer" title="Web Server" data-title="Web Server"><span>Web Server</span></a></li><li class=""><a href="https://developers.google.com/accounts/docs/OAuth2InstalledApp" title="Installed Apps" data-title="Installed Apps"><span>Installed Apps</span></a></li><li class=""><a href="https://developers.google.com/accounts/docs/OAuth2UserAgent" title="Client-side" data-title="Client-side"><span>Client-side</span></a></li><li class=""><a href="https://developers.google.com/accounts/docs/OAuth2ForDevices" title="Devices" data-title="Devices"><span>Devices</span></a></li><li class=""><a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount" title="Service Accounts" data-title="Service Accounts"><span>Service Accounts</span></a></li><li class=""><a href="https://developers.google.com/accounts/docs/CrossClientAuth" title="Cross-client Identity" data-title="Cross-client Identity"><span>Cross-client Identity</span></a></li></ul></li><li class=""><a class="tlw-control tlw-collapsed">▸</a><span class="tlw-title tlw-control-title" data-title="Older Protocols">Older Protocols</span><ul style="display: none;"><li class="deprecated"><a href="https://developers.google.com/accounts/docs/OAuth" title="OAuth 1.0 for Web Apps" data-title="OAuth 1.0 for Web Apps"><span>OAuth 1.0 for Web Apps<sup>Deprecated</sup></span></a></li><li class="deprecated"><a href="https://developers.google.com/accounts/docs/OAuthForInstalledApps" title="OAuth 1.0 for Installed Apps" data-title="OAuth 1.0 for Installed Apps"><span>OAuth 1.0 for Installed Apps<sup>Deprecated</sup></span></a></li><li class="deprecated"><a href="https://developers.google.com/accounts/docs/OAuth_ref" title="OAuth 1.0 Reference" data-title="OAuth 1.0 Reference"><span>OAuth 1.0 Reference<sup>Deprecated</sup></span></a></li><li class="deprecated"><a href="https://developers.google.com/accounts/docs/AuthSub" title="AuthSub" data-title="AuthSub"><span>AuthSub<sup>Deprecated</sup></span></a></li><li class="deprecated"><a href="https://developers.google.com/accounts/docs/AuthForInstalledApps" title="ClientLogin" data-title="ClientLogin"><span>ClientLogin<sup>Deprecated</sup></span></a></li></ul></li></ul></li><li class=""><a href="https://developers.google.com/accounts/terms" title="Terms of Service" data-title="Terms of Service"><span>Terms of Service</span></a></li><li class=""><a href="https://developers.google.com/accounts/forum" title="Forum" data-title="Forum"><span>Forum</span></a></li></ul></nav>
+
+
+
+      </div>
+      
+
+      <div id="gc-content">
+        
+        <div>
+  
+          
+  
+  <h1 itemprop="name" class="page-title">Using OAuth 2.0 to Access Google APIs</h1>
+  
+  <div itemprop="articleBody">
+  
+<style>todo { background-color: yellow; display: inline; }</style>
+
+<section>
+<p>Google APIs use the <a href="http://tools.ietf.org/html/draft-ietf-oauth-v2-22">OAuth 2.0
+protocol</a> for authentication and authorization. Google supports common OAuth 2.0 
+scenarios such as those for web server, installed, and client-side applications.</p>
+
+<p>
+OAuth 2.0 is a relatively simple protocol. 
+To begin, you obtain OAuth 2.0 credentials from the <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>. Then your client application
+requests an access token from the Google 
+Authorization Server, extracts a token from the response, and sends the token to the 
+Google API that you want to access.</p>
+
+<p>
+This page gives an overview of the OAuth 2.0 authorization scenarios that Google supports, 
+and provides links to more detailed content. For details about using OAuth 2.0 for 
+authentication, see <a href="https://developers.google.com/accounts/docs/OAuth2Login">Using OAuth 2.0 for Login</a>.
+</p>
+
+<aside class="note"><b>Note:</b> 
+Given the security implications of getting the implementation correct, we strongly encourage you to use OAuth 2.0 libraries when
+interacting with Google's OAuth 2.0 endpoints. It is a best practice to use well-debugged code 
+provided by others, and it will help you protect yourself and your users. For more information, 
+see <a href="#libraries">Client libraries</a>. 
+</aside>
+</section>
+
+<section>
+<h2>Contents</h2>
+<ol class="toc">
+  <li><a href="#basicsteps">Basic steps</a></li>
+  <li><a href="#scenarios">Scenarios</a>
+    <ol>
+      <li><a href="#webserver">Web server applications</a> </li>
+      <li><a href="#installed">Installed applications</a> </li>
+      <li><a href="#clientside">Client-side (JavaScript) applications</a> </li>
+      <li><a href="#device">Applications on limited-input devices</a> </li>
+      <li><a href="#serviceaccount">Service accounts</a></li>
+    </ol>
+  </li>
+  <li><a href="#libraries">Client libraries</a></li>
+  <li><a href="#expiration">Token expiration</a></li>
+</ol>
+</section>
+
+<section>
+<h2 id="basicsteps">Basic steps</h2>
+<p>All applications follow a basic pattern when accessing a Google API using OAuth 2.0. At a high level, you follow four steps:
+        </p><h4>1. Obtain OAuth 2.0 credentials from the Google Developers Console.</h4>
+        <p>
+            Visit the
+<a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>
+            to obtain OAuth 2.0 credentials such as a client ID
+and client secret that are known to both Google and your application. The set of values varies
+based on what type of application you are building. For example, a JavaScript application does not require a secret, but
+            a web server application does.
+        </p>
+        <h4>2. Obtain an access token from the Google Authorization Server.</h4>
+        <p>
+          Before your application can access private data using a Google
+ API, it must obtain an access token that grants access to that API.
+          A single access token can grant varying degrees of access to 
+multiple APIs. A variable parameter 
+          called <code>scope</code> controls the set of resources and operations that an access token 
+          permits. During the access-token request, your application sends one or more values in 
+the <code>scope</code> parameter.
+        </p>
+        <p>
+           There are several ways to make this request, and they vary 
+based on the type of application you are building. For example, a 
+JavaScript application
+           might request an access token using a browser redirect to 
+Google, while an application installed on a device that has no browser 
+uses web service requests.
+        </p>
+        <p>
+           Some requests require an authentication step where the user logs in with their Google 
+account. After logging in, the user is asked 
+           whether they are willing to grant the permissions that your application is requesting. 
+           This process is called <dfn>user consent</dfn>.
+        </p>
+        <p>
+           If the user grants the permission, the Google Authorization Server 
+sends your application an access token (or an authorization code that your application can use to obtain an access token).
+           If the user does not grant the permission, the server returns an error.
+        </p>
+	<p>
+
+
+<style>
+  body.docs section.expandable-bottom-margin {
+    margin-bottom: 1.5em;
+  }
+  body.docs section.expandable-no-left-margin {
+    margin-left: 0;
+  }
+</style>
+
+
+
+It is generally a best practice to request scopes incrementally, at the 
+time access is required, rather than up front. For example, an app that 
+wants to support purchases should not request Google Wallet access until
+ the user presses the “buy” button; see <a href="https://developers.google.com/accounts/docs/OAuth2WebServer#incrementalAuth">Incremental authorization</a>.
+
+
+
+	</p>
+        <h4>3. Send the access token to an API.</h4>
+        <p>
+          After an application obtains an access token, it sends the token to a Google 
+API in an HTTP authorization header. It is possible to send tokens as URI query-string parameters, 
+but we don't recommend it, because URI parameters can end up in log files that are not completely 
+secure. Also, it is good REST practice 
+to avoid creating unnecessary URI parameter names.</p> 
+ <p>Access tokens are valid only for the set of
+          operations and resources described in the <code>scope</code> 
+of the token request. For example, if an access token is issued for the 
+Google+ API, it does not grant access
+          to the Google Contacts API. You can, however, send that access
+ token to the Google+ API multiple times for similar operations.
+        
+        </p>
+        <h4>4. Refresh the access token, if necessary.</h4>
+        <p>
+            Access tokens have limited lifetimes. If your application 
+needs access to a Google API beyond the lifetime of a single access 
+token, 
+            it can obtain a refresh token. A 
+refresh token allows your application to obtain new access tokens.
+        </p>
+        <aside class="note"><b>Note: </b>
+          Save refresh tokens in secure long-term storage and continue to use them as long as they 
+remain valid. Limits apply to the number of refresh tokens that are issued per client-user 
+combination, and per user across all clients, and these limits are different. If your application 
+requests enough refresh tokens to go over one of the limits, older refresh tokens stop working.
+</aside>
+</section>
+
+<section>
+  <h2 id="scenarios">Scenarios</h2>
+<h3 id="webserver">Web server applications</h3>
+<p>
+The Google OAuth 2.0 endpoint supports web server applications that use languages and frameworks 
+such as PHP, Java, Python, Ruby, and ASP.NET.</p>
+<p>
+The authorization sequence begins when your application redirects 
+a browser to a Google URL; the URL includes query parameters that indicate the type of access 
+being requested. Google handles the user authentication, session selection, and user consent. 
+The result is an authorization code, which the application can exchange for
+an access token and a refresh token.
+</p>
+
+<p>
+The application should store the refresh token for 
+future use and use the access token to access a Google API. Once the access token expires, the 
+application uses the refresh token to obtain a new one.
+</p>
+
+<figure id="fig1">
+<img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/webflow.png" alt="Your application sends a token request to the Google Authorization Server, receives an authorization code, 
+exchanges the code for a token, and uses the token to call a Google API endpoint." height="377px" width="364px">
+</figure>
+
+<p>
+For details, see <a href="https://developers.google.com/accounts/docs/OAuth2WebServer">Using OAuth 2.0 for Web Server Applications</a>.
+</p>
+
+<h3 id="installed">Installed applications</h3>
+<p>
+The Google OAuth 2.0 endpoint supports applications that are installed on devices such as computers, 
+mobile devices, and tablets. When you create a client ID through the
+<a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>, specify that this is an Installed application,
+then select Android, Chrome, iOS, or "Other" as the
+application type.</p>
+<p>
+The process results in a client ID and, in some cases, a client secret,
+which you embed in the source code of your application. (In this context, the client secret 
+is obviously not treated as a secret.) 
+</p>
+<p>The authorization sequence begins when your application redirects 
+a browser to a Google URL; the URL includes query parameters that indicate the type of access 
+being requested. Google handles the user authentication, session selection, and user consent. 
+The result is an authorization code, which the application can exchange for
+an access token and a refresh token.
+</p>
+
+<p>
+The application should store the refresh token for 
+future use and use the access token to access a Google API. Once the access token expires, the 
+application uses the refresh token to obtain a new one.
+</p>
+<figure id="fig1">
+<img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/webflow.png" alt="Your application sends a token request to the Google Authorization Server, receives an authorization code, 
+exchanges the code for a token, and uses the token to call a Google API endpoint." height="377px" width="364px">
+</figure>
+<p>
+For details, see <a href="https://developers.google.com/accounts/docs/OAuth2InstalledApp">Using OAuth 2.0 for Installed Applications</a>.
+</p>
+
+<h3 id="clientside">Client-side (JavaScript) applications</h3>
+<p>
+The Google OAuth 2.0 endpoint supports JavaScript applications that run in a browser.
+</p>
+<p>
+The authorization sequence begins when your application redirects a browser to a Google URL; the URL 
+includes query parameters that indicate the type of access 
+being requested. Google handles the user authentication, session selection, and user consent.
+</p>
+<p>The result is an access token, which the client should validate before including it in a Google 
+API request. When the token expires, the application repeats the process.
+</p>
+
+<figure id="fig2">
+<img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/tokenflow.png" alt="Your JS application sends a token request to the Google Authorization Server, receives a token, 
+validates the token, and uses the token to call a Google API endpoint." height="377px" width="364px">
+</figure>
+
+<p>
+For details, see <a href="https://developers.google.com/accounts/docs/OAuth2UserAgent">Using OAuth 2.0 for Client-side Applications</a>.
+</p>
+
+<h3 id="device">Applications on limited-input devices</h3>
+<p>
+The Google OAuth 2.0 endpoint supports applications that run on limited-input devices 
+such as game consoles, video cameras, and printers. </p>
+<p>The authorization sequence begins with the application making 
+a web service request to a Google URL for an authorization code. The response contains several parameters, including a URL and
+a code that the application shows to the user.
+</p>
+
+<p>
+The user obtains the URL and code from the device, then switches to a separate device or computer with 
+richer input capabilities. The user launches a browser, navigates to the specified URL, logs in, and enters the code.
+</p>
+
+<p>Meanwhile, the application polls a Google URL at a specified 
+interval. After the user approves access, 
+the response from the Google server contains an access token and refresh
+ token. The application should store the refresh token for 
+future use and use the access token to access a Google API. Once the 
+access token expires, the 
+application uses the refresh token to obtain a new one.
+</p>
+
+<figure id="fig3">
+<img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/deviceflow.png" alt="The user logs in on a separate device that has a browser." height="423px" width="451px">
+</figure>
+
+<p>For details, see <a href="https://developers.google.com/accounts/docs/OAuth2ForDevices">Using OAuth 2.0 for Devices</a>.</p>
+
+<h3 id="serviceaccount">Service accounts</h3>
+<p>
+Google APIs such as the Prediction API and Google Cloud Storage can act on behalf of your application
+without accessing user information. In these situations your application needs to
+prove its own identity to the API, but no user consent is necessary. Similarly, in enterprise scenarios,
+your application can request delegated access to some resources.
+</p>
+
+<p>
+  For these types of server-to-server interactions you need a <b>service account</b>, which is an account that belongs to your
+  application instead of to an individual end-user. Your application calls Google APIs on behalf of
+  the service account, and user consent is not required. (In non-service-account scenarios, your
+  application calls Google APIs on behalf of end-users, and user consent is sometimes required.)
+</p>
+
+<aside class="note">
+<b>Note:</b> These service-account scenarios require applications to create and cryptographically sign JSON Web Tokens (JWTs).
+We strongly encourage you to use a library to perform these tasks. If you write this code without using
+a library that abstracts token creation and signing, you might make errors that would have a severe impact
+on the security of your application. For a list of libraries that support this scenario, see the
+<a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount">service-account documentation</a>.
+</aside>
+
+<p>
+  A service account's credentials, which you obtain from the Google Developers Console,
+  include a generated email address that is unique, a client ID, and at least one public/private key pair.
+  You use the client ID and one private key to create a signed JWT and construct an access-token request
+in the appropriate format. Your
+application then sends the token request to the Google OAuth 2.0 Authorization Server, which returns an
+access token. The application uses the token to access a Google API. When the token
+expires, the application repeats the process.
+</p>
+
+<figure id="fig4">
+<a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount"><img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/serviceaccount.png" alt="Your server application uses a JWT to request a token from the Google Authorization Server,
+then uses the token to call a Google API endpoint. No end-user is involved." height="302px" width="325px"></a>
+</figure>
+
+<p>
+For details, see the <a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount">service-account documentation</a>.
+</p>
+</section>
+
+  <section>
+    <h2 id="expiration">Token expiration</h2>
+    <p>You should write your code to anticipate the possibility that a granted token might no
+      longer work. A token might stop working for one of these reasons:</p>
+    <ul>
+      <li>The user has revoked access.</li>
+      <li>The token has not been used for six months.</li>
+      <li>The user account has exceeded a certain number of token requests.</li>
+    </ul>
+      <p>There is currently a 25-token limit per Google user account. If a user account has
+      25 valid tokens, the next authentication request succeeds, but quietly invalidates the
+        oldest outstanding token without any user-visible warning.</p>
+    <p>If you need to authorize
+      multiple programs, machines, or devices, one workaround is to limit the number of
+      clients that you authorize per user account to 15 or 20. If you are a
+      <a href="https://support.google.com/a/">Google Apps admin</a>, you
+      can create additional admin users and use them to authorize some of the clients.</p>
+  </section>
+<section>
+<h2 id="libraries">Client libraries</h2>
+<p>The following client libraries integrate with popular frameworks, which makes implementing
+OAuth 2.0 simpler. More features will be added to the libraries over time.</p>
+  <ul>
+    <li><a href="https://code.google.com/p/google-api-java-client/wiki/OAuth2">Google APIs Client Library for Java</a></li>
+    <li><a href="https://developers.google.com/api-client-library/python/guide/aaa_oauth">Google APIs Client Library for Python</a></li>
+    <li><a href="https://developers.google.com/api-client-library/dotnet/guide/aaa_oauth">Google APIs Client Library for .NET</a></li>
+    <li><a href="https://code.google.com/p/google-api-ruby-client/wiki/OAuth2">Google APIs Client Library for Ruby</a></li>
+    <li><a href="https://code.google.com/p/google-api-php-client/wiki/OAuth2">Google APIs Client Library for PHP</a></li>
+    <li><a href="https://developers.google.com/api-client-library/javascript/features/authentication">Google APIs Client Library for JavaScript</a></li>
+    <li><a href="https://code.google.com/p/gwt-oauth2">OAuth 2.0 Library for Google Web Toolkit</a></li>
+    <li><a href="https://code.google.com/p/gtm-oauth2/">Google Toolbox for Mac OAuth 2.0 Controllers</a></li>
+  </ul>
+</section>
+
+  
+  </div>
+
+  
+        </div>
+        
+<div id="gc-content-footer">
+
+<div id="gc-content-license">
+
+    
+      
+        <p>Sofern nicht anders angegeben, ist der Inhalt dieser Seite unter der <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons – Namensnennung&nbsp;3.0-Lizenz</a> lizenziert und Codebeispiele sind unter der <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache&nbsp;2.0-Lizenz</a> lizenziert. Weitere Informationen <a href="https://developers.google.com/site-policies">finden Sie in unseren Websiterichtlinien</a>.</p>
+      
+    
+    
+    
+
+</div>
+
+
+
+<div itemprop="datePublished" content="2014-07-17T17:57:04.947400" id="gc-content-last-updated">Last updated Juli 17, 2014.</div>
+
+</div>
+
+
+      </div>
+  
+
+        
+      </div>
+        
+      
+      
+        
+          
+        
+      
+
+      
+  
+       <!-- not (if site.theme == 'maia' or site.theme == 'maia-cloud') -->
+      <div id="gc-footer-container">
+        <footer id="gc-footer">
+          
+
+
+
+
+        <div id="maia-footer-local" class="footer-local">
+          <div id="footer-top" class="maia-aux">
+            <div class="footer-top-wrap">
+
+             <div class="search-wrap new_left">
+               <div class="dev-wrap new_left">
+                 <a href="https://developers.google.com/"><img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/developers-logo.png"></a>
+               </div>
+               <form class="search new_left" action="/search/results" method="GET" id="footer-search">
+                 <div id="searchbox" class="searchbox new_left">
+                   <input name="q" class="q" id="q" placeholder="Search" autocomplete="off" type="text">
+                 </div>
+                 <button id="search-button" class="button button-blue big new_left">
+                   <img src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/search.png" alt="Search">
+                 </button>
+               </form>
+             </div>
+             <div class="plus-wrap new_left">
+               <div class="plus">
+                 <!-- Place this tag where you want the widget to render. -->
+                 <div id="___follow_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 143px; height: 24px;"><iframe data-gapiattached="true" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/follow.htm" name="I1_1413844552118" id="I1_1413844552118" vspace="0" tabindex="0" style="position: static; top: 0px; width: 143px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 24px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div>
+                 <!-- Place this tag after the last widget tag. -->
+                 <script type="text/javascript">
+                   (function() {
+                     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                     po.src = 'https://apis.google.com/js/platform.js';
+                     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                   })();
+                 </script>
+               </div>
+             </div>
+           </div>
+         </div>
+
+      <div id="footer-list" class="maia-aux">
+    <div class="footer-list-wrap  maia-cols">
+      <div class="maia-col-3">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="https://developers.google.com/products/">Products</a></li>
+          <li><a href="https://developers.google.com/showcase/">Showcase</a></li>
+          <li><a href="https://developers.google.com/events/">Events</a></li>
+          <li><a href="https://developers.google.com/community/">Communities</a></li>
+        </ul>
+      </div>
+      <div class="maia-col-3">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="http://googledevelopers.blogspot.com/" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Blog Link">Blog</a></li>
+          <li><a href="https://plus.google.com/+GoogleDevelopers/posts" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer G+ Link">Google+ Community</a></li>
+          <li><a href="http://www.youtube.com/user/GoogleDevelopers" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer YouTube Link">YouTube Channel</a></li>
+          <li><a class="google-feedback" data-p="81425" data-b="Documentation" data-v="devsite-20141020-r00-rc00.default" href="">Problem melden</a></li>
+          <li><a href="https://developers.google.com/careers/">Jobs</a></li>
+        </ul>
+      </div>
+      <div class="maia-col-3">
+        <h4>Programs</h4>
+        <ul>
+          <li><a href="https://developers.google.com/groups/">Groups</a></li>
+          <li><a href="https://developers.google.com/experts/">Experts</a></li>
+          <li><a href="https://developers.google.com/startups/">Startups</a></li>
+          <li><a href="https://developers.google.com/women-techmakers/">Women Techmakers</a></li>
+        </ul>
+      </div>
+      <div class="maia-col-3">
+        <h4>Top Products</h4>
+        <ul class="top-prod-1 left">
+          <li><a href="https://developers.google.com/advertise/">Ads</a></li>
+          <li><a href="https://developers.google.com/analytics/">Analytics</a></li>
+          <li><a href="https://developer.android.com/" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Android Link">Android</a></li>
+          <li><a href="https://developers.google.com/cast/">Cast</a></li>
+          <li><a href="https://developers.google.com/chrome/">Chrome</a></li>
+          <li><a href="https://cloud.google.com/docs/" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Cloud Link">Cloud</a></li>
+        </ul>
+        <ul class="top-prod-2 left">
+          <li><a href="https://developers.google.com/glass/">Glass</a></li>
+          <li><a href="https://developers.google.com/google-apps/">Google Apps</a></li>
+          <li><a href="https://developers.google.com/+/">Google+</a></li>
+          <li><a href="https://developers.google.com/maps/">Maps</a></li>
+          <li><a href="https://developers.google.com/commerce/wallet/">Wallet</a></li>
+          <li><a href="https://developers.google.com/youtube/">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div><!-- END DIV#MAIA-FOOTER-LOCAL -->
+
+<div id="maia-footer-global" class="footer-global">
+  <div class="maia-aux">
+    <span id="terms">
+      <a href="https://developers.google.com/site-terms/">Terms of Use</a>
+    </span>
+    <span class="pipe">
+    </span>
+    <span id="privacy">
+      <a href="http://www.google.com/intl/en/privacy/" class="gc-analytics-event" data-category="Site-Wide Custom Events" data-label="Footer Privacy Link">Privacy Policy</a>
+    </span>
+
+    
+    <div id="gc-language" class="new_right">
+    <ul>
+      <li>
+        <form id="setlang" action="/i18n/setlang/" method="post">
+          <input name="xsrf_token" value="wvG7e0wiAvqUBAbDSmXoZzoxNDEzODQ0NTQ4MzM0NjQw" type="hidden">
+          <select style="display: none;" id="footer_language" name="language">
+            <option value="ar">
+                العربيّة
+              </option><option value="bg">
+                български
+              </option><option value="ca">
+                català
+              </option><option value="zh-cn">
+                简体中文
+              </option><option value="zh-tw">
+                繁體中文
+              </option><option value="hr">
+                Hrvatski
+              </option><option value="cs">
+                česky
+              </option><option value="da">
+                dansk
+              </option><option value="nl">
+                Nederlands
+              </option><option value="en">
+                English
+              </option><option value="fa">
+                فارسی
+              </option><option value="fi">
+                suomi
+              </option><option value="fr">
+                français
+              </option><option value="de" selected="selected">
+                Deutsch
+              </option><option value="el">
+                Ελληνικά
+              </option><option value="he">
+                עברית
+              </option><option value="hi">
+                Hindi
+              </option><option value="hu">
+                Magyar
+              </option><option value="id">
+                Bahasa Indonesia
+              </option><option value="it">
+                italiano
+              </option><option value="ja">
+                日本語
+              </option><option value="ko">
+                한국어
+              </option><option value="lv">
+                latviešu
+              </option><option value="lt">
+                Lithuanian
+              </option><option value="nb">
+                norsk (bokmål)
+              </option><option value="nn">
+                norsk (nynorsk)
+              </option><option value="pl">
+                polski
+              </option><option value="pt-br">
+                Português Brasileiro
+              </option><option value="pt">
+                Português
+              </option><option value="ro">
+                Română
+              </option><option value="ru">
+                Русский
+              </option><option value="sr">
+                српски
+              </option><option value="sk">
+                slovenský
+              </option><option value="sl">
+                Slovenščina
+              </option><option value="es">
+                español
+              </option><option value="sv">
+                svenska
+              </option><option value="th">
+                Thai
+              </option><option value="tr">
+                Türkçe
+              </option><option value="uk">
+                Українська
+              </option><option value="vi">
+                Vietnamese
+              </option>
+          </select><span class="kd-button kd-menubutton kd-select"><div style="display: inline-block;"><div style="float: left;" class="label">
+                Deutsch
+              </div><div class="kd-disclosureindicator"></div></div></span>
+        </form>
+      </li>
+    </ul>
+    </div>
+    
+  </div>
+</div><!-- END DIV#MAIA-FOOTER-GLOBAL -->
+<script gapi_processed="true" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/plusone.js" async="" defer="defer"></script>
+<script type="text/javascript">
+    // Add the handlers once the document has loaded.
+    $(document).ready(function() {
+      devsite.devsite.handlePlusBadgeResize($('#plusbadge'), $('#homephoto'));
+    });
+  </script>
+
+        </footer>
+      </div>
+      
+      
+  
+
+    </div>
+    <div id="needAuth" class="msgDialogContent">
+      
+      <h1>Authentifizierung erforderlich</h1>
+      
+      <div>
+        Dazu müssen Sie in <a href="http://www.google.com/+">Google+</a> angemeldet sein.
+      </div>
+      <button>Anmelden</button>
+      <button>Abbrechen</button>
+    </div>
+    <div id="signingIn" class="msgDialogContent">
+      
+      <h1>Anmeldung...</h1>
+      <div>
+        
+        Google Developers braucht hierfür Ihre Erlaubnis.
+      </div>
+      
+      <button>Erneut versuchen</button>
+      
+      <button>Abbrechen</button>
+    </div>
+    <div id="search-autocomplete" class="search-results search-autocomplete" style="display:none"></div>
+    <script type="text/javascript" async="" defer="defer" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/api.js"></script>
+    
+      <script>
+        (function($) {
+          var cssHref = $('#screen-foot').attr('data-href');
+          $('#screen-foot').attr('href', cssHref);
+        })(jQuery);
+      </script>
+    
+    <script id="jqueryui" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/jquery-ui.js"></script>
+    
+    <script type="text/javascript" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/a"></script>
+    <script src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/script_foot.js"></script>
+    <script>
+      (function($) {
+        devsite.devsite.Init($, 'devsite', '',
+            'de', true,
+            '889047b07f');
+      })(jQuery);
+
+      
+      devsite.localInit = function() {
+        
+      };
+    </script>
+    
+    <!-- Google Code for PXL - Developers - Codesite - HP - 90d Remarketing List -->
+    <script type="text/javascript">
+    $('#setlang select').each(function() {
+      if (navigator.userAgent.match(/msie/i)) {
+        $(this).change(function() {
+          $('#setlang').submit();
+        });
+      } else {
+        $(this).kdSelect({'change': function() {
+          $('#setlang').submit();
+        }});
+      }
+    });
+    </script>
+    <script type="text/javascript">
+      /* <![CDATA[ */
+      var google_conversion_id = 992540712;
+      var google_conversion_language = "en";
+      var google_conversion_format = "3";
+      var google_conversion_color = "ffffff";
+      var google_conversion_label = "qio2CKCPwQMQqPCj2QM";
+      var google_conversion_value = 0;
+      /* ]]> */
+    </script>
+    <script type="text/javascript" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/conversion.js">
+    </script>
+
+    
+
+    
+    
+    <script async="" defer="defer" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/async_survey"></script>
+    
+
+    
+    <script type="text/javascript">
+    var axel = Math.random() + "";
+    var a = axel * 10000000000000;
+    document.write('<iframe src="https://2507573.fls.doubleclick.net/activityi;src=2507573;type=other026;cat=googl875;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+    </script><iframe src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/activityi.htm" style="display:none" frameborder="0" height="1" width="1"></iframe>
+    <noscript>
+    <iframe src="https://2507573.fls.doubleclick.net/activityi;src=2507573;type=other026;cat=googl875;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+    </noscript>
+    
+
+    <noscript>
+      <div style="display:none;">
+        <img style="display:none;" src="//www.googleadservices.com/pagead/conversion/992540712/?label=qio2CKCPwQMQqPCj2QM&amp;guid=ON&amp;script=0"/>
+      </div>
+    </noscript>
+    
+
+
+
+<script type="text/javascript" defer="defer">
+
+
+$(document).ready(function() {
+    contentTimer.name = 'content';
+    contentTimer.tick('ol');
+    window.jstiming.report(contentTimer);
+
+});
+</script>
+<script gapi_processed="true" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/plusone.js" async="" defer="defer"></script>
+
+
+
+
+  </div><ul style="display: none; position: absolute; top: 5672.77px; right: 0px; bottom: auto; left: auto; height: 1312px; padding: 0px;" class="kd-menulist"><li class="kd-menulistitem">
+                العربيّة
+              </li><li class="kd-menulistitem">
+                български
+              </li><li class="kd-menulistitem">
+                català
+              </li><li class="kd-menulistitem">
+                简体中文
+              </li><li class="kd-menulistitem">
+                繁體中文
+              </li><li class="kd-menulistitem">
+                Hrvatski
+              </li><li class="kd-menulistitem">
+                česky
+              </li><li class="kd-menulistitem">
+                dansk
+              </li><li class="kd-menulistitem">
+                Nederlands
+              </li><li class="kd-menulistitem">
+                English
+              </li><li class="kd-menulistitem">
+                فارسی
+              </li><li class="kd-menulistitem">
+                suomi
+              </li><li class="kd-menulistitem">
+                français
+              </li><li class="kd-menulistitem selected">
+                Deutsch
+              </li><li class="kd-menulistitem">
+                Ελληνικά
+              </li><li class="kd-menulistitem">
+                עברית
+              </li><li class="kd-menulistitem">
+                Hindi
+              </li><li class="kd-menulistitem">
+                Magyar
+              </li><li class="kd-menulistitem">
+                Bahasa Indonesia
+              </li><li class="kd-menulistitem">
+                italiano
+              </li><li class="kd-menulistitem">
+                日本語
+              </li><li class="kd-menulistitem">
+                한국어
+              </li><li class="kd-menulistitem">
+                latviešu
+              </li><li class="kd-menulistitem">
+                Lithuanian
+              </li><li class="kd-menulistitem">
+                norsk (bokmål)
+              </li><li class="kd-menulistitem">
+                norsk (nynorsk)
+              </li><li class="kd-menulistitem">
+                polski
+              </li><li class="kd-menulistitem">
+                Português Brasileiro
+              </li><li class="kd-menulistitem">
+                Português
+              </li><li class="kd-menulistitem">
+                Română
+              </li><li class="kd-menulistitem">
+                Русский
+              </li><li class="kd-menulistitem">
+                српски
+              </li><li class="kd-menulistitem">
+                slovenský
+              </li><li class="kd-menulistitem">
+                Slovenščina
+              </li><li class="kd-menulistitem">
+                español
+              </li><li class="kd-menulistitem">
+                svenska
+              </li><li class="kd-menulistitem">
+                Thai
+              </li><li class="kd-menulistitem">
+                Türkçe
+              </li><li class="kd-menulistitem">
+                Українська
+              </li><li class="kd-menulistitem">
+                Vietnamese
+              </li></ul><!-- END DIV.MAIA-MAX -->
+  
+
+  
+
+<div id="contain-402"></div><script src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/prompt"></script><iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;" src="Using%20OAuth%202.0%20to%20Access%20Google%20APIs%20-%20Google%20Accounts%20Authentication%20and%20Authorization%20%E2%80%94%20Google%20Developers-Dateien/postmessageRelay.htm" id="oauth2relay549469383" name="oauth2relay549469383"></iframe></body></html>
