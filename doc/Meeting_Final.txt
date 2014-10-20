@@ -2,6 +2,13 @@
 - AES neu formulieren (kein Eigenplagiat)
 - 60 bis 70 Seiten Textumfang
 - Wikipedia bei AES und Java akzeptabel (besser vermeiden)
+- refactor 	grafie -> graphie
+		Software, anwendung, programm -> Applikation
+		Anwender:Benutzer:Nutzer
+		Loginserver, Providingserver -> login Server, providing Server
+		cloud Speicher(-computing etc.) -> Cloudspeicher, Cloudcomputing
+- evtl. Begriffslexikon
+- UML generieren (sinnvoll)
 
 - Forschungsfragen: 
 Aufgliedern und Arbeit anpassen oder Frage streichen
@@ -11,6 +18,7 @@ Aufgliedern und Arbeit anpassen oder Frage streichen
 Abgabe: 
 - Papierformat (auch ungebunden) + Digitale Form, Webseiten Speichern/Drucken
 - .jar + Installationsanleitung
+- Code
 
 Holzi:
 - .boto/gsutil: Probleme mit groﬂen Dateien (Ergebnisse)
