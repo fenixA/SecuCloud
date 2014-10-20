@@ -1,0 +1,100 @@
+
+/* gettext library */
+
+var catalog = new Array();
+
+function pluralidx(count) { return (count == 1) ? 0 : 1; }
+catalog['%s results'] = '%s results';
+catalog['All %s results'] = 'All %s results';
+catalog['Difficult to use documentation.'] = 'Difficult to use documentation.';
+catalog['Documentation can be improved.'] = 'Documentation can be improved.';
+catalog['Excellent documentation.'] = 'Excellent documentation.';
+catalog['Failed to send page rating.'] = 'Failed to send page rating.';
+catalog['Good documentation.'] = 'Good documentation.';
+catalog['History Preferences'] = 'History Preferences';
+catalog['Loading your history...'] = 'Loading your history...';
+catalog['Most Recently Visited'] = 'Most Recently Visited';
+catalog['My Most Visited'] = 'My Most Visited';
+catalog['Place this code where you want your ad unit to appear.'] = 'Place this code where you want your ad unit to appear.';
+catalog['Place this code where you want your first ad unit to appear. '] = 'Place this code where you want your first ad unit to appear. ';
+catalog['Please enter a width in pixels, or "auto"'] = 'Please enter a width in pixels, or "auto"';
+catalog['Please enter the client-ID using the pub-0000000000000000 format'] = 'Please enter the client-ID using the pub-0000000000000000 format';
+catalog['Please enter the pub-id using the pub-0000000000000000 format'] = 'Please enter the pub-id using the pub-0000000000000000 format';
+catalog['Sign in to view your recently visited pages.'] = 'Sign in to view your recently visited pages.';
+catalog['Thanks for Rating!'] = 'Thanks for Rating!';
+catalog['Turn on <a href="%s">history</a> to view recently visited pages.'] = 'Turn on <a href="%s">history</a> to view recently visited pages.';
+catalog['Unusable documentation.'] = 'Unusable documentation.';
+catalog['Your browsing history on Google Developers will appear here.'] = 'Your browsing history on Google Developers will appear here.';
+
+
+function gettext(msgid) {
+  var value = catalog[msgid];
+  if (typeof(value) == 'undefined') {
+    return msgid;
+  } else {
+    return (typeof(value) == 'string') ? value : value[0];
+  }
+}
+
+function ngettext(singular, plural, count) {
+  value = catalog[singular];
+  if (typeof(value) == 'undefined') {
+    return (count == 1) ? singular : plural;
+  } else {
+    return value[pluralidx(count)];
+  }
+}
+
+function gettext_noop(msgid) { return msgid; }
+
+function pgettext(context, msgid) {
+  var value = gettext(context + '\x04' + msgid);
+  if (value.indexOf('\x04') != -1) {
+    value = msgid;
+  }
+  return value;
+}
+
+function npgettext(context, singular, plural, count) {
+  var value = ngettext(context + '\x04' + singular, context + '\x04' + plural, count);
+  if (value.indexOf('\x04') != -1) {
+    value = ngettext(singular, plural, count);
+  }
+  return value;
+}
+
+function interpolate(fmt, obj, named) {
+  if (named) {
+    return fmt.replace(/%\(\w+\)s/g, function(match){return String(obj[match.slice(2,-2)])});
+  } else {
+    return fmt.replace(/%s/g, function(match){return String(obj.shift())});
+  }
+}
+
+/* formatting library */
+
+var formats = new Array();
+
+formats['DATETIME_FORMAT'] = 'j. F Y H:i:s';
+formats['DATE_FORMAT'] = 'j. F Y';
+formats['DECIMAL_SEPARATOR'] = ',';
+formats['MONTH_DAY_FORMAT'] = 'j. F';
+formats['NUMBER_GROUPING'] = '3';
+formats['TIME_FORMAT'] = 'H:i:s';
+formats['FIRST_DAY_OF_WEEK'] = '1';
+formats['TIME_INPUT_FORMATS'] = ['%H:%M:%S', '%H:%M'];
+formats['THOUSAND_SEPARATOR'] = '.';
+formats['DATE_INPUT_FORMATS'] = ['%d.%m.%Y', '%d.%m.%y', '%Y-%m-%d'];
+formats['YEAR_MONTH_FORMAT'] = 'F Y';
+formats['SHORT_DATE_FORMAT'] = 'd.m.Y';
+formats['SHORT_DATETIME_FORMAT'] = 'd.m.Y H:i:s';
+formats['DATETIME_INPUT_FORMATS'] = ['%d.%m.%Y %H:%M:%S', '%d.%m.%Y %H:%M', '%d.%m.%Y', '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S.%f', '%Y-%m-%d %H:%M', '%Y-%m-%d'];
+
+function get_format(format_type) {
+    var value = formats[format_type];
+    if (typeof(value) == 'undefined') {
+      return format_type;
+    } else {
+      return value;
+    }
+}

@@ -1,0 +1,23 @@
+/*****************************
+2.0 branding
+*****************************/
+
+#branding #branding-banner{
+background:transparent url(/SiteGlobals/StyleBundles/Bilder/Farbschema_A/branding_themen.jpg?__blob=normal&v=2) no-repeat scroll left top;
+}
+
+
+#navSecondary dt {
+background-color: #CC9933;
+}
+#navPrimary {
+border-bottom: 4px solid #CC9933;
+}
+
+
+#navSecondary dl li a:hover,
+#navSecondary dl li a:focus,
+#navSecondary dl li a:active {
+color: #fff;
+background-color: #CC9933;
+}
