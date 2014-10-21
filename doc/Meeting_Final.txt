@@ -18,10 +18,6 @@ Abgabe:
 - Code
 
 Holzi:
-- .boto/gsutil: Probleme mit groﬂen Dateien (Ergebnisse)
-	fragmentierung
-	beta status
-	sehr neu (google cloud)
 - Daseinsberechtigung(diskussion): 
 Skaleneffekte, Verbundeffekte, Nachfrageschwankungen (Volatilit‰t)
 

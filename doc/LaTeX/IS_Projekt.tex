@@ -206,7 +206,7 @@ Ziel der Arbeit ist es herauszuarbeiten, ob und wie Cloudspeicher zur sicheren A
 Hinzu kommt eine Abwägung, ob und wie eine solche Applikation marktfähig entwickelt und vertrieben werden kann.
 
 \subsection{Gang der Arbeit}
-Zunächst werden im Kapitel \fullref{GrundlagenV} alle Grundlagen erläutert, die zum Verständnis der in \fullref{UmsetzungV}  beschriebenen Konzeptionierung und Implementierung dienen. Darin werden die verwendeten Sicherheitsalgorithmen, die Notwendigkeit von Cloudcomputing, dessen wirtschafliche Aspekte, die Abgrenzung der einzelnen Anbieter, die Programmiersprache Java, das Kryptosystem AES sowie die zur Entwicklung der Applikation verwendeten Werkzeuge und Technologien beschrieben. Nachfolgend wird in \fullref{ErgebnisseV} die Applikation selbst in Architektur und Aufbau des Programmcodes und das entworfene Sicherheitskonzept erläutert. Außerdem findet sich hier auch eine detaillierte Beschreibung des graphischen Interfaces und eine Bedienungsanleitung. In \fullref{DiskussionV} werden die Ergebnisse (die Applikation) im Sinne der Motivation und der Zielsetzung bewertet sowie Möglichkeiten zur Optimierung der Applikation und eine Aussicht auf zukünftige Weiterentwicklungen gegeben.
+Zunächst werden im Kapitel \fullref{GrundlagenV} alle Grundlagen erläutert, die zum Ver-ständnis der in \fullref{UmsetzungV}  beschriebenen Konzeptionierung und Implementierung dienen. Darin werden die verwendeten Sicherheitsalgorithmen, die Notwendigkeit von Cloudcomputing, dessen wirtschafliche Aspekte, die Abgrenzung der einzelnen Anbieter, die Programmiersprache Java, das Kryptosystem AES sowie die zur Entwicklung der Applikation verwendeten Werkzeuge und Technologien beschrieben. Nachfolgend wird in \fullref{ErgebnisseV} die Applikation selbst in Architektur und Aufbau des Programmcodes und das entworfene Sicherheitskonzept erläutert. Außerdem findet sich hier auch eine detaillierte Beschreibung des graphischen Interfaces und eine Bedienungsanleitung. In \fullref{DiskussionV} werden die Ergebnisse (die Applikation) im Sinne der Motivation und der Zielsetzung bewertet sowie Möglichkeiten zur Optimierung der Applikation und eine Aussicht auf zukünftige Weiterentwicklungen gegeben.
 
 In der Ausarbeitung werden teilweise Anglizismen und englische Begriffe in deutssprachigen Fließtexten verwendet, zum Teil in Eindeutschungen. Dies geschieht, da das Zielpublikum eine an der Informatik interessierte Fachöffentlichkeit ist. Wir gehen davon aus, dass viele Begriffe der Informatik auch im deutschen Sprachgebrauch auf englisch verwendet werden und so in diesem Zusammenhang eindeutiger sind als ihre deutsche Übersetzung. So ist zum Beispiel ein Bytearray ein stehender Begriff, während die Übersetzung Bytefeld einer Erläuterung bedürfen würde.
 
@@ -229,11 +229,10 @@ Definition von Cloud Computing nach dem Bundesamt für Sicherheit in der Informa
 "Cloud Computing bezeichnet das dynamisch an den Bedarf angepasste Anbieten, Nutzen und Abrechnen von IT-Dienstleistungen über ein Netz. Angebot und Nutzung dieser Dienstleistungen erfolgen dabei ausschließlich über definierte technische Schnittstellen und Protokolle. Die Spannbreite der im Rahmen von Cloud Computing angebotenen Dienstleistungen umfasst das komplette Spektrum der Informationstechnik und beinhaltet unter anderem Infrastruktur (z. B. Rechenleistung, Speicherplatz), Plattformen und Software."
 
 \subsubsection{Daseinsberechtigung}\label{CloudV}
-Cloud Computing bietet Unternehmen die Möglichkeit hohe Investitionskosten für die IT-Infrastruktur in variable laufende Kosten umzuwandeln. Dies ist vor allem für kleinere und mittlere Unternehmen sowie Start-Ups interessant, da nicht nur der enorme Kapitalaufwand bei der Beschaffung von IT-Hardware sondern auch anfallende Kosten für die Administation umgewandelt und minimiert werden können \cite[S. 78]{45}. Die Möglichkeit einer Bereitstellung zusätzlicher Ressourcen bietet zudem eine flexible Alternative zu einer stetigen anforderungsorientierten Erweiterung der IT-Landschaft. Dies ermöglicht eine risikolose, bedarfsgerechte Steuerung der Kapazitäten und Konzentration auf die Kernkompetenz des Unternehmens. Im Allgemeinen betreffen diese Vorzüge alle Bereiche der IT-Infrastruktur (Rechenleistung etc.) \cite[S. 35]{39}. Im Projekthintergrund wird nachfolgend im Detail der wirtschaftliche Aspekt der Speichernutzung bei IaaS betrachtet \cite[S. 35 ff.]{39}:
+Cloud Computing bietet Unternehmen die Möglichkeit hohe Investitionskosten für die IT-Infrastruktur in variable laufende Kosten umzuwandeln. Dies ist vor allem für kleinere und mittlere Unternehmen sowie Start-Ups interessant, da nicht nur der enorme Kapitalaufwand bei der Beschaffung von IT-Hardware sondern auch anfallende Kosten für die Administation umgewandelt und minimiert werden können \cite[S. 78]{45}. Die Möglichkeit einer Bereitstellung zusätzlicher Ressourcen bietet zudem eine flexible Alternative zu einer stetigen anforderungsorientierten Erweiterung der IT-Landschaft. Dies ermöglicht eine risikolose, bedarfsgerechte Steuerung der Kapazitäten und Konzentration auf die Kernkompetenz des Unternehmens. Im Allgemeinen betreffen diese Vorzüge alle Bereiche der IT-Infrastruktur (Rechenleistung etc.) \cite[S. 35]{39}. Im Projekthintergrund wird nachfolgend im Detail der wirtschaftliche Aspekt der Speichernutzung bei IaaS betrachtet \cite[S. 35ff.]{39}:\\
 
-\textbf{Elastische Skalierbarkeit}
-
-Gängige Ansätze fordern eine kostenintensive und zeitlich aufwändige Analyse bestehender Systeme und möglicher Erweiterungen. Schwankungen des Bedarfs erschweren eine exakte Kalkulation notwendiger Betriebsmittel, sodass eine Fehl- oder wohlwollend angesetzte Kalkulation zu ungenutzten Kapazitäten und einer unnötigen Belastung der Umwelt führt \cite[S. 91 ff.]{45}. Durch Cloud Computing können innerhalb kürzester Zeit Ressourcen bereitsgestellt oder entzogen werden.
+\textbf{Elastische Skalierbarkeit}\\
+Gängige Ansätze fordern eine kostenintensive und zeitlich aufwändige Analyse bestehender Systeme und möglicher Erweiterungen. Schwankungen des Bedarfs erschweren eine exakte Kalkulation notwendiger Betriebsmittel, sodass eine Fehl- oder wohlwollend angesetzte Kalkulation zu ungenutzten Kapazitäten und einer unnötigen Belastung der Umwelt führt \cite[S. 91ff.]{45}. Durch Cloud Computing können innerhalb kürzester Zeit Ressourcen bereitsgestellt oder entzogen werden.
 
 \vspace{1em}
 $\;$\\
@@ -245,14 +244,12 @@ $\;$\\
 \end{minipage}
 \vspace{1em}
 
-Abbildung \ref{SpeicherV} stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Über-\\kapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.
-
-\textbf{Materielle Wertverluste}
-
+Abbildung \ref{SpeicherV} stellt schemenhaft den Speicherbedarf eines Unternehmens dar. Eine Überkapazität tritt dann ein, wenn der zum Zeitpunkt x verwendete Speicher unter dem tatsächlich verfügbaren Speicher liegt - eine Unterkapazität, wenn mehr Speicher benötigt wird, als vorhanden ist. Eine Kalkulation benötigter Ressourcen ist zu Beginn schwierig und eine Überkapazität sogar, um einen ständigen Integrationsaufwand zu vermeiden, gewünscht. Der Anstieg an Daten führt unweigerlich zur Erreichung der Kapazitätsgrenzen. Im Extremfall wird die Migration besserer Systeme notwendig, was teilweise Geschäftsprozesse beeinflussen kann. In jedem Fall führt jedoch eine Beschaffung und Integration neuer Hardware zu finanziellem und administrativem Aufwand. Sinkt der Speicherbedarf wieder, bspw. durch Löschen redundanter Daten, wäre eine solche irreversible Invesition, kurzfristig betrachtet, als unnötig anzusehen. Bei Cloud Computing wird diese Herausforderung auf den Anbieter übertragen - der benötigte Speicher kann bedarfsgerecht gesteuert und abgerechnet werden.\\\\
+\textbf{Materielle Wertverluste}\\
 Der stetige technische Fortschritt führt zu einem rapiden Wertverlust der vorhandenen Hardware. Auch die Lebensdauer von stark beanspruchter Hardware, wie beim Einsatz in Servern, macht einen Austausch notwendig. Deshalb ist es nicht sinnvoll für ein Unternehmen einen großen, nicht verwendeten "Vorratsspeicher'' anzulegen. Dieser müsste eventuell noch vor Erreichung seiner maximaler Auslastung ersetzt werden. Dies bedeutet, dass zum einen die Instandhaltung der IT-Infrastruktur Kosten verursacht, zum anderen aber auch innerhalb einer kurzen Zeitspanne die angefallenen Kosten zum Investitionszeitpunkt nicht mehr dem eigentlichen Wert entsprechen. Ein solcher Wertverlust kann durch Cloud Computing vermieden werden. Die Verwaltung und Aktualität der Infrastruktur obliegt einzig dem Anbieter, welcher aufgrund großer Margen eher in der Lage ist, neuste Technik zu einem moderaten Preis einzukaufen und diese Einsparungen an den Kunden weiterzugeben.
+\pagebreak
 
 \textbf{Höhere Wirtschaftlichkeit}
-
 \vspace{1em}
 $\;$\\
 \begin{minipage}{\linewidth}
@@ -276,7 +273,7 @@ Nach NIST \cite[S. 2f.]{34} können Cloud Services in fünf Eigenschaften unters
 	\item Measured Services: Ressourcennutzung wird gemessen und überwacht
 \end{compactitem}
 
-Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) \cite[S. 14 ff.]{36} um nachfolgende Punkte erweitert:
+Zusätzlich werden diese Eigenschaften durch die Cloud Security Alliance (CSA) \cite[S. 14ff.]{36} um nachfolgende Punkte erweitert:
 \begin{compactitem}
 	\item Mandantenfähigkeit: Ressourcen werden geteilt, Unterscheidung der Mandanten notwendig
 	\item Pay per Use: Nur tatsächlich verwendete Ressourcen müssen bezahl werden
@@ -305,19 +302,19 @@ Der Anbieter stellt eine verwaltete Cloud-Infrastruktur zur Verfügung, worauf e
 Reine, bedarfsgerechte Nutzung der Rechnerinfrastruktur des Anbieters. Der Anwender muss alles außer der virtuellen Infrastruktur selbst verwalten. Dies bedeutet zwar einen Mehraufwand, bietet aber gleichzeitig eine größtmögliche Skalierbarkeit. Bekannte Anbieter sind \href{https://cloud.google.com/storage/}{\textit{Google Cloud Storage}} oder Amazon Webservices (AWS) mit \href{http://aws.amazon.com/de/}{\textit{Amazon S3 oder Amazon EC2}}.
 \end{compactitem}
 
-\cite{35} \cite[S. 65f.]{41} \cite[S. 2f]{34}
+\cite{35} \cite[S. 65f.]{41} \cite[S. 2f.]{34}
 
 Im Rahmen dieser Projektarbeit bezieht sich das Konzept auf Infrastructure as a Service (IaaS), worauf nachfolgend im Näheren eingegangen wird.
 
 \subsubsection{Bereitstellungsmodelle}
 \begin{compactitem}
-\item Public Cloud:\\
+\item Public IaaS Cloud:\\
 Cloud Computing Services für die breite Öffentlichkeit - je Server mehrere unabhängige Nutzer.
-\item Private Cloud:\\
+\item Private IaaS Cloud:\\
 Cloud Computing Services für Unternehmen - je Server ein Unternehmen.
-\item Hybrid Cloud:\\
+\item Hybrid IaaS Cloud:\\
 Cloud Computing Services für Unternehmen - physikalische Server je nach Anwendungsgebiet entweder Public oder Private.
-\item Community Cloud:\\
+\item Community IaaS Cloud:\\
 Cloud Computing Services für Unternehmen - Zusammenschluss von Interessensgemeinschaften/Institutionen zur gemeinsamen Nutzung.
 \item Personal IaaS Cloud:\\
 Cloud Computing Service durch den Anwender selbst.
@@ -342,11 +339,11 @@ Das Management eines Zwischenfalles und dessen Gegenmaßnahmen sollte darauf aus
 \item Geschäftskontinuität:\\
 RPO (engl. Recovery Point Objective) definiert die Höchstmenge an Datenverlust, welche nach einem entsprechenden Vorfall akzeptabel ist. Ausgedrückt wird dies zusätzlich in Zeit, der Zeit zwischen entsprechendem Verlust und Rückführung zur letzten zuverlässigen Sicherung. RTO (engl. Recovery Time Objective) definiert die Höchstzeitdauer, die für die Wiederherstellung und vollständigen Zugriff auf die Daten akzeptabel ist.
 \end{compactitem}
-\cite[S. 93 ff., 224f.]{38}
+\cite[S. 93ff., 224f.]{38}
 
 \subsection{Java}\label{JavaV}
 Die Applikation zur sicheren Speicherung in der Cloud wurde komplett in Java in der Version 1.7 implementiert. Der Ursprung von Java liegt in den frühen 90er Jahren, als ein Team um James Gosling (genannt das Green Team) bei Sun Microsystems damit begann, eine der ersten plattformunabhängigen Programmiersprachen zu entwickeln. Sie sollte die Computerwelt revolutionieren, indem sie die Grenzen zwischen den Systemen, die damals noch deutlicher waren als heute, verwischt. Heute gehört die gesamte Java Technologie der Oracle-Gruppe, die Sun Microsystems im Januar 2010 kaufte.\\
-\cite{1}\cite{2}\cite[S. 52]{3}\\
+\cite{1}\cite{2}\cite[S. 52]{3}
 
 Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt, besteht im Kern aus drei Teilen:
 \begin{compactitem}
@@ -357,7 +354,7 @@ Die Java Technologie, welche die Plattformunabhängigkeit zur Verfügung stellt,
 
 \subsubsection{Java Development Kit}
 Das \textbf{Java Development Kit} ist das Entwicklungswerkzeug mit welchem Java Applikationen erstellt werden können. Seit 2006 wird es von Sun Microsystems unter der Gnu Public License mit einer sog. Linking Exception (Ausnahmegenehmigung für das Linken einer Programmbibliothek) veröffentlicht und mittlerweile wird es von einer OpenSource Commuinity in enger Zusammenarbeit mit Firmen wie IBM und Apple als OpenJDK in einer freien Version weiterentwickelt. Es besteht hauptsächlich aus Bibliotheken, sowie dem Java Compiler \textbf{Javac} mit dem aus Java Code der sog. \textbf{Java-Bytecode} erzeugt werden kann.\\
-\cite[S. 63f]{3}\\
+\cite[S. 63f]{3}
 
 \subsubsection{Programmiersprache Java}
 Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt objektorientiert. Das Besondere an Java ist außerdem eine Vielzahl an Bibliotheken, die vom JDK direkt mitgeliefert und (als es noch ausschließlich Sun gehörte) von Sun Microsystems gewartet werden. Hierdurch können viele Standardaufgaben, die bei der Entwicklung anfallen, direkt mit einer Java Bibliothek gelöst werden, ohne dass diese Funktionalitäten erst entwickelt oder weite externe Bibliotheken eingebunden werden müssten, die dann weitere Lizenzen erfordern oder zweifelhaften Ursprungs sind.\\
@@ -367,6 +364,7 @@ Die Programmiersprache \textbf{Java} ist eng mit C++ verwandt und strikt objekto
 Das \textbf{Java Runtime Environment} ist die Besonderheit der Java Technologie, welche den plattformunabhängigen Betrieb der Java Applikationen erst ermöglicht. Das  JRE nimmt keinen üblichen Maschinencode entgegen, der prozessorgebunden wäre und damit nur auf bestimmten Architekturen laufen könnte, sondern \textbf{Java-Bytecode}. Dieser Bytecode besteht auch aus Prozessoranweisungen, allerdings für den Prozessor der virtuellen Maschine, welche das JRE zur Verfügung stellt. Darin besteht der Kern der Plattformunabhängigkeit: Wurde einmal ein JRE für die betreffende Architektur und das Betriebssystem entwickelt, sind Java Applikationen auf diesem lauffähig, solange sie sich strikt an Java und seine Bibliotheken halten.\\
 Diese Besonderheit ist auch der Grund, aus dem die Wahl der Programmiersprache zu Beginn des Projektes auf Java fiel. Zum Einen kann die Software ohne Portierungsaufwand auf allen gängingen Betriebssystemen verwendet werden, zum Anderen entfällt ein großer Teil des Entwicklungsaufwandes für Funktionalitäten die nicht dem Kern der Applikation dienen, wie ein graphisches Interface oder der Umgang mit Dateien und Ordnern. Dadurch lässt sich mehr Zeit auf die eigentlichen Kernfunktionen wie Verschlüsselung und Cloudanbindung,  sowie das zugrunde liegende Sicherheitskonzept verwenden. \\
 \cite[S. 63f]{3}
+\pagebreak
 
 \subsection{Kryptographie}\label{KryptV}
 Unter dem Begriff Kryptographie wird meist das Ver- und Entschlüsseln von Botschaften verstanden, mit dem Anspruch, dass nur berechtigte Personen in der Lage sind, diese zu lesen. Dies ist zwar nur bedingt falsch, vernachlässigt aber wichtige Aspekte, die von essentieller Bedeutung für die moderne Kryptographie sind: Kryptographie umfasst heute die vier Kernziele
@@ -378,7 +376,7 @@ Unter dem Begriff Kryptographie wird meist das Ver- und Entschlüsseln von Botsc
 \end{compactitem}
 \cite[S. 14-17]{48} \cite[S. 2]{42}\\\\
 Der Aspekt der \textbf{Vertraulichkeit} ist der im Einleitungssatz erwähnte. Vertraulichkeit bedeutet, dass eine Botschaft derart geschützt ist, dass sie ausschließlich von authorisierten Personen gelesen werden kann. Dies wird im Computerzeitalter mittels Verschlüsselungsalgorithmen erreicht. Allerdings schützt Vertraulichkeit nicht davor, dass eine Botschaft manipuliert wird. Um dies sicherzustellen muss bei einem Kryptosystem die \textbf{Integretät} der Botschaft sichergestellt werden. Das bedeutet nicht, dass eine Botschaft nicht manipuliert werden könnte, es bedeutet nur, dass eine Manipulation sofort entdeckt werden und die Botschaft entsprechend als nicht integer entlarvt werden kann. Nun sind wir in der Lage eine Botschaft zu erzeugen, die weder von Fremden gelesen, noch unbemerkt manupuliert werden könnte. Allerdings kann nicht sichergestellt werden, dass die Botschaft von dem in ihr erwähnten Absender kommt. Deshalb gibt es noch die Aspekte \textbf{Authentizität und Verbindlichkeit}. Authentizität garantiert, dass eine Botschaft tatsächlich von der Person kommt, die im Absender erwähnt ist. Meist geht dies Hand in Hand mit Verbindlichkeit: Ist es möglich festzustellen, dass eine Botschaft nur von einer betreffenden Person gesendet werden konnte, ist es dieser Person nicht möglich, den Versandt abzustreiten.\\
- \cite[S. 2]{42} \cite[S. 14-17]{48}\\
+ \cite[S. 2]{42} \cite[S. 14-17]{48}
 
 Im Folgenden sollen vor allem die Aspekte der Vertraulichkeit und Integrität näher erläutert werden, da sie von Bedeutung für den entwickelten Prototypen sind und daher für das Verständnis des Konzeptes wichtig sind.
 
@@ -393,10 +391,10 @@ Diese Chiffren wiederum teilen sich in zwei Gruppen: Strom- und Blockchiffren. D
 Während Bruce Schneier in seinem Standardwerk Angewandte Kryptographie noch beschreibt \cite[S. 249]{42}, dass Stromchiffren beliebter seien, aber bald ein Umbruch erfolgen könnte, sind Blockchiffren heute deutlich verbreiteter. Dies liegt vermutlich auch an Standards wie AES. AES ist ein Verschlüsselungsstandard des US-amerikanischen National Institute of Standardisation (NIST) und soll im Folgenden, als der häufigste Vertreter der symmetrischen Chiffren, näher erläutert werden:\\
 \\\textbf{AES}\\
 AES (Advanced Encryption Standard) ist ein kryptographischer Standard, welcher im Zuge einer 1997 bekannt gegebenen Ausschreibung des US-Amerikanischen Handelsministeriums festgelegt wurde. Es hat die mittlerweile als unsicher geltenden DES bzw. 3DES Standards abgelöst, gilt heute als Standard der symmetrischen Verschlüsselung und als für viele Jahre sicher. Es gibt ihn in den Varianten AES-128, AES-192 und AES-256, wobei die Zahlen sich auf die jeweils verwendete Schlüssellänge in Bit beziehen. Der verwendete Algorithmus ist der Rijndael von Vincent Rijmen und Joan Daemen. Unter anderem wird er von der NASA und der US-amerikanischen Regierung verwendet und ist Teil der Standards WPA2, SSH, IPSec, SSL und vieler anderer. Außerdem ist er in jedem größeren Betriebssystem an der einen oder anderen Stelle implementiert. Die sehr hohe Verbreitung ist vor allem seiner Einfachheit, der Möglichkeit ihn in Hardware zu implementieren, der mathematischen Eleganz, dem geringen Rechenaufwand und nicht zuletzt dem offenen Ausschreibungsverfahren geschuldet. Gerade die Besonderheit, dass dieser Standard der US-Amerikaner offen liegt, von jedem selbst implementiert werden kann, nicht übernommen werden muss und in einem äußerst transparenten Verfahren ausgeschrieben und ausgewählt wurde, wird bis heute gelobt und ist Hauptgrund für das in AES gesetzte Vertrauen. Grundsätzlich ist AES eine symmetrische Blockchiffre. Es arbeitet also bei der Ver- und Entschlüsselung mit denselben Schlüsseln. Außerdem werden die Nutzdaten in 16 Byte Blöcke geteilt, welche getrennt verschlüsselt werden. Die Blockgröße ist im Gegensatz zur Schlüssellänge nicht variierbar. Der Algorithmus sieht die Möglichkeit zwar vor, sie wurde jedoch nicht im AES standardisiert.\\
-\cite{5} \cite[S. 7ff ]{4}\\
+\cite{5} \cite[S. 7ff]{4}\\
 \\\textbf{Betriebsmodi}\\
 Für Blockchiffren (teilweise auch für Stromchiffren) wurden im Laufe der Jahre verschiedene sog. Betriebsmodi entwickelt. Ein Betriebsmodus stellt die Art und Weise dar, in der eine Blockchiffre verwendet wird. Sie wurden eingeführt, da die Verwendung einer Blockchiffre in ihrer reinen Form problematisch werden kann. Zum einen gehört dazu die Tatsache, dass die Eingabe der Blocklänge entsprechen muss und ein Padding Gefahren für die Sicherheit mitbringen kann. Hinzu kommt, dass eine Chiffre bei gleichem Schlüssel und gleicher Eingabe immer das selbe Chiffrat erzeugt, was kryptographische Analysen erleichtert. Der einfachste denkbare Betriebsmodus nennt sich Electronic Codebook Mode. Hier wird die Nachricht in Blöcke von gleicher Blocklänge zerteilt und jeweils einzeln verschlüsselt. Dieser löst keines der oben gennante Probleme, ermöglicht es aber die Nachricht parallel zu verschlüsseln, also einen Geschwindigkeitsvorteil auf rechenstarken Systemen zu erzeugen. Weitere Betriebsmodi erzeugen aus einer zugrundeliegenden Blockchiffre eine Stromchiffre oder machen Chiffratblöcke von vorangegangenen abhängig um dafür zu sorgen, dass die Eindeutigkeit von Chiffratblöcken aufgehoben wird. Im Folgenden soll einer dieser Betriebsmodi, der Counter Mode, näher erläutert werden.\\
-\cite[S. 223ff.]{42} \cite[S. 23f]{13} \cite[S. 88-94]{48}\\
+\cite[S. 223ff.]{42} \cite[S. 23f.]{13} \cite[S. 88-94]{48}\\
 \\\textbf{Counter Mode}\\
 Im Counter Mode wird nicht der Klartext selbst mittels Algorithmus und Schlüssels chiffriert, sondern mittels eines (im besten Fall zufällig) gewählten Initialisierungsvektor (Nonce, number only used once) und eines Zählers (Counter) eine Bytefolge in Blocklänge gebildet. Diese wird dann mittels des Schlüssels chiffriert und per XOR Operation mit einem der Blocklänge entsprechen Teil des Klartextes verknüpft. Danach wird der Zähler um eins erhöht, auf dieselbe Weise wird mit dem Rest der Nachricht fortgefahren. Wichtig zu verstehen ist hierbei, dass der Initialisierungsvektor nicht Teil des Geheimnisses ist (welches ausschließlich der Schlüssel darstellt, siehe Kerckhoffs‘ Prinzip \cite[S. 38]{48}), sondern offen übertragen werden kann. Er dient ausschließlich der Diversifikation gleicher Klartexte und dem Auffüllen einer Blocklänge. Durch den Counter Mode ist es möglich, Blockchiffren als Stromchiffren zu betreiben, da Klartexte beliebiger Länge mit den erzeugten Chiffratbytes bitweise verknüpft werden können. Vorteil bei diesem Modus ist auch, dass Chiffrate im Voraus errechnet werden können, wodurch sich unter Umständen Zeitvorteile ergeben. Fehlerhaft übertragene Bits werden eins zu eins fehlerhaft entschlüsselt, weitere Teile der Nachricht sind nicht betroffen.\\
 \cite{6} \cite{7} \cite[S. 243f]{42} \cite[S. 93f]{48}\\
@@ -407,6 +405,7 @@ Zur Vollständigkeit werden hier die asymmetrischen Chiffren genannt. Sie verwen
 \subsubsection{Integrität}
 Um die Integrität von Botschaften festzustellen werden üblicherweise Hashingverfahren verwendet. Hashing wird zum Beispiel auch verwendet um sicher zu stellen, dass Botschaften korrekt übertragen wurden, also keine Übertragungsfehler entstanden sind. Im Falle der Integritätssicherstellung gegen gezielte Angriffe werden allerdings besondere kryptographische Hashfunktionen verwendet.\\
  \cite[S. 15]{48}  \cite[S. 2]{42}\\
+ \pagebreak
 \\\textbf{Kryptographisches Hashing}\\
 Ein sicherer Hash Algorithmus ist in erster Linie eine Hashfunktion wie jede andere, also ein Algorithmus, der Prüfsummen auf Eingabewerte beliebiger Länge berechnet. Prüfsummen fanden schon vor der Kryptographie Einsatz in der Informatik, vor allem um die korrekte Übertragung von Daten zu gewährleisten. Ein gutes Beispiel hierfür bietet der CRC (Cyclic Redundancy Check). Wenn aus einem Bitstrom mittels CRC eine Prüfsumme berechnet wurde, kann anhand dieser nach der Übertragung der Daten relativ sicher festgestellt werden, ob alle Daten korrekt übertragen wurden, da der CRC Wert sich durch kleinste Veränderungen im Bitstrom stark verändert. Im Falle der kryptogephischen Hashfunktion ist diese Eigenschaft ebenso wichtig, allerdings kommen  in diesem Umfeld weitere Anforderungen hinzu: Eine kryptographische Hashfunktion sollte eine Einwegfunktion sein. Das bedeutet, dass es nicht möglich sein darf, aus einem berechneten Hashwert die ursprüglichen Daten zu rekonstruieren. Die meisten Hashfunktionen stellen dies sicher, indem der Hashwert kürzer als die Eingabedaten ist. Durch diese Kompression ist es nicht mehr möglich die ursprünglichen Daten zu ermitteln. Eine weitere Anforderung ist, dass eine kryptographische Hashfunktion kollisionsresistent sein muss. Bei einer kollisionsresistenten Hashfunktion ist es nicht möglich in effektiver Zeit zwei unterschiedliche Datenströme zu berechnen die den selben Hashwert erzeugen \cite[S. 4]{12}. Aus dieser Anforderung ergibt sich auch, dass es nicht möglich ist einen Datenstrom derart zu bearbeiten, dass er einen gewünschten Hash produziert. Diese Anforderungen erfüllt CRC nicht, dafür aber kryptographische Hashfunktionen wie die in SHA standardisierten. Dagegen sind diese meist deutlich komplexer (rechenintensiver) und die erzeugten Hashes länger. Der eigentliche Sinn von kryptographischen Hashfunktionen liegt vor allem in zwei Anwendungsfällen:\\
 \\\textbf{Sicherstellung von Integrität}\\
@@ -417,6 +416,7 @@ Will eine Person einer anderen beweisen im Besitz eines Geheimnisses zu sein, ve
 \\\textbf{SHA2-256}\\
 SHA (Secure Hash Algorithm) ist eben so wie der AES eine Standardisierung. In diesem Falle allerdings die Standardisierung eines sicheren Hash Algorithmus. SHA2 ist der Nachfolger von SHA1 und ermöglicht die Erzeugung von sicheren Hashes von 224, 256, 384 oder 512 Bit Länge. Der Algorithmus dieser verschiedenen Versionen ist grundsätzlich immer derselbe, allerdings unterscheiden sich die Anzahl der berechneten Runden und die Länge der Initialwerte. Zum Teil (256 zu 224) wird auch einfach der letzte Teil der Ausgabe ignoriert und damit eine geringere Länge des Hashwertes erreicht.\\
 \cite[S. 5f]{13}\cite[S. 3, 7f, 10f]{10}
+\pagebreak
 
 \section{Technische Analyse/Umsetzung}\label{UmsetzungV}
 
@@ -430,19 +430,15 @@ Der Markt für Cloud Computing in Form von IaaS befindet sich in einem stetigen 
 	\item Einzelanwendungsfälle und virtuelle Rechenzentren
 	\item Entwurfsmuster für native Cloud Anwendungen und Unternehmensanwendungen
 \end{compactitem}
-\pagebreak
 
-\textbf{Magisches Quadrat}
-\vspace{1em}
+\subsubsection{Magisches Quadrat}
 $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.7\linewidth]{./img/Gartner_Magic_Square.png}
-	\captionof{figure}{\small Magisches Quadrat}
+	\includegraphics[width=0.5\linewidth]{./img/Gartner_Magic_Square.png}
+	\captionof{figure}{\small Magisches Quadrat \cite{30}}
 	\label{Gartner}
 \end{minipage}
-\vspace{1em}
-
 \begin{compactitem}
 \item{Marktführer (Leaders):}
 \\Der Marktführer-Quadtrant stellt Anbieter dar, die über ein für den strategische Einsatz geeignetes Angebot verfügen und ehrgeizige Ziele verfolgen. Sie sind zwangsläufig nicht die besten Anbieter für spezielle Bedürfnisse und bedienen möglicherweise nicht alle Anwendungsfälle, decken aber ein breites Spektrum davon ab. Marktführer besitzen eine Erfolgsbilanz über Auslieferung, bedeutende Marktanteile und viele referenzierbare Kunden.
@@ -453,11 +449,13 @@ $\;$\\
 \item{Nischenspieler (Niche Players):}
 \\Nischenspieler sind womöglich ausgezeichnete Anbieter für Anwendungsfälle auf die sie sich spezialisiert haben, können aber bei weitem nicht alle Anwendungsfälle abdecken. Sie können in diesen Markt neu eingetreten sein oder noch nicht über ausreichend signifikante Marktanteile verfügen. Nischenspieler können Marktführer in einem Gebiet abseits von IaaS sein, befinden sich aber zum aktuellen Zeitpunkt für Cloud-IaaS in relativ frühen Stadien. Je speziefischer die Bedürfnisse, desto wahrscheinlicher ist es das passende Produkt in diesem Quadranten zu finden.
 \end{compactitem}
+\cite{30}
 
-\textbf{Entscheidungsgrundlage Cloud-Anbieter}\\
+\subsubsection{Entscheidungsgrundlage Cloud-Anbieter}
 In Abbildung \fullref{Gartner} ist ersichtlich, dass die Top-Unternehmen Amazon (Amazon Web Services) und Microsoft (Microsoft Infrastructure Services) bei den aktuellen Marktführern einzuordnen sind, während sich Google mit seinem IaaS-Angebot Google Cloud Storage im Quadrant der Visionäre befindet.
 
-Die Strategie der Google Cloud Plattform basiert auf dem Konzept anderen Unternehmen eine Leistungsfähigkeit anzubieten, wie Google sie selbst verwendet. Dies wird durch Nutzung der innovativen internen technischen Möglichkeiten erreicht. Obwohl Google erst im Dezember 2013 in den IaaS-Markt vorgedrungen ist (seit 2008 Google App Engine als PaaS), befindet sich die angebotene Lösung bereits unter den Visionären. Das liegt unter anderem daran, dass sich Google auf seine Fähigkeiten beschränkt, anstatt diese von Grund auf neu zu strukturieren. Daher wird es auf lange Sicht in der Lage sein das Angebot schneller als seine Konkurrenten voranzubringen. Google verfügt über eine umfassende Vision und ausreichend Erfahrung darüber, wie native Cloud-Anwendungen über einen Lebenszyklus hinweg entwickelt und verwaltet werden. Die Vorstellung von fließenden Grenzen zwischen IaaS und PaaS wird Anwendern in absehbarer Zeit einen Kompromiss zwischen Kontrolle und automatisierter Verwaltung bieten. Die gesamte Unternehmung Google verfügt über eine Vielzahl von Rechenzentren, enorme infrastrukturelle Kapazitäten und ein eigenes globales Hochleistungsnetzwerk. Da der IaaS-Zweig Google Compute Engine (GCE) lediglich geringe Mehrkosten für Google darstellt, kann es den Preis trotz hoher Leistungsfähigkeit aggressiv gestalten. Dennoch wird sich Google nicht durch den Preis, sondern durch seine Plattform und zusätzliche Verwaltungsfunktionen von den anderen IaaS-Anbietern unterscheiden. Aktuell ist Google Cloud Storage jedoch ein relativ neues Produkt, sodass noch keine operative Erfolgsbilanz gezogen werden kann. Hinzu kommen kleinere Störungen bis zur Freigabe der allgemeinen Verfügbarkeit von GCE. Eine der größten Herausforderungen besteht darin, das Vertrauen der Unternehmen zu gewinnen und den Support auszubauen. Allerdings wird Google bereits heute als künftiger Marktführer für IaaS wahrgenommen, nicht zuletzt wegen der gewohnten Unterstützung durch Software-Unternehmen und Entwickler. Diesen Vorteil konnten wir uns im Rahmen der Projektarbeit zunutze machen und auf Entwicklungsmöglichkeiten von Google, bspw. durch die Verwendung der Schnittstelle gsutil, zurückgreifen. Da das Ziel dieser Arbeit ebenfalls in einem visionären Quadranten einzuordnen wäre, haben wir uns für Google Cloud Storage und gegen Amazon Web Services und Microsoft Infrastructure Services entschieden.
+Die Strategie der Google Cloud Plattform basiert auf dem Konzept anderen Unternehmen eine Leistungsfähigkeit anzubieten, wie Google sie selbst verwendet. Dies wird durch Nutzung der innovativen internen technischen Möglichkeiten erreicht. Obwohl Google erst im Dezember 2013 in den IaaS-Markt vorgedrungen ist (seit 2008 Google App Engine als PaaS), befindet sich die angebotene Lösung bereits unter den Visionären. Das liegt unter anderem daran, dass sich Google auf seine Fähigkeiten beschränkt, anstatt diese von Grund auf neu zu strukturieren. Daher wird es auf lange Sicht in der Lage sein das Angebot schneller als seine Konkurrenten voranzubringen. Google verfügt über eine umfassende Vision und ausreichend Erfahrung darüber, wie native Cloud-Anwendungen über einen Lebenszyklus hinweg entwickelt und verwaltet werden. Die Vorstellung von fließenden Grenzen zwischen IaaS und PaaS wird Anwendern in absehbarer Zeit einen Kompromiss zwischen Kontrolle und automatisierter Verwaltung bieten. Die gesamte Unternehmung Google verfügt über eine Vielzahl von Rechenzentren, enorme infrastrukturelle Kapazitäten und ein eigenes globales Hochleistungsnetzwerk. Da der IaaS-Zweig Google Compute Engine (GCE) lediglich geringe Mehrkosten für Google darstellt, kann es den Preis trotz hoher Leistungsfähigkeit aggressiv gestalten. Dennoch wird sich Google nicht durch den Preis, sondern durch seine Plattform und zusätzliche Verwaltungsfunktionen von den anderen IaaS-Anbietern unterscheiden. Aktuell ist Google Cloud Storage jedoch ein relativ neues Produkt, sodass noch keine operative Erfolgsbilanz gezogen werden kann. Hinzu kommen kleinere Störungen bis zur Freigabe der allgemeinen Verfügbarkeit von GCE. Eine der größten Herausforderungen besteht darin, das Vertrauen der Unternehmen zu gewinnen und den Support auszubauen. Allerdings wird Google bereits heute als künftiger Marktführer für IaaS wahrgenommen, nicht zuletzt wegen der gewohnten Unterstützung durch Software-Unternehmen und Entwickler. Diesen Vorteil konnten wir uns im Rahmen der Projektarbeit zunutze machen und auf Entwicklungsmöglichkeiten von Google, bspw. durch die Verwendung der Schnittstelle gsutil, zurückgreifen. Da das Ziel dieser Arbeit ebenfalls in einem visionären Quadranten einzuordnen wäre, haben wir uns für Google Cloud Storage und gegen Amazon Web Services und Microsoft Infrastructure Services entschieden.\\
+\cite{30}
 
 \subsection{Google Cloud Storage}
 Google Cloud Storage ermöglicht es Daten auf der Google-Infrastruktur mit hoher Zuverlässigkeit, Verfügbarkeit und Leistung abzulegen. Der Aufbau kann in drei Ebenen \cite{40} eingeteilt werden:
@@ -488,42 +486,44 @@ Desweiteren verarbeitet gsutil Befehle für das Erstellen und Löschen von Bucke
 
 \textbf{boto} \cite{47} ist eine OpenSource Python-Bibliothek, die als Schnittstelle zu Google Cloud Storage dient. Das zugehörige GCS-0auth2-boto-Plugin ist ein Plugin zur Authentifizierung mit OAuth 2.0 Anmeldeinformationen. Neben Google verwendet es auch Amazon Web Services als Schnittstelle.
 
-\vspace{1em}
 $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=0.7\linewidth]{./img/OAuth.png}
+	\includegraphics[width=0.5\linewidth]{./img/OAuth.png}
 	\captionof{figure}{\small OAuth 2.0 \cite{46}}
 	\label{OAuthV}
 \end{minipage}
-\vspace{1em}
 
 In Abbildung \ref{OAuthV} wird das Authentifizierungsverfahren OAuth 2.0 an den Google-Servern dargestellt. Ein Anwender meldet sich im System an, erhält daraufhin einen Authentifizierungscode, bestätigt diesen und kann anschließend mit jeglicher, auf die Google APIs zugreifender, Anwendung Google Cloud Storage verwenden. Die Informationen werden in einer *.boto Datei gespeichert und bleiben somit automatisierend für weitere Zugriffe erhalten. \cite{46}
 
 Neben gsutil verfügt Google Cloud Storage über eine \textbf{XML API} für HTTP-Anfragen von Web-Services, eine \textbf{JSON API} in Version v1 und weitere \textbf{Cloud Storage Tools}.
 
 \subsection{Eclipse IDE for Java Developers}
-\href{https://www.eclipse.org/}{\textit{Eclipse}} ist eine OpenSource Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch Plugins kann die Funktionalität von Enclipse erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet.
-\vspace{1em}
-$\;$\\
-\begin{minipage}{\linewidth}
-	\centering
-	\includegraphics[width=1.0\linewidth]{./img/Eclipse.png}
-	\captionof{figure}{\small Eclipse}
-\end{minipage}
-\vspace{1em}
+\href{https://www.eclipse.org/}{\textit{Eclipse}} ist eine OpenSource Entwicklungsumgebung zur gestützten Entwicklung von Software. Die IDE for Java Developers beinhaltet zusätzlich Pakete und Tools, die eine Programmierung in der Programmierhochsprache Java erleichtert. Interessant hierbei ist, das Eclipse selbst für Java und auch in Java entwickelt wurde. Es ist also genau so vielseitig nutzbar wie die Anwendungen die damit entwickelt werden. Durch Plugins kann die Funktionalität von Enclipse erweitert werden, etwa um UML Diagramme aus Code oder umgekehrt aus UML Diagrammen Code zu erzeugen oder um die Entwicklung in anderen Sprachen zu ermöglichen. Im Zuge dieses Projekts wurde Eclipse in der Version \textbf{Kepler Service Release 2}, \textbf{Build id: 20140224-0627}, verwendet - siehe Abbildung \ref{EclipseV}.
 
 \subsection{Versionsverwaltung: git}
-\textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von \href{https://www.atlassian.com/software/sourcetree/overview}{\textit{Atlassian SourceTree}} als Interface, Verwendung. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.
+\textbf{git} ist eine Software unter der OpenSource-Lizenz GNU GPLv2, welche zur verteilten Versionsverwaltung von Dateien eingesetzt wird. Seinen Ursprung fand git in der Verwaltung von Quellcode zur Entwicklung des Linux-Kernels. In diesem Projekt fand Version 2.1.2, unter Einsatz von \href{https://www.atlassian.com/software/sourcetree/overview}{\textit{Atlassian SourceTree}} als Interface, Verwendung - siehe Abbildung \ref{SourceTreeV}. Dies machte eine gleichzeitige, standortunabhängige Entwicklung und Synchronisierung von Änderungen des Prototyps möglich.\\
+ \cite{31}
+
+$\;$\\
+\begin{minipage}{\linewidth}
+	\centering
+	\includegraphics[width=0.8\linewidth]{./img/Eclipse.png}
+	\captionof{figure}{\small Eclipse}
+	\label{EclipseV}
+\end{minipage}
+
+
 \vspace{1em}
 $\;$\\
 \begin{minipage}{\linewidth}
 	\centering
-	\includegraphics[width=1.0\linewidth]{./img/SourceTree.png}
+	\includegraphics[width=0.8\linewidth]{./img/SourceTree.png}
 	\captionof{figure}{\small Atalassian SourceTree}
+	\label{SourceTreeV}
 \end{minipage}
 \vspace{1em}
-  \cite{31}
+  \pagebreak
 
 \subsection{Kryptographie}
 \subsubsection{Notwendige Verfahren}
@@ -548,9 +548,11 @@ Im Folgenden Kapitel wird der entwickelte Prototyp näher erläutert, zunächst 
 Der Applikation zugrunde liegt eine Architektur, die an das Model-View-Control Entwurfsmuster angelehnt ist. Sie unterteilt sich in drei packages (Abgrenzung von Programmteilen in Java) sowie zwei subpackages (packages, die in anderen enthalten sind). Im Folgenden werden diese sowie die enthaltenen Klassen näher skizziert. Eine genaue Auflistung der Methoden und Klassenvariablen kann den UML Diagrammen bzw. der Dokumentation entnommen werden.
 
 \subsubsection{Package: control}
-Das Package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüsselung, Benutzerverwaltung und Koordination der Datei-Informationen.\\\\
+Das Package control enthält die Programmlogik, hierzu gehören Ver- und Entschlüssel-ung, Benutzerverwaltung und Koordination der Datei-Informationen.\\\\
 \textbf{Klasse: Main}\\
-Die Klasse Main stellt das Herz der Applikation dar: In ihr liegen applikationsweit verwendete Definitionen (public static final Variablen) und Methoden, die von den Views aus aufgerufen werden um auf Benutzerinteraktionen zu reagieren. Die meisten anderen Klassen werden hier instanziert, die temporären Benutzerinformationen hinterlegt und mit get() und set() Methoden für andere Module nutzbar gemacht. Sie stellt also den Knotenpunkt dar, der die Module der Applikation verbindet. Main ist an der Programmlogik selbst nur in Form des Programmstartes und der Delegation anderer Aufrufe beteiligt. Kalkulationen oder Dateioperationen finden hier nicht statt. Sie ist mit dem Singelton Entwurfsmuster implementiert. So ist sichergestellt, dass alle Programmteile auf dieselbe Instanz von Main zugreifen, ohne dass eine entsprechende Referenz an die anderen Klassen übergeben werden müsste.\\\\
+Die Klasse Main stellt das Herz der Applikation dar: In ihr liegen applikationsweit verwendete Definitionen (public static final Variablen) und Methoden, die von den Views aus aufgerufen werden um auf Benutzerinteraktionen zu reagieren. Die meisten anderen Klassen werden hier instanziert, die temporären Benutzerinformationen hinterlegt und mit get() und set() Methoden für andere Module nutzbar gemacht. Sie stellt also den Knotenpunkt dar, der die Module der Applikation verbindet. Main ist an der Programmlogik selbst nur in Form des Programmstartes und der Delegation anderer Aufrufe beteiligt. Kalkulationen oder Dateioperationen finden hier nicht statt. Sie ist mit dem Singelton Entwurfsmuster implementiert. So ist sichergestellt, dass alle Programmteile auf dieselbe Instanz von Main zugreifen, ohne dass eine entsprechende Referenz an die anderen Klassen übergeben werden müsste.\\
+\pagebreak
+
 \textbf{Klasse: FileListHandler}\\
 Auch der FileListHandler ist ein Singleton, kommt also applikationsweit nur in einer Instanz vor und wird von verschiedenen Programmteilen direkt aufgerufen. Im Kern besteht er aus einem Vector aus InformationContainer Instanzen (siehe Package model - InformationContainer), er ist also das temporäre (während des Programmablaufes) Speichermodul für Informationen über die in der Cloud liegenden Dateien. Zusätzlich besitzt er Methoden für Operationen auf diesem Vector, etwa neue Dateien hinzuzufügen oder aber Dateien anhand bestimmter Schlüssel zurück zu geben.\\\\
 \textbf{Klasse: SettingsFileHandler}\\
@@ -582,7 +584,7 @@ Das Interface CloudConnector definiert, wie eine Schnittstelle zu einem Cloudanb
 Der CloudConnectorGoogleGsutil ist eine Implementierung des Interfaces CloudConnector zur Anbindung des Google Cloud Storage mittels der Python Schnittstelle gsutil und stellt die in CloudConnector definierten Methoden für Operation auf dem Cloudspeicher bereit.
 
 \subsubsection{Package: view}
-Das Package view enhält alle Teile des graphischen Interfaces. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur restlichen Applikation: Die Main Klasse, welche Aktionen (klicks) auf den Views entgegen nimmt und daraufhin andere Programmteile steuert, sowie die Klasse FileListHandler, welche dem MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien, InformationContainer) liefert. Eine genaue Beschreibung, wie das GUI aufgebaut ist, befindet sich in \fullref{GUIV}\\\\
+Das Package view enhält alle Teile des graphischen Interfaces. In diesem werden alle Fenster definiert. Die views verfügen über lediglich zwei Schnittstellen zur restlichen Applikation: Die Main Klasse, welche Aktionen (klicks) auf den Views entgegen nimmt und daraufhin andere Programmteile steuert, sowie die Klasse FileListHandler, welche dem MainWindow die in der Tabelle aufgelisteten Informationen (in der Cloud befindliche Dateien, InformationContainer) liefert. Eine genaue Beschreibung, wie das GUI aufgebaut ist, befindet sich in \fullref{GUIV}\\
 \textbf{Klasse: MainWindow}\\
 Das MainWindow ist die Hauptoberfläche der Applikation. Hier wird eine Liste der in der Cloud befindlichen Dateien angezeigt, es können weitere zum Upload ausgewählt oder aus der Cloud gedownloaded bzw. gelöscht werden.\\\\
 \textbf{Klasse: CreateAccountWindow}\\
@@ -598,7 +600,7 @@ Das NotificationWindow wird angezeigt, wenn der Benutzer die Menüpunkte Help od
 
 
 \subsection{UML-Diagramme}
-Die UML Diagramme befinden sich im digitalen Anhang, Ordner UML. In der Datei ClassRelations.jpg findet sich eine Übersicht aller Klassen und deren Beziehungen zu einander. Attribute und Methoden wurden hier weg gelassen, da sie der Übersichtlichkeit abträglich wären. Des Weiteren gibt es für jedes Package bzw. Subpackage ein weiteres UML mit den jeweiligen Klassen, deren Beziehungen sowie Attributen und Methoden. Genauere Beschreibungen der einzelnen Methoden, Klassen und Attribute finden sich in der Dokumentation im Ordner Projektdokumentation im digitalen Anhang. TODO
+Die UML Diagramme befinden sich im digitalen Anhang, Ordner UML. In der Datei ClassRelations.jpg findet sich eine Übersicht aller Klassen und deren Beziehungen zu einander. Attribute und Methoden wurden hier weg gelassen, da sie der Übersichtlichkeit abträglich wären. Des Weiteren gibt es für jedes Package bzw. Subpackage ein weiteres UML mit den jeweiligen Klassen, deren Beziehungen sowie Attributen und Methoden. Genauere Beschreibungen der einzelnen Methoden, Klassen und Attribute finden sich in der Dokumentation im Ordner JavaDoc im digitalen Anhang.
 
 \pagebreak
 
@@ -773,20 +775,20 @@ GUI (engl. Graphical User Interface) ist eine graphische Benutzeroberfläche, di
 \pagebreak
 
 \subsection{Kryptosystem}
-Die Verschlüsselung und das Accountmanagement basieren zurzeit ausschließlich auf den Algorithmen AES128 im CTR Modus und SHA256. Eine asymmetrische Verschlüsselung wurde in Betracht gezogen, schied jedoch aus unter der Annahme, dass der Client auf dem die Applikation läuft, als sichere Umgebung gilt. In einer späteren Weiterentwicklung ist es aber durchaus sinnvoll dies erneut zu evaluieren. Vor allem dann, wenn ein Server das Dateisystem bzw. dessen Synchronität verwalten oder mehrere kaskadierte Verschlüsselungsebenen geschaffen werden sollen, um eine erweiterte Rechteverwaltung zu ermöglichen. Die Beschreibung der Sicherungsverfahren wird nachfolgend in der Reihenfolge, in der sie von einem Benutzer ausgelöst werden, beschrieben.
+Die Verschlüsselung und das Accountmanagement basieren zurzeit ausschließlich auf den Algorithmen AES128 im CTR Modus und SHA256. Eine asymmetrische Verschlüsselung wurde in Betracht gezogen, schied jedoch aus unter der Annahme, dass der Client auf dem die Applikation läuft, als sichere Umgebung gilt. In einer späteren Weiterentwicklung ist es aber durchaus sinnvoll dies erneut zu evaluieren. Vor allem dann, wenn ein Server das Dateisystem bzw. dessen Synchronität verwaltet oder mehrere kaskadierte Verschlüsselungsebenen gebildet werden sollen, um eine erweiterte Rechteverwaltung zu ermöglichen. Die Beschreibung der Sicherungsverfahren wird nachfolgend in der Reihenfolge, in der sie von einem Benutzer ausgelöst werden, beschrieben.
 \subsubsection{Account anlegen}
-Wird die Applikation zum ersten Mal gestartet, stellt sie also fest, dass bisher keine Benutzer im System registriert sind, schafft sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem Schließen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Benutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. ''Salt". Danach wird der Benutzername im Klartext in die Datei HOME/NSAbGONE/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Anschließend berechnet das Programm einen SHA256 Hashwert über ein Bytearray bestehend aus dem Salt und dem Passwort. Dieser Hash sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf dieselbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten des einen Benutzers enden und die des nächsten beginnen. TODO SCHRIFTSPRACHE
+Wird die Applikation zum ersten Mal gestartet, d.h. es ist noch kein Benutzer registriert, erzeugt sie im Home-Verzeichnis des Benutzers eine eigene Ordnerstruktur, um die anfallenden Informationen zu verwalten und nach dem Schließen vorzuhalten. Nachdem der Benutzer im CreateAccountWindow seine gewünschten Benutzerdaten eingetragen hat, wird automatisch ein zufälliger Wert von 64 Byte berechnet, der sog. ''Salt". Danach wird der Benutzername im Klartext in die Datei HOME/NSAbGONE/settings.cfg eingetragen, gefolgt von einem Doppelpunkt (":") als Separator. Anschließend berechnet das Programm einen SHA256 Hashwert über ein Bytearray bestehend aus dem Salt und dem Passwort. Dieser Hash sowie der Salt werden hinter dem Doppelpunkt abgelegt. Weitere eventuell angelegte Benutzer werden auf dieselbe Weise an die Datei angehängt, die Applikation erkennt anhand des Separators und der Kenntnis über Länge von Hash und Salt, wo die Daten eines Benutzers enden und die des nächsten beginnen.
 \subsubsection{Login}
 Um sich in seinen Account einzuloggen, muss ein Benutzer seinen Benutzernamen und sein Passwort in die im LoginWindow vorgegebenen Zellen eintragen. Drückt er auf den OK Button, erstellt die Applikation ein Bytearray aus dem Passwort und dem in settings.cfg hinterlegten Salt. Dies wird gehasht und das Ergebnis mit dem in settings.cfg eingetragenen verglichen. Stimmen die beiden überein, sind die Benutzerdaten valide und die Applikation wechselt in das MainWindow. Der Vorteil bei der Verwendung eines Salt ist in \fullref{KryptV} näher erläutert.
 \subsubsection{Dateien ablegen}
-Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit, einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen zu speichern. Dann wird ein Hash über die gesamte Datei gebildet und eine temporäre Kopie angehängt, bevor diese dann selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt wird. Für jede Datei wird ein eigener Schlüssel berechnet, da ein Schlüssel immer gefährdeter wird, je öfter er benutzt, bzw. je mehr Daten damit verschlüsselt werden. Außerdem ist es möglich einem anderen Benutzer den Zugriff auf eine einzelene Datei zu gestatten, indem man diesem den Schlüssel aushändigt. 
+Wählt der Benutzer eine Datei über das MainWindow aus, um diese in der Cloud sicher zu speichern, beginnt die Applikation zunächst damit, einen zufälligen Schlüssel von 16 Byte Länge (AES Key, 128 Bit) und einen Initialisierungsvektor (Nonce) für den CTR Modus (ebenfalls 16 Byte) zu berechnen und in einer Instanz der Klasse InformationContainer zusammen mit dem Dateinamen und weiteren Informationen zu speichern. Danach wird ein Hash über die gesamte Datei gebildet und eine temporäre Kopie angehängt, bevor diese dann selbst mit den generierten Werten verschlüsselt, der verwendete Initialisierungsvektor angehängt und sie anschließend in der Cloud abgelegt wird. Für jede Datei wird ein eigener Schlüssel berechnet, da ein Schlüssel immer unsicherer wird, je öfter er verwendet bzw. je mehr Daten damit verschlüsselt werden. Zudem ist es möglich, durch Aushändigen des Schlüssels, einem anderen Benutzer den Zugriff auf eine einzelene Datei zu gestatten.
 \subsubsection{Programm schließen}
-Wird die CLOSE Schaltfläche des MainWindow betätigt oder das X in der Ecke des Programmfensters, werden alle laufenden Verschlüsselungs- und Uploadprozesse abgearbeitet. Anschließend werden die gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Bytearray wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/NSAbGONE/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Schlüssellänge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet, es wird so oft hintereinander gehängt, bis 16 Byte erreicht oder überschritten werden. Eventuell überflüssige Zeichen werden anschließend abgeschnitten. Aus diesem Grund lohnt es sich ein ausreichend langes Passwort zu wählen.
+Wird die CLOSE Schaltfläche des MainWindow oder das X in der Ecke des Programmfensters betätigt, werden alle laufenden Verschlüsselungs- und Uploadprozesse abgearbeitet. Anschließend werden die gespeicherten InformationContainer in Bytefolgen umgewandelt und aneinander gehängt. Dieses Bytearray wird dann mittels des Benutzerpasswortes und einem weiteren zufällig generierten Initialisierungsvektor AES CTR verschlüsselt. Danach wird der Initialisierungsvektor angehängt und die Daten in die Datei HOME/NSAbGONE/\textless Benutzername\textgreater/data/state.cfg gespeichert. Sollte das Benutzerpasswort nicht die richtige Länge haben (genau 16 Byte, AES Schlüssellänge) wird es bei 16 Byte abgeschnitten, bzw. auf 16 Byte expandiert. Das bedeutet, es wird so oft hintereinander gehängt, bis 16 Byte erreicht oder überschritten werden. Eventuell überflüssige Zeichen werden anschließend abgeschnitten. Aus diesem Grund lohnt es sich ein ausreichend langes Passwort zu wählen.
 \subsubsection{Programmstart mit vorhandener state.cfg}
 Wird die Applikation gestartet und ein Benutzer meldet sich mit validen Daten an, wird geprüft, ob bereits eine state.cfg für diesen Benutzer existiert, also ob bereits Dateien abgelegt und entsprechend Informationen dazu gespeichert wurden. Ist dies der Fall, expandiert die Applikation das Benutzerpasswort und entschlüsselt die state.cfg. Hier wird auch klar, warum die state.cfg verschlüsselt sein muss: Es ist möglich, dass jemand die settings.cfg derart manipuliert, dass jemand sich mit einem falschen Passwort einloggen kann. Dann ist es dieser Person aber nach wie vor nicht möglich, die Dateien des eigentlichen Benutzers zu entschlüsseln, da er das echte Passwort nicht besitzt. Auch ist es zukünftig denkbar die state.cfg selbst in der Cloud abzulegen. Dann wäre es möglich von überall aus das Programm zu verwenden (etwa mitgeführt auf einem USB Stick), ohne die Informationen im Benutzerverzeichnis zu benötigen.
 \subsubsection{Datei herunterladen}
 Wählt der Benutzer eine Datei zum Download aus, wird diese zunächst heruntergeladen und in einem temporären Verzeichnis gespeichert. Mit dem hinterlegten Schlüssel und dem Initialisierungsvektor wird sie dann entschlüsselt und der Hash extrahiert. Dann wird über die Datei ein neuer Hash erzeugt und die beiden verglichen, um sicher zu stellen, dass sie nicht manipuliert wurde. Ist dies nicht der Fall wird sie in das Downloadverzeichnis abgelegt und der Benutzer kann sie verwenden.
-
+\pagebreak
 \subsection{GUI und Funktionalitäten}\label{GUIV}
 Nachfolgend wird die Oberfläche sowie die Funktionalität des Prototyps beschrieben.
 
@@ -878,7 +880,8 @@ $\;$\\
 	\captionof{figure}{\small Kontextmenü}
 	\label{Kontext}
 \end{minipage}
-\\\\Das Kontextmenü wird durch Auswahl einer Zeile und Betätigen der rechten Maustaste ausgeführt. Es beinhaltet die Möglichkeiten Download und Delete from Cloud. Download initialisiert das temporäre Herunterladen der ausgewählten Datei mit anschließender Entschlüsselung und entschlüsselter Ablage in HOME/NSAbGONE/\textless Benutzername\textgreater/download. Mit Delete from Cloud kann eine Datei aus der Cloud zusammen mit dem zugehörigem lokal gespeicherten Schlüssel gelöscht werden. Der Eintrag wird anschließend aus der Dateiübersicht entfernt. Das Kontextmenü kann durch einen Klick auf eine freie Fläche innerhalb der Applikation oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
+\\\\Das Kontextmenü wird durch Auswahl einer Zeile und Betätigen der rechten Maustaste ausgeführt. Es beinhaltet die Möglichkeiten Download und Delete from Cloud. Download initialisiert das temporäre Herunterladen der ausgewählten Datei mit anschließender Entschlüsselung und entschlüsselter Ablage in\\ 
+HOME/NSAbGONE/\textless Benutzername\textgreater/download.\\ Mit Delete from Cloud kann eine Datei aus der Cloud zusammen mit dem zugehörigem lokal gespeicherten Schlüssel gelöscht werden. Der Eintrag wird anschließend aus der Dateiübersicht entfernt. Das Kontextmenü kann durch einen Klick auf eine freie Fläche innerhalb der Applikation oder einen beliebigen Klick in die Oberfläche des Betriebssystems geschlossen werden.
 
 \subsubsection{Delete Fenster}
 $\;$\\
@@ -908,8 +911,8 @@ $\;$\\
 Im folgenden Kapitel werden die Ergebnisse der Projektarbeit in der aktuellen Lage (NSA, Prism etc.) eingeordnet. Außerdem wird auf mögliche Erweiterungen der Applikation, sowie weitere mögliche Konzepte der verschlüsselten Datensicherung in der Cloud, eingegangen. 
 
 \subsection{Bedeutung}
-Dass Cloud Computing in der heutigen Zeit eine immer größere Bedeutung zukommt und es durchaus seine Existenzberechtigung im Sinne von ökonomischen und ökologischen Gesichtspunkten hat, soll hier nicht weiter thematisiert werden, da es in \fullref{CloudV} ausführlich dargelegt wurde. Das essentielle Problem beim Cloud Computing, dass die meisten Anbieter im Ausland liegen und damit nicht unter deutsches Recht fallen, macht es jedoch für viele Anwendungen unbrauchbar. Auf der einen Seite ist der Datenschutz nicht gewährleistet, was gerade bei den empfindlichen deutschen Datenschutzgesetzen gefährlich sein kann. Auf der anderen Seite haben die Enthüllungen der letzten Monate gezeigt, dass sogar auf staatlicher Ebene massiv Industriespionage betrieben wird. Dies ist für die meisten deutschen Firmen, die sich ob des hohen Lohnstandards nur aufgrund von technischem Know-How und modernen Entwicklungen gegen Konkurrenten aus dem Ausland durchsetzen können, ein ausreichender Grund, Cloud Computing zu meiden. Diese Umstände werden durch Applikationen wie der, die im Rahmen dieses Projektes prototypisch entwickelt wurde, behoben. Durch die vorverschlüsselte Ablage muss die genutzte Infrastruktur nicht mehr als sicher angesehen und kann ohne Vorbehalte in dieser Hinsicht genutzt werden. Sehr bewusst wurde bei der Konzeption darauf geachtet, auch BSI Standards für die Verschlüsselung abzudecken: Weniger weil es keine weiteren guten Verschlüsselungssysteme gäbe, als vielmehr um dem deutschen Datenschutz gerecht zu werden und zu zeigen, dass es durchaus möglich ist, im Ausland Daten derart abzusichern, dass sie als sicher im Sinne der deutschen Gesetzgebung gelten.
-
+Dass Cloud Computing in der heutigen Zeit eine immer größere Bedeutung zukommt und es durchaus seine Existenzberechtigung im Sinne von ökonomischen und ökolo-gischen Gesichtspunkten hat, soll hier nicht weiter thematisiert werden, da es in \textbf{\ref{CloudV} \nameref{CloudV}} ausführlich dargelegt wurde. Das essentielle Problem beim Cloud Computing, dass die meisten Anbieter im Ausland liegen und damit nicht unter deutsches Recht fallen, macht es jedoch für viele Anwendungen unbrauchbar. Auf der einen Seite ist der Datenschutz nicht gewährleistet, was gerade bei den empfindlichen deutschen Datenschutzgesetzen gefährlich sein kann. Auf der anderen Seite haben die Enthüllungen der letzten Monate gezeigt, dass sogar auf staatlicher Ebene massiv Industriespionage betrieben wird. Dies ist für die meisten deutschen Firmen, die sich ob des hohen Lohnstandards nur aufgrund von technischem Know-How und modernen Entwicklungen gegen Konkurrenten aus dem Ausland durchsetzen können, ein ausreichender Grund, Cloud Computing zu meiden. Diese Umstände werden durch Applikationen wie der, die im Rahmen dieses Projektes prototypisch entwickelt wurde, behoben. Durch die vorverschlüsselte Ablage muss die genutzte Infrastruktur nicht mehr als sicher angesehen und kann ohne Vorbehalte in dieser Hinsicht genutzt werden. Sehr bewusst wurde bei der Konzeption darauf geachtet, auch BSI Standards für die Verschlüsselung abzudecken: Weniger weil es keine weiteren guten Verschlüsselungssysteme gäbe, als vielmehr um dem deutschen Datenschutz gerecht zu werden und zu zeigen, dass es durchaus möglich ist, im Ausland Daten derart abzusichern, dass sie als sicher im Sinne der deutschen Gesetzgebung gelten.
+\pagebreak
 \subsection{Erweiterung der Funktionalitäten}
 Im folgenden werden Möglichkeiten beschrieben, die bestehende Applikation zu verbessern, ohne dass dazu die grundlegende Architektur verändert werden muss.
 \subsubsection{Erhöhung der Bedienerfreundlichkeit}
@@ -918,7 +921,8 @@ Eine sehr simple, aber dennoch äußerst nützliche Erweiterung des bestehenden 
 \\\textbf{Drag\&Drop}\\
 Um die Benutzerfreundlichkeit des Programmes zu erhöhen wäre es vorteilhaft, Dateien per Drag\&Drop in das Programmfenster hinein zu ziehen. Dadurch müsste ein Benutzer nicht jedesmal, wenn er eine Datei hinzufügen möchte, durch die Verzeichnisstruktur seines Betriebssystems navigieren.\\
 \\\textbf{Schnittstellen}\\
-Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Applikation als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Applikation selbst geschehen. Desweiteren haben Testfälle unter Einsatz von gsutil gezeigt, dass dieses nicht performant genug für die Verarbeitung von großen Dateien ist. Bereits bei einer Dateigröße von 50MB kam es zu langen Verzögerungen im Datei-Upload, in manchen Fällen sogar zu Abbrüchen. Dieses Verhalten war zu Beginn der Projektarbeit nicht ersichtlich und ist, auf Grund fehlender Reproduzierbarkeit, nicht zu erklären. Eine Weiterentwicklung dieser oder die Wahl einer alternativen Schnittstelle ist für eine zukünftige Implementierung sinnvoll. TODO\\
+Zurzeit muss gsutil noch manuell vorkonfiguriert werden, um es anschließend mit der Applikation als Schnittstelle zu Google Cloud Storage zu verwenden. Diese Konfiguartion könnte automatisiert durch die Applikation selbst geschehen. Desweiteren haben Testfälle unter Einsatz von gsutil gezeigt, dass dieses nicht performant genug für die Verarbeitung von großen Dateien ist. Bereits bei einer Dateigröße von 50MB kam es zu langen Verzögerungen im Datei-Upload, in manchen Fällen sogar zu Abbrüchen. Dieses Verhalten war zu Beginn der Projektarbeit nicht ersichtlich und ist, auf Grund fehlender Reproduzierbarkeit, nicht zu erklären. Eine Fragmentierung hochzuladender Dateien wäre hier prinzipiell realisierbar oder eine Weiterentwicklung dieser bzw. die Wahl einer alternativen Schnittstelle möglicherweise für eine zukünftige Implementierung sinnvoll. Aktuell befindet sich das IaaS-Angebot Google Cloud Storage indirekt noch im Beta Status, weswegen eine rasche Weiterentwicklung und Optimierung durch den Anbieter und freie Entwickler zu erwarten ist.\\
+\pagebreak
 \\\textbf{Installations Setup}\\
 Die gesamte Installation des Programmes kann durch einen Wizard derart automatisiert werden, dass auch Zusatzsoftware wie Python installiert und die Pfade in Konfigurationsdateien hinterlegt werden. Auch wäre es möglich Python für Windowssysteme automatisch bereit zu stellen und in der .jar Datei zu verpacken. Linux und MAC Systeme besitzen ohnehin standardmäßig eine Python2x Installation und verwenden Standardpfade für installierte Anwendungen (/bin, /usr/bin etc.).\\
 \\\textbf{Selbstsynchronisierung}\\
@@ -935,7 +939,7 @@ Zurzeit werden die Daten verschlüsselt indem für jeden Vershlüsselungsvorgang
 \subsubsection{Serverseitiges Management}
 Die folgenden Abschnitte sind kaum mit Quellen versehen, da sie aus eigenen Gedanken entstanden sind. Sollte es ähnliche Verfahrensweisen in anderen Systemen geben, so ist dies Zufall und bedeutet nicht, dass Quellen vorsätzlich unterschlagen wurden.\\\\
 \textbf{Schlüsselmanagement durch Key-Server}\\
-Ein potentieller Einsatz der Applikation auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rückhaltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, sondern lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße). TODO \cite{38}\\
+Ein potentieller Einsatz der Applikation auf mehreren Endgeräten macht zwangsläufig ein serverseitiges Schlüsselmanagement unabdingbar. Hinzu kommt eine lange Rück-haltezeit der Schlüssel für verschlüsselt abgelegte Dateien. Dies verringert weniger die Anzahl von abzusichernden Geheimnissen, sondern lediglich deren Größe (Schlüsselgröße meist kleiner als Dateigröße).\\ \cite{38}\\
 \\\textbf{Loginserver}\\
 Um die Applikation unabhängiger von einem bestimmten Cloudanbieter zu halten, wäre ein Konzept mittels Loginserver sinnvoll: Ein Benutzer hat einen Account bei diesem und meldet sich bei Programmstart an. Möchte er eine Datei hochladen, fragt er beim Loginserver an, wohin dies geschehen soll und dieser antwortet mit einem Cloudverzeichnis. Ebenso geschieht es beim Herunterladen der Daten. Möchte der Betrieber des Systems nun einen anderen Cloud-Anbieter nutzen, etwa weil dieser ein besseres Angebot unterbeitet hat, zieht er alle Daten um und hinterlegt dies beim Loginserver. Der Benutzer merkt von dieser Änderung nichts, aber das Programm arbeitet nun auf einem anderen Speicher als zuvor. Außerdem könnte so auch eine Rechteverwaltung gestaltet werden, sodass der Loginserver den Cloudspeicher verwaltet und den Benuzern selbstständig nur dort Rechte auf dem Speicher gibt, wo sie welche haben sollen und jedesmal neue, wenn sie neue Daten ablegen wollen.\\
 \\\textbf{Providing Server}\label{provV}\\
@@ -964,9 +968,6 @@ Einer der effektivsten Ansatzpunkte für einen Angriff auf die Verschlüsselung 
 Manche Sicherheitssysteme (zum Beispiel TrueCrypt) arbeiten mit verschlüsselten Containern. Dies bedeutet, dass zunächst festgelegt wird, wie groß die verschlüsselte Datenmenge maximal sein darf. In dieser Größe wird nun eine Datei angelegt, gefüllt mit zufälligen Bits. Wenn der Benutzer eine Datei in diesen Container hinein speichern möchte, verschlüsselt er sie und überschreibt einen Teil der Zufallsbits mit dem Chiffrat. Ein Angreifer der des Containers habhaft wird ist nicht in der Lage zu sagen, ob, wie viel, und wo Dateien in dem Container liegen, was die Entschlüsselung beinahe unmöglich macht. Auf das Projekt abgebildet würde dies allerdings einen Vorteil des Cloudspeichers zerstören, nämlich nur so viel Speicher bezahlen zu müssen wie tatsächlich gebraucht wird. In einem gewissen Maße bildet aber der Cloudspeicher selbst bei Fraktionierung der Daten diesen Vorteil: Der Angreifer sieht Datenfragmente und kann keine Aussage darüber treffen, wo Deteien beginnen oder enden, wieviele es gesamt oder wie groß sie sind.\\
 \\\textbf{Rechteverwaltung}\\
 Zurzeit gibt es in derApplikation keinerlei Rechteverwaltung auf dem Cloudspeicher selbst. Ein Benutzer mit Zugriffsrechten auf den Cloudspeicher, also ein Benutzer der Applikation, kann theoretisch per Webinterface die Daten anderer manipulieren. Dies muss auf Dauer geändert werden, entweder über die interne Rechteverwaltung der Cloudanbieter oder durch Login und Providing, wie in \fullref{provV} beschrieben wurden. Es kann in der Applikation selbst geschen oder manuell im Cloudspeicher, wenn neue Benutzer hinzu kommen. Im Falle von Google Cloud Storage wäre es möglich, bei Neuanlegen eines Benutzer einen für ihn vorgesehener Bucket zu erstellen, auf den nur der Benutzer allein Schreibrechte hat. Leserechte sind aufgrund der Verschlüsselung eher unkrtitisch. Außerdem ist der Hintergrund der Applikation ja das Misstrauen gegenüber dem Cloudanbieter selbst, der ohnehin Schreib- und Leserechte auf alle Dateien besitzt.
-
-TODO Discussion: Skaleneffekte, Verbundeffekte, Volatilität\\
-CC and ROI: S. 80 - effects \cite[S. 80]{45}
 \pagebreak
 
 
@@ -977,7 +978,6 @@ CC and ROI: S. 80 - effects \cite[S. 80]{45}
 {\raggedright 
 \bibliography{literature}
  \bibliographystyle{alphadin}
- 
  \nocite{43}
 }
 \pagebreak
@@ -998,6 +998,14 @@ CC and ROI: S. 80 - effects \cite[S. 80]{45}
 
 \section{Installationsanleitung}
 In \fullref{GsutilV} wird kurz beschrieben, welche Vorbedingungen für den Einsatz der Applikation erfüllt sein müssen.
+\begin{compactitem}
+\item{Python:}\\
+Python muss in der Version 2.6.x oder 2.7.x unter Windows oder Linux im Standard Installationsverzeichnis installiert sein.
+\item{gsutil und boto:}\\
+Die Installation und Konfiguration von gsutil und boto entspricht der Beschreibung der Google Cloud Plattform und ist in \url{https://cloud.google.com/storage/docs/gsutil_install} detailliert einzusehen und nachzuvollziehen.
+\item{Java:}\\
+Da die Applikation in Java erstellt wurde, wird dies zum Ausführen auf dem System benötigt. Aufgerufen werden kann NSAbGONE.jar in der Konsole durch: java -jar NSAbGONE.jar.
+\end{compactitem}
 \section{Digitaler Anhang}
 \begin{compactitem}
 \item{Quellcode}
